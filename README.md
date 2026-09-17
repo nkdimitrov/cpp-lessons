@@ -9,6 +9,9 @@ and the problem catalogue. No build system, no runtime dependencies, no JavaScri
 framework. Open `index.html` in a browser and it works, over `file://` as well as
 over HTTP.
 
+Once GitHub Pages is enabled for this repository (Settings → Pages → deploy from
+`main`, root folder), it is served at <https://nkdimitrov.github.io/cpp-lessons/>.
+
 ## What is here
 
 | | |
