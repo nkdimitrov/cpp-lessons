@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C++17 Setup and I/O - getting the data in and the answer out</title>
+<style>
+:root{
+  --bg:#fbfaf8; --panel:#ffffff; --ink:#1c1b1a; --muted:#6b6763; --line:#e4e0da;
+  --accent:#8a4b1f; --accent-soft:#f3ece4; --code-bg:#f6f3ee; --code-ink:#2d2a26;
+  --kw:#8a4b1f; --str:#3f6b3f; --com:#9a948c; --num:#2f5c8a; --pre:#7a5ea8;
+  --note-bg:#fdf6e7; --note-line:#d9a441; --ok:#3f6b3f;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+    --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+    --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+    --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+  --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+  --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+  --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+code,pre,.mono{font-family:"JetBrains Mono",Consolas,"SF Mono",Menlo,monospace}
+.wrap{display:flex;gap:0;align-items:flex-start;max-width:1220px;margin:0 auto}
+/* ---- sidebar ---- */
+#nav{position:sticky;top:0;flex:0 0 250px;height:100vh;overflow-y:auto;
+  padding:26px 14px 40px 20px;border-right:1px solid var(--line);font-size:13.5px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#nav .brand{font-weight:700;letter-spacing:.02em;color:var(--accent);
+  font-size:12px;text-transform:uppercase;margin-bottom:14px}
+#nav a{display:block;padding:4px 8px;margin:1px 0;border-radius:5px;
+  color:var(--muted);text-decoration:none;line-height:1.35}
+#nav a:hover{background:var(--accent-soft);color:var(--ink)}
+#nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+#nav .grp{margin-top:14px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);opacity:.7;padding:0 8px}
+/* ---- main ---- */
+main{flex:1 1 auto;min-width:0;padding:34px 40px 120px;max-width:900px}
+header.top{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:8px}
+h1{font-size:30px;line-height:1.2;margin:0 0 6px}
+.sub{color:var(--muted);font-size:14.5px;font-family:system-ui,sans-serif}
+h2{font-size:21px;margin:44px 0 12px;padding-top:10px;border-top:1px solid var(--line);
+  scroll-margin-top:16px}
+h2:first-of-type{border-top:none}
+h3{font-size:16.5px;margin:26px 0 8px;color:var(--accent);scroll-margin-top:16px}
+p{margin:11px 0}
+code{background:var(--code-bg);padding:1.5px 5px;border-radius:4px;font-size:.87em;
+  color:var(--code-ink);border:1px solid var(--line)}
+pre{background:var(--code-bg);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:7px;padding:13px 15px;overflow-x:auto;font-size:13px;line-height:1.55;
+  margin:14px 0;color:var(--code-ink)}
+pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
+.kw{color:var(--kw);font-weight:600}.str{color:var(--str)}.com{color:var(--com);font-style:italic}
+.num{color:var(--num)}.pp{color:var(--pre)}
+table{border-collapse:collapse;width:100%;margin:15px 0;font-size:14px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+  border-bottom:1.5px solid var(--line);font-weight:600}
+tbody tr:nth-child(even){background:var(--accent-soft)}
+ul{margin:11px 0;padding-left:22px}
+li{margin:4px 0}
+.note{background:var(--note-bg);border-left:3px solid var(--note-line);border-radius:0 7px 7px 0;
+  padding:11px 15px;margin:15px 0;font-size:14.5px}
+.tblwrap{overflow-x:auto}
+/* ---- problems ---- */
+.pgroup{margin:26px 0 0}
+.pgroup h3{margin-bottom:2px}
+.pgroup .maps{color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif;margin:0 0 8px}
+table.prob td{padding:9px 10px}
+table.prob a{color:var(--accent);text-decoration:none;font-weight:600;
+  font-family:Consolas,monospace;font-size:13.5px}
+table.prob a:hover{text-decoration:underline}
+.tech{color:var(--muted);font-size:13px}
+.src{color:var(--muted);font-size:12px;white-space:nowrap}
+.dif{color:var(--accent);letter-spacing:1px;font-size:11.5px;white-space:nowrap}
+.done td{opacity:.45}
+.done td a{text-decoration:line-through}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+#bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;
+  border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;
+  font-family:system-ui,sans-serif;font-size:13px;flex-wrap:wrap}
+#bar .track{flex:1 1 130px;height:7px;background:var(--line);border-radius:4px;overflow:hidden;
+  min-width:110px}
+#bar .fill{height:100%;background:var(--accent);width:0;transition:width .25s}
+button{font:inherit;font-size:12.5px;padding:4px 11px;border:1px solid var(--line);
+  border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+#themeBtn{position:fixed;top:14px;right:16px;z-index:10}
+.cheat td:first-child{font-family:system-ui,sans-serif;width:33%}
+.pit b{display:block;margin-bottom:2px}
+footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif}
+@media(max-width:900px){
+  #nav{display:none}
+  main{padding:26px 18px 90px}
+  h1{font-size:24px}
+  #themeBtn{top:8px;right:10px}
+}
+</style>
+</head><body>
+<button id="themeBtn" title="Toggle light / dark">&#9681;</button>
+<div class="wrap">
+<nav id="nav"><div class="brand">Lesson 01 · Setup and I/O</div>
+<a href="#howto">How to use this lesson</a>
+<div class="grp">Theory</div>
+<a href="#skeleton">1. What a solution looks like</a>
+<a href="#compile">2. Compiling and running it</a>
+<a href="#read">3. Reading numbers with cin</a>
+<a href="#until">4. When the count is not given</a>
+<a href="#print">5. Printing your answer</a>
+<a href="#fast">6. Making cin and cout fast</a>
+<a href="#notnumbers">7. Reading something that is not just numbers</a>
+<a href="#testing">8. Testing before you submit</a>
+<a href="#judge">9. What the judge actually checks</a>
+<div class="grp">Reference</div>
+<a href="#cheat">10. Cheat sheet</a>
+<a href="#pitfalls">11. Pitfalls</a>
+<a href="#complexity">12. Complexity</a>
+<div class="grp">Practice</div>
+<a href="#problems">13. 12 problems</a>
+<a href="#gA" style="padding-left:16px">A. Read a few numbers, print the answer</a>
+<a href="#gB" style="padding-left:16px">B. One character at a time</a>
+<a href="#gC" style="padding-left:16px">C. Read the numbers, loop, print one answer</a>
+<a href="#gD" style="padding-left:16px">D. Input that is not just numbers</a>
+<a href="#gE" style="padding-left:16px">E. Getting the output exactly right</a>
+<a href="#gF" style="padding-left:16px">F. Too much input to store</a>
+</nav>
+<main>
+<header class="top"><h1>C++17 Setup and I/O - getting the data in and the answer out</h1><div class="sub">Lesson 01 | Theory, cheat sheet and 12 graded problems from arena.olimpiici.com (Groups D and C)</div></header>
+<h2 id="howto">How to use this lesson</h2>
+<p>This lesson is built to be worked through in three passes. Do not try to do all three in one sitting.</p>
+<p><strong>Pass 1 - Read.</strong> Go through sections 1-9 once, typing every snippet into a compiler and running it. Change a number, run it again, see what happens. Do not try to memorise anything yet; the aim is only to know what exists and where to find it later.</p>
+<p><strong>Pass 2 - Memorise.</strong> Section 10 is the cheat sheet. Cover the right-hand column and write out each line from its description alone. Repeat until they all come out without thinking. Section 11 lists the mistakes that cost marks, and section 12 says what each operation costs.</p>
+<p><strong>Pass 3 - Solve.</strong> Section 13 lists 12 problems from the Olimpiici Arena, ordered from easiest to hardest and grouped by technique. Solve them in order. Each group points back at the theory sections that solve it, so when a problem stalls you, re-read that section instead of looking up a solution.</p>
+<p>This is the first lesson and it contains no algorithms at all. Every problem in section 13 is easy once the data is in your variables - the whole difficulty is getting it there, and getting the answer back out in exactly the shape the judge expects. That sounds dull. It is also the reason a great many correct solutions score zero.</p>
+<h2 id="skeleton">1. What a solution looks like</h2>
+<p>Every solution you write in this course has the same five parts. Here is a complete one - it reads two numbers and prints their sum:</p>
+<pre><code>#include &lt;iostream&gt;          // the input and output tools
+
+using namespace std;         // so you may write cout instead of std::cout
+
+int main() {                 // the program starts here
+    int a, b;
+    cin &gt;&gt; a &gt;&gt; b;           // read two numbers
+    cout &lt;&lt; a + b &lt;&lt; &#x27;\n&#x27;;   // print one
+    return 0;                // tell the system all went well
+}</code></pre>
+<p>Four of those five lines never change. Learn them as one block and type them from memory at the start of every problem:</p>
+<div class="tblwrap"><table><thead><tr>
+<th>Line</th>
+<th>What it does</th>
+</tr></thead><tbody>
+<tr><td><code>#include &lt;iostream&gt;</code></td><td>brings in <code>cin</code> and <code>cout</code>; without it nothing here works</td></tr>
+<tr><td><code>using namespace std;</code></td><td>lets you write <code>cout</code> instead of <code>std::cout</code> everywhere</td></tr>
+<tr><td><code>int main()</code></td><td>where the program begins - there must be exactly one</td></tr>
+<tr><td><code>return 0;</code></td><td>&quot;finished, no problem&quot;. You may leave it out of <code>main</code>, but write it anyway</td></tr>
+</tbody></table></div>
+<div class="note">A judge runs your program, feeds it the input, and compares what comes out against the expected answer. It never looks at your code. So there are no marks for tidy names or comments - and no forgiveness for one stray space in the output.</div>
+<h2 id="compile">2. Compiling and running it</h2>
+<p>A C++ file is not a program until the compiler has turned it into one. Save the code as <code>sol.cpp</code> and run this in a terminal in the same folder:</p>
+<pre><code>g++ -std=c++17 -O2 -Wall -o sol sol.cpp</code></pre>
+<div class="tblwrap"><table><thead><tr>
+<th>Part</th>
+<th>What it means</th>
+</tr></thead><tbody>
+<tr><td><code>g++</code></td><td>the compiler</td></tr>
+<tr><td><code>-std=c++17</code></td><td>use the 2017 version of the language - what this course is written for</td></tr>
+<tr><td><code>-O2</code></td><td>optimise; this is what the judge uses, and it is often twice as fast</td></tr>
+<tr><td><code>-Wall</code></td><td>warn me about anything suspicious. <strong>Read the warnings.</strong></td></tr>
+<tr><td><code>-o sol</code></td><td>call the finished program <code>sol</code></td></tr>
+<tr><td><code>sol.cpp</code></td><td>the file to compile</td></tr>
+</tbody></table></div>
+<p>Then run it. On Windows type <code>sol</code> or <code>sol.exe</code>; on Linux and macOS type <code>./sol</code>. The program waits, you type the input, you press Enter, and the answer appears.</p>
+<div class="note"><code>-Wall</code> is the cheapest help you will ever get. A warning about a variable used before it was given a value, or about comparing two different types, is very often the bug you would otherwise have spent twenty minutes hunting. If it warns, read it.</div>
+<h3>When it will not compile</h3>
+<p>The compiler prints the <strong>first</strong> error with a line number. Fix that one and compile again - later errors are often just confusion caused by the first. Three that everybody meets:</p>
+<div class="tblwrap"><table><thead><tr>
+<th>Message says something like</th>
+<th>Usually means</th>
+</tr></thead><tbody>
+<tr><td><code>expected &#x27;;&#x27; before ...</code></td><td>a missing semicolon, on the line <strong>above</strong> the one named</td></tr>
+<tr><td><code>&#x27;cout&#x27; was not declared</code></td><td>no <code>#include &lt;iostream&gt;</code> or no <code>using namespace std;</code></td></tr>
+<tr><td><code>expected &#x27;}&#x27; at end of input</code></td><td>a <code>{</code> somewhere with no matching <code>}</code></td></tr>
+</tbody></table></div>
+<h2 id="read">3. Reading numbers with cin</h2>
+<p><code>cin &gt;&gt; x</code> reads one value and puts it into <code>x</code>. It skips over any spaces, tabs and newlines first, so <strong>the layout of the input does not matter at all</strong>. These three inputs are all the same to the program:</p>
+<pre><code>int a, b, c;
+cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+
+//   3 1 4        on one line
+//   3            or on three lines
+//   1
+//   4
+//   3   1
+//      4         or any other arrangement - all identical</code></pre>
+<p>That is why you never need to think about where the line breaks are, as long as you are reading numbers. The commonest shape by far is *a count, then that many values*:</p>
+<pre><code>int n;
+cin &gt;&gt; n;                    // how many values are coming
+
+int sum = 0;
+for (int i = 0; i &lt; n; i++) {
+    int x;
+    cin &gt;&gt; x;                // the same variable, reused n times
+    sum += x;
+}
+cout &lt;&lt; sum &lt;&lt; &#x27;\n&#x27;;</code></pre>
+<div class="note">Notice that nothing was stored. The values were read one at a time, added up, and thrown away. A great many problems need nothing more than that - and when the input is too big to store, as in group F of section 13, it is the only way. Keeping the whole list is Lesson 04&#x27;s job, and you should only do it when the problem really needs it.</div>
+<p>Read into a variable of the right kind. A whole number needs an <code>int</code>, a number with a decimal point needs a <code>double</code>, one character needs a <code>char</code>:</p>
+<pre><code>int    n;       cin &gt;&gt; n;      // 42
+double d;       cin &gt;&gt; d;      // 3.5
+char   c;       cin &gt;&gt; c;      // one character, spaces skipped</code></pre>
+<div class="note">If the input contains a number too big for an <code>int</code> - anything past about 2 000 000 000 - you need a <code>long long</code>. That is the whole of Lesson 02, and it is the single commonest cause of a wrong answer in Groups C and D.</div>
+<h2 id="until">4. When the count is not given</h2>
+<p>Sometimes the input simply stops, with no count to tell you when. <code>cin &gt;&gt; x</code> answers <code>false</code> once there is nothing left to read, so it can be the condition of a <code>while</code> loop:</p>
+<pre><code>int x;
+int cnt = 0, sum = 0;
+
+while (cin &gt;&gt; x) {           // runs until the input runs out
+    cnt++;
+    sum += x;
+}
+
+cout &lt;&lt; cnt &lt;&lt; &#x27; &#x27; &lt;&lt; sum &lt;&lt; &#x27;\n&#x27;;</code></pre>
+<div class="note">Typing that in by hand at the keyboard, the input never &quot;runs out&quot; - you have to say so. Press <strong>Ctrl+Z then Enter</strong> on Windows, or <strong>Ctrl+D</strong> on Linux and macOS - that is how youtell the program that the input has finished.</div>
+<h3>Several test cases in one file</h3>
+<p>Many statements say &quot;the first line holds T, the number of test cases&quot;. Wrap your whole solution in a loop and do not forget to clear anything you carried over:</p>
+<pre><code>int t;
+cin &gt;&gt; t;
+
+while (t--) {                // runs t times
+    int a, b;
+    cin &gt;&gt; a &gt;&gt; b;
+    cout &lt;&lt; a + b &lt;&lt; &#x27;\n&#x27;;   // one line of output per test case
+}</code></pre>
+<h3>Stopping at a special value</h3>
+<p>Others end with a line that is not really data - often <code>0</code>, or <code>0 0</code>. Read, test, and break <strong>before</strong> you use the values:</p>
+<pre><code>int a, b;
+while (cin &gt;&gt; a &gt;&gt; b) {
+    if (a == 0 &amp;&amp; b == 0) break;    // the marker: stop, and do not print anything for it
+    cout &lt;&lt; a + b &lt;&lt; &#x27;\n&#x27;;
+}</code></pre>
+<h2 id="print">5. Printing your answer</h2>
+<p><code>cout &lt;&lt;</code> prints one thing. Chain as many as you like, and put the line break in yourself - printing never adds one for you.</p>
+<pre><code>int a = 3, b = 4;
+
+cout &lt;&lt; a + b &lt;&lt; &#x27;\n&#x27;;                       // 7
+cout &lt;&lt; &quot;the answer is &quot; &lt;&lt; a + b &lt;&lt; &#x27;\n&#x27;;   // the answer is 7
+cout &lt;&lt; a &lt;&lt; &#x27; &#x27; &lt;&lt; b &lt;&lt; &#x27;\n&#x27;;               // 3 4</code></pre>
+<p>When several numbers go on one line, the tidy habit is a space <strong>before</strong> every one except the first. That leaves no trailing space at the end of the line:</p>
+<pre><code>int n = 5;
+for (int i = 1; i &lt;= n; i++) {
+    if (i &gt; 1) cout &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; i * i;
+}
+cout &lt;&lt; &#x27;\n&#x27;;                 // 1 4 9 16 25</code></pre>
+<div class="note">Judges almost always forgive a trailing space and a missing or extra newline at the very end. They forgive nothing else - not a capital letter where the statement wanted a small one, not &quot;YES&quot; where it asked for &quot;Yes&quot;. Copy the wording out of the statement rather than typing it from memory.</div>
+<h3>Never use endl</h3>
+<p><code>endl</code> prints a line break <strong>and</strong> empties the output buffer, which means asking the operating system to actually write the text out. Doing that once is nothing. Doing it 100000 times, once per line, is enough on its own to fail a time limit on a solution that is otherwise perfect.</p>
+<pre><code>cout &lt;&lt; x &lt;&lt; endl;      // a line break AND a flush - slow
+cout &lt;&lt; x &lt;&lt; &#x27;\n&#x27;;      // just a line break - use this one</code></pre>
+<h2 id="fast">6. Making cin and cout fast</h2>
+<p>Out of the box, <code>cin</code> and <code>cout</code> keep themselves in step with the older C functions <code>scanf</code> and <code>printf</code>, so that a program may safely use both. Almost no program wants that, and it makes reading several times slower. These two lines switch it off:</p>
+<pre><code>int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    // the rest of your solution
+}</code></pre>
+<div class="tblwrap"><table><thead><tr>
+<th>Line</th>
+<th>What it switches off</th>
+</tr></thead><tbody>
+<tr><td><code>ios_base::sync_with_stdio(false)</code></td><td>keeping <code>cin</code>/<code>cout</code> in step with <code>scanf</code>/<code>printf</code></td></tr>
+<tr><td><code>cin.tie(nullptr)</code></td><td>flushing <code>cout</code> before every single read</td></tr>
+</tbody></table></div>
+<p>How much does it matter? On a problem that reads 200000 numbers, those two lines are regularly the difference between passing and failing - with no change at all to your algorithm. Type them at the start of every solution, out of habit, before you even read the statement.</p>
+<div class="note">Two rules come with them. <strong>Never mix the two styles in one program</strong> - <code>cin</code>/<code>cout</code> or <code>scanf</code>/<code>printf</code>, pick one and stay with it, because the syncing that made mixing safe is now gone. And carry on printing <code>&#x27;\n&#x27;</code> rather than <code>endl</code>, for the reason in section 5.</div>
+<p>So the full skeleton, the one you type from memory at the start of every problem:</p>
+<pre><code>#include &lt;iostream&gt;
+
+using namespace std;
+
+int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    // read, work it out, print
+
+    return 0;
+}</code></pre>
+<h2 id="notnumbers">7. Reading something that is not just numbers</h2>
+<h3>One character at a time</h3>
+<p><code>cin &gt;&gt; c</code> into a <code>char</code> skips whitespace and hands you the next real character. Put it in a <code>while</code> and you can walk through a whole stream of letters without ever storing them - which is exactly what group B of section 13 asks for:</p>
+<pre><code>char c;
+int ones = 0, zeros = 0;
+
+while (cin &gt;&gt; c) {
+    if (c == &#x27;1&#x27;) ones++;
+    else if (c == &#x27;0&#x27;) zeros++;
+}
+cout &lt;&lt; ones &lt;&lt; &#x27; &#x27; &lt;&lt; zeros &lt;&lt; &#x27;\n&#x27;;</code></pre>
+<h3>Input in a fixed shape</h3>
+<p>When the input has punctuation in it - <code>12+7</code>, or <code>3/4</code>, or a date as <code>21.05.2015</code> - you do not need to do anything clever. Read the pieces in the order they appear, using a <code>char</code> to swallow each separator:</p>
+<pre><code>// the input line is   12+7
+int a, b;
+char sign;
+cin &gt;&gt; a &gt;&gt; sign &gt;&gt; b;          // a = 12, sign = &#x27;+&#x27;, b = 7
+
+// the input line is   21.05.2015
+int day, month, year;
+char dot;
+cin &gt;&gt; day &gt;&gt; dot &gt;&gt; month &gt;&gt; dot &gt;&gt; year;      // 21, 5, 2015</code></pre>
+<div class="note">This works because <code>cin &gt;&gt;</code> into an <code>int</code> stops as soon as it meets something that is not a digit, and leaves it sitting there for the next read. The <code>char</code> then picks it up. It is the shortest way to read a formatted line, and it solves several problems in group D.</div>
+<h3>A whole line, spaces and all</h3>
+<p><code>cin &gt;&gt; s</code> stops at the first space, so it cannot read a line of several words. <code>getline</code> reads everything up to the line break:</p>
+<pre><code>#include &lt;string&gt;
+
+string line;
+getline(cin, line);              // the whole line, spaces included
+cout &lt;&lt; line &lt;&lt; &#x27;\n&#x27;;</code></pre>
+<div class="note"><strong>The trap.</strong> After <code>cin &gt;&gt; n</code>, the newline you pressed after the number is still waiting in the input. The next <code>getline</code> finds it immediately and hands you an empty line. The cure is one line in between: <code>cin.ignore();</code> throws that leftover newline away. Text is Lesson 03&#x27;s subject and it goes much further than this - for now, know that <code>getline</code> exists and that this trap exists.</div>
+<pre><code>int n;
+cin &gt;&gt; n;
+cin.ignore();                    // throw away the rest of that line
+string line;
+getline(cin, line);              // now this really reads the next line</code></pre>
+<h2 id="testing">8. Testing before you submit</h2>
+<p>The statement always comes with a sample input and a sample answer. Running your program on that sample is the first thing to do and takes about fifteen seconds: start it, type the sample input, press Enter, and check what comes back against the expected answer - every character of it, including the spaces.</p>
+<p>That is only the beginning, though. The sample is written to explain the problem, not to break your program, so it will happily agree with a solution that is about to score 40.</p>
+<h3>The tests worth inventing yourself</h3>
+<p>Before you submit, try the input the statement allows but the sample never shows. These five catch most of what a judge will catch:</p>
+<ul><li><strong>The smallest allowed input.</strong> <code>n = 1</code>, an empty list, one character. Loops that assume there are at least two things break here.</li><li><strong>The largest allowed input.</strong> If the statement says <code>n &lt;= 200000</code>, feed it 200000 values and time it. A program that takes six seconds will not get faster on the judge.</li><li><strong>The largest allowed values.</strong> Not the most values - the biggest ones. This is where a missing <code>long long</code> shows up, and it is Lesson 02&#x27;s whole subject.</li><li><strong>Negative numbers and zero</strong>, whenever the statement permits them. A maximum started at 0 instead of at the first value is wrong the moment the input can be negative.</li><li><strong>All the values the same</strong>, or already sorted, or in reverse. Cheap to write and they catch an astonishing number of off-by-one mistakes.</li></ul>
+<div class="note">A later lesson builds a <strong>stress test</strong>: a small program that makes random inputs, a slow-but-obviously-correct solution, and a loop that compares the two until they disagree. It is the single most effective debugging tool in competitive programming. For now, hand-written edge cases will find most of your bugs.</div>
+<h2 id="judge">9. What the judge actually checks</h2>
+<p>Understanding what happens after you press submit turns most unexplained scores into obvious ones. The judge compiles your file, runs it once per test, feeds each test&#x27;s input in, and compares your output with the expected output.</p>
+<div class="tblwrap"><table><thead><tr>
+<th>Verdict</th>
+<th>What it means</th>
+<th>Where to look first</th>
+</tr></thead><tbody>
+<tr><td>Accepted</td><td>every test matched</td><td>-</td></tr>
+<tr><td>Wrong answer</td><td>the output differs on some test</td><td>the edge cases in section 8; the wording of your output</td></tr>
+<tr><td>Time limit exceeded</td><td>too slow on some test</td><td><code>endl</code> in a loop; missing <code>sync_with_stdio</code>; the algorithm</td></tr>
+<tr><td>Memory limit exceeded</td><td>used too much memory</td><td>storing input that could have been streamed</td></tr>
+<tr><td>Runtime error</td><td>the program crashed or returned something other than 0</td><td>reading past the end of an array; dividing by zero</td></tr>
+<tr><td>Compilation error</td><td>it did not build on the judge</td><td>compile it yourself with <code>-std=c++17 -Wall</code> first</td></tr>
+</tbody></table></div>
+<p>Three facts that surprise people the first time:</p>
+<ul><li><strong>Each test is a fresh run.</strong> Anything your program remembers between test cases inside one file is your own doing; between separate tests, nothing carries over.</li><li><strong>Partial marks are normal.</strong> Most Group C and D problems are graded per test group, so a solution that is correct but slow still scores on the small tests. Submit the slow correct version before you try to make it fast.</li><li><strong>&quot;It works on my machine&quot; is not evidence.</strong> An uninitialised variable can hold 0 on your computer and rubbish on the judge. That is why <code>-Wall</code> is in section 2.</li></ul>
+<div class="note">Read the statement&#x27;s limits before you write anything: the largest <code>n</code>, the largest value, the time limit and the memory limit. Those four numbers decide which solution you should even attempt - and, in group F of section 13, they are the entire problem.</div>
+<h2 id="cheat">10. Cheat sheet &mdash; memorise this page</h2>
+<p>Cover the right-hand column and reproduce each idiom from its description alone.</p>
+<div class="tblwrap"><table class="cheat"><thead><tr><th>You want to&hellip;</th><th>Write</th></tr></thead><tbody>
+<tr><td>The whole skeleton</td><td><code>#include &lt;iostream&gt;</code> / <code>using namespace std;</code> / <code>int main() { ... }</code></td></tr>
+<tr><td>Fast input and output</td><td><code>ios_base::sync_with_stdio(false); cin.tie(nullptr);</code></td></tr>
+<tr><td>Compile it</td><td><code>g++ -std=c++17 -O2 -Wall -o sol sol.cpp</code></td></tr>
+<tr><td>Run it</td><td><code>sol</code> on Windows, <code>./sol</code> on Linux and macOS</td></tr>
+<tr><td>Read one value</td><td><code>cin &gt;&gt; x;</code></td></tr>
+<tr><td>Read several</td><td><code>cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;</code> - the layout of the input does not matter</td></tr>
+<tr><td>Read a count, then that many</td><td><code>cin &gt;&gt; n;</code> then <code>for (int i = 0; i &lt; n; i++) cin &gt;&gt; x;</code></td></tr>
+<tr><td>Read until the input ends</td><td><code>while (cin &gt;&gt; x) { ... }</code></td></tr>
+<tr><td>End the input by hand</td><td>Ctrl+Z then Enter on Windows, Ctrl+D elsewhere</td></tr>
+<tr><td>T test cases</td><td><code>cin &gt;&gt; t; while (t--) { ... }</code></td></tr>
+<tr><td>Stop at a marker</td><td><code>if (a == 0 &amp;&amp; b == 0) break;</code> - test before you use the values</td></tr>
+<tr><td>Print</td><td><code>cout &lt;&lt; x &lt;&lt; &#x27;\n&#x27;;</code></td></tr>
+<tr><td>Never</td><td><code>endl</code> - it flushes every time and can fail a time limit on its own</td></tr>
+<tr><td>Several on one line</td><td><code>if (i &gt; 0) cout &lt;&lt; &#x27; &#x27;;</code> then <code>cout &lt;&lt; v;</code></td></tr>
+<tr><td>Read one character</td><td><code>char c; cin &gt;&gt; c;</code> - whitespace is skipped</td></tr>
+<tr><td>Read <code>12+7</code></td><td><code>int a, b; char sign; cin &gt;&gt; a &gt;&gt; sign &gt;&gt; b;</code></td></tr>
+<tr><td>Read <code>21.05.2015</code></td><td><code>cin &gt;&gt; day &gt;&gt; dot &gt;&gt; month &gt;&gt; dot &gt;&gt; year;</code></td></tr>
+<tr><td>Read a whole line</td><td><code>string line; getline(cin, line);</code></td></tr>
+<tr><td>After <code>&gt;&gt;</code>, before <code>getline</code></td><td><code>cin.ignore();</code></td></tr>
+<tr><td>Before submitting</td><td>smallest input, largest input, largest values, negatives, all equal</td></tr>
+</tbody></table></div>
+<h2 id="pitfalls">11. Ten pitfalls that cost real marks</h2>
+<div class="tblwrap"><table class="pit"><tbody>
+<tr><td><b><code>endl</code> instead of <code>&#x27;\n&#x27;</code>.</b><span class="tech"><code>endl</code> empties the output buffer every single time. Over 100000 lines that alone is enough to exceed the time limit on an otherwise perfect solution.</span></td></tr>
+<tr><td><b>Forgetting the two fast-input lines.</b><span class="tech"><code>ios_base::sync_with_stdio(false); cin.tie(nullptr);</code> regularly decide whether a solution that reads 200000 numbers passes. Type them before you read the statement.</span></td></tr>
+<tr><td><b>Mixing <code>cin</code>/<code>cout</code> with <code>scanf</code>/<code>printf</code> after switching the syncing off.</b><span class="tech">The two no longer agree about what has been read or written, and the output comes out in the wrong order. Pick one style per program.</span></td></tr>
+<tr><td><b><code>getline</code> straight after <code>cin &gt;&gt; n</code> gives you an empty line.</b><span class="tech">The newline from the earlier read is still waiting. Put <code>cin.ignore();</code> between the two.</span></td></tr>
+<tr><td><b>Printing a prompt.</b><span class="tech"><code>cout &lt;&lt; &quot;Enter n: &quot;;</code> is helpful at the keyboard and fatal on a judge - it becomes part of your output and nothing will match. Print the answer and nothing else.</span></td></tr>
+<tr><td><b>The wrong wording in the output.</b><span class="tech">&quot;YES&quot; is not &quot;Yes&quot;. Copy the exact word out of the statement instead of typing it from memory, and mind the capital letters.</span></td></tr>
+<tr><td><b>Reading into the wrong type.</b><span class="tech"><code>cin &gt;&gt; x</code> into an <code>int</code> when the value passes 2 000 000 000 gives a silently wrong number. Lesson 02 is about nothing else.</span></td></tr>
+<tr><td><b>Storing the input when there was no need.</b><span class="tech">Many problems can be answered while reading. Storing 10^7 values when a running total would have done is how a memory limit is exceeded - see group F of section 13.</span></td></tr>
+<tr><td><b>Testing only on the sample.</b><span class="tech">The sample is written to explain the problem, not to break your program. <code>n = 1</code> and the largest allowed input find far more bugs.</span></td></tr>
+<tr><td><b>Ignoring the compiler warnings.</b><span class="tech"><code>-Wall</code> warns about exactly the mistakes that behave differently on the judge than on your machine, an uninitialised variable being the classic. Read them.</span></td></tr>
+</tbody></table></div>
+<h2 id="complexity">12. Complexity reference</h2>
+<div class="tblwrap"><table><thead><tr><th>Operation</th><th>Cost</th></tr></thead><tbody>
+<tr><td><code>cin &gt;&gt; x</code>, with the syncing switched off</td><td>fast - a few tens of nanoseconds</td></tr>
+<tr><td><code>cin &gt;&gt; x</code>, with the syncing left on</td><td>several times slower, and it adds up over 10^6 reads</td></tr>
+<tr><td><code>cout &lt;&lt; x &lt;&lt; &#x27;\n&#x27;</code></td><td>fast - the text is buffered and written in blocks</td></tr>
+<tr><td><code>cout &lt;&lt; x &lt;&lt; endl</code></td><td>slow - it forces a write to the system every single time</td></tr>
+<tr><td><code>ios_base::sync_with_stdio(false)</code></td><td>free - one call, at the start</td></tr>
+<tr><td>Reading n values in a loop</td><td>O(n)</td></tr>
+<tr><td>Reading n values without storing them</td><td>O(n) time, O(1) memory - prefer this</td></tr>
+<tr><td>Reading n values into an array</td><td>O(n) time, O(n) memory</td></tr>
+<tr><td><code>getline</code></td><td>O(length of the line)</td></tr>
+<tr><td>A typical time limit</td><td>1-2 seconds, which is about 10^8 simple operations</td></tr>
+<tr><td>A typical memory limit</td><td>64-256 MB, and sometimes 2-4 MB on purpose</td></tr>
+</tbody></table></div>
+<h2 id="problems">13. Practice &mdash; 12 problems, Group D and C</h2>
+<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D and C, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
+<div class="pgroup"><h3 id="gA">A. Read a few numbers, print the answer</h3><p class="maps">Theory: sections 3 and 5</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100283"></td><td><a href="https://arena.olimpiici.com/#/catalog/122/problem/100283" target="_blank" rel="noopener">cinema</a><br><span class="tech">Cinema</span></td><td class="tech">read two numbers, print two - <code>/</code> and <code>%</code> do the work</td><td class="src">Municipal round 2014</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100236"></td><td><a href="https://arena.olimpiici.com/#/catalog/103/problem/100236" target="_blank" rel="noopener">table</a><br><span class="tech">The table</span></td><td class="tech">read three numbers, answer with a formula</td><td class="src">Municipal round 2011</td><td class="dif">★☆☆☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gB">B. One character at a time</h3><p class="maps">Theory: sections 3, 4 and 7</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100748"></td><td><a href="https://arena.olimpiici.com/#/catalog/261/problem/100748" target="_blank" rel="noopener">sin</a><br><span class="tech">Forecast</span></td><td class="tech">read the letters one at a time; never store them</td><td class="src">Spring tournament 2008</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100041"></td><td><a href="https://arena.olimpiici.com/#/catalog/26/problem/100041" target="_blank" rel="noopener">maxbin</a><br><span class="tech">Ones and zeros</span></td><td class="tech">count while reading, then print the answer yourself</td><td class="src">Autumn tournament 2009</td><td class="dif">★☆☆☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Read the numbers, loop, print one answer</h3><p class="maps">Theory: sections 3 and 5</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100370"></td><td><a href="https://arena.olimpiici.com/#/catalog/157/problem/100370" target="_blank" rel="noopener">num</a><br><span class="tech">Repeated digits</span></td><td class="tech">loop over the range the input gives you</td><td class="src">Regional round 2010</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100222"></td><td><a href="https://arena.olimpiici.com/#/catalog/97/problem/100222" target="_blank" rel="noopener">Lubimec13</a><br><span class="tech">Favourite 13</span></td><td class="tech">test every number in the range, print the count</td><td class="src">Municipal round 2010</td><td class="dif">★★☆☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gD">D. Input that is not just numbers</h3><p class="maps">Theory: section 7</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100315"></td><td><a href="https://arena.olimpiici.com/#/catalog/134/problem/100315" target="_blank" rel="noopener">abx</a><br><span class="tech">The equation</span></td><td class="tech">read <code>a</code>, then the sign, then <code>b</code> - <code>cin &gt;&gt;</code> can do it</td><td class="src">Municipal round 2016</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100330"></td><td><a href="https://arena.olimpiici.com/#/catalog/140/problem/100330" target="_blank" rel="noopener">circles</a><br><span class="tech">Loops in the digits</span></td><td class="tech">read an expression, then look at the answer&#x27;s digits</td><td class="src">Municipal round 2017</td><td class="dif">★★☆☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gE">E. Getting the output exactly right</h3><p class="maps">Theory: section 5</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100512"></td><td><a href="https://arena.olimpiici.com/#/catalog/211/problem/100512" target="_blank" rel="noopener">clock</a><br><span class="tech">Clock</span></td><td class="tech">a time in, a time out - get the format exactly right</td><td class="src">National round 2009</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100927"></td><td><a href="https://arena.olimpiici.com/#/catalog/332/problem/100927" target="_blank" rel="noopener">position</a><br><span class="tech">The k-th digit</span></td><td class="tech">print one digit out of a very long run of squares</td><td class="src">Winter tournament 2010</td><td class="dif">★★☆☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gF">F. Too much input to store</h3><p class="maps">Theory: sections 4 and 6</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="102529"></td><td><a href="https://arena.olimpiici.com/#/catalog/912/problem/102529" target="_blank" rel="noopener">prices</a><br><span class="tech">Prices</span></td><td class="tech">the list will not fit - decide as each value arrives</td><td class="src">Winter tournament 2026</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100726"></td><td><a href="https://arena.olimpiici.com/#/catalog/255/problem/100726" target="_blank" rel="noopener">major</a><br><span class="tech">Majority</span></td><td class="tech">the same, inside 2 MB</td><td class="src">National round 2018</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 01 · C++17 setup and input/output. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
+</main></div>
+<script>var LESSON_SLUG="01_Setup_And_IO";var LEGACY_KEY=null;</script>
+<script>
+var THEME_KEY="cpp_lessons_theme";
+var DONE_KEY="cpp_done_"+LESSON_SLUG;
+// ---- theme -------------------------------------------------------------
+var tb=document.getElementById('themeBtn');
+function setTheme(t){
+  if(t) document.documentElement.setAttribute('data-theme',t);
+  else document.documentElement.removeAttribute('data-theme');
+  try{t?localStorage.setItem(THEME_KEY,t):localStorage.removeItem(THEME_KEY)}catch(e){}
+}
+try{var st=localStorage.getItem(THEME_KEY); if(st) setTheme(st);}catch(e){}
+tb.onclick=function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  setTheme(cur==='dark'?'light':'dark');
+};
+
+// ---- progress ----------------------------------------------------------
+var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-pid]'));
+var fill=document.querySelector('#bar .fill'), lbl=document.getElementById('cnt');
+// state lives in memory; localStorage is a best-effort mirror so that ticking
+// still works when storage is blocked (private window, file:// restrictions)
+var state={};
+try{
+  var raw=localStorage.getItem(DONE_KEY);
+  if(raw===null && LEGACY_KEY) raw=localStorage.getItem(LEGACY_KEY);  // one-time adopt
+  state=JSON.parse(raw||'{}')||{};
+}catch(e){state={}}
+function save(){try{localStorage.setItem(DONE_KEY,JSON.stringify(state))}catch(e){}}
+function paint(){
+  var n=0;
+  boxes.forEach(function(b){
+    var on=!!state[b.dataset.pid]; b.checked=on; if(on)n++;
+    b.closest('tr').classList.toggle('done',on);
+  });
+  fill.style.width=(n/boxes.length*100)+'%';
+  lbl.textContent=n+' / '+boxes.length+' solved';
+}
+boxes.forEach(function(b){b.onchange=function(){
+  if(b.checked)state[b.dataset.pid]=1; else delete state[b.dataset.pid];
+  save(); paint();
+};});
+document.getElementById('reset').onclick=function(){
+  if(confirm('Clear all progress?')){state={};save();paint();}
+};
+paint();
+
+// ---- scroll spy --------------------------------------------------------
+var links=[].slice.call(document.querySelectorAll('#nav a[href^="#"]'));
+var map={}; links.forEach(function(a){
+  var el=document.getElementById(a.getAttribute('href').slice(1)); if(el)map[el.id]=a;});
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.remove('on')});
+      if(map[e.target.id])map[e.target.id].classList.add('on');
+    }});
+},{rootMargin:'0px 0px -75% 0px'});
+Object.keys(map).forEach(function(id){obs.observe(document.getElementById(id))});
+
+// ---- C++ highlighter ---------------------------------------------------
+var KW=('alignas|alignof|auto|bool|break|case|catch|char|class|const|constexpr|continue|'+
+ 'decltype|default|delete|do|double|else|enum|explicit|export|extern|false|float|for|friend|'+
+ 'goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|'+
+ 'public|register|return|short|signed|sizeof|static|static_cast|struct|switch|template|this|'+
+ 'throw|true|try|typedef|typename|union|unsigned|using|virtual|void|volatile|while|'+
+ 'string|string_view|vector|size_t|map|unordered_map|set|pair|istringstream|ostringstream').split('|');
+var KWRE=new RegExp('\\b('+KW.join('|')+')\\b','g');
+document.querySelectorAll('pre code').forEach(function(el){
+  var src=el.textContent, out='', i=0;
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  while(i<src.length){
+    var rest=src.slice(i), m;
+    if((m=rest.match(/^\/\/[^\n]*/))){out+='<span class="com">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^#[a-z]+/))){out+='<span class="pp">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^"(?:\\.|[^"\\])*"/))||(m=rest.match(/^'(?:\\.|[^'\\])*'/))){
+      out+='<span class="str">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^\b\d[\w.]*/))){out+='<span class="num">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^[A-Za-z_]\w*/))){
+      out+= KWRE.test(m[0])&&(KWRE.lastIndex=0,true) ? '<span class="kw">'+esc(m[0])+'</span>' : esc(m[0]);
+      i+=m[0].length;continue;}
+    out+=esc(src[i]); i++;
+  }
+  el.innerHTML=out;
+});
+</script>
+</body></html>

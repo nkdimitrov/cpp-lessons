@@ -1,0 +1,301 @@
+{
+ "group": "D, with six from Group C",
+ "groups": [
+  {
+   "key": "A",
+   "name": "A. One formula - and it must be a long long",
+   "maps": "Theory: sections 2 and 3"
+  },
+  {
+   "key": "B",
+   "name": "B. Taking a number apart: / and %",
+   "maps": "Theory: section 4"
+  },
+  {
+   "key": "C",
+   "name": "C. Counting with a formula, not a loop",
+   "maps": "Theory: sections 3 and 4"
+  },
+  {
+   "key": "D",
+   "name": "D. Try every candidate, and watch the size",
+   "maps": "Theory: sections 2 and 3"
+  },
+  {
+   "key": "E",
+   "name": "E. Doubles, roots and powers",
+   "maps": "Theory: sections 8 and 9"
+  },
+  {
+   "key": "F",
+   "name": "F. Bigger arithmetic",
+   "maps": "Theory: sections 2-5 and 10"
+  }
+ ],
+ "problems": [
+  {
+   "section": "A",
+   "pid": 100012,
+   "title": "div",
+   "en": "Multiples",
+   "tech": "`b/c - (a-1)/c` - the count does not fit in an `int`",
+   "family": "Autumn tournament",
+   "year": 2007,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/14/problem/100012"
+  },
+  {
+   "section": "A",
+   "pid": 100825,
+   "title": "pentagonal",
+   "en": "Pentagonal",
+   "tech": "`k(3k-1)/2` - one line, one overflow trap",
+   "family": "Spring tournament",
+   "year": 2013,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/291/problem/100825"
+  },
+  {
+   "section": "A",
+   "pid": 100329,
+   "title": "klas",
+   "en": "Handshakes",
+   "tech": "`N(N-1)/2` and a second closed formula",
+   "family": "Municipal round",
+   "year": 2017,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/140/problem/100329"
+  },
+  {
+   "section": "A",
+   "pid": 100913,
+   "title": "box",
+   "en": "Three parts",
+   "tech": "how many ways to split N into three positive parts",
+   "family": "Winter tournament",
+   "year": 2009,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/327/problem/100913"
+  },
+  {
+   "section": "B",
+   "pid": 100025,
+   "title": "digit",
+   "en": "Digits",
+   "tech": "split each number with `% 10` and `/ 10`",
+   "family": "Autumn tournament",
+   "year": 2008,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/20/problem/100025"
+  },
+  {
+   "section": "B",
+   "pid": 102493,
+   "title": "tail",
+   "en": "Trailing zeros",
+   "tech": "divide by 10, then 100, then 1000",
+   "family": "Municipal round",
+   "year": 2026,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/900/problem/102493"
+  },
+  {
+   "section": "B",
+   "pid": 100268,
+   "title": "tailor",
+   "en": "The tailor",
+   "tech": "stotinki into leva and stotinki: `/ 100` and `% 100`",
+   "family": "Municipal round",
+   "year": 2013,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/116/problem/100268"
+  },
+  {
+   "section": "B",
+   "pid": 100974,
+   "title": "angles",
+   "en": "Angles",
+   "tech": "degrees, minutes and seconds, with carrying",
+   "family": "Winter tournament",
+   "year": 2013,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/351/problem/100974"
+  },
+  {
+   "section": "C",
+   "pid": 100235,
+   "title": "segments",
+   "en": "Overlap",
+   "tech": "`min` of the right ends minus `max` of the left ends",
+   "family": "Municipal round",
+   "year": 2011,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/103/problem/100235"
+  },
+  {
+   "section": "C",
+   "pid": 101044,
+   "title": "triangle",
+   "en": "Third side",
+   "tech": "how many integers lie strictly inside a range",
+   "family": "Municipal round",
+   "year": 2019,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/382/problem/101044"
+  },
+  {
+   "section": "C",
+   "pid": 102109,
+   "title": "rectcut",
+   "en": "Cutting",
+   "tech": "each cut clamps one coordinate; the area follows",
+   "family": "Regional round",
+   "year": 2024,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/799/problem/102109"
+  },
+  {
+   "section": "C",
+   "pid": 100210,
+   "title": "princess",
+   "en": "The princess",
+   "tech": "`a(a+1)/2`, then the largest odd share that divides",
+   "family": "Municipal round",
+   "year": 2009,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/92/problem/100210"
+  },
+  {
+   "section": "D",
+   "pid": 100587,
+   "title": "decision",
+   "en": "Buses and taxis",
+   "tech": "try every count, keep the cheapest",
+   "family": "National round",
+   "year": 2012,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/226/problem/100587"
+  },
+  {
+   "section": "D",
+   "pid": 100661,
+   "title": "cubes",
+   "en": "Cubes",
+   "tech": "take off the largest cube that still fits, and repeat",
+   "family": "National round",
+   "year": 2015,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/241/problem/100661"
+  },
+  {
+   "section": "D",
+   "pid": 101366,
+   "title": "int",
+   "en": "Digit product",
+   "tech": "at most 100001 candidates, so test them all",
+   "family": "Municipal round",
+   "year": 2020,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/555/problem/101366"
+  },
+  {
+   "section": "D",
+   "pid": 101635,
+   "title": "vector",
+   "en": "Vectors",
+   "tech": "a product of two counts - check it fits before you write it",
+   "family": "Municipal round",
+   "year": 2022,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/651/problem/101635"
+  },
+  {
+   "section": "E",
+   "pid": 100557,
+   "title": "clock",
+   "en": "Clock hands",
+   "tech": "`|30H - 5.5M|`, folded into 0-180",
+   "family": "National round",
+   "year": 2011,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/220/problem/100557"
+  },
+  {
+   "section": "E",
+   "pid": 100808,
+   "title": "degree",
+   "en": "Exact power",
+   "tech": "is the root, raised back, really equal to x?",
+   "family": "Spring tournament",
+   "year": 2012,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/285/problem/100808"
+  },
+  {
+   "section": "E",
+   "pid": 100297,
+   "title": "two",
+   "en": "Two arcs",
+   "tech": "normalise both modulo 360, then test the overlap",
+   "family": "Municipal round",
+   "year": 2015,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/127/problem/100297"
+  },
+  {
+   "section": "E",
+   "pid": 100311,
+   "title": "stepen",
+   "en": "Every exponent",
+   "tech": "the same root question, for every exponent b",
+   "family": "Municipal round",
+   "year": 2016,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/133/problem/100311"
+  },
+  {
+   "section": "F",
+   "pid": 100616,
+   "title": "nine",
+   "en": "Nines",
+   "tech": "`s(N) = s(9N)` holds exactly for the multiples of 9",
+   "family": "National round",
+   "year": 2013,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/231/problem/100616"
+  },
+  {
+   "section": "F",
+   "pid": 100746,
+   "title": "lamps",
+   "en": "Lamps",
+   "tech": "a lamp stays on when its number is a perfect square",
+   "family": "Spring tournament",
+   "year": 2008,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/261/problem/100746"
+  },
+  {
+   "section": "F",
+   "pid": 100450,
+   "title": "digits",
+   "en": "Counting a digit",
+   "tech": "how often digit k appears, up to 10^18",
+   "family": "Regional round",
+   "year": 2015,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/188/problem/100450"
+  },
+  {
+   "section": "F",
+   "pid": 100883,
+   "title": "zcount",
+   "en": "Counting zeros",
+   "tech": "the same idea, one position at a time, up to 10^16",
+   "family": "Spring tournament",
+   "year": 2017,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/315/problem/100883"
+  }
+ ]
+}

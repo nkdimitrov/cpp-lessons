@@ -1,0 +1,12 @@
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Historical scratch from the first lesson - kept on disk, not in the repo
+.work/
+
+# Word / Windows / OneDrive leftovers
+~$*
+Thumbs.db
+desktop.ini
+.DS_Store

@@ -1,0 +1,301 @@
+{
+ "group": "D, with four from Group C",
+ "groups": [
+  {
+   "key": "A",
+   "name": "A. Read it in, then look at every box",
+   "maps": "Theory: sections 4 and 5"
+  },
+  {
+   "key": "B",
+   "name": "B. One pass, one running answer",
+   "maps": "Theory: section 6"
+  },
+  {
+   "key": "C",
+   "name": "C. Neighbours and windows of fixed width",
+   "maps": "Theory: section 7"
+  },
+  {
+   "key": "D",
+   "name": "D. Two arrays, and a value used as an index",
+   "maps": "Theory: section 8"
+  },
+  {
+   "key": "E",
+   "name": "E. Moving things about",
+   "maps": "Theory: section 9"
+  },
+  {
+   "key": "F",
+   "name": "F. Longer scans - everything at once",
+   "maps": "Theory: sections 5-9"
+  }
+ ],
+ "problems": [
+  {
+   "section": "A",
+   "pid": 100254,
+   "title": "minipoker",
+   "en": "Mini poker",
+   "tech": "read five numbers into an array, sort, compare neighbours",
+   "family": "Municipal round",
+   "year": 2012,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/110/problem/100254"
+  },
+  {
+   "section": "A",
+   "pid": 100358,
+   "title": "stones",
+   "en": "Stones",
+   "tech": "sort, then count how many neighbours differ",
+   "family": "Regional round",
+   "year": 2009,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/152/problem/100358"
+  },
+  {
+   "section": "A",
+   "pid": 100225,
+   "title": "remote",
+   "en": "Remote control",
+   "tech": "min scan with a condition, over two parallel arrays",
+   "family": "Municipal round",
+   "year": 2010,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/98/problem/100225"
+  },
+  {
+   "section": "A",
+   "pid": 100613,
+   "title": "rabbits",
+   "en": "Rabbits",
+   "tech": "two parallel arrays, largest `|a[i] - b[i]|`",
+   "family": "National round",
+   "year": 2013,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/231/problem/100613"
+  },
+  {
+   "section": "B",
+   "pid": 100389,
+   "title": "seq",
+   "en": "The sequence",
+   "tech": "longest non-decreasing run, one pass",
+   "family": "Regional round",
+   "year": 2011,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/164/problem/100389"
+  },
+  {
+   "section": "B",
+   "pid": 101371,
+   "title": "max2",
+   "en": "The two largest",
+   "tech": "carry `best` and `second` forward while scanning",
+   "family": "Municipal round",
+   "year": 2020,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/556/problem/101371"
+  },
+  {
+   "section": "B",
+   "pid": 100464,
+   "title": "leaders",
+   "en": "Leaders",
+   "tech": "running maximum, scanning from the right",
+   "family": "Regional round",
+   "year": 2016,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/194/problem/100464"
+  },
+  {
+   "section": "B",
+   "pid": 100240,
+   "title": "temperature",
+   "en": "Temperatures",
+   "tech": "averages, then counting rising, falling and flat runs",
+   "family": "Municipal round",
+   "year": 2011,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/104/problem/100240"
+  },
+  {
+   "section": "C",
+   "pid": 100205,
+   "title": "maxk",
+   "en": "Best k in a row",
+   "tech": "window of `k`, add the new value, drop the old one",
+   "family": "Municipal round",
+   "year": 2009,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/91/problem/100205"
+  },
+  {
+   "section": "C",
+   "pid": 100224,
+   "title": "harvest",
+   "en": "Harvest",
+   "tech": "three in a row round a circle - wrap with `%`",
+   "family": "Municipal round",
+   "year": 2010,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/98/problem/100224"
+  },
+  {
+   "section": "C",
+   "pid": 101637,
+   "title": "lokmax",
+   "en": "Local maxima",
+   "tech": "`a[i-1] < a[i] > a[i+1]`, plus the smallest gap",
+   "family": "Municipal round",
+   "year": 2022,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/652/problem/101637"
+  },
+  {
+   "section": "C",
+   "pid": 100513,
+   "title": "product",
+   "en": "Product",
+   "tech": "window of `m` over the leading digits",
+   "family": "National round",
+   "year": 2009,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/211/problem/100513"
+  },
+  {
+   "section": "D",
+   "pid": 100026,
+   "title": "roads",
+   "en": "Roads",
+   "tech": "a total per settlement: the settlement number is the index",
+   "family": "Autumn tournament",
+   "year": 2008,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/20/problem/100026"
+  },
+  {
+   "section": "D",
+   "pid": 100010,
+   "title": "happy",
+   "en": "Happy years",
+   "tech": "classify every year, then find the closest pair",
+   "family": "Autumn tournament",
+   "year": 2007,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/14/problem/100010"
+  },
+  {
+   "section": "D",
+   "pid": 100915,
+   "title": "shisho",
+   "en": "Number plates",
+   "tech": "a flag array of primes, filled once and reused",
+   "family": "Winter tournament",
+   "year": 2009,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/327/problem/100915"
+  },
+  {
+   "section": "D",
+   "pid": 100056,
+   "title": "parking",
+   "en": "Parking",
+   "tech": "mark the forbidden places, then count what is left",
+   "family": "Autumn tournament",
+   "year": 2010,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/32/problem/100056"
+  },
+  {
+   "section": "E",
+   "pid": 100943,
+   "title": "trick",
+   "en": "The trick",
+   "tech": "store the moves, then replay them backwards",
+   "family": "Winter tournament",
+   "year": 2011,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/338/problem/100943"
+  },
+  {
+   "section": "E",
+   "pid": 100659,
+   "title": "blackd",
+   "en": "Black card",
+   "tech": "cutting a deck = rebuilding the array in a new order",
+   "family": "National round",
+   "year": 2015,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/241/problem/100659"
+  },
+  {
+   "section": "E",
+   "pid": 100057,
+   "title": "planes",
+   "en": "Aeroplanes",
+   "tech": "stepping round a circular array with `%`",
+   "family": "Autumn tournament",
+   "year": 2010,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/32/problem/100057"
+  },
+  {
+   "section": "E",
+   "pid": 101638,
+   "title": "skip",
+   "en": "Skipping",
+   "tech": "delete every k-th box, rebuild, repeat",
+   "family": "Municipal round",
+   "year": 2022,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/652/problem/101638"
+  },
+  {
+   "section": "F",
+   "pid": 100390,
+   "title": "shield",
+   "en": "The shield",
+   "tech": "maximum over pairs, both orientations",
+   "family": "Regional round",
+   "year": 2011,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/164/problem/100390"
+  },
+  {
+   "section": "F",
+   "pid": 100809,
+   "title": "processors",
+   "en": "Processors",
+   "tech": "carry state forward through two arrays",
+   "family": "Spring tournament",
+   "year": 2012,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/285/problem/100809"
+  },
+  {
+   "section": "F",
+   "pid": 101295,
+   "title": "dry",
+   "en": "Dry tubs",
+   "tech": "best wall to the left and best wall to the right of each gap",
+   "family": "Regional round",
+   "year": 2020,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/476/problem/101295"
+  },
+  {
+   "section": "F",
+   "pid": 102066,
+   "title": "nature",
+   "en": "Nature",
+   "tech": "differences between neighbours, summed",
+   "family": "Autumn tournament",
+   "year": 2023,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/789/problem/102066"
+  }
+ ]
+}

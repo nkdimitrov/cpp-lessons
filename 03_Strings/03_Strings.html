@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C++17 Strings - the contest toolkit</title>
+<style>
+:root{
+  --bg:#fbfaf8; --panel:#ffffff; --ink:#1c1b1a; --muted:#6b6763; --line:#e4e0da;
+  --accent:#8a4b1f; --accent-soft:#f3ece4; --code-bg:#f6f3ee; --code-ink:#2d2a26;
+  --kw:#8a4b1f; --str:#3f6b3f; --com:#9a948c; --num:#2f5c8a; --pre:#7a5ea8;
+  --note-bg:#fdf6e7; --note-line:#d9a441; --ok:#3f6b3f;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+    --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+    --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+    --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+  --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+  --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+  --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+code,pre,.mono{font-family:"JetBrains Mono",Consolas,"SF Mono",Menlo,monospace}
+.wrap{display:flex;gap:0;align-items:flex-start;max-width:1220px;margin:0 auto}
+/* ---- sidebar ---- */
+#nav{position:sticky;top:0;flex:0 0 250px;height:100vh;overflow-y:auto;
+  padding:26px 14px 40px 20px;border-right:1px solid var(--line);font-size:13.5px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#nav .brand{font-weight:700;letter-spacing:.02em;color:var(--accent);
+  font-size:12px;text-transform:uppercase;margin-bottom:14px}
+#nav a{display:block;padding:4px 8px;margin:1px 0;border-radius:5px;
+  color:var(--muted);text-decoration:none;line-height:1.35}
+#nav a:hover{background:var(--accent-soft);color:var(--ink)}
+#nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+#nav .grp{margin-top:14px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);opacity:.7;padding:0 8px}
+/* ---- main ---- */
+main{flex:1 1 auto;min-width:0;padding:34px 40px 120px;max-width:900px}
+header.top{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:8px}
+h1{font-size:30px;line-height:1.2;margin:0 0 6px}
+.sub{color:var(--muted);font-size:14.5px;font-family:system-ui,sans-serif}
+h2{font-size:21px;margin:44px 0 12px;padding-top:10px;border-top:1px solid var(--line);
+  scroll-margin-top:16px}
+h2:first-of-type{border-top:none}
+h3{font-size:16.5px;margin:26px 0 8px;color:var(--accent);scroll-margin-top:16px}
+p{margin:11px 0}
+code{background:var(--code-bg);padding:1.5px 5px;border-radius:4px;font-size:.87em;
+  color:var(--code-ink);border:1px solid var(--line)}
+pre{background:var(--code-bg);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:7px;padding:13px 15px;overflow-x:auto;font-size:13px;line-height:1.55;
+  margin:14px 0;color:var(--code-ink)}
+pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
+.kw{color:var(--kw);font-weight:600}.str{color:var(--str)}.com{color:var(--com);font-style:italic}
+.num{color:var(--num)}.pp{color:var(--pre)}
+table{border-collapse:collapse;width:100%;margin:15px 0;font-size:14px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+  border-bottom:1.5px solid var(--line);font-weight:600}
+tbody tr:nth-child(even){background:var(--accent-soft)}
+ul{margin:11px 0;padding-left:22px}
+li{margin:4px 0}
+.note{background:var(--note-bg);border-left:3px solid var(--note-line);border-radius:0 7px 7px 0;
+  padding:11px 15px;margin:15px 0;font-size:14.5px}
+.tblwrap{overflow-x:auto}
+/* ---- problems ---- */
+.pgroup{margin:26px 0 0}
+.pgroup h3{margin-bottom:2px}
+.pgroup .maps{color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif;margin:0 0 8px}
+table.prob td{padding:9px 10px}
+table.prob a{color:var(--accent);text-decoration:none;font-weight:600;
+  font-family:Consolas,monospace;font-size:13.5px}
+table.prob a:hover{text-decoration:underline}
+.tech{color:var(--muted);font-size:13px}
+.src{color:var(--muted);font-size:12px;white-space:nowrap}
+.dif{color:var(--accent);letter-spacing:1px;font-size:11.5px;white-space:nowrap}
+.done td{opacity:.45}
+.done td a{text-decoration:line-through}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+#bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;
+  border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;
+  font-family:system-ui,sans-serif;font-size:13px;flex-wrap:wrap}
+#bar .track{flex:1 1 130px;height:7px;background:var(--line);border-radius:4px;overflow:hidden;
+  min-width:110px}
+#bar .fill{height:100%;background:var(--accent);width:0;transition:width .25s}
+button{font:inherit;font-size:12.5px;padding:4px 11px;border:1px solid var(--line);
+  border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+#themeBtn{position:fixed;top:14px;right:16px;z-index:10}
+.cheat td:first-child{font-family:system-ui,sans-serif;width:33%}
+.pit b{display:block;margin-bottom:2px}
+footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif}
+@media(max-width:900px){
+  #nav{display:none}
+  main{padding:26px 18px 90px}
+  h1{font-size:24px}
+  #themeBtn{top:8px;right:10px}
+}
+</style>
+</head><body>
+<button id="themeBtn" title="Toggle light / dark">&#9681;</button>
+<div class="wrap">
+<nav id="nav"><div class="brand">Lesson 03 · Strings</div>
+<a href="#howto">How to use this lesson</a>
+<div class="grp">Theory</div>
+<a href="#setup">1. Getting started: headers and fast input</a>
+<a href="#basics">2. Making a string and reading its characters</a>
+<a href="#chars">3. Characters are numbers</a>
+<a href="#modify">4. Changing a string</a>
+<a href="#search">5. Finding something inside a string</a>
+<a href="#compare">6. Comparing strings</a>
+<a href="#convert">7. Strings and numbers</a>
+<a href="#algo">8. Ready-made tools from &lt;algorithm&gt;</a>
+<a href="#io">9. Reading the input</a>
+<a href="#freq">10. Counting letters</a>
+<a href="#patterns">11. Patterns that keep coming back</a>
+<div class="grp">Reference</div>
+<a href="#cheat">12. Cheat sheet</a>
+<a href="#pitfalls">13. Pitfalls</a>
+<a href="#complexity">14. Complexity</a>
+<div class="grp">Practice</div>
+<a href="#problems">15. 24 problems</a>
+<a href="#gA" style="padding-left:16px">A. Characters, indexing and ASCII arithmetic</a>
+<a href="#gB" style="padding-left:16px">B. Searching: find / rfind / substr</a>
+<a href="#gC" style="padding-left:16px">C. Frequency counting and counting sort</a>
+<a href="#gD" style="padding-left:16px">D. Palindromes</a>
+<a href="#gE" style="padding-left:16px">E. Tokenising, runs and transformations</a>
+<a href="#gF" style="padding-left:16px">F. Two pointers and sliding window</a>
+</nav>
+<main>
+<header class="top"><h1>C++17 Strings - the contest toolkit</h1><div class="sub">Lesson 03 | Theory, cheat sheet and 24 graded problems from arena.olimpiici.com (Group D)</div></header>
+<h2 id="howto">How to use this lesson</h2>
+<p>This lesson is built to be worked through in three passes. Do not try to do all three in one sitting.</p>
+<p><strong>Pass 1 - Read.</strong> Go through sections 1-11 once, typing every snippet into a compiler and running it. Change a number, run it again, see what happens. Do not try to memorise anything yet; the aim is only to know what exists and where to find it later.</p>
+<p><strong>Pass 2 - Memorise.</strong> Section 12 is the cheat sheet. Cover the right-hand column and write out each line from its description alone. Repeat until they all come out without thinking. Section 13 lists the mistakes that cost marks, and section 14 says how fast each operation is.</p>
+<p><strong>Pass 3 - Solve.</strong> Section 15 lists 24 problems from the Olimpiici Arena, Group D, ordered from easiest to hardest and grouped by technique. Solve them in order. Each group points back at the theory sections that solve it, so when a problem stalls you, re-read that section instead of looking up a solution.</p>
+<h2 id="setup">1. Getting started: headers and fast input</h2>
+<p>Every program in this lesson begins the same way. These five headers cover everything the lesson uses, so include them all at the top.</p>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;       // string, stoi, to_string
+#include &lt;vector&gt;       // vector
+#include &lt;cctype&gt;       // isalpha, isdigit, toupper, tolower, ...
+#include &lt;algorithm&gt;    // sort, reverse, count, ...
+
+using namespace std;</code></pre>
+<p><code>cin</code> and <code>cout</code> are slow out of the box, because they keep themselves in step with the older C functions <code>scanf</code> and <code>printf</code>. A problem that reads 100000 words can run out of time for that reason alone. Switch the syncing off with two lines at the start of <code>main</code>:</p>
+<pre><code>int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    // your solution goes here
+}</code></pre>
+<div class="note">Two rules come with those two lines. Do not mix <code>cin</code>/<code>cout</code> with <code>scanf</code>/<code>printf</code> in the same program - pick one. And print <code>&#x27;\n&#x27;</code> instead of <code>endl</code>: <code>endl</code> empties the output buffer after every single line, which on its own is enough to fail a time limit.</div>
+<h2 id="basics">2. Making a string and reading its characters</h2>
+<p>A <code>string</code> is a row of characters with numbered positions. Counting starts at 0, so the first character is <code>s[0]</code> and the last one is <code>s[s.size() - 1]</code>.</p>
+<pre><code>string s = &quot;hello&quot;;
+
+//  position:   0    1    2    3    4
+//  character: &#x27;h&#x27;  &#x27;e&#x27;  &#x27;l&#x27;  &#x27;l&#x27;  &#x27;o&#x27;
+
+cout &lt;&lt; s[0];             // h
+cout &lt;&lt; s[4];             // o
+cout &lt;&lt; s.size();         // 5</code></pre>
+<p>The ways to make one:</p>
+<pre><code>string a;                 // &quot;&quot;        empty
+string b = &quot;hello&quot;;       // &quot;hello&quot;
+string c(5, &#x27;x&#x27;);         // &quot;xxxxx&quot;   five copies of one character
+string d = b;             // &quot;hello&quot;   an independent copy of b
+string e = b + &quot;!&quot;;       // &quot;hello!&quot;  + glues strings together
+string f(b, 1, 3);        // &quot;ell&quot;     from b, start at 1, take 3 characters</code></pre>
+<div class="tblwrap"><table><thead><tr>
+<th>Member</th>
+<th>What it does</th>
+<th>Cost</th>
+</tr></thead><tbody>
+<tr><td><code>s.size()</code></td><td>How many characters there are. <code>s.length()</code> is the very same function.</td><td>O(1)</td></tr>
+<tr><td><code>s.empty()</code></td><td><code>true</code> when there are no characters at all. Prefer it to <code>s.size() == 0</code>.</td><td>O(1)</td></tr>
+<tr><td><code>s.clear()</code></td><td>Throws every character away, leaving <code>&quot;&quot;</code>.</td><td>O(1)</td></tr>
+<tr><td><code>s[i]</code></td><td>The character at position <code>i</code>. <strong>Does not check</strong> that position <code>i</code> exists.</td><td>O(1)</td></tr>
+<tr><td><code>s.at(i)</code></td><td>The same character, but stops the program with an error message when <code>i</code> is out of range. Useful while hunting a bug.</td><td>O(1)</td></tr>
+<tr><td><code>s.front()</code> / <code>s.back()</code></td><td>First / last character. Never call them on an empty string.</td><td>O(1)</td></tr>
+</tbody></table></div>
+<p>Four ways to walk over a string. All four are worth recognising when you read someone else&#x27;s code:</p>
+<pre><code>string s = &quot;hello&quot;;
+int n = s.size();
+
+for (int i = 0; i &lt; n; i++)      cout &lt;&lt; s[i];    // by position
+for (char c : s)                 cout &lt;&lt; c;       // every character, read only
+for (char&amp; c : s)                c = &#x27;x&#x27;;         // the &amp; lets you change it
+for (int i = n - 1; i &gt;= 0; i--) cout &lt;&lt; s[i];    // backwards</code></pre>
+<div class="note"><code>s.size()</code> is an <strong>unsigned</strong> number: it can never be negative, and subtracting past zero does not give -1, it gives a gigantic number. So <code>for (int i = 0; i &lt; s.size() - 1; i++)</code> on an empty string loops billions of times instead of none. The cure is a habit: write <code>int n = s.size();</code> on the line before the loop and use <code>n</code> from then on.</div>
+<h2 id="chars">3. Characters are numbers</h2>
+<p>This is the single most useful idea in the lesson. A <code>char</code> is not a special kind of thing - it is a small whole number, the character&#x27;s ASCII code, and you may do arithmetic on it. The codes worth knowing:</p>
+<div class="tblwrap"><table><thead><tr>
+<th>Characters</th>
+<th>Codes</th>
+</tr></thead><tbody>
+<tr><td><code>&#x27;0&#x27;</code> ... <code>&#x27;9&#x27;</code></td><td>48 ... 57</td></tr>
+<tr><td><code>&#x27;A&#x27;</code> ... <code>&#x27;Z&#x27;</code></td><td>65 ... 90</td></tr>
+<tr><td><code>&#x27;a&#x27;</code> ... <code>&#x27;z&#x27;</code></td><td>97 ... 122</td></tr>
+<tr><td><code>&#x27; &#x27;</code> (space)</td><td>32</td></tr>
+</tbody></table></div>
+<p>You almost never need the numbers themselves, because the letters and the digits are stored in order. Subtracting the first character of a run turns a character into a small index, and adding it turns the index back into a character:</p>
+<pre><code>int  d  = &#x27;7&#x27; - &#x27;0&#x27;;           // 7      digit character -&gt; its value
+char ch = char(&#x27;0&#x27; + 7);       // &#x27;7&#x27;    value -&gt; digit character
+
+int  i  = &#x27;c&#x27; - &#x27;a&#x27;;           // 2      letter -&gt; index 0..25
+char c2 = char(&#x27;a&#x27; + 2);       // &#x27;c&#x27;    index -&gt; letter
+
+int  up = &#x27;C&#x27; - &#x27;A&#x27;;           // 2      the same trick for capitals
+
+// the digit sum of a number given as text
+string s = &quot;9251&quot;;
+int sum = 0;
+for (char c : s) sum += c - &#x27;0&#x27;;     // 9 + 2 + 5 + 1 = 17</code></pre>
+<p>The <code>&lt;cctype&gt;</code> header names the tests you would otherwise write by hand:</p>
+<div class="tblwrap"><table><thead><tr>
+<th>Function</th>
+<th>True for</th>
+</tr></thead><tbody>
+<tr><td><code>isalpha(c)</code></td><td>A-Z, a-z</td></tr>
+<tr><td><code>isdigit(c)</code></td><td>0-9</td></tr>
+<tr><td><code>isalnum(c)</code></td><td>a letter or a digit</td></tr>
+<tr><td><code>isspace(c)</code></td><td>space, tab, newline</td></tr>
+<tr><td><code>isupper(c)</code> / <code>islower(c)</code></td><td>a capital / a small letter</td></tr>
+<tr><td><code>ispunct(c)</code></td><td>a printable character that is neither a letter, a digit, nor a space</td></tr>
+<tr><td><code>toupper(c)</code> / <code>tolower(c)</code></td><td><strong>not a test</strong> - gives back the converted character, unchanged when it is not a letter</td></tr>
+</tbody></table></div>
+<pre><code>string s = &quot;Hello, World 42!&quot;;
+
+int letters = 0, digits = 0, spaces = 0;
+for (char c : s) {
+    if (isalpha(c)) letters++;
+    else if (isdigit(c)) digits++;
+    else if (isspace(c)) spaces++;
+}
+// letters = 10, digits = 2, spaces = 2
+
+// turn the whole string into capitals, in place
+for (char&amp; c : s) c = toupper(c);</code></pre>
+<div class="note">If the input can contain letters outside A-Z and a-z - Cyrillic, for instance - write <code>isalpha((unsigned char)c)</code>. The cast costs nothing, is always correct, and without it those characters can crash the program.</div>
+<h2 id="modify">4. Changing a string</h2>
+<div class="tblwrap"><table><thead><tr>
+<th>Call</th>
+<th>Effect</th>
+<th>Cost</th>
+</tr></thead><tbody>
+<tr><td><code>s += t</code></td><td>Glue <code>t</code> onto the end. <code>t</code> may be a string, a piece of text in quotes, or a single character.</td><td>O(length of <code>t</code>)</td></tr>
+<tr><td><code>s.push_back(c)</code></td><td>Add one character at the end.</td><td>O(1)</td></tr>
+<tr><td><code>s.pop_back()</code></td><td>Remove the last character. Never on an empty string.</td><td>O(1)</td></tr>
+<tr><td><code>s.insert(pos, t)</code></td><td>Push <code>t</code> in <strong>before</strong> position <code>pos</code>.</td><td>O(n)</td></tr>
+<tr><td><code>s.erase(pos, len)</code></td><td>Delete <code>len</code> characters starting at <code>pos</code>.</td><td>O(n)</td></tr>
+<tr><td><code>s.erase(pos)</code></td><td>Delete everything from <code>pos</code> to the end - a chop.</td><td>O(n)</td></tr>
+<tr><td><code>s.replace(pos, len, t)</code></td><td>Swap the <code>len</code> characters at <code>pos</code> for <code>t</code>. The two lengths need not match.</td><td>O(n)</td></tr>
+<tr><td><code>s.substr(pos, len)</code></td><td>A <strong>copy</strong> of <code>len</code> characters starting at <code>pos</code>. The second number is a length, not an end position.</td><td>O(len)</td></tr>
+</tbody></table></div>
+<pre><code>string s = &quot;competitive&quot;;
+s.insert(0, &quot;&gt;&gt; &quot;);             // &quot;&gt;&gt; competitive&quot;
+s.erase(0, 3);                  // &quot;competitive&quot;
+s.replace(0, 4, &quot;REPE&quot;);        // &quot;REPEtitive&quot;
+string mid  = s.substr(4, 6);   // &quot;titive&quot;      6 is a LENGTH
+string tail = s.substr(4);      // &quot;titive&quot;      no length means &quot;to the end&quot;
+s.pop_back();                   // &quot;REPEtitiv&quot;</code></pre>
+<p>To throw characters away, the clearest method is to build a new string out of the ones you are keeping. It is easy to read, easy to change when the rule changes, and it walks the string only once:</p>
+<pre><code>string s = &quot;a b c d&quot;;
+string t = &quot;&quot;;
+for (char c : s)
+    if (c != &#x27; &#x27;) t += c;       // keep everything that is not a space
+s = t;                          // &quot;abcd&quot;</code></pre>
+<p>The same job in one line, when you are deleting one particular character. <code>remove</code> shuffles the survivors to the front and reports where they end; <code>erase</code> does the actual shortening. The two always travel together:</p>
+<pre><code>s.erase(remove(s.begin(), s.end(), &#x27; &#x27;), s.end());   // drop every space</code></pre>
+<div class="note">Inside a loop, <code>s += x</code> is fast but <code>s = s + x</code> is catastrophically slow: the second form builds a whole new copy of <code>s</code> every time round. On a string of 100000 characters that is the difference between instant and several minutes.</div>
+<h2 id="search">5. Finding something inside a string</h2>
+<p>Every search function below gives back the position of what it found - and <code>string::npos</code> when there is nothing to find. <code>npos</code> is a huge number, not -1, so always compare against <code>string::npos</code> by name, and keep the answer in a <code>size_t</code>, never in an <code>int</code>.</p>
+<div class="tblwrap"><table><thead><tr>
+<th>Call</th>
+<th>Finds</th>
+</tr></thead><tbody>
+<tr><td><code>s.find(t)</code></td><td>The first place where the whole of <code>t</code> appears.</td></tr>
+<tr><td><code>s.find(t, from)</code></td><td>The same, but starting the hunt at position <code>from</code>.</td></tr>
+<tr><td><code>s.rfind(t)</code></td><td>The <strong>last</strong> place where <code>t</code> appears.</td></tr>
+<tr><td><code>s.find_first_of(set)</code></td><td>The first position holding <strong>any one</strong> of the characters in <code>set</code>.</td></tr>
+<tr><td><code>s.find_last_of(set)</code></td><td>The last position holding any one of them.</td></tr>
+<tr><td><code>s.find_first_not_of(set)</code></td><td>The first position holding a character that is <strong>not</strong> in <code>set</code>.</td></tr>
+<tr><td><code>s.find_last_not_of(set)</code></td><td>The last position holding a character that is not in <code>set</code>.</td></tr>
+</tbody></table></div>
+<pre><code>string s = &quot;mississippi&quot;;
+
+size_t p = s.find(&quot;ss&quot;);               // 2
+size_t q = s.rfind(&quot;ss&quot;);              // 5
+size_t v = s.find_first_of(&quot;aeiou&quot;);   // 1     the first &#x27;i&#x27;
+size_t z = s.find(&quot;zz&quot;);               // string::npos - not there
+
+if (s.find(&quot;ss&quot;) != string::npos) cout &lt;&lt; &quot;found\n&quot;;
+
+// count every occurrence of a pattern, overlaps included
+int cnt = 0;
+for (size_t i = s.find(&quot;iss&quot;); i != string::npos; i = s.find(&quot;iss&quot;, i + 1))
+    cnt++;                             // 2</code></pre>
+<p>C++17 has no <code>starts_with</code>, <code>ends_with</code> or <code>contains</code> - those arrived in later standards. They are three lines each:</p>
+<pre><code>bool starts_with(string s, string p) {
+    return s.size() &gt;= p.size() &amp;&amp; s.substr(0, p.size()) == p;
+}
+bool ends_with(string s, string p) {
+    return s.size() &gt;= p.size() &amp;&amp; s.substr(s.size() - p.size()) == p;
+}
+bool contains(string s, string p) {
+    return s.find(p) != string::npos;
+}</code></pre>
+<p>Cutting the spaces off both ends of a line - trimming - is <code>find_first_not_of</code> paired with <code>find_last_not_of</code>:</p>
+<pre><code>string trim(string s) {
+    size_t b = s.find_first_not_of(&quot; \t&quot;);
+    if (b == string::npos) return &quot;&quot;;        // the line was all spaces
+    size_t e = s.find_last_not_of(&quot; \t&quot;);
+    return s.substr(b, e - b + 1);
+}</code></pre>
+<h2 id="compare">6. Comparing strings</h2>
+<p><code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>&gt;</code> and <code>&gt;=</code> all work on strings, and they compare the way a dictionary orders words: character by character, from the left, using the ASCII codes. The first position where the two strings differ decides everything. If one string runs out first, it is the smaller one.</p>
+<pre><code>string a = &quot;apple&quot;, b = &quot;apply&quot;;
+
+a == b;            // false
+a &lt;  b;            // true    &#x27;e&#x27; (101) &lt; &#x27;y&#x27; (121) at position 4
+
+string(&quot;abc&quot;) &lt; string(&quot;abcd&quot;);     // true    the shorter prefix is smaller</code></pre>
+<div class="note">Dictionary order is not alphabetical order once capitals are involved. Every capital letter has a smaller code than every small letter, so <code>&quot;Zebra&quot; &lt; &quot;apple&quot;</code> is <code>true</code>, and sorting a list of names leaves all the capitalised ones in front. For a real alphabetical sort, make the case the same first.</div>
+<p>Comparing while ignoring the case is done by flattening both strings and then using <code>==</code>:</p>
+<pre><code>bool same_ignoring_case(string x, string y) {
+    for (char&amp; c : x) c = tolower(c);
+    for (char&amp; c : y) c = tolower(c);
+    return x == y;
+}</code></pre>
+<p>Because <code>&lt;</code> works, <code>sort</code> sorts a <code>vector&lt;string&gt;</code> with no extra effort, and <code>min</code> picks the dictionary-smallest of two answers - which is exactly what a problem asking for &quot;the smallest such word&quot; wants:</p>
+<pre><code>vector&lt;string&gt; v = {&quot;pear&quot;, &quot;Apple&quot;, &quot;fig&quot;};
+sort(v.begin(), v.end());        // {&quot;Apple&quot;, &quot;fig&quot;, &quot;pear&quot;}
+
+string best = &quot;zzzzzz&quot;;
+best = min(best, candidate);     // keep the dictionary-smallest seen so far</code></pre>
+<h2 id="convert">7. Strings and numbers</h2>
+<div class="tblwrap"><table><thead><tr>
+<th>Call</th>
+<th>Meaning</th>
+</tr></thead><tbody>
+<tr><td><code>stoi(s)</code></td><td>The text <code>s</code> as an <code>int</code>.</td></tr>
+<tr><td><code>stoll(s)</code></td><td>The same as a <code>long long</code>, for numbers above about two billion.</td></tr>
+<tr><td><code>stod(s)</code></td><td>The same as a <code>double</code>.</td></tr>
+<tr><td><code>to_string(x)</code></td><td>Any number turned into text.</td></tr>
+</tbody></table></div>
+<pre><code>int       n   = stoi(&quot;42&quot;);            // 42
+long long big = stoll(&quot;9000000000&quot;);  // too big for an int
+string    s   = to_string(255);       // &quot;255&quot;</code></pre>
+<div class="note"><code>stoi</code> is fussier than it looks. It <strong>stops</strong> at the first character that is not part of a number, so <code>stoi(&quot;12abc&quot;)</code> is <code>12</code> and no complaint is made. And it <strong>stops the program</strong> when the text does not begin with a number at all, or when the number will not fit in an <code>int</code> - <code>stoi(&quot;9000000000&quot;)</code> is a runtime error, not a wrong answer. When the number may be long, use <code>stoll</code>.</div>
+<p>You will often want the conversion by hand instead. It is one line, and unlike <code>stoi</code> it keeps working on numbers far too long for any built-in type, because you handle the digits one at a time:</p>
+<pre><code>string s = &quot;12345&quot;;
+long long v = 0;
+for (char c : s) v = v * 10 + (c - &#x27;0&#x27;);     // 12345</code></pre>
+<p>Writing a number in another base is the same loop in reverse, and it is exactly what base-conversion problems ask for. The digits come out backwards, so the last step is a <code>reverse</code>:</p>
+<pre><code>// n written in base b, where 2 &lt;= b &lt;= 36
+string to_base(long long n, int b) {
+    if (n == 0) return &quot;0&quot;;
+    string r = &quot;&quot;;
+    while (n &gt; 0) {
+        int d = n % b;
+        r += (d &lt; 10 ? char(&#x27;0&#x27; + d) : char(&#x27;A&#x27; + d - 10));
+        n /= b;
+    }
+    reverse(r.begin(), r.end());
+    return r;
+}</code></pre>
+<h2 id="algo">8. Ready-made tools from &lt;algorithm&gt;</h2>
+<p>A string is a container of characters, so the standard algorithms work on it. Each one wants to be told where to start and where to stop; <code>s.begin(), s.end()</code> is how you say &quot;the whole string&quot;.</p>
+<pre><code>string s = &quot;competitive&quot;;
+
+sort(s.begin(), s.end());                     // &quot;ceeiimopttv&quot;
+reverse(s.begin(), s.end());                  // back to front
+
+int e = count(s.begin(), s.end(), &#x27;e&#x27;);       // 2   how many &#x27;e&#x27; there are
+char mx = *max_element(s.begin(), s.end());   // the largest character
+
+// remove repeats: unique only deletes NEIGHBOURING copies, so sort first
+sort(s.begin(), s.end());
+s.erase(unique(s.begin(), s.end()), s.end()); // &quot;ceimoptv&quot;
+
+// walk through every rearrangement, in dictionary order (sort first!)
+string p = &quot;abc&quot;;
+sort(p.begin(), p.end());
+do {
+    cout &lt;&lt; p &lt;&lt; &#x27;\n&#x27;;                        // abc acb bac bca cab cba
+} while (next_permutation(p.begin(), p.end()));</code></pre>
+<p>Sorting a string deserves a second look, because it gives you a <strong>fingerprint</strong>: two words are anagrams of each other exactly when their sorted forms are identical. <code>&quot;listen&quot;</code> and <code>&quot;silent&quot;</code> both sort to <code>&quot;eilnst&quot;</code>.</p>
+<p>Checking for a palindrome - a word that reads the same backwards - is the two-pointer loop. One index walks in from the left, the other from the right, and they compare as they go:</p>
+<pre><code>bool is_palindrome(string s) {
+    int i = 0, j = (int)s.size() - 1;
+    while (i &lt; j) {
+        if (s[i] != s[j]) return false;
+        i++;
+        j--;
+    }
+    return true;
+}</code></pre>
+<p>The short version, for when you do not mind making a copy, builds the string backwards and compares the two:</p>
+<pre><code>string r(s.rbegin(), s.rend());     // s, backwards
+bool pal = (s == r);</code></pre>
+<h2 id="io">9. Reading the input</h2>
+<div class="tblwrap"><table><thead><tr>
+<th>Form</th>
+<th>Reads</th>
+</tr></thead><tbody>
+<tr><td><code>cin &gt;&gt; s</code></td><td>One <strong>word</strong> - everything up to the next space or newline. Any spaces in front are skipped and thrown away.</td></tr>
+<tr><td><code>getline(cin, s)</code></td><td>A whole <strong>line</strong>, spaces included, without the newline at the end.</td></tr>
+<tr><td><code>while (cin &gt;&gt; s)</code></td><td>Word after word, until the input runs out.</td></tr>
+<tr><td><code>while (getline(cin, line))</code></td><td>Line after line, until the input runs out.</td></tr>
+<tr><td><code>cin.get(c)</code></td><td>Exactly one character, spaces and newlines included.</td></tr>
+</tbody></table></div>
+<div class="note"><strong>The trap everybody falls into once.</strong> After <code>cin &gt;&gt; n</code>, the newline that ended that line is still waiting in the input. The next <code>getline</code> finds it immediately and hands you an empty string. Throw it away with <code>cin.ignore();</code> in between.</div>
+<pre><code>int n;
+cin &gt;&gt; n;
+cin.ignore();               // eat the leftover newline
+string line;
+getline(cin, line);         // now this really does read the next line</code></pre>
+<p>When the input is nothing but words, and the line breaks do not matter, <code>cin &gt;&gt; word</code> is all the splitting you need - it treats every run of spaces and newlines as a separator:</p>
+<pre><code>string word;
+while (cin &gt;&gt; word) cout &lt;&lt; word.size() &lt;&lt; &#x27;\n&#x27;;    // the length of every word</code></pre>
+<p>When the line structure does matter, read the line whole and cut it up yourself. Walk across it collecting characters into <code>part</code>, and every time you meet the separator you have finished one piece. Letting <code>i</code> reach <code>n</code> is the trick that flushes the last piece out:</p>
+<pre><code>string line = &quot;apple,,pear,fig&quot;;
+int n = line.size();
+string part = &quot;&quot;;
+
+for (int i = 0; i &lt;= n; i++) {
+    if (i == n || line[i] == &#x27;,&#x27;) {
+        cout &lt;&lt; &quot;[&quot; &lt;&lt; part &lt;&lt; &quot;]\n&quot;;     // [apple] [] [pear] [fig]
+        part = &quot;&quot;;
+    } else {
+        part += line[i];
+    }
+}</code></pre>
+<p>Change the <code>&#x27;,&#x27;</code> to <code>&#x27; &#x27;</code> and the same loop splits a sentence into words. To collect the pieces instead of printing them, declare <code>vector&lt;string&gt; v;</code> above the loop and swap the <code>cout</code> line for <code>v.push_back(part);</code>.</p>
+<p>Some problems end the input with a marker character instead of telling you how much there is. Read one character at a time until it turns up:</p>
+<pre><code>string text = &quot;&quot;;
+char c;
+while (cin.get(c) &amp;&amp; c != &#x27;#&#x27;) text += c;</code></pre>
+<h2 id="freq">10. Counting letters</h2>
+<p>More string problems are solved by counting characters than by any other method, and the counting is always the same three lines. Make an array with one box per letter, walk the string, add one to the right box. <code>c - &#x27;a&#x27;</code> turns the letter into the box number, which is the trick from section 3 doing real work.</p>
+<pre><code>string s;
+cin &gt;&gt; s;
+
+int cnt[26] = {0};                  // small latin letters only
+for (char c : s) cnt[c - &#x27;a&#x27;]++;
+
+cout &lt;&lt; cnt[&#x27;e&#x27; - &#x27;a&#x27;];             // how many &#x27;e&#x27; there were
+
+// which letter is the commonest? ties go to the earlier letter
+int best = 0;
+for (int i = 1; i &lt; 26; i++)
+    if (cnt[i] &gt; cnt[best]) best = i;
+cout &lt;&lt; char(&#x27;a&#x27; + best) &lt;&lt; &#x27;\n&#x27;;</code></pre>
+<div class="note"><code>cnt[c - &#x27;a&#x27;]</code> is only correct while every character really is a small letter. If capitals, digits or punctuation can turn up, use <code>int cnt[256] = {0};</code> with <code>cnt[(unsigned char)c]++</code> - one box per possible character, and nothing can fall outside the array.</div>
+<p>Two strings are anagrams when their counts match. Counting beats sorting here, because it needs only one pass over each word:</p>
+<pre><code>bool anagram(string a, string b) {
+    if (a.size() != b.size()) return false;
+
+    int cnt[26] = {0};
+    for (char c : a) cnt[c - &#x27;a&#x27;]++;
+    for (char c : b) {
+        cnt[c - &#x27;a&#x27;]--;
+        if (cnt[c - &#x27;a&#x27;] &lt; 0) return false;   // b has a letter that a did not
+    }
+    return true;
+}</code></pre>
+<p>One fact about counts solves a surprising number of contest problems on its own. <strong>The letters of a string can be rearranged into a palindrome exactly when at most one letter appears an odd number of times.</strong> Everything else has to pair up around the middle:</p>
+<pre><code>bool can_be_rearranged_to_palindrome(string s) {
+    int cnt[26] = {0};
+    for (char c : s) cnt[c - &#x27;a&#x27;]++;
+
+    int odd = 0;
+    for (int i = 0; i &lt; 26; i++)
+        if (cnt[i] % 2 == 1) odd++;
+
+    return odd &lt;= 1;
+}</code></pre>
+<h2 id="patterns">11. Patterns that keep coming back</h2>
+<h3>Runs of equal characters</h3>
+<p>A run is a block of identical characters sitting next to each other: <code>&quot;aaabbc&quot;</code> is three runs. Push <code>j</code> forward while the character stays the same, then jump <code>i</code> straight to <code>j</code>, so that every character is looked at once. This is the backbone of run-length encoding and of nearly every &quot;longest streak&quot; question:</p>
+<pre><code>string s = &quot;aaabbc&quot;;
+int n = s.size();
+
+for (int i = 0; i &lt; n; ) {
+    int j = i;
+    while (j &lt; n &amp;&amp; s[j] == s[i]) j++;
+    int len = j - i;                 // s[i..j-1] is one run, len characters long
+    cout &lt;&lt; len &lt;&lt; s[i];             // prints 3a2b1c
+    i = j;                           // carry on from the end of the run
+}</code></pre>
+<h3>Sliding window</h3>
+<p>For questions shaped like &quot;the longest piece of the string such that ...&quot;. Two indexes mark the ends of a window. The right end steps forward one character at a time; the left end moves forward too, jumping ahead whenever the window stops being allowed. Neither index ever goes back, so the whole scan is one pass:</p>
+<pre><code>// the longest piece with no repeated character
+string s;  cin &gt;&gt; s;
+int n = s.size();
+
+int last[256];                            // last[c] = where c was last seen
+for (int i = 0; i &lt; 256; i++) last[i] = -1;
+
+int best = 0, left = 0;
+for (int r = 0; r &lt; n; r++) {
+    unsigned char c = s[r];               // one box per possible character
+    if (last[c] &gt;= left) left = last[c] + 1;      // jump past the earlier copy
+    last[c] = r;
+    if (r - left + 1 &gt; best) best = r - left + 1;
+}
+cout &lt;&lt; best &lt;&lt; &#x27;\n&#x27;;</code></pre>
+<h3>Prefix sums over characters</h3>
+<p>When a problem asks the same counting question about many different pieces of one string, count once from the start instead. <code>pre[i]</code> holds the number of matches among the first <code>i</code> characters, and any range then costs one subtraction rather than a loop:</p>
+<pre><code>string s;  cin &gt;&gt; s;
+int n = s.size();
+
+vector&lt;int&gt; pre(n + 1, 0);
+for (int i = 0; i &lt; n; i++)
+    pre[i + 1] = pre[i] + (s[i] == &#x27;a&#x27; ? 1 : 0);
+
+// how many &#x27;a&#x27; between positions i and j, both included
+int answer = pre[j + 1] - pre[i];</code></pre>
+<h3>Rotations</h3>
+<p>Rotating <code>&quot;abcd&quot;</code> by one gives <code>&quot;bcda&quot;</code>: the front moves to the back. Cutting and re-gluing is all it takes. And the doubling trick is worth remembering - every rotation of <code>s</code> is hiding somewhere inside <code>s + s</code>:</p>
+<pre><code>string s = &quot;abcd&quot;;
+int k = 1;
+string rot = s.substr(k) + s.substr(0, k);     // &quot;bcda&quot;
+
+// is t a rotation of s?
+bool is_rotation = (s.size() == t.size()) &amp;&amp;
+                   ((s + s).find(t) != string::npos);</code></pre>
+<h2 id="cheat">12. Cheat sheet &mdash; memorise this page</h2>
+<p>Cover the right-hand column and reproduce each idiom from its description alone.</p>
+<div class="tblwrap"><table class="cheat"><thead><tr><th>You want to&hellip;</th><th>Write</th></tr></thead><tbody>
+<tr><td>Length / emptiness</td><td><code>s.size()</code>, <code>s.empty()</code></td></tr>
+<tr><td>Reach a character</td><td><code>s[i]</code>, <code>s.front()</code>, <code>s.back()</code></td></tr>
+<tr><td>Add to the end</td><td><code>s += t</code>, <code>s.push_back(c)</code></td></tr>
+<tr><td>Remove</td><td><code>s.pop_back()</code>, <code>s.erase(pos, len)</code>, <code>s.clear()</code></td></tr>
+<tr><td>Take a piece</td><td><code>s.substr(pos, len)</code> - the second number is a LENGTH</td></tr>
+<tr><td>Insert / replace</td><td><code>s.insert(pos, t)</code>, <code>s.replace(pos, len, t)</code></td></tr>
+<tr><td>Find first / last</td><td><code>s.find(t)</code>, <code>s.rfind(t)</code> - compare the answer to <code>string::npos</code></td></tr>
+<tr><td>Find any of a set</td><td><code>s.find_first_of(set)</code>, <code>s.find_last_of(set)</code></td></tr>
+<tr><td>Find none of a set</td><td><code>s.find_first_not_of(set)</code>, <code>s.find_last_not_of(set)</code></td></tr>
+<tr><td>Starts with <code>p</code></td><td><code>s.substr(0, p.size()) == p</code></td></tr>
+<tr><td>Trim the ends</td><td><code>s.find_first_not_of(&quot; \t&quot;)</code> + <code>s.find_last_not_of(&quot; \t&quot;)</code></td></tr>
+<tr><td>Compare</td><td><code>a == b</code>, <code>a &lt; b</code> (dictionary order)</td></tr>
+<tr><td>Text to number</td><td><code>stoi(s)</code>, <code>stoll(s)</code> - or <code>v = v * 10 + (c - &#x27;0&#x27;)</code> by hand</td></tr>
+<tr><td>Number to text</td><td><code>to_string(x)</code></td></tr>
+<tr><td>Digit &lt;-&gt; character</td><td><code>c - &#x27;0&#x27;</code>, <code>char(&#x27;0&#x27; + d)</code>; letter index <code>c - &#x27;a&#x27;</code></td></tr>
+<tr><td>Classify a character</td><td><code>isalpha</code>, <code>isdigit</code>, <code>isalnum</code>, <code>isspace</code>, <code>isupper</code>, <code>islower</code></td></tr>
+<tr><td>Change case</td><td><code>toupper(c)</code>, <code>tolower(c)</code></td></tr>
+<tr><td>Sort / reverse</td><td><code>sort(s.begin(), s.end())</code>, <code>reverse(s.begin(), s.end())</code></td></tr>
+<tr><td>Count one character</td><td><code>count(s.begin(), s.end(), c)</code></td></tr>
+<tr><td>Remove repeats</td><td><code>sort(...)</code> then <code>s.erase(unique(s.begin(), s.end()), s.end())</code></td></tr>
+<tr><td>Delete a character everywhere</td><td><code>s.erase(remove(s.begin(), s.end(), c), s.end())</code></td></tr>
+<tr><td>Every rearrangement</td><td><code>sort(...)</code> then <code>while (next_permutation(s.begin(), s.end()))</code></td></tr>
+<tr><td>Backwards copy</td><td><code>string r(s.rbegin(), s.rend())</code></td></tr>
+<tr><td>Palindrome test</td><td>two indexes, <code>i</code> from the left and <code>j</code> from the right</td></tr>
+<tr><td>Can be rearranged into a palindrome</td><td>at most one letter has an odd count</td></tr>
+<tr><td>Anagram test</td><td>sorted forms equal, or equal <code>cnt[26]</code> arrays</td></tr>
+<tr><td>Count the letters</td><td><code>int cnt[26] = {0}; for (char c : s) cnt[c - &#x27;a&#x27;]++;</code></td></tr>
+<tr><td>Read a word / a line</td><td><code>cin &gt;&gt; s</code> / <code>getline(cin, s)</code></td></tr>
+<tr><td>After <code>&gt;&gt;</code>, before <code>getline</code></td><td><code>cin.ignore();</code></td></tr>
+<tr><td>Split a line</td><td>walk it, collect into <code>part</code>, flush <code>part</code> at every separator</td></tr>
+<tr><td>Fast input</td><td><code>ios_base::sync_with_stdio(false); cin.tie(nullptr);</code></td></tr>
+<tr><td>Rotation test</td><td><code>(s + s).find(t) != string::npos</code></td></tr>
+</tbody></table></div>
+<h2 id="pitfalls">13. Eleven pitfalls that cost real marks</h2>
+<div class="tblwrap"><table class="pit"><tbody>
+<tr><td><b>The second argument of <code>substr</code> is a length, not an end position.</b><span class="tech"><code>s.substr(2, 5)</code> gives you five characters starting at position 2, not the characters from 2 to 5.</span></td></tr>
+<tr><td><b><code>s.size()</code> is unsigned.</b><span class="tech">On an empty string <code>s.size() - 1</code> is not -1, it is a gigantic number, and the loop runs almost for ever. Write <code>int n = s.size();</code> before the loop and compare against <code>n</code>.</span></td></tr>
+<tr><td><b>Compare the result of <code>find</code> against <code>string::npos</code>, not against -1.</b><span class="tech"><code>if (s.find(t) != string::npos)</code>. Storing the result in an <code>int</code> first breaks the same test.</span></td></tr>
+<tr><td><b><code>getline</code> straight after <code>cin &gt;&gt; x</code> hands you an empty line.</b><span class="tech">The newline from the earlier read is still waiting. Put <code>cin.ignore();</code> between the two.</span></td></tr>
+<tr><td><b><code>s = s + x</code> inside a loop is far slower than <code>s += x</code>.</b><span class="tech">The first form copies the entire string on every single iteration. On a long input that alone will exceed the time limit.</span></td></tr>
+<tr><td><b><code>unique</code> only removes neighbouring repeats.</b><span class="tech">Sort the string first, and remember that <code>unique</code> does not shorten anything by itself - it needs the <code>erase</code> around it.</span></td></tr>
+<tr><td><b><code>next_permutation</code> must start from a sorted string.</b><span class="tech">Starting anywhere else gives you only the rearrangements that come after that one in dictionary order, so you silently lose part of the answer.</span></td></tr>
+<tr><td><b>Dictionary order is not alphabetical order once capitals are mixed in.</b><span class="tech"><code>&#x27;Z&#x27;</code> is 90 and <code>&#x27;a&#x27;</code> is 97, so <code>&quot;Zoo&quot; &lt; &quot;apple&quot;</code>. Make the case uniform before sorting words.</span></td></tr>
+<tr><td><b>Erasing inside a loop over positions skips characters.</b><span class="tech">Every erase shifts the rest of the string to the left, so the next character slides in under your index and is never looked at. Build a new string instead, or walk backwards.</span></td></tr>
+<tr><td><b><code>stoi</code> fails loudly on a number that is too big and quietly on trailing rubbish.</b><span class="tech"><code>stoi(&quot;9000000000&quot;)</code> stops the program; <code>stoi(&quot;12abc&quot;)</code> is 12 with no warning at all. Use <code>stoll</code> when the number may be long.</span></td></tr>
+<tr><td><b><code>endl</code> empties the output buffer, <code>&#x27;\n&#x27;</code> does not.</b><span class="tech">Use <code>&#x27;\n&#x27;</code>. One flush per line over 100000 lines is a measurable slowdown.</span></td></tr>
+</tbody></table></div>
+<h2 id="complexity">14. Complexity reference</h2>
+<div class="tblwrap"><table><thead><tr><th>Operation</th><th>Cost</th></tr></thead><tbody>
+<tr><td><code>s[i]</code>, <code>at</code>, <code>front</code>, <code>back</code>, <code>size</code>, <code>empty</code></td><td>O(1)</td></tr>
+<tr><td><code>push_back</code>, <code>pop_back</code>, <code>+=</code> one character</td><td>O(1)</td></tr>
+<tr><td><code>s += t</code></td><td>O(length of <code>t</code>)</td></tr>
+<tr><td><code>insert</code>, <code>erase</code>, <code>replace</code> in the middle</td><td>O(n)</td></tr>
+<tr><td><code>substr(pos, len)</code></td><td>O(len) - it makes a copy</td></tr>
+<tr><td><code>find</code> / <code>rfind</code> of a pattern <code>p</code></td><td>about O(n * length of <code>p</code>)</td></tr>
+<tr><td><code>==</code>, <code>&lt;</code></td><td>O(n)</td></tr>
+<tr><td><code>sort(s.begin(), s.end())</code></td><td>O(n log n)</td></tr>
+<tr><td><code>reverse</code>, <code>count</code></td><td>O(n)</td></tr>
+<tr><td><code>unique</code> after a sort</td><td>O(n)</td></tr>
+<tr><td><code>next_permutation</code> (one step)</td><td>O(1) on average</td></tr>
+<tr><td><code>stoi</code>, <code>to_string</code></td><td>O(number of digits)</td></tr>
+<tr><td>Counting the letters into <code>cnt[26]</code></td><td>O(n)</td></tr>
+<tr><td>Scanning runs, or a sliding window</td><td>O(n) - every position is visited at most twice</td></tr>
+</tbody></table></div>
+<h2 id="problems">15. Practice &mdash; 24 problems, Group D</h2>
+<p>All 24 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
+<div class="pgroup"><h3 id="gA">A. Characters, indexing and ASCII arithmetic</h3><p class="maps">Theory: sections 2 and 3</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="208"></td><td><a href="https://arena.olimpiici.com/#/catalog/92/problem/100208" target="_blank" rel="noopener">word</a><br><span class="tech">Even word</span></td><td class="tech">char→index, ASCII arithmetic, powers of two</td><td class="src">Municipal round 2009</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="238"></td><td><a href="https://arena.olimpiici.com/#/catalog/104/problem/100238" target="_blank" rel="noopener">telephone</a><br><span class="tech">Telephone</span></td><td class="tech">char→digit lookup table, ranges</td><td class="src">Municipal round 2011</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="434"></td><td><a href="https://arena.olimpiici.com/#/catalog/182/problem/100434" target="_blank" rel="noopener">numerology</a><br><span class="tech">Numerology</span></td><td class="tech">letter→digit map, digit sum loop</td><td class="src">Regional round 2014</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="1596"></td><td><a href="https://arena.olimpiici.com/#/catalog/639/problem/101605" target="_blank" rel="noopener">third</a><br><span class="tech">Every third</span></td><td class="tech">erase() in a loop + reverse()</td><td class="src">Autumn tournament 2021</td><td class="dif">★★☆☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gB">B. Searching: find / rfind / substr</h3><p class="maps">Theory: section 5</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="388"></td><td><a href="https://arena.olimpiici.com/#/catalog/164/problem/100388" target="_blank" rel="noopener">letters</a><br><span class="tech">Letters</span></td><td class="tech">find / front / back / tolower</td><td class="src">Regional round 2011</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="27"></td><td><a href="https://arena.olimpiici.com/#/catalog/20/problem/100027" target="_blank" rel="noopener">choco</a><br><span class="tech">Chocolate</span></td><td class="tech">find + rfind, first &amp; last occurrence</td><td class="src">Autumn tournament 2008</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="564"></td><td><a href="https://arena.olimpiici.com/#/catalog/221/problem/100564" target="_blank" rel="noopener">key</a><br><span class="tech">Cipher (rotations)</span></td><td class="tech">substr concatenation, all rotations, min</td><td class="src">National round 2011</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="1412"></td><td><a href="https://arena.olimpiici.com/#/catalog/570/problem/101412" target="_blank" rel="noopener">crack</a><br><span class="tech">Crack the password</span></td><td class="tech">wildcard &#x27;*&#x27; matching, compare with mask</td><td class="src">National round 2021</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Frequency counting and counting sort</h3><p class="maps">Theory: section 10</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="2065"></td><td><a href="https://arena.olimpiici.com/#/catalog/792/problem/102085" target="_blank" rel="noopener">maxsub</a><br><span class="tech">Same letters</span></td><td class="tech">frequency array, max count</td><td class="src">Municipal round 2024</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="313"></td><td><a href="https://arena.olimpiici.com/#/catalog/134/problem/100313" target="_blank" rel="noopener">word</a><br><span class="tech">Code word</span></td><td class="tech">frequency array + sort by (count, letter)</td><td class="src">Municipal round 2016</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="2234"></td><td><a href="https://arena.olimpiici.com/#/catalog/845/problem/102264" target="_blank" rel="noopener">password</a><br><span class="tech">Password</span></td><td class="tech">sort() + capped per-letter counts</td><td class="src">Municipal round 2025</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="116"></td><td><a href="https://arena.olimpiici.com/#/catalog/56/problem/100116" target="_blank" rel="noopener">substring</a><br><span class="tech">Substring</span></td><td class="tech">multiset intersection of letters, lexicographic output</td><td class="src">Autumn tournament 2014</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gD">D. Palindromes</h3><p class="maps">Theory: sections 8 and 10</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="1894"></td><td><a href="https://arena.olimpiici.com/#/catalog/742/problem/101907" target="_blank" rel="noopener">palin</a><br><span class="tech">Palindrome (rearrange)</span></td><td class="tech">odd-frequency parity check</td><td class="src">Municipal round 2023</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="162"></td><td><a href="https://arena.olimpiici.com/#/catalog/74/problem/100162" target="_blank" rel="noopener">palin</a><br><span class="tech">Palindrome (minimum count)</span></td><td class="tech">count of odd-frequency letters</td><td class="src">Autumn tournament 2017</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="592"></td><td><a href="https://arena.olimpiici.com/#/catalog/226/problem/100592" target="_blank" rel="noopener">number</a><br><span class="tech">Palindrome number</span></td><td class="tech">base conversion 2..36 + palindrome test</td><td class="src">National round 2012</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="70"></td><td><a href="https://arena.olimpiici.com/#/catalog/38/problem/100070" target="_blank" rel="noopener">symmetric</a><br><span class="tech">Make it symmetric</span></td><td class="tech">longest palindromic suffix, then mirror the rest onto the end</td><td class="src">Autumn tournament 2011</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gE">E. Tokenising, runs and transformations</h3><p class="maps">Theory: sections 9 and 11</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100"></td><td><a href="https://arena.olimpiici.com/#/catalog/50/problem/100100" target="_blank" rel="noopener">zero</a><br><span class="tech">Zeros</span></td><td class="tech">runs of equal chars, distinct run lengths</td><td class="src">Autumn tournament 2013</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="563"></td><td><a href="https://arena.olimpiici.com/#/catalog/221/problem/100563" target="_blank" rel="noopener">word</a><br><span class="tech">Correct word</span></td><td class="tech">replace/erase + split into words + validation</td><td class="src">National round 2011</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="2202"></td><td><a href="https://arena.olimpiici.com/#/catalog/834/problem/102231" target="_blank" rel="noopener">conway</a><br><span class="tech">Conway</span></td><td class="tech">run-length encoding, iterated</td><td class="src">Autumn tournament 2024</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="1486"></td><td><a href="https://arena.olimpiici.com/#/catalog/601/problem/101486" target="_blank" rel="noopener">magic</a><br><span class="tech">Magic words</span></td><td class="tech">vowel/consonant runs, greedy insertions</td><td class="src">Spring tournament 2021</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gF">F. Two pointers and sliding window</h3><p class="maps">Theory: section 11</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="1345"></td><td><a href="https://arena.olimpiici.com/#/catalog/542/problem/101345" target="_blank" rel="noopener">strange</a><br><span class="tech">Peculiar substring</span></td><td class="tech">sliding window, longest substring w/o repeats</td><td class="src">Autumn tournament 2020</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="2352"></td><td><a href="https://arena.olimpiici.com/#/catalog/885/problem/102445" target="_blank" rel="noopener">small</a><br><span class="tech">Smallest substring</span></td><td class="tech">minimum window substring, two pointers</td><td class="src">Summer tournament 2025</td><td class="dif">★★★★☆</td></tr>
+<tr><td><input type="checkbox" data-pid="1035"></td><td><a href="https://arena.olimpiici.com/#/catalog/375/problem/101035" target="_blank" rel="noopener">like</a><br><span class="tech">Similar words</span></td><td class="tech">best overlap of two words, offset scan</td><td class="src">Winter tournament 2017</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="2110"></td><td><a href="https://arena.olimpiici.com/#/catalog/803/problem/102130" target="_blank" rel="noopener">bitstring</a><br><span class="tech">Binary strings</span></td><td class="tech">runs + point updates, contribution counting</td><td class="src">National round 2024</td><td class="dif">★★★★★</td></tr>
+</tbody></table></div></div>
+<footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 03 · C++17 strings. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
+</main></div>
+<script>var LESSON_SLUG="03_Strings";var LEGACY_KEY="str_done";</script>
+<script>
+var THEME_KEY="cpp_lessons_theme";
+var DONE_KEY="cpp_done_"+LESSON_SLUG;
+// ---- theme -------------------------------------------------------------
+var tb=document.getElementById('themeBtn');
+function setTheme(t){
+  if(t) document.documentElement.setAttribute('data-theme',t);
+  else document.documentElement.removeAttribute('data-theme');
+  try{t?localStorage.setItem(THEME_KEY,t):localStorage.removeItem(THEME_KEY)}catch(e){}
+}
+try{var st=localStorage.getItem(THEME_KEY); if(st) setTheme(st);}catch(e){}
+tb.onclick=function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  setTheme(cur==='dark'?'light':'dark');
+};
+
+// ---- progress ----------------------------------------------------------
+var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-pid]'));
+var fill=document.querySelector('#bar .fill'), lbl=document.getElementById('cnt');
+// state lives in memory; localStorage is a best-effort mirror so that ticking
+// still works when storage is blocked (private window, file:// restrictions)
+var state={};
+try{
+  var raw=localStorage.getItem(DONE_KEY);
+  if(raw===null && LEGACY_KEY) raw=localStorage.getItem(LEGACY_KEY);  // one-time adopt
+  state=JSON.parse(raw||'{}')||{};
+}catch(e){state={}}
+function save(){try{localStorage.setItem(DONE_KEY,JSON.stringify(state))}catch(e){}}
+function paint(){
+  var n=0;
+  boxes.forEach(function(b){
+    var on=!!state[b.dataset.pid]; b.checked=on; if(on)n++;
+    b.closest('tr').classList.toggle('done',on);
+  });
+  fill.style.width=(n/boxes.length*100)+'%';
+  lbl.textContent=n+' / '+boxes.length+' solved';
+}
+boxes.forEach(function(b){b.onchange=function(){
+  if(b.checked)state[b.dataset.pid]=1; else delete state[b.dataset.pid];
+  save(); paint();
+};});
+document.getElementById('reset').onclick=function(){
+  if(confirm('Clear all progress?')){state={};save();paint();}
+};
+paint();
+
+// ---- scroll spy --------------------------------------------------------
+var links=[].slice.call(document.querySelectorAll('#nav a[href^="#"]'));
+var map={}; links.forEach(function(a){
+  var el=document.getElementById(a.getAttribute('href').slice(1)); if(el)map[el.id]=a;});
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.remove('on')});
+      if(map[e.target.id])map[e.target.id].classList.add('on');
+    }});
+},{rootMargin:'0px 0px -75% 0px'});
+Object.keys(map).forEach(function(id){obs.observe(document.getElementById(id))});
+
+// ---- C++ highlighter ---------------------------------------------------
+var KW=('alignas|alignof|auto|bool|break|case|catch|char|class|const|constexpr|continue|'+
+ 'decltype|default|delete|do|double|else|enum|explicit|export|extern|false|float|for|friend|'+
+ 'goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|'+
+ 'public|register|return|short|signed|sizeof|static|static_cast|struct|switch|template|this|'+
+ 'throw|true|try|typedef|typename|union|unsigned|using|virtual|void|volatile|while|'+
+ 'string|string_view|vector|size_t|map|unordered_map|set|pair|istringstream|ostringstream').split('|');
+var KWRE=new RegExp('\\b('+KW.join('|')+')\\b','g');
+document.querySelectorAll('pre code').forEach(function(el){
+  var src=el.textContent, out='', i=0;
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  while(i<src.length){
+    var rest=src.slice(i), m;
+    if((m=rest.match(/^\/\/[^\n]*/))){out+='<span class="com">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^#[a-z]+/))){out+='<span class="pp">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^"(?:\\.|[^"\\])*"/))||(m=rest.match(/^'(?:\\.|[^'\\])*'/))){
+      out+='<span class="str">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^\b\d[\w.]*/))){out+='<span class="num">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^[A-Za-z_]\w*/))){
+      out+= KWRE.test(m[0])&&(KWRE.lastIndex=0,true) ? '<span class="kw">'+esc(m[0])+'</span>' : esc(m[0]);
+      i+=m[0].length;continue;}
+    out+=esc(src[i]); i++;
+  }
+  el.innerHTML=out;
+});
+</script>
+</body></html>

@@ -1,0 +1,953 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C++17 for Competitive Programming</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap">
+<style>
+:root{
+  --font-body:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --font-display:"Source Serif 4",Georgia,"Times New Roman",serif;
+  --font-mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --bg:#f5f7fa; --panel:#ffffff; --ink:#16233a; --muted:#5d6b82; --line:#dfe5ee;
+  --accent:#1f4f9c; --accent-soft:#e8f0fd;
+  --shadow:0 1px 2px rgba(16,32,64,.06),0 6px 18px rgba(16,32,64,.06);
+  --ok:#2e7d32; --okb:#e4f5e5; --plan:#5d6b82; --planb:#eef1f6;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10151d; --panel:#171e28; --ink:#e6ecf5; --muted:#93a1b5; --line:#2a3442;
+    --accent:#7fb0ff; --accent-soft:#1b2838;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);
+    --ok:#8ed49a; --okb:#1d3524; --plan:#93a1b5; --planb:#1e2733;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10151d; --panel:#171e28; --ink:#e6ecf5; --muted:#93a1b5; --line:#2a3442;
+  --accent:#7fb0ff; --accent-soft:#1b2838;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 8px 22px rgba(0,0,0,.35);
+  --ok:#8ed49a; --okb:#1d3524; --plan:#93a1b5; --planb:#1e2733;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:15px/1.55 var(--font-body);margin:0}
+.page{max-width:1120px;margin:0 auto;padding-block:30px;padding-left:20px;padding-right:20px}
+a{color:var(--accent)}
+h1{font-family:var(--font-display);font-size:30px;font-weight:700;margin:0 0 6px;
+   letter-spacing:-.012em;text-wrap:balance}
+.sub{color:var(--muted);margin:0 0 22px;font-size:14.5px;max-width:74ch}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+.topbar{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:22px}
+.chipbtn{font:inherit;font-size:13px;padding:7px 14px;border:1px solid var(--line);
+  border-radius:999px;background:var(--panel);color:var(--ink);cursor:pointer;text-decoration:none}
+.chipbtn:hover{border-color:var(--accent);color:var(--accent)}
+.chipbtn.primary{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600}
+
+.summary{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:26px}
+.stat{padding:12px 16px;min-width:132px;flex:1 1 132px}
+.stat b{display:block;font-family:var(--font-display);font-size:24px;line-height:1.1}
+.stat span{color:var(--muted);font-size:12px;font-family:var(--font-mono);
+  letter-spacing:.06em;text-transform:uppercase}
+
+.track{margin:34px 0 0}
+.track > h2{font-family:var(--font-display);font-size:21px;margin:0 0 4px;letter-spacing:-.01em}
+.track > p{color:var(--muted);margin:0 0 16px;font-size:14px;max-width:78ch}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:12px}
+.card{padding:16px 18px;display:flex;flex-direction:column;gap:8px}
+.card .hd{display:flex;align-items:baseline;gap:10px}
+.num{font-family:var(--font-mono);font-size:12px;color:var(--muted);letter-spacing:.06em}
+.card h3{font-family:var(--font-display);font-size:17px;margin:0;flex:1 1 auto;line-height:1.25}
+.card h3 a{text-decoration:none}
+.card h3 a:hover{text-decoration:underline}
+.badge{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  padding:3px 8px;border-radius:999px;white-space:nowrap}
+.badge.done{color:var(--ok);background:var(--okb)}
+.badge.plan{color:var(--plan);background:var(--planb)}
+.card .sm{color:var(--muted);font-size:13.5px;margin:0}
+.covers{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:5px}
+.covers li{font-size:11.5px;font-family:var(--font-mono);color:var(--muted);
+  border:1px solid var(--line);border-radius:5px;padding:2px 7px}
+.covers li.more{border-style:dashed}
+.foot{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:auto;padding-top:4px;
+  font-size:12px;color:var(--muted);font-family:var(--font-mono)}
+.foot .prog{flex:1 1 90px;min-width:70px;height:6px;background:var(--line);border-radius:4px;overflow:hidden}
+.foot .prog i{display:block;height:100%;width:0;background:var(--ok)}
+.pool a{text-decoration:none}
+
+footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px}
+#themeBtn{position:fixed;top:14px;right:16px;z-index:10;font:inherit;font-size:13px;
+  padding:5px 11px;border:1px solid var(--line);border-radius:8px;background:var(--panel);
+  color:var(--ink);cursor:pointer}
+@media(max-width:640px){
+  h1{font-size:24px}
+  .grid{grid-template-columns:1fr}
+  #themeBtn{top:8px;right:10px}
+}
+</style>
+</head><body>
+<button id="themeBtn" title="Toggle light / dark">&#9681; Theme</button>
+<div class="page">
+<h1>C++17 for Competitive Programming</h1>
+<p class="sub">A structured course built on the classified Olimpiici Arena catalogue (Groups C and D, 2007-2026)</p>
+<div class="topbar">
+<a class="chipbtn primary" href="Group C and D problems/index.html">Problem catalogue &rarr;</a>
+<a class="chipbtn" href="https://arena.olimpiici.com/#/catalog/1" target="_blank" rel="noopener">Olimpiici Arena</a>
+<a class="chipbtn" href="SYLLABUS.md">Syllabus (markdown)</a>
+</div>
+<div class="summary">
+<div class="panel stat"><b>42</b><span>lessons planned</span></div>
+<div class="panel stat"><b>5</b><span>lessons written</span></div>
+<div class="panel stat"><b>108</b><span>problems assigned</span></div>
+<div class="panel stat"><b>768</b><span>in the catalogue</span></div>
+<div class="panel stat" id="solvedStat"><b>0</b><span>problems solved</span></div>
+</div>
+<section class="track">
+<h2>Part I - Language and data structures</h2>
+<p>The C++17 you actually type in a contest. Every lesson is self-contained, follows the shape of Lesson 03, and ends with graded problems drawn from the catalogue.</p>
+<div class="grid">
+<article class="panel card" data-slug="01_Setup_And_IO" data-picked="12">
+<div class="hd"><span class="num">01</span>
+<h3><a href="01_Setup_And_IO/01_Setup_And_IO.html">Setup, I/O and the contest toolkit</a></h3>
+<span class="badge done">written</span>
+</div>
+<p class="sm">The skeleton of a solution: headers, fast I/O, reading until EOF, whitespace vs lines, file I/O, formatted output, and how to compile and test locally.</p>
+<ul class="covers">
+<li>the five-line skeleton every solution starts from</li>
+<li>compiling with g++ -std=c++17 -O2 -Wall, and reading the warnings</li>
+<li>cin &gt;&gt; skips whitespace, so the input layout never matters</li>
+<li>a count then that many values; answering while reading, storing nothing</li>
+<li>reading until EOF, T test cases, and stopping at a marker value</li>
+<li>printing: separators, and why endl fails time limits</li>
+<li class="more">+4 more</li>
+</ul>
+<div class="foot">
+<span class="plabel">0/12 solved</span>
+<span class="prog"><i></i></span>
+</div>
+</article>
+<article class="panel card" data-slug="02_Primitive_Types" data-picked="24">
+<div class="hd"><span class="num">02</span>
+<h3><a href="02_Primitive_Types/02_Primitive_Types.html">Primitive types: integers, characters, booleans, floating point</a></h3>
+<span class="badge done">written</span>
+</div>
+<p class="sm">What fits in what, when it silently breaks, and the arithmetic rules that decide half the wrong answers in Group C and D.</p>
+<ul class="covers">
+<li>int / long long / unsigned and their ranges</li>
+<li>overflow: where it happens and how to see it coming</li>
+<li>`int * int` is an `int` - casting the operand, not the answer</li>
+<li>integer division and truncation toward zero</li>
+<li>the sign of % for negative operands, and `(i - 1 + n) % n`</li>
+<li>taking a number apart with / and %; rounding up as `(a + b - 1) / b`</li>
+<li class="more">+6 more</li>
+</ul>
+<div class="foot">
+<span class="plabel">0/24 solved</span>
+<span class="prog"><i></i></span>
+</div>
+</article>
+<article class="panel card" data-slug="03_Strings" data-picked="24" data-legacy="str_done">
+<div class="hd"><span class="num">03</span>
+<h3><a href="03_Strings/03_Strings.html">Strings</a></h3>
+<span class="badge done">written</span>
+</div>
+<p class="sm">std::string for beginners: characters as numbers, search, modification, conversion, frequency counting, and the patterns that keep reappearing.</p>
+<ul class="covers">
+<li>construction, size, element access</li>
+<li>characters as ASCII numbers, &lt;cctype&gt; classification</li>
+<li>find / rfind / substr / replace / erase / insert</li>
+<li>comparison and dictionary order</li>
+<li>stoi / stoll / to_string, conversion by hand, other bases</li>
+<li>&lt;algorithm&gt; on strings: sort, reverse, unique, next_permutation</li>
+<li class="more">+3 more</li>
+</ul>
+<div class="foot">
+<span class="plabel">0/24 solved</span>
+<span class="prog"><i></i></span>
+</div>
+</article>
+<article class="panel card" data-slug="04_Arrays" data-picked="24">
+<div class="hd"><span class="num">04</span>
+<h3><a href="04_Arrays/04_Arrays.html">Arrays - fixed storage and the loop patterns</a></h3>
+<span class="badge done">written</span>
+</div>
+<p class="sm">The raw C array is still the fastest thing in the language and the most common source of a zero. Declaration, bounds, global vs local, and the scan patterns every problem reuses.</p>
+<ul class="covers">
+<li>declaration, initialisation, `{}` and fill</li>
+<li>global arrays vs stack arrays and why size limits differ</li>
+<li>off-by-one and out-of-bounds: what actually happens</li>
+<li>the six standard scans: sum, max, min, count, index-of, contains</li>
+<li>keeping a running answer in a single pass; runs and streaks</li>
+<li>neighbouring pairs, local maxima and windows of fixed width</li>
+<li class="more">+5 more</li>
+</ul>
+<div class="foot">
+<span class="plabel">0/24 solved</span>
+<span class="prog"><i></i></span>
+</div>
+</article>
+<article class="panel card" data-slug="05_Vectors" data-picked="24">
+<div class="hd"><span class="num">05</span>
+<h3><a href="05_Vectors/05_Vectors.html">std::vector - dynamic arrays</a></h3>
+<span class="badge done">written</span>
+</div>
+<p class="sm">When the size is not known until runtime. Growth, cost, the copy traps, and the vector idioms that replace a page of manual array code.</p>
+<ul class="covers">
+<li>why a fixed-size array is not always enough</li>
+<li>construction: `v`, `v(n)`, `v(n, x)`, `{...}`; resize and clear</li>
+<li>push_back / pop_back / back, and reading a list of unknown length</li>
+<li>iteration: index, range-for, range-for by reference</li>
+<li>passing by value vs const reference (the classic TLE)</li>
+<li>building a new vector instead of erasing in a loop</li>
+<li class="more">+6 more</li>
+</ul>
+<div class="foot">
+<span class="plabel">0/24 solved</span>
+<span class="prog"><i></i></span>
+</div>
+</article>
+<article class="panel card" data-slug="06_Counting_Arrays" data-picked="0">
+<div class="hd"><span class="num">06</span>
+<h3>Counting and frequency arrays</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">The single highest-yield technique in Groups C and D: turn a loop over values into an index into an array.</p>
+<ul class="covers">
+<li>the count[] pattern and choosing its size</li>
+<li>counting sort in O(n + k)</li>
+<li>histograms and mode</li>
+<li>presence arrays vs counting arrays</li>
+<li>offsetting negative keys</li>
+<li>counting pairs without enumerating pairs</li>
+<li class="more">+3 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Counting / Frequency arrays · level 2-4">102 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="07_Grids_And_Matrices" data-picked="0">
+<div class="hd"><span class="num">07</span>
+<h3>Two-dimensional arrays, grids and matrices</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Rows, columns, diagonals and neighbours. The indexing discipline that makes grid problems routine instead of error-prone.</p>
+<ul class="covers">
+<li>declaration of 2D and 3D arrays; memory layout</li>
+<li>row-major traversal and cache behaviour</li>
+<li>the dx/dy direction-array idiom (4- and 8-neighbourhood)</li>
+<li>bounds checking in one helper</li>
+<li>diagonals: i+j and i-j indexing</li>
+<li>transpose, rotate 90, mirror</li>
+<li class="more">+4 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="2D arrays · level 2-4">93 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="08_Sorting" data-picked="0">
+<div class="hd"><span class="num">08</span>
+<h3>Sorting and custom comparators</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">std::sort and everything around it - stability, comparators, sorting by more than one key, and the problems that become trivial once sorted.</p>
+<ul class="covers">
+<li>sort, stable_sort, partial_sort, nth_element</li>
+<li>comparator functions, lambdas, and the strict-weak-ordering rule</li>
+<li>sorting pairs and structs by several keys</li>
+<li>descending order: greater&lt;&gt; vs reversing the comparator</li>
+<li>sorting indices instead of values</li>
+<li>unique + erase to deduplicate</li>
+<li class="more">+3 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Sorting · level 2-4">67 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="09_Pairs_Structs_Tuples" data-picked="0">
+<div class="hd"><span class="num">09</span>
+<h3>Pairs, structs and tuples</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Grouping related values so that sorting, comparing and returning them stops being painful.</p>
+<ul class="covers">
+<li>std::pair, make_pair, .first / .second</li>
+<li>lexicographic comparison of pairs - and how to exploit it</li>
+<li>structs with named fields; when to prefer them</li>
+<li>operator&lt; on a struct</li>
+<li>std::tuple, tie and structured bindings (C++17)</li>
+<li>returning several values from a function</li>
+<li class="more">+2 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Pairs / Structs · level 2-4">26 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="10_Stacks_Queues_Deques" data-picked="0">
+<div class="hd"><span class="num">10</span>
+<h3>Stacks, queues and deques</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Three containers with one rule each, and the problem shapes that announce them.</p>
+<ul class="covers">
+<li>std::stack: push, pop, top, empty</li>
+<li>bracket matching and expression evaluation</li>
+<li>the monotonic stack (next greater element, largest rectangle)</li>
+<li>std::queue: push, pop, front - and BFS&#x27;s data structure</li>
+<li>simulation queues (service, rotation, Josephus)</li>
+<li>std::deque: both-ends insertion</li>
+<li class="more">+2 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Stacks / Queues / Deque · level 2-4">45 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="11_Sets_And_Maps" data-picked="0">
+<div class="hd"><span class="num">11</span>
+<h3>Sets and maps, ordered and unordered</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Associative containers: what they cost, what order they give back, and when a plain array beats both.</p>
+<ul class="covers">
+<li>set / multiset: insert, erase, count, find</li>
+<li>ordered traversal and lower_bound on a set</li>
+<li>map / multimap: operator[] vs at vs find</li>
+<li>the operator[] insertion trap</li>
+<li>unordered_set / unordered_map and hashing</li>
+<li>when unordered is slower (collisions, reserve, max_load_factor)</li>
+<li class="more">+3 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Maps / Sets · level 2-4">32 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="12_Priority_Queues" data-picked="0">
+<div class="hd"><span class="num">12</span>
+<h3>Priority queues and heaps</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Repeatedly taking the best element without re-sorting.</p>
+<ul class="covers">
+<li>priority_queue basics: push, top, pop</li>
+<li>min-heap via greater&lt;&gt; or negated keys</li>
+<li>priority_queue of pairs and structs; custom comparators</li>
+<li>heap of a fixed size (k largest)</li>
+<li>make_heap / push_heap / pop_heap on a vector</li>
+<li>scheduling and merging problems</li>
+<li class="more">+2 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Priority queue · level 3-5">14 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="13_Algorithm_Library" data-picked="0">
+<div class="hd"><span class="num">13</span>
+<h3>Iterators and the &lt;algorithm&gt; toolbox</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">The standard library functions that replace hand-written loops, and the iterator vocabulary they all speak.</p>
+<ul class="covers">
+<li>iterator basics: begin/end, half-open ranges</li>
+<li>min_element / max_element / minmax_element</li>
+<li>accumulate, count, count_if, find, find_if</li>
+<li>all_of / any_of / none_of</li>
+<li>reverse, rotate, next_permutation</li>
+<li>fill, iota, copy, transform</li>
+<li class="more">+3 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Vectors · level 2-3">20 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="14_Big_Integers" data-picked="0">
+<div class="hd"><span class="num">14</span>
+<h3>Big integers - arithmetic beyond long long</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">When the answer has 200 digits. Representation, the four operations, and how to keep them fast enough.</p>
+<ul class="covers">
+<li>deciding that long long is not enough</li>
+<li>representation: digit vector, little-endian, base 10 vs base 10^9</li>
+<li>addition and subtraction with carry/borrow</li>
+<li>multiplication by a small integer, and long multiplication</li>
+<li>division and modulo by a small integer</li>
+<li>comparison and normalisation (leading zeros)</li>
+<li class="more">+3 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Big numbers · level 2-5">40 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="15_Recursion" data-picked="0">
+<div class="hd"><span class="num">15</span>
+<h3>Recursion and the call stack</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Writing a function that calls itself, reasoning about it, and knowing what it costs.</p>
+<ul class="covers">
+<li>base case and recursive case</li>
+<li>the call stack; what a stack overflow looks like</li>
+<li>recursion vs iteration; converting between them</li>
+<li>recursive array and string processing</li>
+<li>divide and conquer: binary search, merge sort</li>
+<li>recursion with an accumulator vs with a return value</li>
+<li class="more">+3 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Recursion · level 2-4">30 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="16_Complexity_And_Limits" data-picked="0">
+<div class="hd"><span class="num">16</span>
+<h3>Complexity, memory limits and choosing a container</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Reading the constraints and deciding, before writing a line, which approach can pass.</p>
+<ul class="covers">
+<li>big-O in practice: the 10^8 operations rule of thumb</li>
+<li>mapping n to an allowed complexity</li>
+<li>memory: bytes per element for every container</li>
+<li>the 1 MB and 16 MB limits in older NOI tasks</li>
+<li>time cost of I/O and of endl</li>
+<li>cache behaviour: why a flat array beats a vector of vectors</li>
+<li class="more">+3 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Memory optimization · level 3-5">15 candidate problems</span>
+</div>
+</article>
+</div></section>
+<section class="track">
+<h2>Part II - Algorithms and techniques</h2>
+<p>One technique per lesson, in the order the catalogue rewards. Each assumes Part I and nothing else.</p>
+<div class="grid">
+<article class="panel card" data-slug="17_Brute_Force" data-picked="0">
+<div class="hd"><span class="num">17</span>
+<h3>Brute force and complete search</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Enumerating every candidate - and the arithmetic that tells you whether you are allowed to.</p>
+<ul class="covers">
+<li>counting the search space before coding</li>
+<li>nested loops over pairs and triples</li>
+<li>enumerating subsets and permutations</li>
+<li>early exit and pruning</li>
+<li>brute force as a correctness oracle for stress tests</li>
+<li>meet in the middle (a first look)</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Brute force · level 2-4">54 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="18_Simulation" data-picked="0">
+<div class="hd"><span class="num">18</span>
+<h3>Simulation and implementation discipline</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Problems where the statement is the algorithm. Structuring long implementations so they stay debuggable.</p>
+<ul class="covers">
+<li>translating a statement into state + transitions</li>
+<li>step loops, event loops and termination</li>
+<li>cycle detection in a simulation</li>
+<li>dates and calendars</li>
+<li>decomposing into small tested functions</li>
+<li>reading a long statement without missing a rule</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Implementation / Simulation · level 2-4">82 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="19_Prefix_Sums" data-picked="0">
+<div class="hd"><span class="num">19</span>
+<h3>Prefix sums and difference arrays</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Answering range questions in O(1) after one pass.</p>
+<ul class="covers">
+<li>1D prefix sums and the half-open convention</li>
+<li>range sum, range count, range average</li>
+<li>difference arrays for range updates</li>
+<li>2D prefix sums and the inclusion-exclusion rectangle</li>
+<li>prefix XOR, prefix max, prefix products</li>
+<li>prefix sums plus a hash map: subarrays with a given sum</li>
+<li class="more">+1 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Prefix sums · level 2-5">71 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="20_Two_Pointers" data-picked="0">
+<div class="hd"><span class="num">20</span>
+<h3>Two pointers and sliding window</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Turning an O(n^2) scan into O(n) by never moving a pointer backwards.</p>
+<ul class="covers">
+<li>opposite-direction pointers on a sorted array</li>
+<li>same-direction pointers: the window</li>
+<li>fixed-size and variable-size windows</li>
+<li>the monotone condition that makes it valid</li>
+<li>window with a counting array inside</li>
+<li>merging two sorted sequences</li>
+<li class="more">+1 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Two pointers · level 2-5">45 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="21_Binary_Search" data-picked="0">
+<div class="hd"><span class="num">21</span>
+<h3>Binary search, including binary search on the answer</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">The loop invariant that never goes wrong, and the trick of searching over answers rather than over data.</p>
+<ul class="covers">
+<li>the canonical while (lo &lt; hi) template</li>
+<li>off-by-one: which half to discard</li>
+<li>lower_bound / upper_bound semantics</li>
+<li>predicate form: the first true in a monotone sequence</li>
+<li>binary search on the answer (minimise the maximum)</li>
+<li>binary search over a real interval with fixed iterations</li>
+<li class="more">+1 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Binary search · level 3-5">32 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="22_Greedy" data-picked="0">
+<div class="hd"><span class="num">22</span>
+<h3>Greedy - and how to prove it</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">The most used and most mis-used technique in Group C. A greedy solution is worthless without an argument.</p>
+<ul class="covers">
+<li>the greedy-choice property and the exchange argument</li>
+<li>sort-then-scan as the canonical shape</li>
+<li>interval scheduling and interval covering</li>
+<li>fractional versus 0/1 choices</li>
+<li>greedy with a priority queue</li>
+<li>counterexample hunting: how to disprove your own greedy</li>
+<li class="more">+1 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Greedy · level 2-5">118 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="23_Sorting_Techniques" data-picked="0">
+<div class="hd"><span class="num">23</span>
+<h3>Sorting-based techniques: sweep line and coordinate compression</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">What becomes easy once the data is in the right order.</p>
+<ul class="covers">
+<li>event sweeps: +1 / -1 at interval ends</li>
+<li>maximum overlap and the &#x27;how many at once&#x27; family</li>
+<li>coordinate compression of large value ranges</li>
+<li>sorting by a derived key</li>
+<li>counting inversions with merge sort</li>
+<li>offline query processing: sort the queries too</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Sorting · level 3-5">58 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="24_Number_Theory_I" data-picked="0">
+<div class="hd"><span class="num">24</span>
+<h3>Number theory I: divisibility, primes and GCD</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">The arithmetic toolkit behind the largest single family of problems in the catalogue.</p>
+<ul class="covers">
+<li>divisibility, divisors in O(sqrt n)</li>
+<li>primality test in O(sqrt n)</li>
+<li>sieve of Eratosthenes; smallest-prime-factor sieve</li>
+<li>factorisation via the sieve</li>
+<li>gcd, lcm and the Euclidean algorithm</li>
+<li>number of divisors and sum of divisors from the factorisation</li>
+<li class="more">+2 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Number theory · level 2-4">128 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="25_Number_Theory_II" data-picked="0">
+<div class="hd"><span class="num">25</span>
+<h3>Number theory II: modular arithmetic and fast exponentiation</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Working under a modulus without overflow, and computing powers in logarithmic time.</p>
+<ul class="covers">
+<li>the modular identities for +, -, *</li>
+<li>keeping intermediate values inside long long</li>
+<li>negative values and the ((x % m) + m) % m idiom</li>
+<li>binary exponentiation</li>
+<li>modular inverse via Fermat&#x27;s little theorem</li>
+<li>division under a modulus</li>
+<li class="more">+2 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Modular arithmetic · level 3-5">30 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="26_Combinatorics" data-picked="0">
+<div class="hd"><span class="num">26</span>
+<h3>Combinatorics and counting</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Counting without enumerating.</p>
+<ul class="covers">
+<li>the product and sum rules</li>
+<li>permutations, combinations, and C(n, k) by Pascal&#x27;s triangle</li>
+<li>counting with repetition; stars and bars</li>
+<li>inclusion-exclusion on small sets</li>
+<li>counting complement instead of the thing itself</li>
+<li>pigeonhole arguments</li>
+<li class="more">+2 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Combinatorics · level 3-5">50 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="27_Backtracking" data-picked="0">
+<div class="hd"><span class="num">27</span>
+<h3>Backtracking and generating combinatorial objects</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Systematic search with undo. Generating every subset, permutation and arrangement, and cutting the tree early.</p>
+<ul class="covers">
+<li>the choose / recurse / un-choose skeleton</li>
+<li>generating subsets, permutations, combinations</li>
+<li>n-queens and placement problems</li>
+<li>used[] versus swapping in place</li>
+<li>pruning: feasibility and bound checks</li>
+<li>counting solutions versus listing them</li>
+<li class="more">+1 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Recursion / Backtracking · level 3-5">17 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="28_Bitmasks" data-picked="0">
+<div class="hd"><span class="num">28</span>
+<h3>Bitmasks and subset enumeration</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Representing a set of up to ~20 items in one integer.</p>
+<ul class="covers">
+<li>the operators: &amp; | ^ ~ &lt;&lt; &gt;&gt;</li>
+<li>set, clear, toggle, test a bit</li>
+<li>popcount, lowest set bit, __builtin_ functions</li>
+<li>iterating over all 2^n subsets</li>
+<li>iterating over submasks of a mask</li>
+<li>bitset for dense boolean arrays</li>
+<li class="more">+2 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Bit manipulation · level 3-5">22 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="29_DP_I" data-picked="0">
+<div class="hd"><span class="num">29</span>
+<h3>Dynamic programming I: one dimension</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">State, transition, base case, order of evaluation - on a single axis.</p>
+<ul class="covers">
+<li>recognising overlapping subproblems</li>
+<li>memoisation versus bottom-up tables</li>
+<li>Fibonacci, staircase, and the first transitions</li>
+<li>coin change: minimum coins and number of ways</li>
+<li>0/1 knapsack and its rolling-array form</li>
+<li>longest increasing subsequence in O(n^2) and O(n log n)</li>
+<li class="more">+2 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Dynamic programming · level 3-4">76 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="30_DP_II" data-picked="0">
+<div class="hd"><span class="num">30</span>
+<h3>Dynamic programming II: two dimensions and grids</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Two-index states: grids, pairs of sequences, and the layouts that keep them in memory.</p>
+<ul class="covers">
+<li>paths in a grid with obstacles</li>
+<li>longest common subsequence</li>
+<li>edit distance</li>
+<li>two-sequence alignment patterns</li>
+<li>the order of the loops and why it matters</li>
+<li>rolling rows to cut memory</li>
+<li class="more">+1 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Dynamic programming · 2D arrays · level 3-5">39 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="31_DP_III" data-picked="0">
+<div class="hd"><span class="num">31</span>
+<h3>Dynamic programming III: interval, digit and bitmask DP</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">The state shapes that appear once the obvious ones stop working.</p>
+<ul class="covers">
+<li>interval DP: dp[l][r] and the split point</li>
+<li>palindrome partitioning, matrix chain, stone merging</li>
+<li>digit DP over the decimal representation</li>
+<li>bitmask DP over subsets</li>
+<li>DP on a tree (subtree states)</li>
+<li>choosing a state: what must be remembered and what must not</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Dynamic programming · level 5">21 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="32_Graphs_Traversal" data-picked="0">
+<div class="hd"><span class="num">32</span>
+<h3>Graphs: representation and traversal</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Adjacency lists, BFS and DFS, and the questions each one answers.</p>
+<ul class="covers">
+<li>adjacency list vs adjacency matrix vs edge list</li>
+<li>reading a graph; directed vs undirected</li>
+<li>DFS recursive and iterative; visited discipline</li>
+<li>BFS and the layer structure</li>
+<li>connected components and component sizes</li>
+<li>cycle detection in both directions</li>
+<li class="more">+2 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Graph traversal · level 3-5">56 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="33_Flood_Fill" data-picked="0">
+<div class="hd"><span class="num">33</span>
+<h3>Flood fill and grid graphs</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Treating a grid as a graph - the most common way graph theory appears in Groups C and D.</p>
+<ul class="covers">
+<li>the grid as an implicit graph</li>
+<li>flood fill by DFS and by BFS</li>
+<li>counting regions and measuring their size</li>
+<li>multi-source BFS</li>
+<li>shortest path on an unweighted grid</li>
+<li>0-1 BFS with a deque</li>
+<li class="more">+2 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Flood fill / Grid/Matrix · level 2-5">64 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="34_Shortest_Paths" data-picked="0">
+<div class="hd"><span class="num">34</span>
+<h3>Shortest paths</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">From unweighted BFS to Dijkstra, and how to know which one the weights allow.</p>
+<ul class="covers">
+<li>BFS for unit weights</li>
+<li>0-1 BFS with a deque</li>
+<li>Dijkstra with a priority queue</li>
+<li>path reconstruction via parent arrays</li>
+<li>Bellman-Ford and negative weights</li>
+<li>Floyd-Warshall for all pairs on small graphs</li>
+<li class="more">+1 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Shortest path · level 3-5">14 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="35_Trees" data-picked="0">
+<div class="hd"><span class="num">35</span>
+<h3>Trees</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Graphs with no cycles - and the simplifications that buys.</p>
+<ul class="covers">
+<li>properties: n-1 edges, unique paths</li>
+<li>rooting a tree; parent, depth, subtree size</li>
+<li>DFS on a tree without a visited array</li>
+<li>subtree aggregation (DP on trees)</li>
+<li>diameter in two DFS passes</li>
+<li>binary trees and traversal orders</li>
+<li class="more">+1 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Trees · level 3-5">10 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="36_DSU" data-picked="0">
+<div class="hd"><span class="num">36</span>
+<h3>Disjoint set union (union-find)</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Fifteen lines that answer &#x27;are these two in the same group?&#x27; in near-constant time.</p>
+<ul class="covers">
+<li>the parent array and find</li>
+<li>path compression</li>
+<li>union by size or rank</li>
+<li>counting components and component sizes</li>
+<li>offline connectivity queries</li>
+<li>Kruskal&#x27;s minimum spanning tree</li>
+<li class="more">+1 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Data structures · level 4-5">37 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="37_Fenwick_Segment_Trees" data-picked="0">
+<div class="hd"><span class="num">37</span>
+<h3>Fenwick and segment trees</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Range queries with updates - the structure to reach for when prefix sums stop working.</p>
+<ul class="covers">
+<li>why a static prefix sum fails under updates</li>
+<li>Fenwick tree: update and prefix query</li>
+<li>Fenwick for counting inversions</li>
+<li>segment tree: build, query, point update</li>
+<li>segment tree for min, max, gcd</li>
+<li>lazy propagation for range updates</li>
+<li class="more">+1 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Data structures · level 5">20 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="38_String_Algorithms" data-picked="0">
+<div class="hd"><span class="num">38</span>
+<h3>String algorithms: KMP, Z, hashing and tries</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Beyond std::string - the linear-time algorithms for pattern matching and substring comparison.</p>
+<ul class="covers">
+<li>naive matching and why it is O(nm)</li>
+<li>the prefix function and KMP</li>
+<li>the Z function</li>
+<li>polynomial hashing and O(1) substring comparison</li>
+<li>collision risk and double hashing</li>
+<li>tries: insertion, lookup, prefix counting</li>
+<li class="more">+2 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="String processing · level 4-5">20 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="39_Geometry" data-picked="0">
+<div class="hd"><span class="num">39</span>
+<h3>Geometry basics</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Points, vectors and the handful of primitives that cover the school-level geometry tasks.</p>
+<ul class="covers">
+<li>points and vectors as pairs</li>
+<li>dot product and cross product</li>
+<li>orientation of three points</li>
+<li>area of a triangle and of a polygon (shoelace)</li>
+<li>distance point-to-point, point-to-line, point-to-segment</li>
+<li>segment intersection</li>
+<li class="more">+2 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Geometry · level 3-5">13 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="40_Game_Theory" data-picked="0">
+<div class="hd"><span class="num">40</span>
+<h3>Game theory</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Two players, perfect information, and deciding who wins from the starting position.</p>
+<ul class="covers">
+<li>winning and losing positions</li>
+<li>computing W/L states by DP</li>
+<li>the subtraction game and periodicity</li>
+<li>Nim and the XOR rule</li>
+<li>Sprague-Grundy numbers for sums of games</li>
+<li>symmetry and mirroring strategies</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Game theory · level 3-5">7 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="41_Ad_Hoc_Constructive" data-picked="0">
+<div class="hd"><span class="num">41</span>
+<h3>Ad hoc, constructive problems and invariants</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">Problems with no named algorithm. What to look for when nothing fits.</p>
+<ul class="covers">
+<li>finding the invariant: what never changes</li>
+<li>parity arguments</li>
+<li>monovariants and termination proofs</li>
+<li>constructing an example rather than searching for one</li>
+<li>small-case tables to reveal a pattern</li>
+<li>extremal arguments</li>
+<li class="more">+2 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="Ad hoc · level 3-5">28 candidate problems</span>
+</div>
+</article>
+<article class="panel card" data-slug="42_Contest_Craft" data-picked="0">
+<div class="hd"><span class="num">42</span>
+<h3>Contest craft: strategy, testing and debugging</h3>
+<span class="badge plan">planned</span>
+</div>
+<p class="sm">The part that is not code. How to spend the five hours, and how to stop losing points you have already earned.</p>
+<ul class="covers">
+<li>reading the set and choosing an order</li>
+<li>constraints as a hint about the intended complexity</li>
+<li>writing a brute-force oracle</li>
+<li>stress testing with a random generator</li>
+<li>edge cases that recur: n=1, all equal, maximum values, empty input</li>
+<li>reading the output format exactly</li>
+<li class="more">+3 more</li>
+</ul>
+<div class="foot">
+<span class="pool" title="level 1-5 · National">204 candidate problems</span>
+</div>
+</article>
+</div></section>
+<footer>768 problems, each tagged with a primary algorithm, an optional secondary algorithm, technique tags, a 1-5 difficulty and a one-line hint. Built from <code>syllabus.json</code> by <code>tools/build_site.py</code>. Problem statements live on arena.olimpiici.com and are in Bulgarian.</footer>
+</div>
+<script>
+var THEME_KEY="cpp_lessons_theme";
+var tb=document.getElementById('themeBtn');
+function setTheme(t){
+  if(t) document.documentElement.setAttribute('data-theme',t);
+  else document.documentElement.removeAttribute('data-theme');
+  try{t?localStorage.setItem(THEME_KEY,t):localStorage.removeItem(THEME_KEY)}catch(e){}
+}
+try{var st=localStorage.getItem(THEME_KEY); if(st) setTheme(st);}catch(e){}
+tb.onclick=function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  setTheme(cur==='dark'?'light':'dark');
+};
+
+// read each lesson's tick state, written by the lesson pages themselves
+var totalDone=0, totalPicked=0;
+[].forEach.call(document.querySelectorAll('[data-slug]'), function(card){
+  var slug=card.dataset.slug, picked=+card.dataset.picked||0;
+  if(!picked) return;
+  var n=0;
+  try{
+    var raw=localStorage.getItem('cpp_done_'+slug);
+    if(raw===null && card.dataset.legacy) raw=localStorage.getItem(card.dataset.legacy);
+    var st=JSON.parse(raw||'{}')||{};
+    for(var k in st) if(st[k]) n++;
+  }catch(e){}
+  if(n>picked) n=picked;
+  totalDone+=n; totalPicked+=picked;
+  var lbl=card.querySelector('.plabel'), bar=card.querySelector('.prog i');
+  if(lbl) lbl.textContent=n+'/'+picked+' solved';
+  if(bar) bar.style.width=(n/picked*100)+'%';
+});
+var s=document.getElementById('solvedStat');
+if(s) s.innerHTML='<b>'+totalDone+'</b><span>problems solved</span>';
+</script>
+</body></html>

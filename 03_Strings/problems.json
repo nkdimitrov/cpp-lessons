@@ -1,0 +1,301 @@
+{
+ "group": "D",
+ "groups": [
+  {
+   "key": "A",
+   "name": "A. Characters, indexing and ASCII arithmetic",
+   "maps": "Theory: sections 2 and 3"
+  },
+  {
+   "key": "B",
+   "name": "B. Searching: find / rfind / substr",
+   "maps": "Theory: section 5"
+  },
+  {
+   "key": "C",
+   "name": "C. Frequency counting and counting sort",
+   "maps": "Theory: section 10"
+  },
+  {
+   "key": "D",
+   "name": "D. Palindromes",
+   "maps": "Theory: sections 8 and 10"
+  },
+  {
+   "key": "E",
+   "name": "E. Tokenising, runs and transformations",
+   "maps": "Theory: sections 9 and 11"
+  },
+  {
+   "key": "F",
+   "name": "F. Two pointers and sliding window",
+   "maps": "Theory: section 11"
+  }
+ ],
+ "problems": [
+  {
+   "section": "A",
+   "pid": 208,
+   "en": "Even word",
+   "tech": "char→index, ASCII arithmetic, powers of two",
+   "diff": 1,
+   "title": "word",
+   "family": "Общински кръг",
+   "year": "2009",
+   "url": "https://arena.olimpiici.com/#/catalog/92/problem/100208"
+  },
+  {
+   "section": "A",
+   "pid": 238,
+   "en": "Telephone",
+   "tech": "char→digit lookup table, ranges",
+   "diff": 1,
+   "title": "telephone",
+   "family": "Общински кръг",
+   "year": "2011",
+   "url": "https://arena.olimpiici.com/#/catalog/104/problem/100238"
+  },
+  {
+   "section": "A",
+   "pid": 434,
+   "en": "Numerology",
+   "tech": "letter→digit map, digit sum loop",
+   "diff": 1,
+   "title": "numerology",
+   "family": "Областен кръг",
+   "year": "2014",
+   "url": "https://arena.olimpiici.com/#/catalog/182/problem/100434"
+  },
+  {
+   "section": "A",
+   "pid": 1596,
+   "en": "Every third",
+   "tech": "erase() in a loop + reverse()",
+   "diff": 2,
+   "title": "third",
+   "family": "Есенен турнир",
+   "year": "2021",
+   "url": "https://arena.olimpiici.com/#/catalog/639/problem/101605"
+  },
+  {
+   "section": "B",
+   "pid": 388,
+   "en": "Letters",
+   "tech": "find / front / back / tolower",
+   "diff": 1,
+   "title": "letters",
+   "family": "Областен кръг",
+   "year": "2011",
+   "url": "https://arena.olimpiici.com/#/catalog/164/problem/100388"
+  },
+  {
+   "section": "B",
+   "pid": 27,
+   "en": "Chocolate",
+   "tech": "find + rfind, first & last occurrence",
+   "diff": 2,
+   "title": "choco",
+   "family": "Есенен турнир",
+   "year": "2008",
+   "url": "https://arena.olimpiici.com/#/catalog/20/problem/100027"
+  },
+  {
+   "section": "B",
+   "pid": 564,
+   "en": "Cipher (rotations)",
+   "tech": "substr concatenation, all rotations, min",
+   "diff": 2,
+   "title": "key",
+   "family": "Национален кръг",
+   "year": "2011",
+   "url": "https://arena.olimpiici.com/#/catalog/221/problem/100564"
+  },
+  {
+   "section": "B",
+   "pid": 1412,
+   "en": "Crack the password",
+   "tech": "wildcard '*' matching, compare with mask",
+   "diff": 4,
+   "title": "crack",
+   "family": "Национален кръг",
+   "year": "2021",
+   "url": "https://arena.olimpiici.com/#/catalog/570/problem/101412"
+  },
+  {
+   "section": "C",
+   "pid": 2065,
+   "en": "Same letters",
+   "tech": "frequency array, max count",
+   "diff": 1,
+   "title": "maxsub",
+   "family": "Общински кръг",
+   "year": "2024",
+   "url": "https://arena.olimpiici.com/#/catalog/792/problem/102085"
+  },
+  {
+   "section": "C",
+   "pid": 313,
+   "en": "Code word",
+   "tech": "frequency array + sort by (count, letter)",
+   "diff": 2,
+   "title": "word",
+   "family": "Общински кръг",
+   "year": "2016",
+   "url": "https://arena.olimpiici.com/#/catalog/134/problem/100313"
+  },
+  {
+   "section": "C",
+   "pid": 2234,
+   "en": "Password",
+   "tech": "sort() + capped per-letter counts",
+   "diff": 2,
+   "title": "password",
+   "family": "Общински кръг",
+   "year": "2025",
+   "url": "https://arena.olimpiici.com/#/catalog/845/problem/102264"
+  },
+  {
+   "section": "C",
+   "pid": 116,
+   "en": "Substring",
+   "tech": "multiset intersection of letters, lexicographic output",
+   "diff": 3,
+   "title": "substring",
+   "family": "Есенен турнир",
+   "year": "2014",
+   "url": "https://arena.olimpiici.com/#/catalog/56/problem/100116"
+  },
+  {
+   "section": "D",
+   "pid": 1894,
+   "en": "Palindrome (rearrange)",
+   "tech": "odd-frequency parity check",
+   "diff": 2,
+   "title": "palin",
+   "family": "Общински кръг",
+   "year": "2023",
+   "url": "https://arena.olimpiici.com/#/catalog/742/problem/101907"
+  },
+  {
+   "section": "D",
+   "pid": 162,
+   "en": "Palindrome (minimum count)",
+   "tech": "count of odd-frequency letters",
+   "diff": 3,
+   "title": "palin",
+   "family": "Есенен турнир",
+   "year": "2017",
+   "url": "https://arena.olimpiici.com/#/catalog/74/problem/100162"
+  },
+  {
+   "section": "D",
+   "pid": 592,
+   "en": "Palindrome number",
+   "tech": "base conversion 2..36 + palindrome test",
+   "diff": 3,
+   "title": "number",
+   "family": "Национален кръг",
+   "year": "2012",
+   "url": "https://arena.olimpiici.com/#/catalog/226/problem/100592"
+  },
+  {
+   "section": "D",
+   "pid": 70,
+   "en": "Make it symmetric",
+   "tech": "longest palindromic suffix, then mirror the rest onto the end",
+   "diff": 3,
+   "title": "symmetric",
+   "family": "Есенен турнир",
+   "year": "2011",
+   "url": "https://arena.olimpiici.com/#/catalog/38/problem/100070"
+  },
+  {
+   "section": "E",
+   "pid": 100,
+   "en": "Zeros",
+   "tech": "runs of equal chars, distinct run lengths",
+   "diff": 1,
+   "title": "zero",
+   "family": "Есенен турнир",
+   "year": "2013",
+   "url": "https://arena.olimpiici.com/#/catalog/50/problem/100100"
+  },
+  {
+   "section": "E",
+   "pid": 563,
+   "en": "Correct word",
+   "tech": "replace/erase + split into words + validation",
+   "diff": 3,
+   "title": "word",
+   "family": "Национален кръг",
+   "year": "2011",
+   "url": "https://arena.olimpiici.com/#/catalog/221/problem/100563"
+  },
+  {
+   "section": "E",
+   "pid": 2202,
+   "en": "Conway",
+   "tech": "run-length encoding, iterated",
+   "diff": 3,
+   "title": "conway",
+   "family": "Есенен турнир",
+   "year": "2024",
+   "url": "https://arena.olimpiici.com/#/catalog/834/problem/102231"
+  },
+  {
+   "section": "E",
+   "pid": 1486,
+   "en": "Magic words",
+   "tech": "vowel/consonant runs, greedy insertions",
+   "diff": 3,
+   "title": "magic",
+   "family": "Пролетен турнир",
+   "year": "2021",
+   "url": "https://arena.olimpiici.com/#/catalog/601/problem/101486"
+  },
+  {
+   "section": "F",
+   "pid": 1345,
+   "en": "Peculiar substring",
+   "tech": "sliding window, longest substring w/o repeats",
+   "diff": 3,
+   "title": "strange",
+   "family": "Есенен турнир",
+   "year": "2020",
+   "url": "https://arena.olimpiici.com/#/catalog/542/problem/101345"
+  },
+  {
+   "section": "F",
+   "pid": 2352,
+   "en": "Smallest substring",
+   "tech": "minimum window substring, two pointers",
+   "diff": 4,
+   "title": "small",
+   "family": "Летен турнир",
+   "year": "2025",
+   "url": "https://arena.olimpiici.com/#/catalog/885/problem/102445"
+  },
+  {
+   "section": "F",
+   "pid": 1035,
+   "en": "Similar words",
+   "tech": "best overlap of two words, offset scan",
+   "diff": 3,
+   "title": "like",
+   "family": "Зимен турнир",
+   "year": "2017",
+   "url": "https://arena.olimpiici.com/#/catalog/375/problem/101035"
+  },
+  {
+   "section": "F",
+   "pid": 2110,
+   "en": "Binary strings",
+   "tech": "runs + point updates, contribution counting",
+   "diff": 5,
+   "title": "bitstring",
+   "family": "Национален кръг",
+   "year": "2024",
+   "url": "https://arena.olimpiici.com/#/catalog/803/problem/102130"
+  }
+ ]
+}

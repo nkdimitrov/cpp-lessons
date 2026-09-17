@@ -1,0 +1,169 @@
+{
+ "group": "D and C",
+ "groups": [
+  {
+   "key": "A",
+   "name": "A. Read a few numbers, print the answer",
+   "maps": "Theory: sections 3 and 5"
+  },
+  {
+   "key": "B",
+   "name": "B. One character at a time",
+   "maps": "Theory: sections 3, 4 and 7"
+  },
+  {
+   "key": "C",
+   "name": "C. Read the numbers, loop, print one answer",
+   "maps": "Theory: sections 3 and 5"
+  },
+  {
+   "key": "D",
+   "name": "D. Input that is not just numbers",
+   "maps": "Theory: section 7"
+  },
+  {
+   "key": "E",
+   "name": "E. Getting the output exactly right",
+   "maps": "Theory: section 5"
+  },
+  {
+   "key": "F",
+   "name": "F. Too much input to store",
+   "maps": "Theory: sections 4 and 6"
+  }
+ ],
+ "problems": [
+  {
+   "section": "A",
+   "pid": 100283,
+   "title": "cinema",
+   "en": "Cinema",
+   "tech": "read two numbers, print two - `/` and `%` do the work",
+   "family": "Municipal round",
+   "year": 2014,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/122/problem/100283"
+  },
+  {
+   "section": "A",
+   "pid": 100236,
+   "title": "table",
+   "en": "The table",
+   "tech": "read three numbers, answer with a formula",
+   "family": "Municipal round",
+   "year": 2011,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/103/problem/100236"
+  },
+  {
+   "section": "B",
+   "pid": 100748,
+   "title": "sin",
+   "en": "Forecast",
+   "tech": "read the letters one at a time; never store them",
+   "family": "Spring tournament",
+   "year": 2008,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/261/problem/100748"
+  },
+  {
+   "section": "B",
+   "pid": 100041,
+   "title": "maxbin",
+   "en": "Ones and zeros",
+   "tech": "count while reading, then print the answer yourself",
+   "family": "Autumn tournament",
+   "year": 2009,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/26/problem/100041"
+  },
+  {
+   "section": "C",
+   "pid": 100370,
+   "title": "num",
+   "en": "Repeated digits",
+   "tech": "loop over the range the input gives you",
+   "family": "Regional round",
+   "year": 2010,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/157/problem/100370"
+  },
+  {
+   "section": "C",
+   "pid": 100222,
+   "title": "Lubimec13",
+   "en": "Favourite 13",
+   "tech": "test every number in the range, print the count",
+   "family": "Municipal round",
+   "year": 2010,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/97/problem/100222"
+  },
+  {
+   "section": "D",
+   "pid": 100315,
+   "title": "abx",
+   "en": "The equation",
+   "tech": "read `a`, then the sign, then `b` - `cin >>` can do it",
+   "family": "Municipal round",
+   "year": 2016,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/134/problem/100315"
+  },
+  {
+   "section": "D",
+   "pid": 100330,
+   "title": "circles",
+   "en": "Loops in the digits",
+   "tech": "read an expression, then look at the answer's digits",
+   "family": "Municipal round",
+   "year": 2017,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/140/problem/100330"
+  },
+  {
+   "section": "E",
+   "pid": 100512,
+   "title": "clock",
+   "en": "Clock",
+   "tech": "a time in, a time out - get the format exactly right",
+   "family": "National round",
+   "year": 2009,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/211/problem/100512"
+  },
+  {
+   "section": "E",
+   "pid": 100927,
+   "title": "position",
+   "en": "The k-th digit",
+   "tech": "print one digit out of a very long run of squares",
+   "family": "Winter tournament",
+   "year": 2010,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/332/problem/100927"
+  },
+  {
+   "section": "F",
+   "pid": 102529,
+   "title": "prices",
+   "en": "Prices",
+   "tech": "the list will not fit - decide as each value arrives",
+   "family": "Winter tournament",
+   "year": 2026,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/912/problem/102529"
+  },
+  {
+   "section": "F",
+   "pid": 100726,
+   "title": "major",
+   "en": "Majority",
+   "tech": "the same, inside 2 MB",
+   "family": "National round",
+   "year": 2018,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/255/problem/100726"
+  }
+ ]
+}

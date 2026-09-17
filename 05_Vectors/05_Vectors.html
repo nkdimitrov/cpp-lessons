@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C++17 Vectors - a row of boxes that can change length</title>
+<style>
+:root{
+  --bg:#fbfaf8; --panel:#ffffff; --ink:#1c1b1a; --muted:#6b6763; --line:#e4e0da;
+  --accent:#8a4b1f; --accent-soft:#f3ece4; --code-bg:#f6f3ee; --code-ink:#2d2a26;
+  --kw:#8a4b1f; --str:#3f6b3f; --com:#9a948c; --num:#2f5c8a; --pre:#7a5ea8;
+  --note-bg:#fdf6e7; --note-line:#d9a441; --ok:#3f6b3f;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+    --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+    --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+    --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+  --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+  --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+  --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+code,pre,.mono{font-family:"JetBrains Mono",Consolas,"SF Mono",Menlo,monospace}
+.wrap{display:flex;gap:0;align-items:flex-start;max-width:1220px;margin:0 auto}
+/* ---- sidebar ---- */
+#nav{position:sticky;top:0;flex:0 0 250px;height:100vh;overflow-y:auto;
+  padding:26px 14px 40px 20px;border-right:1px solid var(--line);font-size:13.5px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#nav .brand{font-weight:700;letter-spacing:.02em;color:var(--accent);
+  font-size:12px;text-transform:uppercase;margin-bottom:14px}
+#nav a{display:block;padding:4px 8px;margin:1px 0;border-radius:5px;
+  color:var(--muted);text-decoration:none;line-height:1.35}
+#nav a:hover{background:var(--accent-soft);color:var(--ink)}
+#nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+#nav .grp{margin-top:14px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);opacity:.7;padding:0 8px}
+/* ---- main ---- */
+main{flex:1 1 auto;min-width:0;padding:34px 40px 120px;max-width:900px}
+header.top{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:8px}
+h1{font-size:30px;line-height:1.2;margin:0 0 6px}
+.sub{color:var(--muted);font-size:14.5px;font-family:system-ui,sans-serif}
+h2{font-size:21px;margin:44px 0 12px;padding-top:10px;border-top:1px solid var(--line);
+  scroll-margin-top:16px}
+h2:first-of-type{border-top:none}
+h3{font-size:16.5px;margin:26px 0 8px;color:var(--accent);scroll-margin-top:16px}
+p{margin:11px 0}
+code{background:var(--code-bg);padding:1.5px 5px;border-radius:4px;font-size:.87em;
+  color:var(--code-ink);border:1px solid var(--line)}
+pre{background:var(--code-bg);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:7px;padding:13px 15px;overflow-x:auto;font-size:13px;line-height:1.55;
+  margin:14px 0;color:var(--code-ink)}
+pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
+.kw{color:var(--kw);font-weight:600}.str{color:var(--str)}.com{color:var(--com);font-style:italic}
+.num{color:var(--num)}.pp{color:var(--pre)}
+table{border-collapse:collapse;width:100%;margin:15px 0;font-size:14px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+  border-bottom:1.5px solid var(--line);font-weight:600}
+tbody tr:nth-child(even){background:var(--accent-soft)}
+ul{margin:11px 0;padding-left:22px}
+li{margin:4px 0}
+.note{background:var(--note-bg);border-left:3px solid var(--note-line);border-radius:0 7px 7px 0;
+  padding:11px 15px;margin:15px 0;font-size:14.5px}
+.tblwrap{overflow-x:auto}
+/* ---- problems ---- */
+.pgroup{margin:26px 0 0}
+.pgroup h3{margin-bottom:2px}
+.pgroup .maps{color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif;margin:0 0 8px}
+table.prob td{padding:9px 10px}
+table.prob a{color:var(--accent);text-decoration:none;font-weight:600;
+  font-family:Consolas,monospace;font-size:13.5px}
+table.prob a:hover{text-decoration:underline}
+.tech{color:var(--muted);font-size:13px}
+.src{color:var(--muted);font-size:12px;white-space:nowrap}
+.dif{color:var(--accent);letter-spacing:1px;font-size:11.5px;white-space:nowrap}
+.done td{opacity:.45}
+.done td a{text-decoration:line-through}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+#bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;
+  border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;
+  font-family:system-ui,sans-serif;font-size:13px;flex-wrap:wrap}
+#bar .track{flex:1 1 130px;height:7px;background:var(--line);border-radius:4px;overflow:hidden;
+  min-width:110px}
+#bar .fill{height:100%;background:var(--accent);width:0;transition:width .25s}
+button{font:inherit;font-size:12.5px;padding:4px 11px;border:1px solid var(--line);
+  border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+#themeBtn{position:fixed;top:14px;right:16px;z-index:10}
+.cheat td:first-child{font-family:system-ui,sans-serif;width:33%}
+.pit b{display:block;margin-bottom:2px}
+footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif}
+@media(max-width:900px){
+  #nav{display:none}
+  main{padding:26px 18px 90px}
+  h1{font-size:24px}
+  #themeBtn{top:8px;right:10px}
+}
+</style>
+</head><body>
+<button id="themeBtn" title="Toggle light / dark">&#9681;</button>
+<div class="wrap">
+<nav id="nav"><div class="brand">Lesson 05 · Vectors</div>
+<a href="#howto">How to use this lesson</a>
+<div class="grp">Theory</div>
+<a href="#setup">1. Getting started: headers and fast input</a>
+<a href="#why">2. Why a vector exists</a>
+<a href="#make">3. Making a vector</a>
+<a href="#grow">4. Growing it: push_back, pop_back, back</a>
+<a href="#walk">5. Walking a vector</a>
+<a href="#pass">6. Giving a vector to a function - the copy trap</a>
+<a href="#build">7. Building a new vector from an old one</a>
+<a href="#algo">8. Sorting, and the ready-made tools</a>
+<a href="#middle">9. Inserting and erasing in the middle</a>
+<a href="#nested">10. Many lists at once: a vector of vectors</a>
+<a href="#choose">11. Vector or array? How to choose</a>
+<div class="grp">Reference</div>
+<a href="#cheat">12. Cheat sheet</a>
+<a href="#pitfalls">13. Pitfalls</a>
+<a href="#complexity">14. Complexity</a>
+<div class="grp">Practice</div>
+<a href="#problems">15. 24 problems</a>
+<a href="#gA" style="padding-left:16px">A. The list whose length you learn as you go</a>
+<a href="#gB" style="padding-left:16px">B. Build a vector, then sort it</a>
+<a href="#gC" style="padding-left:16px">C. Two vectors kept side by side</a>
+<a href="#gD" style="padding-left:16px">D. When the answer is itself a list</a>
+<a href="#gE" style="padding-left:16px">E. Many lists at once</a>
+<a href="#gF" style="padding-left:16px">F. Bigger builds</a>
+</nav>
+<main>
+<header class="top"><h1>C++17 Vectors - a row of boxes that can change length</h1><div class="sub">Lesson 05 | Theory, cheat sheet and 24 graded problems from arena.olimpiici.com (Groups D and C)</div></header>
+<h2 id="howto">How to use this lesson</h2>
+<p>This lesson is built to be worked through in three passes. Do not try to do all three in one sitting.</p>
+<p><strong>Pass 1 - Read.</strong> Go through sections 1-11 once, typing every snippet into a compiler and running it. Change a number, run it again, see what happens. Do not try to memorise anything yet; the aim is only to know what exists and where to find it later.</p>
+<p><strong>Pass 2 - Memorise.</strong> Section 12 is the cheat sheet. Cover the right-hand column and write out each line from its description alone. Repeat until they all come out without thinking. Section 13 lists the mistakes that cost marks, and section 14 says how fast each operation is.</p>
+<p><strong>Pass 3 - Solve.</strong> Section 15 lists 24 problems from the Olimpiici Arena, ordered from easiest to hardest and grouped by technique. Solve them in order. Each group points back at the theory sections that solve it, so when a problem stalls you, re-read that section instead of looking up a solution.</p>
+<p>Lesson 04 left one question open. An array has to be given its size before the program is compiled, and it can never grow. This lesson is the answer to that, and almost everything you learned about arrays carries straight over - the same indexing, the same scans, the same off-by-one traps.</p>
+<h2 id="setup">1. Getting started: headers and fast input</h2>
+<p>Every program in this lesson begins the same way. These headers cover everything the lesson uses, so include them all at the top.</p>
+<pre><code>#include &lt;iostream&gt;
+#include &lt;vector&gt;       // vector
+#include &lt;string&gt;       // string
+#include &lt;algorithm&gt;    // sort, reverse, count, max_element, unique, remove
+
+using namespace std;</code></pre>
+<p><code>cin</code> and <code>cout</code> are slow out of the box, because they keep themselves in step with the older C functions <code>scanf</code> and <code>printf</code>. A problem that reads 200000 numbers can run out of time for that reason alone. Switch the syncing off with two lines at the start of <code>main</code>:</p>
+<pre><code>int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+    // your solution goes here
+}</code></pre>
+<div class="note">Two rules come with those two lines. Do not mix <code>cin</code>/<code>cout</code> with <code>scanf</code>/<code>printf</code> in the same program - pick one. And print <code>&#x27;\n&#x27;</code> instead of <code>endl</code>: <code>endl</code> empties the output buffer after every single line, which on its own is enough to fail a time limit.</div>
+<h2 id="why">2. Why a vector exists</h2>
+<p>In Lesson 04 every array had to be declared like this, and the number in the brackets had to be there before the program was compiled:</p>
+<pre><code>const int MAXN = 200005;
+int a[MAXN];</code></pre>
+<p>That works, but it forces two compromises. If the statement says nothing about the size, you have to guess, and a guess that is too small is a crash while a guess that is too large wastes memory. And once the row exists it can never get longer, so a problem whose answer is &quot;a list of things, and you will not know how many until you have found them&quot; has nowhere to put them.</p>
+<p>A <strong>vector</strong> is a row of boxes that can change its length while the program is running. Everything else about it is the same picture as an array: the boxes lie next to each other, they all hold the same type, and they are numbered from 0.</p>
+<pre><code>vector&lt;int&gt; v;        // a row with no boxes at all, for now
+
+v.push_back(3);       // 3
+v.push_back(1);       // 3 1
+v.push_back(4);       // 3 1 4
+
+cout &lt;&lt; v.size();     // 3    - and it knows this by itself
+cout &lt;&lt; v[0];         // 3    - indexing is exactly as before</code></pre>
+<p>Three things the vector can do that the array could not:</p>
+<div class="tblwrap"><table><thead><tr>
+<th>Question</th>
+<th>Array</th>
+<th>Vector</th>
+</tr></thead><tbody>
+<tr><td>Size decided while running?</td><td>no</td><td><code>vector&lt;int&gt; v(n);</code></td></tr>
+<tr><td>Can it get longer?</td><td>no</td><td><code>v.push_back(x);</code></td></tr>
+<tr><td>Does it know its own length?</td><td>no - you carry <code>n</code></td><td><code>v.size()</code></td></tr>
+<tr><td>Copy the whole thing</td><td>a loop</td><td><code>vector&lt;int&gt; w = v;</code></td></tr>
+<tr><td>Compare two of them</td><td>a loop</td><td><code>v == w</code></td></tr>
+<tr><td>Give it to a function</td><td>only the address goes</td><td>the whole thing is <strong>copied</strong> - see section 6</td></tr>
+</tbody></table></div>
+<div class="note">The last row is the one that costs marks. An array was free to pass because only its address travelled. A vector is copied, box by box, every single time - which is fine once and a disaster inside a loop. Section 6 is about nothing else.</div>
+<h2 id="make">3. Making a vector</h2>
+<p>The forms worth knowing. The second one is the reason the lesson exists: <code>n</code> may be a number that was only just read from the input.</p>
+<pre><code>vector&lt;int&gt; a;                 // 0 boxes
+vector&lt;int&gt; b(5);              // 5 boxes, all 0      &lt;- note: not rubbish
+vector&lt;int&gt; c(5, 7);           // 5 boxes, all 7
+vector&lt;int&gt; d = {3, 1, 4};     // 3 boxes: 3 1 4
+vector&lt;int&gt; e = d;             // an independent copy of d
+
+vector&lt;long long&gt; f(n);        // any type goes in the angle brackets (n was read above)
+vector&lt;string&gt; words(3);       // three empty strings
+vector&lt;double&gt; g(4, 0.5);</code></pre>
+<div class="note"><code>vector&lt;int&gt; b(5);</code> gives five zeros, but <code>int b[5];</code> gives five pieces of rubbish. <strong>That alone removes a whole class of bug from Lesson 04.</strong> Round brackets mean &quot;this many boxes&quot;; curly brackets mean &quot;these values&quot;, so <code>vector&lt;int&gt; v{5}</code> is <strong>one</strong> box holding 5, not five boxes. Read that line twice - it is the single most confusing pair in the language.</div>
+<p>The shape almost every solution in section 15 begins with:</p>
+<pre><code>int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(nullptr);
+
+    int n;
+    cin &gt;&gt; n;
+    vector&lt;int&gt; v(n);                            // exactly n boxes, not MAXN
+    for (int i = 0; i &lt; n; i++) cin &gt;&gt; v[i];
+}</code></pre>
+<h3>Changing the length later</h3>
+<pre><code>vector&lt;int&gt; v(3, 1);      // 1 1 1
+v.resize(5);              // 1 1 1 0 0    new boxes are 0
+v.resize(5, -1);          // if it had grown here, the new boxes would be -1
+v.resize(2);              // 1 1          the extra boxes are thrown away
+v.clear();                //              length 0 again
+cout &lt;&lt; v.empty();        // 1 = true</code></pre>
+<div class="note">After <code>clear()</code> the vector has no boxes, so <code>v[0]</code> is out of bounds and <code>v.back()</code> is a crash waiting to happen. When a problem has several test cases, either <code>clear()</code> and <code>push_back</code> again, or make a fresh vector for each case - do not reuse the old length.</div>
+<h2 id="grow">4. Growing it: push_back, pop_back, back</h2>
+<p><code>push_back</code> adds one box on the right-hand end. <code>back()</code> is the value in the last box, and <code>pop_back()</code> throws that box away. Those three are most of what you will use.</p>
+<pre><code>vector&lt;int&gt; v;             //
+v.push_back(3);            // 3
+v.push_back(1);            // 3 1
+v.push_back(4);            // 3 1 4
+
+cout &lt;&lt; v.size();          // 3
+cout &lt;&lt; v.back();          // 4        the last value
+cout &lt;&lt; v.front();         // 3        the first value
+
+v.pop_back();              // 3 1      pop_back gives nothing back - read back() first
+cout &lt;&lt; v.size();          // 2</code></pre>
+<div class="note"><code>pop_back()</code> <strong>returns nothing</strong>. If you want the last value and also want it gone, read <code>v.back()</code> into a variable first, then call <code>v.pop_back()</code>. And never call <code>back()</code>, <code>front()</code> or <code>pop_back()</code> on an empty vector - check <code>v.empty()</code> when you are not sure.</div>
+<h3>Reading a list whose length is not given</h3>
+<p>This is the pattern that an array simply cannot do. The input just ends, and the vector ends up exactly the right size:</p>
+<pre><code>vector&lt;int&gt; v;
+int x;
+while (cin &gt;&gt; x) v.push_back(x);
+
+int n = v.size();          // now you know how many there were</code></pre>
+<h3>Why push_back is cheap</h3>
+<p>A vector keeps a little spare room on the end. When the spare room runs out it quietly moves every box to a bigger home, with twice as much room as before. That move costs O(n), but it happens so rarely - after 1 box, 2, 4, 8, 16 - that spread over all the calls each <code>push_back</code> costs a constant amount of time. Pushing a million values one at a time is entirely normal and entirely fast.</p>
+<h2 id="walk">5. Walking a vector</h2>
+<p>All four ways from Lesson 03 work unchanged, and you should recognise every one of them in other people&#x27;s code:</p>
+<pre><code>vector&lt;int&gt; v = {3, 1, 4, 1, 5};
+int n = v.size();
+
+for (int i = 0; i &lt; n; i++)      cout &lt;&lt; v[i];    // by position
+for (int x : v)                  cout &lt;&lt; x;       // every value, read only
+for (int&amp; x : v)                 x *= 2;          // the &amp; lets you change it
+for (int i = n - 1; i &gt;= 0; i--) cout &lt;&lt; v[i];    // backwards</code></pre>
+<div class="note"><code>v.size()</code> is an <strong>unsigned</strong> number, exactly like <code>s.size()</code> was. On an empty vector <code>v.size() - 1</code> is not -1, it is a gigantic number, and <code>for (int i = 0; i &lt; v.size() - 1; i++)</code> loops almost for ever. The cure is the same habit: write <code>int n = v.size();</code> on the line before the loop and compare against <code>n</code>.</div>
+<p>The <code>&amp;</code> in <code>for (int&amp; x : v)</code> is worth a second look. Without it you get a copy of each value, so changing <code>x</code> changes nothing. With it, <code>x</code> *is* the box, and writing to it writes into the vector:</p>
+<pre><code>vector&lt;int&gt; v = {1, 2, 3};
+
+for (int x : v)  x = 0;      // v is still 1 2 3   - x was only a copy
+for (int&amp; x : v) x = 0;      // v is now  0 0 0</code></pre>
+<p>The reaching members are the same ones a string had:</p>
+<div class="tblwrap"><table><thead><tr>
+<th>Member</th>
+<th>What it does</th>
+<th>Cost</th>
+</tr></thead><tbody>
+<tr><td><code>v.size()</code></td><td>How many boxes there are.</td><td>O(1)</td></tr>
+<tr><td><code>v.empty()</code></td><td><code>true</code> when there are none. Prefer it to <code>v.size() == 0</code>.</td><td>O(1)</td></tr>
+<tr><td><code>v[i]</code></td><td>The box at position <code>i</code>. <strong>Does not check</strong> that it exists.</td><td>O(1)</td></tr>
+<tr><td><code>v.front()</code> / <code>v.back()</code></td><td>First / last value. Never on an empty vector.</td><td>O(1)</td></tr>
+<tr><td><code>v.clear()</code></td><td>Throws every box away.</td><td>O(n)</td></tr>
+</tbody></table></div>
+<h2 id="pass">6. Giving a vector to a function - the copy trap</h2>
+<p>This is the most expensive single mistake in the lesson, and it does not look like a mistake at all. Written the obvious way, a function that takes a vector <strong>copies every box of it, every time it is called</strong>.</p>
+<pre><code>long long total(vector&lt;int&gt; v) {          // SLOW: the whole vector is copied
+    long long s = 0;
+    for (int x : v) s += x;
+    return s;
+}</code></pre>
+<p>Call that once on a vector of a million values and you pay for a million copies. Call it inside a loop that runs a thousand times and you pay a thousand million - a time limit failure with a completely correct answer. The cure is one character:</p>
+<pre><code>long long total(const vector&lt;int&gt;&amp; v) {   // FAST: nothing is copied
+    long long s = 0;
+    for (int x : v) s += x;
+    return s;
+}</code></pre>
+<p>The <code>&amp;</code> says &quot;work on the caller&#x27;s vector, do not make a copy&quot;. The <code>const</code> says &quot;and I promise not to change it&quot;, which lets the compiler stop you if you try. Three forms, and you should know which one you want before you type the brackets:</p>
+<div class="tblwrap"><table><thead><tr>
+<th>How you write it</th>
+<th>What happens</th>
+<th>Use it when</th>
+</tr></thead><tbody>
+<tr><td><code>f(vector&lt;int&gt; v)</code></td><td>the whole vector is copied</td><td>almost never</td></tr>
+<tr><td><code>f(const vector&lt;int&gt;&amp; v)</code></td><td>no copy; the function may only read</td><td>the function only looks at it</td></tr>
+<tr><td><code>f(vector&lt;int&gt;&amp; v)</code></td><td>no copy; the function may change it</td><td>the function has to change it</td></tr>
+</tbody></table></div>
+<pre><code>void double_all(vector&lt;int&gt;&amp; v) {        // no const - it changes the vector
+    int n = v.size();
+    for (int i = 0; i &lt; n; i++) v[i] *= 2;
+}
+
+int main() {
+    vector&lt;int&gt; v = {1, 2, 3};
+    double_all(v);
+    cout &lt;&lt; v[0] &lt;&lt; &#x27; &#x27; &lt;&lt; v[1] &lt;&lt; &#x27; &#x27; &lt;&lt; v[2];   // 2 4 6
+}</code></pre>
+<div class="note">Returning a vector from a function is fine and costs nothing extra - the compiler hands the result straight over instead of copying it. It is only the <strong>parameters</strong> that need the <code>&amp;</code>.</div>
+<h2 id="build">7. Building a new vector from an old one</h2>
+<p>Lesson 04 ended with the rule &quot;when several boxes have to go, build a new array instead of deleting them one at a time&quot;. With a vector that rule becomes a three-line habit, and you no longer have to carry a separate count:</p>
+<pre><code>vector&lt;int&gt; keep;
+for (int x : v)
+    if (x % 2 == 0) keep.push_back(x);      // the rule for keeping a value
+
+cout &lt;&lt; keep.size() &lt;&lt; &#x27;\n&#x27;;                // however many there turned out to be</code></pre>
+<h3>The answer whose length you do not know</h3>
+<p>Many statements ask for &quot;all the values that ...&quot;, and want the count printed first. Collect into a vector, then print - you never have to work out the count in advance:</p>
+<pre><code>vector&lt;int&gt; answer;
+for (int i = 0; i &lt; n; i++)
+    if (v[i] &gt; 0) answer.push_back(i + 1);        // 1-based, as statements usually number things
+
+cout &lt;&lt; answer.size() &lt;&lt; &#x27;\n&#x27;;
+for (int i = 0; i &lt; (int)answer.size(); i++) {
+    if (i &gt; 0) cout &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; answer[i];
+}
+cout &lt;&lt; &#x27;\n&#x27;;</code></pre>
+<div class="note"><code>(int)answer.size()</code> turns the unsigned length into an ordinary <code>int</code> so that the comparison behaves. Writing <code>int m = answer.size();</code> before the loop does the same job and reads better - use whichever you will remember.</div>
+<h3>Two vectors from one</h3>
+<p>Splitting into two groups is the same idea twice over, in one pass:</p>
+<pre><code>vector&lt;int&gt; small, large;
+for (int x : v) {
+    if (x &lt; 100) small.push_back(x);
+    else         large.push_back(x);
+}</code></pre>
+<h2 id="algo">8. Sorting, and the ready-made tools</h2>
+<p>Everything <code>&lt;algorithm&gt;</code> did for a string does the same for a vector. Where a string wrote <code>s.begin(), s.end()</code> and an array wrote <code>a, a + n</code>, a vector writes <code>v.begin(), v.end()</code>. Treat it as a fixed phrase meaning <strong>the whole vector</strong>.</p>
+<pre><code>vector&lt;int&gt; v = {3, 1, 4, 1, 5};
+
+sort(v.begin(), v.end());                       // 1 1 3 4 5
+reverse(v.begin(), v.end());                    // 5 4 3 1 1
+
+int big  = *max_element(v.begin(), v.end());    // 5
+int tiny = *min_element(v.begin(), v.end());    // 1
+int ones = count(v.begin(), v.end(), 1);        // 2</code></pre>
+<p>You may sort only a part of it. <code>v.begin() + 2</code> means &quot;position 2&quot;, so this sorts the boxes from 2 up to but not including 5:</p>
+<pre><code>sort(v.begin() + 2, v.begin() + 5);
+reverse(v.begin() + 2, v.begin() + 5);</code></pre>
+<h3>Sorting by your own rule</h3>
+<p><code>sort</code> normally puts the smallest first. To use a different order, write an ordinary function that answers one question - *does <code>a</code> belong before <code>b</code>?* - and hand its name to <code>sort</code>:</p>
+<pre><code>bool bigger_first(int a, int b) {
+    return a &gt; b;                 // a belongs before b when a is larger
+}
+
+sort(v.begin(), v.end(), bigger_first);         // 5 4 3 1 1</code></pre>
+<div class="note">The rule must be <strong>strict</strong>: for two equal values it has to answer <code>false</code>. Writing <code>return a &gt;= b;</code> looks harmless and makes <code>sort</code> crash on large inputs, because it never stops. Use <code>&gt;</code> or <code>&lt;</code>, never <code>&gt;=</code> or <code>&lt;=</code>.</div>
+<h3>Throwing away repeats</h3>
+<p><code>unique</code> only squashes repeats that are <strong>next to each other</strong>, so sort first. And it does not shorten the vector by itself - it needs the <code>erase</code> wrapped round it. Learn the whole line as one phrase:</p>
+<pre><code>sort(v.begin(), v.end());
+v.erase(unique(v.begin(), v.end()), v.end());   // now every value appears once
+
+cout &lt;&lt; v.size();        // how many DISTINCT values there were</code></pre>
+<p>That line is worth learning as it stands, but it is also worth knowing what it does. Written out as a loop it is exactly the neighbour comparison from Lesson 04 - keep a value only the first time it appears - with a <code>push_back</code> in place of the counter:</p>
+<pre><code>sort(v.begin(), v.end());
+
+vector&lt;int&gt; once;
+int n = v.size();
+for (int i = 0; i &lt; n; i++)
+    if (i == 0 || v[i] != v[i - 1])      // keep it only the first time it appears
+        once.push_back(v[i]);
+
+v = once;                                // now every value appears once
+cout &lt;&lt; v.size();</code></pre>
+<div class="note">Both versions do the same job at the same O(n) cost, and both need the sort first - neither can see past its immediate neighbour. Use the one-liner in a contest because it is one line, and use the loop whenever the rule for keeping a value is anything more than &quot;it differs from the one before it&quot;, because <code>unique</code> cannot be told a different rule.</div>
+<h2 id="middle">9. Inserting and erasing in the middle</h2>
+<p>A vector can take a value in at any position, and drop one from any position. Both are written with <code>v.begin() + p</code>, meaning &quot;position <code>p</code>&quot;.</p>
+<pre><code>vector&lt;int&gt; v = {3, 1, 4};
+
+v.insert(v.begin() + 1, 9);        // 3 9 1 4      9 becomes v[1]
+v.erase(v.begin() + 2);            // 3 9 4        v[2] disappears
+
+v.insert(v.begin(), 0);            // 0 3 9 4      at the very front
+v.erase(v.begin() + 1, v.begin() + 3);   // 0 4     erase a stretch</code></pre>
+<div class="note">Both cost <strong>O(n)</strong>, because everything to the right of the hole has to shuffle along. One insert is nothing; an insert inside a loop over <code>n</code> values is O(n^2) and will fail on a large test. Before you write <code>insert</code> in a loop, ask whether you could <code>push_back</code> and sort afterwards instead.</div>
+<h3>Do not erase inside a loop over positions</h3>
+<p>Every erase slides the rest of the vector one place to the left, so the next value moves under your index and is never looked at. This is exactly the bug Lesson 03 warned about with strings, and Lesson 04 with arrays:</p>
+<pre><code>// WRONG - skips values
+for (int i = 0; i &lt; (int)v.size(); i++)
+    if (v[i] == 0) v.erase(v.begin() + i);
+
+// RIGHT - build the vector you want
+vector&lt;int&gt; keep;
+for (int x : v) if (x != 0) keep.push_back(x);
+v = keep;</code></pre>
+<p>If you would rather not build a second vector, there is a fixed phrase for &quot;delete every copy of one value&quot;, the same shape as the <code>unique</code> line:</p>
+<pre><code>v.erase(remove(v.begin(), v.end(), 0), v.end());   // every 0 is gone</code></pre>
+<h2 id="nested">10. Many lists at once: a vector of vectors</h2>
+<p>A <code>vector&lt;vector&lt;int&gt;&gt;</code> is a row of boxes where every box is itself a whole vector. That is how you keep many separate lists without inventing many separate names - and each of them grows on its own.</p>
+<pre><code>vector&lt;vector&lt;int&gt;&gt; lists(4);        // four lists, all empty
+
+lists[0].push_back(7);
+lists[0].push_back(9);
+lists[3].push_back(2);
+
+cout &lt;&lt; lists[0].size();             // 2
+cout &lt;&lt; lists[0][1];                 // 9
+cout &lt;&lt; lists[2].empty();            // 1 = true, nothing was put in it</code></pre>
+<h3>The bucket pattern</h3>
+<p>This is what the whole section is for. When each thing in the input belongs to a group - a colour, a letter, a day of the week - make one list per group and push each thing into its own. Afterwards every group is already gathered together:</p>
+<pre><code>string s;
+cin &gt;&gt; s;
+int n = s.size();
+
+vector&lt;vector&lt;int&gt;&gt; pos(26);                  // s is all lower-case; pos[c] = where c appears
+for (int i = 0; i &lt; n; i++)
+    pos[s[i] - &#x27;a&#x27;].push_back(i);             // the letter picks its own list
+
+// every place the letter &#x27;a&#x27; turned up, in order
+for (int i = 0; i &lt; (int)pos[0].size(); i++)
+    cout &lt;&lt; pos[0][i] &lt;&lt; &#x27; &#x27;;</code></pre>
+<div class="note">Compare this with Lesson 04&#x27;s <code>seen[v] = true</code>. A counting array remembers <strong>how many</strong> of each value there were; a vector of vectors remembers <strong>which ones, and where</strong>. Reach for the counting array when a number is enough, and for this when you need the things themselves.</div>
+<h3>A table whose size comes from the input</h3>
+<p>The same type also gives you a rectangle of numbers, with the row and column counts read at run time. Read the second line as &quot;<code>r</code> rows, each of them a vector of <code>c</code> zeros&quot;:</p>
+<pre><code>int r, c;
+cin &gt;&gt; r &gt;&gt; c;
+
+vector&lt;vector&lt;int&gt;&gt; t(r, vector&lt;int&gt;(c, 0));      // r rows, c columns, all 0
+
+for (int i = 0; i &lt; r; i++)
+    for (int j = 0; j &lt; c; j++)
+        cin &gt;&gt; t[i][j];</code></pre>
+<div class="note">Get the two numbers the wrong way round and the program reads happily for a while and then crashes somewhere else entirely. Say the line out loud - <strong>rows first, then columns</strong> - every time you write it. Lesson 07 does grids properly; this is just the container.</div>
+<h2 id="choose">11. Vector or array? How to choose</h2>
+<p>The vector can do everything the array can, so it is a reasonable default. The plain array still wins in a few places, and those places are common enough in contests that you should know them.</p>
+<div class="tblwrap"><table><thead><tr>
+<th>Situation</th>
+<th>Use</th>
+</tr></thead><tbody>
+<tr><td>The size is only known at run time</td><td>vector</td></tr>
+<tr><td>The list has to grow, or its length is the answer</td><td>vector</td></tr>
+<tr><td>You need one list per group</td><td><code>vector&lt;vector&lt;int&gt;&gt;</code></td></tr>
+<tr><td>A fixed size, given in the statement, and a tight time limit</td><td>a global array</td></tr>
+<tr><td>A flag or counting array over a huge range of values</td><td>a global array - it is zero-filled free</td></tr>
+<tr><td>The function is called many times</td><td>either, but pass it as <code>const vector&lt;int&gt;&amp;</code></td></tr>
+</tbody></table></div>
+<p>The honest summary: a vector costs a very small amount of extra time for the bookkeeping, and in return you stop guessing sizes and stop carrying <code>n</code> about. For the problems in section 15 that trade is always worth taking. When a later lesson needs a two-million-box counting array that must be cleared between test cases, the global array comes back.</p>
+<div class="note">One thing to know rather than to use: <code>vector&lt;bool&gt;</code> is a special case. To save memory it packs eight values into each byte, which makes it behave oddly in places the other vectors do not - <code>for (bool&amp; b : v)</code> will not even compile. If you want a row of flags and anything surprises you, write <code>vector&lt;char&gt;</code> instead and store 0 and 1.</div>
+<h2 id="cheat">12. Cheat sheet &mdash; memorise this page</h2>
+<p>Cover the right-hand column and reproduce each idiom from its description alone.</p>
+<div class="tblwrap"><table class="cheat"><thead><tr><th>You want to&hellip;</th><th>Write</th></tr></thead><tbody>
+<tr><td>Include it</td><td><code>#include &lt;vector&gt;</code></td></tr>
+<tr><td>Empty vector</td><td><code>vector&lt;int&gt; v;</code></td></tr>
+<tr><td>n boxes, all zero</td><td><code>vector&lt;int&gt; v(n);</code></td></tr>
+<tr><td>n boxes, all x</td><td><code>vector&lt;int&gt; v(n, x);</code></td></tr>
+<tr><td>Given values</td><td><code>vector&lt;int&gt; v = {3, 1, 4};</code></td></tr>
+<tr><td>Careful</td><td><code>v(5)</code> is five boxes; <code>v{5}</code> is one box holding 5</td></tr>
+<tr><td>Copy one</td><td><code>vector&lt;int&gt; w = v;</code> - a real, independent copy</td></tr>
+<tr><td>How long is it</td><td><code>v.size()</code>, <code>v.empty()</code></td></tr>
+<tr><td>Reach a value</td><td><code>v[i]</code>, <code>v.front()</code>, <code>v.back()</code></td></tr>
+<tr><td>Add to the end</td><td><code>v.push_back(x);</code></td></tr>
+<tr><td>Remove from the end</td><td><code>v.pop_back();</code> - it returns nothing</td></tr>
+<tr><td>Change the length</td><td><code>v.resize(m);</code>, <code>v.clear();</code></td></tr>
+<tr><td>Read n values</td><td><code>vector&lt;int&gt; v(n); for (...) cin &gt;&gt; v[i];</code></td></tr>
+<tr><td>Read until the input ends</td><td><code>int x; while (cin &gt;&gt; x) v.push_back(x);</code></td></tr>
+<tr><td>The whole vector, for <code>&lt;algorithm&gt;</code></td><td><code>v.begin(), v.end()</code></td></tr>
+<tr><td>Position p, for <code>&lt;algorithm&gt;</code></td><td><code>v.begin() + p</code></td></tr>
+<tr><td>Walk it</td><td><code>for (int x : v)</code> - add <code>&amp;</code> when you need to change it</td></tr>
+<tr><td>Sum</td><td><code>long long s = 0; for (int x : v) s += x;</code> - <strong>never an int</strong></td></tr>
+<tr><td>Largest / smallest</td><td><code>*max_element(v.begin(), v.end())</code></td></tr>
+<tr><td>Count one value</td><td><code>count(v.begin(), v.end(), x)</code></td></tr>
+<tr><td>Sort / reverse</td><td><code>sort(v.begin(), v.end());</code>, <code>reverse(v.begin(), v.end());</code></td></tr>
+<tr><td>Sort part of it</td><td><code>sort(v.begin() + i, v.begin() + j);</code></td></tr>
+<tr><td>Sort by your own rule</td><td>a <code>bool</code> function of two values, then <code>sort(v.begin(), v.end(), rule);</code></td></tr>
+<tr><td>Remove repeats</td><td><code>sort(...)</code> then <code>v.erase(unique(v.begin(), v.end()), v.end());</code></td></tr>
+<tr><td>Delete every copy of x</td><td><code>v.erase(remove(v.begin(), v.end(), x), v.end());</code></td></tr>
+<tr><td>Insert at position p</td><td><code>v.insert(v.begin() + p, x);</code> - O(n)</td></tr>
+<tr><td>Erase position p</td><td><code>v.erase(v.begin() + p);</code> - O(n)</td></tr>
+<tr><td>Keep only some values</td><td><code>vector&lt;int&gt; keep; ... keep.push_back(x);</code> then <code>v = keep;</code></td></tr>
+<tr><td>Give it to a function</td><td><code>f(const vector&lt;int&gt;&amp; v)</code> - <strong>always by reference</strong></td></tr>
+<tr><td>Let the function change it</td><td><code>f(vector&lt;int&gt;&amp; v)</code></td></tr>
+<tr><td>Many lists at once</td><td><code>vector&lt;vector&lt;int&gt;&gt; lists(k);</code> then <code>lists[key].push_back(x);</code></td></tr>
+<tr><td>A table r by c</td><td><code>vector&lt;vector&lt;int&gt;&gt; t(r, vector&lt;int&gt;(c, 0));</code></td></tr>
+</tbody></table></div>
+<h2 id="pitfalls">13. Eleven pitfalls that cost real marks</h2>
+<div class="tblwrap"><table class="pit"><tbody>
+<tr><td><b>Passing a vector without the <code>&amp;</code> copies every box of it.</b><span class="tech"><code>f(vector&lt;int&gt; v)</code> copies; <code>f(const vector&lt;int&gt;&amp; v)</code> does not. Inside a loop the difference is a correct solution that fails on time. This is the single most common vector mistake.</span></td></tr>
+<tr><td><b><code>vector&lt;int&gt; v{5};</code> is one box holding 5.</b><span class="tech">Round brackets mean *how many boxes*, curly brackets mean *which values*. <code>vector&lt;int&gt; v(5);</code> is the five zeros you wanted.</span></td></tr>
+<tr><td><b><code>v[i]</code> never makes the vector longer.</b><span class="tech">Writing <code>v[5]</code> on a vector of length 3 does not add boxes - it writes somewhere it should not, and the program misbehaves later, somewhere else. To make it longer use <code>push_back</code> or <code>resize</code>.</span></td></tr>
+<tr><td><b><code>v.size()</code> is unsigned.</b><span class="tech">On an empty vector <code>v.size() - 1</code> is a gigantic number, not -1. Write <code>int n = v.size();</code> before the loop, or <code>(int)v.size()</code> inside the comparison.</span></td></tr>
+<tr><td><b><code>front()</code>, <code>back()</code> and <code>pop_back()</code> on an empty vector.</b><span class="tech">None of them check. Test <code>v.empty()</code> first whenever the vector might have been cleared or fully popped.</span></td></tr>
+<tr><td><b>Erasing inside a loop over positions skips values.</b><span class="tech">Each erase slides the rest one place left, so the next value moves under your index. Build the vector you want with <code>push_back</code> instead.</span></td></tr>
+<tr><td><b><code>insert</code> and <code>erase</code> in the middle cost O(n) each.</b><span class="tech">In a loop that is O(n^2). For 200000 values that is forty thousand million operations - far past any time limit. Push to the end and sort afterwards where you can.</span></td></tr>
+<tr><td><b>A comparison rule that answers <code>true</code> for equal values crashes <code>sort</code>.</b><span class="tech"><code>return a &gt;= b;</code> is not a valid order and sends <code>sort</code> past the end of the vector on large inputs. Always <code>&gt;</code> or <code>&lt;</code>.</span></td></tr>
+<tr><td><b><code>unique</code> does not shorten anything by itself.</b><span class="tech">It needs a sort before it and an <code>erase</code> around it: <code>v.erase(unique(v.begin(), v.end()), v.end());</code></span></td></tr>
+<tr><td><b><code>vector&lt;vector&lt;int&gt;&gt; g;</code> has no rows at all.</b><span class="tech"><code>g[0]</code> is already out of bounds. Give it a size - <code>vector&lt;vector&lt;int&gt;&gt; g(n);</code> - or <code>push_back</code> whole rows into it.</span></td></tr>
+<tr><td><b>Rows and columns the wrong way round.</b><span class="tech"><code>vector&lt;vector&lt;int&gt;&gt; t(r, vector&lt;int&gt;(c));</code> is <code>r</code> rows of <code>c</code> values. Swap them and the program runs for a while before crashing somewhere unrelated.</span></td></tr>
+</tbody></table></div>
+<h2 id="complexity">14. Complexity reference</h2>
+<div class="tblwrap"><table><thead><tr><th>Operation</th><th>Cost</th></tr></thead><tbody>
+<tr><td><code>v[i]</code> - read or write one box</td><td>O(1)</td></tr>
+<tr><td><code>size</code>, <code>empty</code>, <code>front</code>, <code>back</code></td><td>O(1)</td></tr>
+<tr><td><code>push_back</code>, <code>pop_back</code></td><td>O(1) on average</td></tr>
+<tr><td><code>vector&lt;int&gt; v(n);</code></td><td>O(n)</td></tr>
+<tr><td><code>resize</code>, <code>clear</code></td><td>O(n)</td></tr>
+<tr><td>Copying a vector, or passing it without <code>&amp;</code></td><td>O(n) - <strong>every single call</strong></td></tr>
+<tr><td>Passing it as <code>const vector&lt;int&gt;&amp;</code></td><td>O(1)</td></tr>
+<tr><td><code>insert</code> or <code>erase</code> in the middle</td><td>O(n)</td></tr>
+<tr><td><code>insert</code> or <code>erase</code> inside a loop</td><td>O(n^2) - look for another way</td></tr>
+<tr><td><code>v == w</code></td><td>O(n)</td></tr>
+<tr><td><code>sort(v.begin(), v.end())</code></td><td>O(n log n)</td></tr>
+<tr><td><code>reverse</code>, <code>count</code>, <code>max_element</code>, <code>min_element</code></td><td>O(n)</td></tr>
+<tr><td><code>unique</code> after a sort</td><td>O(n)</td></tr>
+<tr><td>Building a new vector with <code>push_back</code></td><td>O(n)</td></tr>
+<tr><td><code>lists[key].push_back(x)</code> over n values</td><td>O(n) in total</td></tr>
+</tbody></table></div>
+<h2 id="problems">15. Practice &mdash; 24 problems, Group D and C</h2>
+<p>All 24 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D and C, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
+<div class="pgroup"><h3 id="gA">A. The list whose length you learn as you go</h3><p class="maps">Theory: sections 4 and 7</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100072"></td><td><a href="https://arena.olimpiici.com/#/catalog/38/problem/100072" target="_blank" rel="noopener">frequency</a><br><span class="tech">Letter chart</span></td><td class="tech">read until <code>@</code>, so the count is not known in advance</td><td class="src">Autumn tournament 2011</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100267"></td><td><a href="https://arena.olimpiici.com/#/catalog/115/problem/100267" target="_blank" rel="noopener">barcode</a><br><span class="tech">Barcodes</span></td><td class="tech">split the input into pieces, one vector entry each</td><td class="src">Municipal round 2013</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100270"></td><td><a href="https://arena.olimpiici.com/#/catalog/116/problem/100270" target="_blank" rel="noopener">all</a><br><span class="tech">Everyone</span></td><td class="tech">collect the ids that turn up in every contest</td><td class="src">Municipal round 2013</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100420"></td><td><a href="https://arena.olimpiici.com/#/catalog/176/problem/100420" target="_blank" rel="noopener">tststsbreh</a><br><span class="tech">Consonants</span></td><td class="tech">split the text into sentences, then test each one</td><td class="src">Regional round 2013</td><td class="dif">★★☆☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gB">B. Build a vector, then sort it</h3><p class="maps">Theory: section 8</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100298"></td><td><a href="https://arena.olimpiici.com/#/catalog/128/problem/100298" target="_blank" rel="noopener">difference</a><br><span class="tech">Difference</span></td><td class="tech">the digits into a vector, sorted both ways</td><td class="src">Municipal round 2015</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100542"></td><td><a href="https://arena.olimpiici.com/#/catalog/216/problem/100542" target="_blank" rel="noopener">machine</a><br><span class="tech">Time machine</span></td><td class="tech">digits out, sorted, glued back together</td><td class="src">National round 2010</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="102277"></td><td><a href="https://arena.olimpiici.com/#/catalog/850/problem/102277" target="_blank" rel="noopener">books</a><br><span class="tech">Books</span></td><td class="tech"><code>sort</code> with a rule of your own</td><td class="src">Winter tournament 2008</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100914"></td><td><a href="https://arena.olimpiici.com/#/catalog/327/problem/100914" target="_blank" rel="noopener">digits</a><br><span class="tech">Digit weights</span></td><td class="tech">group the digits, then sort by weight and value</td><td class="src">Winter tournament 2009</td><td class="dif">★★☆☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Two vectors kept side by side</h3><p class="maps">Theory: sections 5 and 8</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100071"></td><td><a href="https://arena.olimpiici.com/#/catalog/38/problem/100071" target="_blank" rel="noopener">profit</a><br><span class="tech">Profit</span></td><td class="tech">two vectors, both sorted, matched end to end</td><td class="src">Autumn tournament 2011</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101006"></td><td><a href="https://arena.olimpiici.com/#/catalog/363/problem/101006" target="_blank" rel="noopener">pots</a><br><span class="tech">Pans and lids</span></td><td class="tech">two sorted vectors walked with one index each</td><td class="src">Winter tournament 2015</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100284"></td><td><a href="https://arena.olimpiici.com/#/catalog/122/problem/100284" target="_blank" rel="noopener">klassir</a><br><span class="tech">Classification</span></td><td class="tech">times and numbers kept side by side</td><td class="src">Municipal round 2014</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101367"></td><td><a href="https://arena.olimpiici.com/#/catalog/555/problem/101367" target="_blank" rel="noopener">seg</a><br><span class="tech">Segments</span></td><td class="tech">every segment against every other, n &lt; 1000</td><td class="src">Municipal round 2020</td><td class="dif">★★☆☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gD">D. When the answer is itself a list</h3><p class="maps">Theory: sections 7 and 9</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100326"></td><td><a href="https://arena.olimpiici.com/#/catalog/139/problem/100326" target="_blank" rel="noopener">set</a><br><span class="tech">Intervals</span></td><td class="tech">merge what overlaps - the result length is unknown</td><td class="src">Municipal round 2017</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100128"></td><td><a href="https://arena.olimpiici.com/#/catalog/61/problem/100128" target="_blank" rel="noopener">swap</a><br><span class="tech">Swaps</span></td><td class="tech">collect the swaps, however many there turn out to be</td><td class="src">Autumn tournament 2015</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100610"></td><td><a href="https://arena.olimpiici.com/#/catalog/230/problem/100610" target="_blank" rel="noopener">perm</a><br><span class="tech">Permutation</span></td><td class="tech"><code>reverse</code> a stretch inside the vector</td><td class="src">National round 2013</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101001"></td><td><a href="https://arena.olimpiici.com/#/catalog/362/problem/101001" target="_blank" rel="noopener">encryption</a><br><span class="tech">Encryption</span></td><td class="tech">undo an alternating front/back build</td><td class="src">Winter tournament 2015</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gE">E. Many lists at once</h3><p class="maps">Theory: section 10</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100702"></td><td><a href="https://arena.olimpiici.com/#/catalog/250/problem/100702" target="_blank" rel="noopener">comp</a><br><span class="tech">Song contest</span></td><td class="tech">a running total per song, then sorted</td><td class="src">National round 2017</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100340"></td><td><a href="https://arena.olimpiici.com/#/catalog/145/problem/100340" target="_blank" rel="noopener">colors</a><br><span class="tech">Balloons</span></td><td class="tech">one list per colour</td><td class="src">Municipal round 2018</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101409"></td><td><a href="https://arena.olimpiici.com/#/catalog/570/problem/101409" target="_blank" rel="noopener">maxc</a><br><span class="tech">Largest join</span></td><td class="tech">a vector of words, ordered so the join is largest</td><td class="src">National round 2021</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101021"></td><td><a href="https://arena.olimpiici.com/#/catalog/369/problem/101021" target="_blank" rel="noopener">sock</a><br><span class="tech">Socks</span></td><td class="tech">every pair in one long vector - how long is it?</td><td class="src">Winter tournament 2016</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gF">F. Bigger builds</h3><p class="maps">Theory: sections 7-10</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="102132"></td><td><a href="https://arena.olimpiici.com/#/catalog/803/problem/102132" target="_blank" rel="noopener">rank</a><br><span class="tech">The k-th score</span></td><td class="tech">the k-th distinct score, inside 2 MB</td><td class="src">National round 2024</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100658"></td><td><a href="https://arena.olimpiici.com/#/catalog/240/problem/100658" target="_blank" rel="noopener">segments</a><br><span class="tech">Merging</span></td><td class="tech">merging again, with awkward bounds</td><td class="src">National round 2015</td><td class="dif">★★★★☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101296"></td><td><a href="https://arena.olimpiici.com/#/catalog/476/problem/101296" target="_blank" rel="noopener">restore</a><br><span class="tech">Restore</span></td><td class="tech"><code>insert</code> each value at the position it asks for</td><td class="src">Regional round 2020</td><td class="dif">★★★★☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100776"></td><td><a href="https://arena.olimpiici.com/#/catalog/272/problem/100776" target="_blank" rel="noopener">wordfix</a><br><span class="tech">Word repair</span></td><td class="tech">the positions of each letter, in 26 separate lists</td><td class="src">Spring tournament 2010</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 05 · C++17 vectors. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
+</main></div>
+<script>var LESSON_SLUG="05_Vectors";var LEGACY_KEY=null;</script>
+<script>
+var THEME_KEY="cpp_lessons_theme";
+var DONE_KEY="cpp_done_"+LESSON_SLUG;
+// ---- theme -------------------------------------------------------------
+var tb=document.getElementById('themeBtn');
+function setTheme(t){
+  if(t) document.documentElement.setAttribute('data-theme',t);
+  else document.documentElement.removeAttribute('data-theme');
+  try{t?localStorage.setItem(THEME_KEY,t):localStorage.removeItem(THEME_KEY)}catch(e){}
+}
+try{var st=localStorage.getItem(THEME_KEY); if(st) setTheme(st);}catch(e){}
+tb.onclick=function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  setTheme(cur==='dark'?'light':'dark');
+};
+
+// ---- progress ----------------------------------------------------------
+var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-pid]'));
+var fill=document.querySelector('#bar .fill'), lbl=document.getElementById('cnt');
+// state lives in memory; localStorage is a best-effort mirror so that ticking
+// still works when storage is blocked (private window, file:// restrictions)
+var state={};
+try{
+  var raw=localStorage.getItem(DONE_KEY);
+  if(raw===null && LEGACY_KEY) raw=localStorage.getItem(LEGACY_KEY);  // one-time adopt
+  state=JSON.parse(raw||'{}')||{};
+}catch(e){state={}}
+function save(){try{localStorage.setItem(DONE_KEY,JSON.stringify(state))}catch(e){}}
+function paint(){
+  var n=0;
+  boxes.forEach(function(b){
+    var on=!!state[b.dataset.pid]; b.checked=on; if(on)n++;
+    b.closest('tr').classList.toggle('done',on);
+  });
+  fill.style.width=(n/boxes.length*100)+'%';
+  lbl.textContent=n+' / '+boxes.length+' solved';
+}
+boxes.forEach(function(b){b.onchange=function(){
+  if(b.checked)state[b.dataset.pid]=1; else delete state[b.dataset.pid];
+  save(); paint();
+};});
+document.getElementById('reset').onclick=function(){
+  if(confirm('Clear all progress?')){state={};save();paint();}
+};
+paint();
+
+// ---- scroll spy --------------------------------------------------------
+var links=[].slice.call(document.querySelectorAll('#nav a[href^="#"]'));
+var map={}; links.forEach(function(a){
+  var el=document.getElementById(a.getAttribute('href').slice(1)); if(el)map[el.id]=a;});
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.remove('on')});
+      if(map[e.target.id])map[e.target.id].classList.add('on');
+    }});
+},{rootMargin:'0px 0px -75% 0px'});
+Object.keys(map).forEach(function(id){obs.observe(document.getElementById(id))});
+
+// ---- C++ highlighter ---------------------------------------------------
+var KW=('alignas|alignof|auto|bool|break|case|catch|char|class|const|constexpr|continue|'+
+ 'decltype|default|delete|do|double|else|enum|explicit|export|extern|false|float|for|friend|'+
+ 'goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|'+
+ 'public|register|return|short|signed|sizeof|static|static_cast|struct|switch|template|this|'+
+ 'throw|true|try|typedef|typename|union|unsigned|using|virtual|void|volatile|while|'+
+ 'string|string_view|vector|size_t|map|unordered_map|set|pair|istringstream|ostringstream').split('|');
+var KWRE=new RegExp('\\b('+KW.join('|')+')\\b','g');
+document.querySelectorAll('pre code').forEach(function(el){
+  var src=el.textContent, out='', i=0;
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  while(i<src.length){
+    var rest=src.slice(i), m;
+    if((m=rest.match(/^\/\/[^\n]*/))){out+='<span class="com">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^#[a-z]+/))){out+='<span class="pp">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^"(?:\\.|[^"\\])*"/))||(m=rest.match(/^'(?:\\.|[^'\\])*'/))){
+      out+='<span class="str">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^\b\d[\w.]*/))){out+='<span class="num">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^[A-Za-z_]\w*/))){
+      out+= KWRE.test(m[0])&&(KWRE.lastIndex=0,true) ? '<span class="kw">'+esc(m[0])+'</span>' : esc(m[0]);
+      i+=m[0].length;continue;}
+    out+=esc(src[i]); i++;
+  }
+  el.innerHTML=out;
+});
+</script>
+</body></html>
