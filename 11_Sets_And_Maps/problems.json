@@ -1,0 +1,154 @@
+{
+ "group": "D",
+ "groups": [
+  {
+   "key": "A",
+   "name": "A. Each value once: set",
+   "maps": "Theory: sections 1 and 3"
+  },
+  {
+   "key": "B",
+   "name": "B. Counting with a map",
+   "maps": "Theory: sections 2 and 3"
+  },
+  {
+   "key": "C",
+   "name": "C. Is it there? Fast lookups",
+   "maps": "Theory: section 4"
+  }
+ ],
+ "problems": [
+  {
+   "section": "A",
+   "pid": 101343,
+   "title": "albums",
+   "en": "Stamp albums",
+   "tech": "put one album in a set, then check the other album's stamps",
+   "family": "Autumn tournament",
+   "year": 2020,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/542/problem/101343"
+  },
+  {
+   "section": "A",
+   "pid": 100884,
+   "title": "number",
+   "en": "The number",
+   "tech": "a set of the values - more than three different means no answer",
+   "family": "Spring tournament",
+   "year": 2017,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/315/problem/100884"
+  },
+  {
+   "section": "A",
+   "pid": 101922,
+   "title": "brackets",
+   "en": "Brackets",
+   "tech": "every way of removing brackets goes into a set, so repeats count once",
+   "family": "Regional round",
+   "year": 2023,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/747/problem/101922"
+  },
+  {
+   "section": "A",
+   "pid": 102404,
+   "title": "tangerine",
+   "en": "Tangerines",
+   "tech": "only the different values matter: a set of them, sorted for free",
+   "family": "Spring tournament",
+   "year": 2025,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/873/problem/102404"
+  },
+  {
+   "section": "B",
+   "pid": 102279,
+   "title": "excess",
+   "en": "Excess",
+   "tech": "`m[x]++` for every value, then the ones seen fewer than K times",
+   "family": "Winter tournament",
+   "year": 2008,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/850/problem/102279"
+  },
+  {
+   "section": "B",
+   "pid": 100990,
+   "title": "monitors",
+   "en": "Monitors",
+   "tech": "a map from height to total width, then the largest total",
+   "family": "Winter tournament",
+   "year": 2014,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/357/problem/100990"
+  },
+  {
+   "section": "B",
+   "pid": 101109,
+   "title": "progres",
+   "en": "Progression",
+   "tech": "`m[a[i] - i*d]++` - the commonest key is the part that stays",
+   "family": "National round",
+   "year": 2019,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/407/problem/101109"
+  },
+  {
+   "section": "B",
+   "pid": 100686,
+   "title": "scales",
+   "en": "Scales",
+   "tech": "a map of how many pairs give each sum, times the count of that weight",
+   "family": "National round",
+   "year": 2016,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/246/problem/100686"
+  },
+  {
+   "section": "C",
+   "pid": 101577,
+   "title": "squares",
+   "en": "Sums of squares",
+   "tech": "keep the squares in a set; for each `i*i`, is the rest there too?",
+   "family": "Municipal round",
+   "year": 2021,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/627/problem/101577"
+  },
+  {
+   "section": "C",
+   "pid": 101943,
+   "title": "nice",
+   "en": "Nice numbers",
+   "tech": "a set of all sums of two earlier values; look each new value up",
+   "family": "National round",
+   "year": 2023,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/751/problem/101943"
+  },
+  {
+   "section": "C",
+   "pid": 102087,
+   "title": "sumfraction",
+   "en": "Fractions",
+   "tech": "reduce each fraction, then group them in a map by denominator",
+   "family": "Municipal round",
+   "year": 2024,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/792/problem/102087"
+  },
+  {
+   "section": "C",
+   "pid": 102154,
+   "title": "volley",
+   "en": "Volleyball",
+   "tech": "store every sum of a yellow pair, then look up each orange pair",
+   "family": "Spring tournament",
+   "year": 2024,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/810/problem/102154"
+  }
+ ]
+}

@@ -9,257 +9,208 @@ Generated from `syllabus.json` by `tools/build_site.py` - edit the JSON, not thi
 
 ## Part I - Language and data structures
 
-The C++17 you actually type in a contest. Every lesson is self-contained, follows the shape of Lesson 03, and ends with graded problems drawn from the catalogue.
+The C++17 you actually type in a contest, at the level of a 5th or 6th grader: only the basics. Every lesson is self-contained, follows the shape of Lesson 03, and ends with 12 Group D problems from the catalogue, grouped by subtopic and getting harder as you go.
 
 | # | Lesson | Status | Candidate problems | Catalogue filter |
 |---|--------|--------|--------------------|------------------|
-| 01 | Setup, I/O and the contest toolkit | **written** | 12 assigned | `I/O parsing · level 1-3` |
-| 02 | Primitive types: integers, characters, booleans, floating point | **written** | 24 assigned | `Long long · level 1-3` |
-| 03 | Strings | **written** | 24 assigned | `String processing · Group D` |
-| 04 | Arrays - fixed storage and the loop patterns | **written** | 24 assigned | `Arrays · level 1-3` |
-| 05 | std::vector - dynamic arrays | **written** | 24 assigned | `Vectors · level 2-4` |
-| 06 | Counting and frequency arrays | planned | 102 | `Counting / Frequency arrays · level 2-4` |
-| 07 | Two-dimensional arrays, grids and matrices | planned | 93 | `2D arrays · level 2-4` |
-| 08 | Sorting and custom comparators | planned | 67 | `Sorting · level 2-4` |
-| 09 | Pairs, structs and tuples | planned | 26 | `Pairs / Structs · level 2-4` |
-| 10 | Stacks, queues and deques | planned | 45 | `Stacks / Queues / Deque · level 2-4` |
-| 11 | Sets and maps, ordered and unordered | planned | 32 | `Maps / Sets · level 2-4` |
-| 12 | Priority queues and heaps | planned | 14 | `Priority queue · level 3-5` |
-| 13 | Iterators and the <algorithm> toolbox | planned | 20 | `Vectors · level 2-3` |
-| 14 | Big integers - arithmetic beyond long long | planned | 40 | `Big numbers · level 2-5` |
-| 15 | Recursion and the call stack | planned | 30 | `Recursion · level 2-4` |
-| 16 | Complexity, memory limits and choosing a container | planned | 15 | `Memory optimization · level 3-5` |
+| 01 | Setup, I/O and the contest toolkit | **written** | 12 assigned | `I/O parsing · Group D · level 1-3` |
+| 02 | Numbers: int, long long, bool and double | **written** | 12 assigned | `Long long · Group D · level 1-3` |
+| 03 | Strings | **written** | 12 assigned | `String processing · Group D` |
+| 04 | Arrays - a row of numbered boxes | **written** | 12 assigned | `Arrays · Group D · level 1-3` |
+| 05 | std::vector - a list that grows | **written** | 12 assigned | `Vectors · Group D · level 2-4` |
+| 06 | Counting and frequency arrays | **written** | 12 assigned | `Counting / Frequency arrays · Group D · level 2-4` |
+| 07 | Two-dimensional arrays and grids | **written** | 12 assigned | `2D arrays · Group D · level 2-4` |
+| 08 | Sorting | **written** | 12 assigned | `Sorting · Group D · level 2-4` |
+| 09 | Pairs and structs | **written** | 12 assigned | `Pairs / Structs · Group D · level 2-4` |
+| 10 | Stacks, queues and deques | **written** | 12 assigned | `Stacks / Queues / Deque · Group D · level 2-4` |
+| 11 | Sets and maps | **written** | 12 assigned | `Maps / Sets · Group D · level 2-4` |
+| 12 | Priority queues | **written** | 12 assigned | `Priority queue · Group D · level 3-5` |
+| 13 | The <algorithm> toolbox | **written** | 12 assigned | `Vectors · Group D · level 2-3` |
+| 14 | Big integers - arithmetic beyond long long | **written** | 12 assigned | `Big numbers · Group D · level 2-5` |
+| 15 | Recursion | **written** | 12 assigned | `Recursion · Group D · level 2-4` |
+| 16 | Time and memory limits | **written** | 12 assigned | `Memory optimization · Group D · level 3-5` |
 
 ### 01. Setup, I/O and the contest toolkit
 
-The skeleton of a solution: headers, fast I/O, reading until EOF, whitespace vs lines, file I/O, formatted output, and how to compile and test locally.
+The skeleton of every solution: reading numbers and characters, printing exactly what is asked, and checking before you send.
 
-- the five-line skeleton every solution starts from
-- compiling with g++ -std=c++17 -O2 -Wall, and reading the warnings
-- cin >> skips whitespace, so the input layout never matters
-- a count then that many values; answering while reading, storing nothing
-- reading until EOF, T test cases, and stopping at a marker value
-- printing: separators, and why endl fails time limits
-- ios_base::sync_with_stdio / cin.tie, and the rules that come with them
-- cin >> char, reading `12+7` and `21.05.2015` with `cin >>` alone
-- getline and the cin.ignore() trap
-- what to test before submitting, and what each judge verdict means
+- the program skeleton, compiling and running
+- cin >> and cout <<, spaces and new lines
+- a count, then that many numbers - answering while reading
+- the best so far and the longest streak
+- reading characters one at a time, and until the input ends
+- inputs like 12+7 and 21.05.2015
+- fast input, and '
+' instead of endl
+- what the judge's verdicts mean
 
-### 02. Primitive types: integers, characters, booleans, floating point
+### 02. Numbers: int, long long, bool and double
 
-What fits in what, when it silently breaks, and the arithmetic rules that decide half the wrong answers in Group C and D.
+Which number type to use, how / and % take a number apart, and when a formula beats a loop.
 
-- int / long long / unsigned and their ranges
-- overflow: where it happens and how to see it coming
-- `int * int` is an `int` - casting the operand, not the answer
-- integer division and truncation toward zero
-- the sign of % for negative operands, and `(i - 1 + n) % n`
-- taking a number apart with / and %; rounding up as `(a + b - 1) / b`
-- char as a small integer, ASCII arithmetic, <cctype>
-- bool, short-circuit evaluation, the classic `=` vs `==`
-- double: why `7 / 2` is 3, fixed/setprecision, the <cmath> tools
-- epsilon comparison, and staying with whole numbers instead
-- sqrt and pow are inexact - checking the result with integers
-- implicit conversions, the int/unsigned trap, INT_MAX and LLONG_MAX
+- int and long long - and overflow
+- 1LL * a * b
+- / and %: digits, units, rounding up
+- n(n+1)/2 and counting multiples with a formula
+- bool, &&, ||, !
+- double, setprecision, and exact square roots
 
 ### 03. Strings
 
-std::string for beginners: characters as numbers, search, modification, conversion, frequency counting, and the patterns that keep reappearing.
+Words and text: characters as numbers, walking along a string, counting letters and palindromes.
 
-- construction, size, element access
-- characters as ASCII numbers, <cctype> classification
-- find / rfind / substr / replace / erase / insert
-- comparison and dictionary order
-- stoi / stoll / to_string, conversion by hand, other bases
-- <algorithm> on strings: sort, reverse, unique, next_permutation
-- cin >> / getline, the newline trap, splitting a line by hand
-- frequency arrays over characters, anagrams, palindromes
-- runs, sliding window, prefix sums, rotations
+- s[i], s.size(), cin >> s
+- characters as numbers: c - 'a', c - '0'
+- <cctype> tests and changes
+- runs of equal characters, and find
+- +=, substr, reverse, comparing words
+- getline and cin.ignore()
+- counting letters with cnt[26]
+- palindromes
 
-### 04. Arrays - fixed storage and the loop patterns
+### 04. Arrays - a row of numbered boxes
 
-The raw C array is still the fastest thing in the language and the most common source of a zero. Declaration, bounds, global vs local, and the scan patterns every problem reuses.
+Filling and scanning an array, looking at neighbours, going round a circle and sliding a window.
 
-- declaration, initialisation, `{}` and fill
-- global arrays vs stack arrays and why size limits differ
-- off-by-one and out-of-bounds: what actually happens
-- the six standard scans: sum, max, min, count, index-of, contains
-- keeping a running answer in a single pass; runs and streaks
-- neighbouring pairs, local maxima and windows of fixed width
-- wrapping round a circle with `%`
-- parallel arrays, and using a value as an index
-- shifting, rotating, deleting, in-place reversal
-- passing arrays to functions (decay to pointer)
-- sentinel values and 1-based indexing
+- declaring arrays outside main
+- reading and printing, forwards and backwards
+- sum, largest, smallest, count
+- neighbours a[i-1] and a[i+1]
+- going round a circle with %
+- sliding a window of k boxes
+- several passes and several arrays
 
-### 05. std::vector - dynamic arrays
+### 05. std::vector - a list that grows
 
-When the size is not known until runtime. Growth, cost, the copy traps, and the vector idioms that replace a page of manual array code.
+When you do not know the size in advance: push_back, digits in a vector, building new lists, and one list per group.
 
-- why a fixed-size array is not always enough
-- construction: `v`, `v(n)`, `v(n, x)`, `{...}`; resize and clear
-- push_back / pop_back / back, and reading a list of unknown length
-- iteration: index, range-for, range-for by reference
-- passing by value vs const reference (the classic TLE)
-- building a new vector instead of erasing in a loop
-- sort, reverse, count, max_element on `v.begin(), v.end()`
-- sorting by your own rule with a comparison function
-- sort + unique + erase for distinct values
-- insert / erase in the middle and their O(n) cost
-- vector<vector<int>>: one list per group, and a run-time sized table
-- when a plain global array is still the better choice
+- push_back, size, back, pop_back
+- vector<int> a(n) when the size is known
+- sort and reverse on a vector
+- the digits of a number in a vector
+- building a new vector instead of erasing
+- insert in the middle, and what it costs
+- an array of vectors: one list per group
 
 ### 06. Counting and frequency arrays
 
-The single highest-yield technique in Groups C and D: turn a loop over values into an index into an array.
+The value becomes the box number: counting, marking, the commonest value and counting sort.
 
-- the count[] pattern and choosing its size
-- counting sort in O(n + k)
-- histograms and mode
-- presence arrays vs counting arrays
-- offsetting negative keys
-- counting pairs without enumerating pairs
-- when a map beats an array (sparse or huge key space)
-- frequency over characters, digits, remainders
-- difference between counting and marking (visited[])
+- cnt[x]++ and choosing the size
+- shifting negative values
+- seen[] for marking
+- the commonest value
+- c * (c - 1) / 2 pairs
+- counting as you go
+- counting sort and the k-th smallest
 
-### 07. Two-dimensional arrays, grids and matrices
+### 07. Two-dimensional arrays and grids
 
-Rows, columns, diagonals and neighbours. The indexing discipline that makes grid problems routine instead of error-prone.
+Tables of rows and columns: row and column scans, neighbours, spirals and diagonals.
 
-- declaration of 2D and 3D arrays; memory layout
-- row-major traversal and cache behaviour
-- the dx/dy direction-array idiom (4- and 8-neighbourhood)
-- bounds checking in one helper
-- diagonals: i+j and i-j indexing
-- transpose, rotate 90, mirror
-- border padding to avoid bounds checks
-- reading a grid of characters vs a grid of numbers
-- 2D prefix sums (preview of Lesson 19)
-- matrix multiplication and its cost
+- a[i][j]: row first, then column
+- row sums and column sums
+- grids of characters
+- the four neighbours with dr / dc
+- snake order, spiral and turning by 90 degrees
+- diagonals and runs along a line
 
-### 08. Sorting and custom comparators
+### 08. Sorting
 
-std::sort and everything around it - stability, comparators, sorting by more than one key, and the problems that become trivial once sorted.
+sort in one line, sorting by your own rule, and the problems that become easy once things are in order.
 
-- sort, stable_sort, partial_sort, nth_element
-- comparator functions, lambdas, and the strict-weak-ordering rule
-- sorting pairs and structs by several keys
-- descending order: greater<> vs reversing the comparator
-- sorting indices instead of values
-- unique + erase to deduplicate
-- lower_bound / upper_bound / equal_range on a sorted array
-- counting sort vs comparison sort
-- the cost of sorting inside a loop
+- sort on arrays, vectors and strings
+- largest first with greater<int>()
+- neighbours after sorting, counting different values
+- compare functions with several rules
+- two sorted lists side by side
+- sort first, then decide
 
-### 09. Pairs, structs and tuples
+### 09. Pairs and structs
 
-Grouping related values so that sorting, comparing and returning them stops being painful.
+Keeping values that belong together, sorting them, and returning two things from a function.
 
-- std::pair, make_pair, .first / .second
-- lexicographic comparison of pairs - and how to exploit it
-- structs with named fields; when to prefer them
-- operator< on a struct
-- std::tuple, tie and structured bindings (C++17)
-- returning several values from a function
-- vector<pair<int,int>> as the default 'list of events'
-- sorting a struct array by a chosen field
+- pair, .first and .second
+- sorting pairs: by first, then by second
+- {value, number} to remember who is who
+- struct with named fields
+- sorting structs with a compare function
+- returning a pair from a function
 
 ### 10. Stacks, queues and deques
 
-Three containers with one rule each, and the problem shapes that announce them.
+Piles and lines: three containers with one simple rule each.
 
-- std::stack: push, pop, top, empty
-- bracket matching and expression evaluation
-- the monotonic stack (next greater element, largest rectangle)
-- std::queue: push, pop, front - and BFS's data structure
-- simulation queues (service, rotation, Josephus)
-- std::deque: both-ends insertion
-- the monotonic deque and sliding-window minimum
-- implementing all three over a raw array when speed matters
+- stack: push, top, pop, empty
+- queue: push, front, pop
+- deque: both ends
+- the circle game with a queue
+- checking brackets
+- a stack that keeps only what matters
 
-### 11. Sets and maps, ordered and unordered
+### 11. Sets and maps
 
-Associative containers: what they cost, what order they give back, and when a plain array beats both.
+Remembering what you have seen, for any values: different values, counts and fast lookups.
 
-- set / multiset: insert, erase, count, find
-- ordered traversal and lower_bound on a set
-- map / multimap: operator[] vs at vs find
-- the operator[] insertion trap
-- unordered_set / unordered_map and hashing
-- when unordered is slower (collisions, reserve, max_load_factor)
-- map<string,int> for word frequency
-- set as a running 'seen' structure
-- choosing between array, set, map and sorted vector
+- set: insert, count, erase, size
+- map: m[key]++ and the m[key] trap
+- walking a set or a map in order
+- looking up a partner with S - x
+- array, set or map?
 
-### 12. Priority queues and heaps
+### 12. Priority queues
 
-Repeatedly taking the best element without re-sorting.
+A box that always hands you the largest - or the smallest - value.
 
-- priority_queue basics: push, top, pop
-- min-heap via greater<> or negated keys
-- priority_queue of pairs and structs; custom comparators
-- heap of a fixed size (k largest)
-- make_heap / push_heap / pop_heap on a vector
-- scheduling and merging problems
-- why it is the right structure for Dijkstra (preview of Lesson 35)
-- lazy deletion when elements become stale
+- priority_queue: push, top, pop
+- smallest first with greater<int>
+- joining the two smallest
+- pairs in a priority queue
+- events in time order
+- priority queue or sort?
 
-### 13. Iterators and the <algorithm> toolbox
+### 13. The <algorithm> toolbox
 
-The standard library functions that replace hand-written loops, and the iterator vocabulary they all speak.
+Ready-made loops: min, max, count, find, reverse, unique, next_permutation and binary search.
 
-- iterator basics: begin/end, half-open ranges
-- min_element / max_element / minmax_element
-- accumulate, count, count_if, find, find_if
-- all_of / any_of / none_of
-- reverse, rotate, next_permutation
-- fill, iota, copy, transform
-- lower_bound / upper_bound / binary_search
-- unique, remove, remove_if and the erase idiom
-- iterator invalidation - the rules that matter
+- a, a + n and v.begin(), v.end()
+- min, max, swap, min_element, max_element
+- count and find
+- reverse, rotate, unique
+- next_permutation: every order
+- binary_search, lower_bound, upper_bound
 
 ### 14. Big integers - arithmetic beyond long long
 
-When the answer has 200 digits. Representation, the four operations, and how to keep them fast enough.
+Numbers with hundreds of digits, handled digit by digit like sums on paper.
 
-- deciding that long long is not enough
-- representation: digit vector, little-endian, base 10 vs base 10^9
-- addition and subtraction with carry/borrow
-- multiplication by a small integer, and long multiplication
-- division and modulo by a small integer
-- comparison and normalisation (leading zeros)
-- reading and printing
-- factorials, powers and Fibonacci as the classic uses
-- when modular arithmetic replaces big integers entirely
+- digits stored backwards in a vector
+- adding with a carry
+- multiplying by a small number
+- subtracting and comparing
+- multiplying two long numbers
+- dividing by a small number, and the remainder
 
-### 15. Recursion and the call stack
+### 15. Recursion
 
-Writing a function that calls itself, reasoning about it, and knowing what it costs.
+A function that calls itself: the base case, remembering answers, and trying every choice.
 
-- base case and recursive case
-- the call stack; what a stack overflow looks like
-- recursion vs iteration; converting between them
-- recursive array and string processing
-- divide and conquer: binary search, merge sort
-- recursion with an accumulator vs with a return value
-- returning versus printing inside recursion
-- exponential recursion and why memoisation exists
-- mutual recursion and helper signatures
+- base case and step: factorial, digit sum, gcd
+- how the calls wait for each other
+- remembering answers (Fibonacci)
+- all 0/1 strings and all groups
+- all orders with backtracking
 
-### 16. Complexity, memory limits and choosing a container
+### 16. Time and memory limits
 
-Reading the constraints and deciding, before writing a line, which approach can pass.
+Counting steps and bytes before you write a line, and the shortcuts that make a slow idea fast.
 
-- big-O in practice: the 10^8 operations rule of thumb
-- mapping n to an allowed complexity
-- memory: bytes per element for every container
-- the 1 MB and 16 MB limits in older NOI tasks
-- time cost of I/O and of endl
-- cache behaviour: why a flat array beats a vector of vectors
-- amortised vs worst case
-- estimating before implementing
-- a decision table: which container for which requirement
+- counting steps: O(n), O(n * n), O(log n)
+- about 10^8 steps per second
+- which n allows which solution
+- formulas and the square-root shortcut
+- bytes per value and the memory limit
+- a checklist before coding
 
 ## Part II - Algorithms and techniques
 

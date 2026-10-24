@@ -1,0 +1,159 @@
+{
+ "group": "D",
+ "groups": [
+  {
+   "key": "A",
+   "name": "A. Rows and columns",
+   "maps": "Theory: sections 1 and 2"
+  },
+  {
+   "key": "B",
+   "name": "B. Neighbours",
+   "maps": "Theory: sections 3 and 4"
+  },
+  {
+   "key": "C",
+   "name": "C. Walking round the grid",
+   "maps": "Theory: section 5"
+  },
+  {
+   "key": "D",
+   "name": "D. Lines through the grid",
+   "maps": "Theory: section 6"
+  }
+ ],
+ "problems": [
+  {
+   "section": "A",
+   "pid": 100946,
+   "title": "topscore",
+   "en": "Top score",
+   "tech": "smallest in its row and largest in its column",
+   "family": "Winter tournament",
+   "year": 2011,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/339/problem/100946"
+  },
+  {
+   "section": "A",
+   "pid": 100375,
+   "title": "tetris",
+   "en": "Tetris",
+   "tech": "is the row full? then runs of full rows, scored `k * (k + 1) / 2`",
+   "family": "Regional round",
+   "year": 2010,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/158/problem/100375"
+  },
+  {
+   "section": "A",
+   "pid": 100928,
+   "title": "warehouse",
+   "en": "Warehouse",
+   "tech": "a row, or a column, with nothing in it from end to end",
+   "family": "Winter tournament",
+   "year": 2010,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/333/problem/100928"
+  },
+  {
+   "section": "B",
+   "pid": 102486,
+   "title": "enemy",
+   "en": "Enemies",
+   "tech": "`dr`/`dc` over the four neighbours, count the occupied ones",
+   "family": "Municipal round",
+   "year": 2026,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/901/problem/102486"
+  },
+  {
+   "section": "B",
+   "pid": 102263,
+   "title": "minmax",
+   "en": "Smallest and largest",
+   "tech": "every pair of side-by-side cells: the smallest and largest sum",
+   "family": "Municipal round",
+   "year": 2025,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/845/problem/102263"
+  },
+  {
+   "section": "B",
+   "pid": 100637,
+   "title": "table",
+   "en": "The table",
+   "tech": "test every 2 x 2 block of neighbouring cells",
+   "family": "National round",
+   "year": 2014,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/236/problem/100637"
+  },
+  {
+   "section": "C",
+   "pid": 100403,
+   "title": "limes",
+   "en": "Snake order",
+   "tech": "rows numbered left to right, then right to left - find row and column",
+   "family": "Regional round",
+   "year": 2012,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/170/problem/100403"
+  },
+  {
+   "section": "C",
+   "pid": 101906,
+   "title": "spiral",
+   "en": "Spiral",
+   "tech": "walk the spiral with a direction array, turning when blocked",
+   "family": "Municipal round",
+   "year": 2023,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/742/problem/101906"
+  },
+  {
+   "section": "C",
+   "pid": 100688,
+   "title": "traf",
+   "en": "Turning grille",
+   "tech": "turn the mask by 90 degrees, four times, reading letters through it",
+   "family": "National round",
+   "year": 2016,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/246/problem/100688"
+  },
+  {
+   "section": "D",
+   "pid": 100615,
+   "title": "battle",
+   "en": "Sea battle",
+   "tech": "runs of free cells along each row and each column",
+   "family": "National round",
+   "year": 2013,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/231/problem/100615"
+  },
+  {
+   "section": "D",
+   "pid": 100589,
+   "title": "crossword",
+   "en": "Crossword",
+   "tech": "number the word starts, then measure the runs across and down",
+   "family": "National round",
+   "year": 2012,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/226/problem/100589"
+  },
+  {
+   "section": "D",
+   "pid": 100566,
+   "title": "points",
+   "en": "Points",
+   "tech": "runs of consecutive values along rows, columns and both diagonals",
+   "family": "National round",
+   "year": 2011,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/221/problem/100566"
+  }
+ ]
+}

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C++17 Grids - tables of rows and columns</title>
+<style>
+:root{
+  --bg:#fbfaf8; --panel:#ffffff; --ink:#1c1b1a; --muted:#6b6763; --line:#e4e0da;
+  --accent:#8a4b1f; --accent-soft:#f3ece4; --code-bg:#f6f3ee; --code-ink:#2d2a26;
+  --kw:#8a4b1f; --str:#3f6b3f; --com:#9a948c; --num:#2f5c8a; --pre:#7a5ea8;
+  --note-bg:#fdf6e7; --note-line:#d9a441; --ok:#3f6b3f;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+    --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+    --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+    --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+  --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+  --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+  --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+code,pre,.mono{font-family:"JetBrains Mono",Consolas,"SF Mono",Menlo,monospace}
+.wrap{display:flex;gap:0;align-items:flex-start;max-width:1220px;margin:0 auto}
+/* ---- sidebar ---- */
+#nav{position:sticky;top:0;flex:0 0 250px;height:100vh;overflow-y:auto;
+  padding:26px 14px 40px 20px;border-right:1px solid var(--line);font-size:13.5px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#nav .brand{font-weight:700;letter-spacing:.02em;color:var(--accent);
+  font-size:12px;text-transform:uppercase;margin-bottom:14px}
+#nav a{display:block;padding:4px 8px;margin:1px 0;border-radius:5px;
+  color:var(--muted);text-decoration:none;line-height:1.35}
+#nav a:hover{background:var(--accent-soft);color:var(--ink)}
+#nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+#nav .grp{margin-top:14px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);opacity:.7;padding:0 8px}
+#nav a.home{display:inline-flex;align-items:center;gap:7px;margin:0 0 16px;padding:5px 12px;
+  border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);
+  font-weight:600}
+#nav a.home svg{width:15px;height:15px}
+#nav a.home:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager{display:flex;gap:8px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+#nav .pager a,#nav .pager span{flex:1 1 0;display:flex;flex-direction:column;align-items:center;
+  margin:0;padding:6px 4px 7px;border:1px solid var(--line);border-radius:6px;
+  background:var(--panel);color:var(--ink);font-size:22px;line-height:1.1}
+#nav .pager small{font-size:11px;color:var(--muted);margin-top:2px}
+#nav .pager a:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager a:hover small{color:var(--accent)}
+#nav .pager span{opacity:.35}
+/* ---- main ---- */
+main{flex:1 1 auto;min-width:0;padding:34px 40px 120px;max-width:900px}
+header.top{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:8px}
+h1{font-size:30px;line-height:1.2;margin:0 0 6px}
+.sub{color:var(--muted);font-size:14.5px;font-family:system-ui,sans-serif}
+h2{font-size:21px;margin:44px 0 12px;padding-top:10px;border-top:1px solid var(--line);
+  scroll-margin-top:16px}
+h2:first-of-type{border-top:none}
+h3{font-size:16.5px;margin:26px 0 8px;color:var(--accent);scroll-margin-top:16px}
+p{margin:11px 0}
+code{background:var(--code-bg);padding:1.5px 5px;border-radius:4px;font-size:.87em;
+  color:var(--code-ink);border:1px solid var(--line)}
+pre{background:var(--code-bg);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:7px;padding:13px 15px;overflow-x:auto;font-size:13px;line-height:1.55;
+  margin:14px 0;color:var(--code-ink)}
+pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
+.kw{color:var(--kw);font-weight:600}.str{color:var(--str)}.com{color:var(--com);font-style:italic}
+.num{color:var(--num)}.pp{color:var(--pre)}
+table{border-collapse:collapse;width:100%;margin:15px 0;font-size:14px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+  border-bottom:1.5px solid var(--line);font-weight:600}
+tbody tr:nth-child(even){background:var(--accent-soft)}
+ul{margin:11px 0;padding-left:22px}
+li{margin:4px 0}
+.note{background:var(--note-bg);border-left:3px solid var(--note-line);border-radius:0 7px 7px 0;
+  padding:11px 15px;margin:15px 0;font-size:14.5px}
+.tblwrap{overflow-x:auto}
+/* ---- problems ---- */
+.pgroup{margin:26px 0 0}
+.pgroup h3{margin-bottom:2px}
+.pgroup .maps{color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif;margin:0 0 8px}
+table.prob td{padding:9px 10px}
+table.prob a{color:var(--accent);text-decoration:none;font-weight:600;
+  font-family:Consolas,monospace;font-size:13.5px}
+table.prob a:hover{text-decoration:underline}
+.tech{color:var(--muted);font-size:13px}
+.src{color:var(--muted);font-size:12px;white-space:nowrap}
+.dif{color:var(--accent);letter-spacing:1px;font-size:11.5px;white-space:nowrap}
+.done td{opacity:.45}
+.done td a{text-decoration:line-through}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+#bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;
+  border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;
+  font-family:system-ui,sans-serif;font-size:13px;flex-wrap:wrap}
+#bar .track{flex:1 1 130px;height:7px;background:var(--line);border-radius:4px;overflow:hidden;
+  min-width:110px}
+#bar .fill{height:100%;background:var(--accent);width:0;transition:width .25s}
+button{font:inherit;font-size:12.5px;padding:4px 11px;border:1px solid var(--line);
+  border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+#themeBtn{position:fixed;top:14px;right:16px;z-index:10}
+.cheat td:first-child{font-family:system-ui,sans-serif;width:33%}
+.pit b{display:block;margin-bottom:2px}
+footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif}
+@media(max-width:900px){
+  #nav{display:none}
+  main{padding:26px 18px 90px}
+  h1{font-size:24px}
+  #themeBtn{top:8px;right:10px}
+}
+</style>
+</head><body>
+<button id="themeBtn" title="Toggle light / dark">&#9681;</button>
+<div class="wrap">
+<nav id="nav"><a class="home" href="../index.html" title="All lessons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>Home</a>
+<div class="brand">Lesson 07 · Grids</div>
+<div class="grp">Theory</div>
+<a href="#table">1. A table of numbers</a>
+<a href="#rows">2. Rows and columns</a>
+<a href="#chars">3. Grids of characters</a>
+<a href="#neigh">4. Neighbours</a>
+<a href="#walk">5. Walking round the grid</a>
+<a href="#lines">6. Lines through the grid</a>
+<div class="grp">Reference</div>
+<a href="#cheat">7. Cheat sheet</a>
+<a href="#pitfalls">8. Pitfalls</a>
+<a href="#complexity">9. Complexity</a>
+<div class="grp">Practice</div>
+<a href="#problems">10. 12 problems</a>
+<a href="#gA" style="padding-left:16px">A. Rows and columns</a>
+<a href="#gB" style="padding-left:16px">B. Neighbours</a>
+<a href="#gC" style="padding-left:16px">C. Walking round the grid</a>
+<a href="#gD" style="padding-left:16px">D. Lines through the grid</a>
+<div class="pager">
+<a href="../06_Counting_Arrays/06_Counting_Arrays.html" title="Previous: Lesson 06 &middot; Counting and frequency arrays">&larr;<small>Lesson 06</small></a>
+<a href="../08_Sorting/08_Sorting.html" title="Next: Lesson 08 &middot; Sorting">&rarr;<small>Lesson 08</small></a>
+</div>
+</nav>
+<main>
+<header class="top"><h1>C++17 Grids - tables of rows and columns</h1><div class="sub">Lesson 07 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<h2 id="table">1. A table of numbers</h2>
+<p>A two-dimensional array is a table. <code>a[i][j]</code> is the box in <strong>row</strong> <code>i</code> and <strong>column</strong> <code>j</code>. Both start at 0:</p>
+<pre><code>int a[105][105];             // outside main: up to 105 rows and 105 columns
+
+int n, m;                    // n rows, m columns
+cin &gt;&gt; n &gt;&gt; m;
+for (int i = 0; i &lt; n; i++)
+    for (int j = 0; j &lt; m; j++)
+        cin &gt;&gt; a[i][j];</code></pre>
+<p>Printing it row by row: the inner loop prints one row, then a new line ends it.</p>
+<pre><code>for (int i = 0; i &lt; n; i++) {
+    for (int j = 0; j &lt; m; j++) cout &lt;&lt; a[i][j] &lt;&lt; &#x27; &#x27;;
+    cout &lt;&lt; &#x27;\n&#x27;;
+}</code></pre>
+<div class="note">Always the row first, then the column: <code>a[row][column]</code>. Mixing them up is the most common grid bug.</div>
+<h2 id="rows">2. Rows and columns</h2>
+<p>To go along one row, keep <code>i</code> fixed and move <code>j</code>. To go down one column, keep <code>j</code> fixed and move <code>i</code>:</p>
+<pre><code>// the sum of every row
+for (int i = 0; i &lt; n; i++) {
+    int s = 0;
+    for (int j = 0; j &lt; m; j++) s += a[i][j];
+    cout &lt;&lt; s &lt;&lt; &#x27;\n&#x27;;
+}
+
+// the largest number in every column
+for (int j = 0; j &lt; m; j++) {
+    int mx = a[0][j];
+    for (int i = 1; i &lt; n; i++)
+        if (a[i][j] &gt; mx) mx = a[i][j];
+    cout &lt;&lt; mx &lt;&lt; &#x27;\n&#x27;;
+}</code></pre>
+<p>&quot;Is this row completely full?&quot; is the same loop with a <code>bool</code> that turns <code>false</code> as soon as one empty box is found.</p>
+<h2 id="chars">3. Grids of characters</h2>
+<p>Many grids are pictures made of characters such as <code>.</code> and <code>#</code>. Read each row as one string; then <code>g[i][j]</code> is the character in row <code>i</code>, column <code>j</code>:</p>
+<pre><code>string g[105];                   // outside main, together with n and m,
+int n, m;                        // so that functions can use them too
+
+// inside main:
+cin &gt;&gt; n &gt;&gt; m;
+for (int i = 0; i &lt; n; i++) cin &gt;&gt; g[i];      // input:  .#..
+                                              //         ##.#
+int walls = 0;
+for (int i = 0; i &lt; n; i++)
+    for (int j = 0; j &lt; m; j++)
+        if (g[i][j] == &#x27;#&#x27;) walls++;</code></pre>
+<h2 id="neigh">4. Neighbours</h2>
+<p>The four neighbours of a box are up, down, left and right. Instead of writing four <code>if</code>s, keep the four steps in two small arrays and loop over them:</p>
+<pre><code>int dr[4] = {-1, 1, 0, 0};       // row step:    up, down, left, right
+int dc[4] = {0, 0, -1, 1};       // column step
+
+int count_walls(int r, int c) {
+    int k = 0;
+    for (int d = 0; d &lt; 4; d++) {
+        int nr = r + dr[d], nc = c + dc[d];
+        if (nr &lt; 0 || nr &gt;= n || nc &lt; 0 || nc &gt;= m) continue;   // outside the grid
+        if (g[nr][nc] == &#x27;#&#x27;) k++;
+    }
+    return k;
+}</code></pre>
+<p>The check for &quot;outside the grid&quot; must come <strong>before</strong> you look at <code>g[nr][nc]</code>. For eight neighbours (with the corners), use eight steps: every pair of <code>-1</code>, <code>0</code>, <code>1</code> except <code>0, 0</code>.</p>
+<h2 id="walk">5. Walking round the grid</h2>
+<p><strong>Snake order.</strong> Row 0 goes left to right, row 1 right to left, and so on. Check whether the row number is even:</p>
+<pre><code>for (int i = 0; i &lt; n; i++) {
+    if (i % 2 == 0) for (int j = 0; j &lt; m; j++)      cout &lt;&lt; a[i][j] &lt;&lt; &#x27; &#x27;;
+    else            for (int j = m - 1; j &gt;= 0; j--) cout &lt;&lt; a[i][j] &lt;&lt; &#x27; &#x27;;
+}</code></pre>
+<p><strong>Spiral.</strong> Walk with a direction number <code>d</code> and the step arrays. When the next box is outside the grid or already filled, turn right: <code>d = (d + 1) % 4</code>. Use the order right, down, left, up:</p>
+<pre><code>int dr[4] = {0, 1, 0, -1}, dc[4] = {1, 0, -1, 0};    // right, down, left, up
+int r = 0, c = 0, d = 0;
+for (int k = 1; k &lt;= n * n; k++) {
+    a[r][c] = k;
+    int nr = r + dr[d], nc = c + dc[d];
+    if (nr &lt; 0 || nr &gt;= n || nc &lt; 0 || nc &gt;= n || a[nr][nc] != 0) {
+        d = (d + 1) % 4;                             // turn right
+        nr = r + dr[d];
+        nc = c + dc[d];
+    }
+    r = nr;
+    c = nc;
+}</code></pre>
+<p><strong>Turning by 90 degrees</strong> to the right: the box in row <code>i</code>, column <code>j</code> moves to row <code>j</code>, column <code>n - 1 - i</code>. Write the result into a second array <code>b[j][n - 1 - i] = a[i][j];</code>.</p>
+<h2 id="lines">6. Lines through the grid</h2>
+<p>In a square <code>n x n</code> grid, the two long diagonals are easy to spot by their numbers:</p>
+<div class="tblwrap"><table><thead><tr>
+<th>Line</th>
+<th>Boxes where</th>
+</tr></thead><tbody>
+<tr><td>main diagonal, top left to bottom right</td><td><code>i == j</code></td></tr>
+<tr><td>other diagonal, top right to bottom left</td><td><code>i + j == n - 1</code></td></tr>
+<tr><td>any diagonal parallel to the main one</td><td><code>i - j</code> is the same</td></tr>
+<tr><td>any diagonal parallel to the other one</td><td><code>i + j</code> is the same</td></tr>
+</tbody></table></div>
+<p>A <strong>run</strong> along a row is a block of equal or free boxes side by side - the same idea as runs in a string (lesson 03). Count the current run, and start again when it breaks:</p>
+<pre><code>int best = 0;
+for (int i = 0; i &lt; n; i++) {
+    int run = 0;
+    for (int j = 0; j &lt; m; j++) {
+        if (g[i][j] == &#x27;.&#x27;) run++;
+        else run = 0;
+        if (run &gt; best) best = run;
+    }
+}</code></pre>
+<p>For columns, swap the two loops: <code>j</code> outside, <code>i</code> inside.</p>
+<h2 id="cheat">7. Cheat sheet &mdash; memorise this page</h2>
+<p>Cover the right-hand column and try to write each line from memory.</p>
+<div class="tblwrap"><table class="cheat"><thead><tr><th>You want to&hellip;</th><th>Write</th></tr></thead><tbody>
+<tr><td>Make a grid</td><td><code>int a[105][105];</code> outside <code>main</code></td></tr>
+<tr><td>Read a number grid</td><td>two loops: <code>i</code> over rows, <code>j</code> over columns, <code>cin &gt;&gt; a[i][j]</code></td></tr>
+<tr><td>Read a picture</td><td><code>string g[105];</code> and <code>cin &gt;&gt; g[i];</code> for each row</td></tr>
+<tr><td>Along row <code>i</code> / down column <code>j</code></td><td>fix <code>i</code>, move <code>j</code> / fix <code>j</code>, move <code>i</code></td></tr>
+<tr><td>Four neighbours</td><td><code>dr = {-1, 1, 0, 0}</code>, <code>dc = {0, 0, -1, 1}</code></td></tr>
+<tr><td>Inside the grid?</td><td><code>nr &gt;= 0 &amp;&amp; nr &lt; n &amp;&amp; nc &gt;= 0 &amp;&amp; nc &lt; m</code></td></tr>
+<tr><td>Turn right in a spiral</td><td><code>d = (d + 1) % 4</code> with right, down, left, up</td></tr>
+<tr><td>Turn the grid 90 degrees right</td><td><code>b[j][n - 1 - i] = a[i][j];</code></td></tr>
+<tr><td>Main / other diagonal</td><td><code>i == j</code> / <code>i + j == n - 1</code></td></tr>
+<tr><td>Longest run in a row</td><td><code>run++</code> while it holds, <code>run = 0</code> when it breaks</td></tr>
+</tbody></table></div>
+<h2 id="pitfalls">8. 5 pitfalls that cost real marks</h2>
+<div class="tblwrap"><table class="pit"><tbody>
+<tr><td><b>Row and column swapped.</b><span class="tech"><code>a[j][i]</code> instead of <code>a[i][j]</code> works on square grids and fails on the others. Always the row first.</span></td></tr>
+<tr><td><b>Looking at a neighbour before checking it is inside.</b><span class="tech"><code>g[-1][c]</code> is outside the grid. Test the bounds first, then look.</span></td></tr>
+<tr><td><b><code>n</code> and <code>m</code> mixed up.</b><span class="tech">Rows go up to <code>n</code>, columns up to <code>m</code>. Read the statement twice: which number comes first?</span></td></tr>
+<tr><td><b>Turning the grid inside the same array.</b><span class="tech">Writing the turned grid into <code>a</code> while you still read from <code>a</code> destroys boxes you need. Use a second array.</span></td></tr>
+<tr><td><b>A big grid inside <code>main</code>.</b><span class="tech"><code>int a[1000][1000];</code> is a million boxes. Put it outside <code>main</code>.</span></td></tr>
+</tbody></table></div>
+<h2 id="complexity">9. Complexity reference</h2>
+<div class="tblwrap"><table><thead><tr><th>Operation</th><th>Cost</th></tr></thead><tbody>
+<tr><td><code>a[i][j]</code> - one box</td><td>O(1)</td></tr>
+<tr><td>Reading or walking the whole grid</td><td>O(n * m)</td></tr>
+<tr><td>Checking the four neighbours of one box</td><td>O(1)</td></tr>
+<tr><td>Every row sum and every column sum</td><td>O(n * m)</td></tr>
+</tbody></table></div>
+<h2 id="problems">10. Practice &mdash; 12 problems, Group D</h2>
+<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
+<div class="pgroup"><h3 id="gA">A. Rows and columns</h3><p class="maps">Theory: sections 1 and 2</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100946"></td><td><a href="https://arena.olimpiici.com/#/catalog/339/problem/100946" target="_blank" rel="noopener">topscore</a><br><span class="tech">Top score</span></td><td class="tech">smallest in its row and largest in its column</td><td class="src">Winter tournament 2011</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100375"></td><td><a href="https://arena.olimpiici.com/#/catalog/158/problem/100375" target="_blank" rel="noopener">tetris</a><br><span class="tech">Tetris</span></td><td class="tech">is the row full? then runs of full rows, scored <code>k * (k + 1) / 2</code></td><td class="src">Regional round 2010</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100928"></td><td><a href="https://arena.olimpiici.com/#/catalog/333/problem/100928" target="_blank" rel="noopener">warehouse</a><br><span class="tech">Warehouse</span></td><td class="tech">a row, or a column, with nothing in it from end to end</td><td class="src">Winter tournament 2010</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gB">B. Neighbours</h3><p class="maps">Theory: sections 3 and 4</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="102486"></td><td><a href="https://arena.olimpiici.com/#/catalog/901/problem/102486" target="_blank" rel="noopener">enemy</a><br><span class="tech">Enemies</span></td><td class="tech"><code>dr</code>/<code>dc</code> over the four neighbours, count the occupied ones</td><td class="src">Municipal round 2026</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="102263"></td><td><a href="https://arena.olimpiici.com/#/catalog/845/problem/102263" target="_blank" rel="noopener">minmax</a><br><span class="tech">Smallest and largest</span></td><td class="tech">every pair of side-by-side cells: the smallest and largest sum</td><td class="src">Municipal round 2025</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100637"></td><td><a href="https://arena.olimpiici.com/#/catalog/236/problem/100637" target="_blank" rel="noopener">table</a><br><span class="tech">The table</span></td><td class="tech">test every 2 x 2 block of neighbouring cells</td><td class="src">National round 2014</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Walking round the grid</h3><p class="maps">Theory: section 5</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100403"></td><td><a href="https://arena.olimpiici.com/#/catalog/170/problem/100403" target="_blank" rel="noopener">limes</a><br><span class="tech">Snake order</span></td><td class="tech">rows numbered left to right, then right to left - find row and column</td><td class="src">Regional round 2012</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101906"></td><td><a href="https://arena.olimpiici.com/#/catalog/742/problem/101906" target="_blank" rel="noopener">spiral</a><br><span class="tech">Spiral</span></td><td class="tech">walk the spiral with a direction array, turning when blocked</td><td class="src">Municipal round 2023</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100688"></td><td><a href="https://arena.olimpiici.com/#/catalog/246/problem/100688" target="_blank" rel="noopener">traf</a><br><span class="tech">Turning grille</span></td><td class="tech">turn the mask by 90 degrees, four times, reading letters through it</td><td class="src">National round 2016</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gD">D. Lines through the grid</h3><p class="maps">Theory: section 6</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100615"></td><td><a href="https://arena.olimpiici.com/#/catalog/231/problem/100615" target="_blank" rel="noopener">battle</a><br><span class="tech">Sea battle</span></td><td class="tech">runs of free cells along each row and each column</td><td class="src">National round 2013</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100589"></td><td><a href="https://arena.olimpiici.com/#/catalog/226/problem/100589" target="_blank" rel="noopener">crossword</a><br><span class="tech">Crossword</span></td><td class="tech">number the word starts, then measure the runs across and down</td><td class="src">National round 2012</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100566"></td><td><a href="https://arena.olimpiici.com/#/catalog/221/problem/100566" target="_blank" rel="noopener">points</a><br><span class="tech">Points</span></td><td class="tech">runs of consecutive values along rows, columns and both diagonals</td><td class="src">National round 2011</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 07 · C++17 two-dimensional arrays. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
+</main></div>
+<script>var LESSON_SLUG="07_Grids_And_Matrices";var LEGACY_KEY=null;</script>
+<script>
+var THEME_KEY="cpp_lessons_theme";
+var DONE_KEY="cpp_done_"+LESSON_SLUG;
+// ---- theme -------------------------------------------------------------
+var tb=document.getElementById('themeBtn');
+function setTheme(t){
+  if(t) document.documentElement.setAttribute('data-theme',t);
+  else document.documentElement.removeAttribute('data-theme');
+  try{t?localStorage.setItem(THEME_KEY,t):localStorage.removeItem(THEME_KEY)}catch(e){}
+}
+try{var st=localStorage.getItem(THEME_KEY); if(st) setTheme(st);}catch(e){}
+tb.onclick=function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  setTheme(cur==='dark'?'light':'dark');
+};
+
+// ---- progress ----------------------------------------------------------
+var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-pid]'));
+var fill=document.querySelector('#bar .fill'), lbl=document.getElementById('cnt');
+// state lives in memory; localStorage is a best-effort mirror so that ticking
+// still works when storage is blocked (private window, file:// restrictions)
+var state={};
+try{
+  var raw=localStorage.getItem(DONE_KEY);
+  if(raw===null && LEGACY_KEY) raw=localStorage.getItem(LEGACY_KEY);  // one-time adopt
+  state=JSON.parse(raw||'{}')||{};
+}catch(e){state={}}
+function save(){try{localStorage.setItem(DONE_KEY,JSON.stringify(state))}catch(e){}}
+function paint(){
+  var n=0;
+  boxes.forEach(function(b){
+    var on=!!state[b.dataset.pid]; b.checked=on; if(on)n++;
+    b.closest('tr').classList.toggle('done',on);
+  });
+  fill.style.width=(n/boxes.length*100)+'%';
+  lbl.textContent=n+' / '+boxes.length+' solved';
+}
+boxes.forEach(function(b){b.onchange=function(){
+  if(b.checked)state[b.dataset.pid]=1; else delete state[b.dataset.pid];
+  save(); paint();
+};});
+document.getElementById('reset').onclick=function(){
+  if(confirm('Clear all progress?')){state={};save();paint();}
+};
+paint();
+
+// ---- scroll spy --------------------------------------------------------
+var links=[].slice.call(document.querySelectorAll('#nav a[href^="#"]'));
+var map={}; links.forEach(function(a){
+  var el=document.getElementById(a.getAttribute('href').slice(1)); if(el)map[el.id]=a;});
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.remove('on')});
+      if(map[e.target.id])map[e.target.id].classList.add('on');
+    }});
+},{rootMargin:'0px 0px -75% 0px'});
+Object.keys(map).forEach(function(id){obs.observe(document.getElementById(id))});
+
+// ---- C++ highlighter ---------------------------------------------------
+var KW=('alignas|alignof|auto|bool|break|case|catch|char|class|const|constexpr|continue|'+
+ 'decltype|default|delete|do|double|else|enum|explicit|export|extern|false|float|for|friend|'+
+ 'goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|'+
+ 'public|register|return|short|signed|sizeof|static|static_cast|struct|switch|template|this|'+
+ 'throw|true|try|typedef|typename|union|unsigned|using|virtual|void|volatile|while|'+
+ 'string|string_view|vector|size_t|map|unordered_map|set|pair|istringstream|ostringstream').split('|');
+var KWRE=new RegExp('\\b('+KW.join('|')+')\\b','g');
+document.querySelectorAll('pre code').forEach(function(el){
+  var src=el.textContent, out='', i=0;
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  while(i<src.length){
+    var rest=src.slice(i), m;
+    if((m=rest.match(/^\/\/[^\n]*/))){out+='<span class="com">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^#[a-z]+/))){out+='<span class="pp">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^"(?:\\.|[^"\\])*"/))||(m=rest.match(/^'(?:\\.|[^'\\])*'/))){
+      out+='<span class="str">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^\b\d[\w.]*/))){out+='<span class="num">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^[A-Za-z_]\w*/))){
+      out+= KWRE.test(m[0])&&(KWRE.lastIndex=0,true) ? '<span class="kw">'+esc(m[0])+'</span>' : esc(m[0]);
+      i+=m[0].length;continue;}
+    out+=esc(src[i]); i++;
+  }
+  el.innerHTML=out;
+});
+</script>
+</body></html>

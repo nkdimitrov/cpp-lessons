@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C++17 Sets and maps - remembering what you have seen</title>
+<style>
+:root{
+  --bg:#fbfaf8; --panel:#ffffff; --ink:#1c1b1a; --muted:#6b6763; --line:#e4e0da;
+  --accent:#8a4b1f; --accent-soft:#f3ece4; --code-bg:#f6f3ee; --code-ink:#2d2a26;
+  --kw:#8a4b1f; --str:#3f6b3f; --com:#9a948c; --num:#2f5c8a; --pre:#7a5ea8;
+  --note-bg:#fdf6e7; --note-line:#d9a441; --ok:#3f6b3f;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+    --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+    --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+    --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+  --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+  --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+  --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+code,pre,.mono{font-family:"JetBrains Mono",Consolas,"SF Mono",Menlo,monospace}
+.wrap{display:flex;gap:0;align-items:flex-start;max-width:1220px;margin:0 auto}
+/* ---- sidebar ---- */
+#nav{position:sticky;top:0;flex:0 0 250px;height:100vh;overflow-y:auto;
+  padding:26px 14px 40px 20px;border-right:1px solid var(--line);font-size:13.5px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#nav .brand{font-weight:700;letter-spacing:.02em;color:var(--accent);
+  font-size:12px;text-transform:uppercase;margin-bottom:14px}
+#nav a{display:block;padding:4px 8px;margin:1px 0;border-radius:5px;
+  color:var(--muted);text-decoration:none;line-height:1.35}
+#nav a:hover{background:var(--accent-soft);color:var(--ink)}
+#nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+#nav .grp{margin-top:14px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);opacity:.7;padding:0 8px}
+#nav a.home{display:inline-flex;align-items:center;gap:7px;margin:0 0 16px;padding:5px 12px;
+  border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);
+  font-weight:600}
+#nav a.home svg{width:15px;height:15px}
+#nav a.home:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager{display:flex;gap:8px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+#nav .pager a,#nav .pager span{flex:1 1 0;display:flex;flex-direction:column;align-items:center;
+  margin:0;padding:6px 4px 7px;border:1px solid var(--line);border-radius:6px;
+  background:var(--panel);color:var(--ink);font-size:22px;line-height:1.1}
+#nav .pager small{font-size:11px;color:var(--muted);margin-top:2px}
+#nav .pager a:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager a:hover small{color:var(--accent)}
+#nav .pager span{opacity:.35}
+/* ---- main ---- */
+main{flex:1 1 auto;min-width:0;padding:34px 40px 120px;max-width:900px}
+header.top{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:8px}
+h1{font-size:30px;line-height:1.2;margin:0 0 6px}
+.sub{color:var(--muted);font-size:14.5px;font-family:system-ui,sans-serif}
+h2{font-size:21px;margin:44px 0 12px;padding-top:10px;border-top:1px solid var(--line);
+  scroll-margin-top:16px}
+h2:first-of-type{border-top:none}
+h3{font-size:16.5px;margin:26px 0 8px;color:var(--accent);scroll-margin-top:16px}
+p{margin:11px 0}
+code{background:var(--code-bg);padding:1.5px 5px;border-radius:4px;font-size:.87em;
+  color:var(--code-ink);border:1px solid var(--line)}
+pre{background:var(--code-bg);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:7px;padding:13px 15px;overflow-x:auto;font-size:13px;line-height:1.55;
+  margin:14px 0;color:var(--code-ink)}
+pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
+.kw{color:var(--kw);font-weight:600}.str{color:var(--str)}.com{color:var(--com);font-style:italic}
+.num{color:var(--num)}.pp{color:var(--pre)}
+table{border-collapse:collapse;width:100%;margin:15px 0;font-size:14px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+  border-bottom:1.5px solid var(--line);font-weight:600}
+tbody tr:nth-child(even){background:var(--accent-soft)}
+ul{margin:11px 0;padding-left:22px}
+li{margin:4px 0}
+.note{background:var(--note-bg);border-left:3px solid var(--note-line);border-radius:0 7px 7px 0;
+  padding:11px 15px;margin:15px 0;font-size:14.5px}
+.tblwrap{overflow-x:auto}
+/* ---- problems ---- */
+.pgroup{margin:26px 0 0}
+.pgroup h3{margin-bottom:2px}
+.pgroup .maps{color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif;margin:0 0 8px}
+table.prob td{padding:9px 10px}
+table.prob a{color:var(--accent);text-decoration:none;font-weight:600;
+  font-family:Consolas,monospace;font-size:13.5px}
+table.prob a:hover{text-decoration:underline}
+.tech{color:var(--muted);font-size:13px}
+.src{color:var(--muted);font-size:12px;white-space:nowrap}
+.dif{color:var(--accent);letter-spacing:1px;font-size:11.5px;white-space:nowrap}
+.done td{opacity:.45}
+.done td a{text-decoration:line-through}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+#bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;
+  border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;
+  font-family:system-ui,sans-serif;font-size:13px;flex-wrap:wrap}
+#bar .track{flex:1 1 130px;height:7px;background:var(--line);border-radius:4px;overflow:hidden;
+  min-width:110px}
+#bar .fill{height:100%;background:var(--accent);width:0;transition:width .25s}
+button{font:inherit;font-size:12.5px;padding:4px 11px;border:1px solid var(--line);
+  border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+#themeBtn{position:fixed;top:14px;right:16px;z-index:10}
+.cheat td:first-child{font-family:system-ui,sans-serif;width:33%}
+.pit b{display:block;margin-bottom:2px}
+footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif}
+@media(max-width:900px){
+  #nav{display:none}
+  main{padding:26px 18px 90px}
+  h1{font-size:24px}
+  #themeBtn{top:8px;right:10px}
+}
+</style>
+</head><body>
+<button id="themeBtn" title="Toggle light / dark">&#9681;</button>
+<div class="wrap">
+<nav id="nav"><a class="home" href="../index.html" title="All lessons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>Home</a>
+<div class="brand">Lesson 11 · Sets and maps</div>
+<div class="grp">Theory</div>
+<a href="#set">1. set: each value once, in order</a>
+<a href="#map">2. map: a box for any key</a>
+<a href="#walk">3. Walking through a set or a map</a>
+<a href="#lookup">4. Is it there? Fast lookups</a>
+<a href="#choose">5. Array, set or map?</a>
+<div class="grp">Reference</div>
+<a href="#cheat">6. Cheat sheet</a>
+<a href="#pitfalls">7. Pitfalls</a>
+<a href="#complexity">8. Complexity</a>
+<div class="grp">Practice</div>
+<a href="#problems">9. 12 problems</a>
+<a href="#gA" style="padding-left:16px">A. Each value once: set</a>
+<a href="#gB" style="padding-left:16px">B. Counting with a map</a>
+<a href="#gC" style="padding-left:16px">C. Is it there? Fast lookups</a>
+<div class="pager">
+<a href="../10_Stacks_Queues_Deques/10_Stacks_Queues_Deques.html" title="Previous: Lesson 10 &middot; Stacks, queues and deques">&larr;<small>Lesson 10</small></a>
+<a href="../12_Priority_Queues/12_Priority_Queues.html" title="Next: Lesson 12 &middot; Priority queues">&rarr;<small>Lesson 12</small></a>
+</div>
+</nav>
+<main>
+<header class="top"><h1>C++17 Sets and maps - remembering what you have seen</h1><div class="sub">Lesson 11 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<h2 id="set">1. set: each value once, in order</h2>
+<p>A <code>set</code> is a bag that keeps every value <strong>only once</strong> and always keeps them <strong>sorted</strong>. Add <code>#include &lt;set&gt;</code>:</p>
+<pre><code>set&lt;int&gt; s;
+s.insert(5);
+s.insert(1);
+s.insert(5);                     // already there: nothing happens
+s.insert(3);                     // s is {1, 3, 5}
+
+cout &lt;&lt; s.size() &lt;&lt; &#x27;\n&#x27;;        // 3
+cout &lt;&lt; s.count(3) &lt;&lt; &#x27;\n&#x27;;      // 1 - it is there
+cout &lt;&lt; s.count(4) &lt;&lt; &#x27;\n&#x27;;      // 0 - it is not
+s.erase(3);                      // s is {1, 5}</code></pre>
+<p>The easiest use of all: <strong>how many different values</strong> are there? Insert them all and ask for the size. Unlike a counting array (lesson 06), the values may be huge or negative, and they can even be strings.</p>
+<h2 id="map">2. map: a box for any key</h2>
+<p>A <code>map</code> is like a counting array whose box numbers can be anything: big numbers, negative numbers, words. Each box number is called a <strong>key</strong>. Add <code>#include &lt;map&gt;</code>:</p>
+<pre><code>map&lt;string, int&gt; cnt;
+string w;
+while (cin &gt;&gt; w) cnt[w]++;           // count every word
+
+cout &lt;&lt; cnt[&quot;apple&quot;] &lt;&lt; &#x27;\n&#x27;;        // how many times &quot;apple&quot; appeared
+
+map&lt;long long, int&gt; c;               // keys up to 10^18 - no array could do this
+c[1000000000000LL]++;</code></pre>
+<p>A key that has never been used starts with the value 0, so <code>cnt[w]++</code> just works.</p>
+<div class="note">Even <strong>looking</strong> at <code>cnt[w]</code> creates the key <code>w</code> with value 0. To ask &quot;is the key there?&quot; without creating it, use <code>cnt.count(w)</code>.</div>
+<h2 id="walk">3. Walking through a set or a map</h2>
+<p>A range <code>for</code> visits the values of a set from the smallest to the largest:</p>
+<pre><code>for (int x : s) cout &lt;&lt; x &lt;&lt; &#x27; &#x27;;          // 1 5</code></pre>
+<p>In a map, each element is a pair: the key in <code>first</code>, the value in <code>second</code>. The keys come in sorted order:</p>
+<pre><code>map&lt;int, int&gt; cnt;
+// ... cnt[x]++ for every x ...
+
+int best = 0, bestKey = 0;            // the commonest key
+for (pair&lt;int, int&gt; p : cnt)
+    if (p.second &gt; best) {
+        best = p.second;
+        bestKey = p.first;
+    }</code></pre>
+<p>Because the keys are sorted, ties go to the smallest key - which is what most statements ask for.</p>
+<h2 id="lookup">4. Is it there? Fast lookups</h2>
+<p>A set answers &quot;have I seen this value?&quot; quickly, whatever the values are. That turns many slow double loops into one loop.</p>
+<p><strong>Two numbers with sum S.</strong> For every number <code>x</code>, the partner it needs is <code>S - x</code>. Ask the set whether that partner has already been seen:</p>
+<pre><code>set&lt;long long&gt; seen;
+int pairs = 0;
+for (int i = 0; i &lt; n; i++) {
+    long long x = a[i];
+    if (seen.count(S - x)) pairs++;
+    seen.insert(x);
+}</code></pre>
+<p><strong>Meeting in the middle.</strong> If you must match &quot;something from list A&quot; with &quot;something from list B&quot;, put everything from A into a set (or a map with counts). Then walk B and look each one up.</p>
+<h2 id="choose">5. Array, set or map?</h2>
+<div class="tblwrap"><table><thead><tr>
+<th>The values are...</th>
+<th>and you need...</th>
+<th>Use</th>
+</tr></thead><tbody>
+<tr><td>small whole numbers (up to about a million)</td><td>counts or marks</td><td>an array: <code>cnt[x]</code></td></tr>
+<tr><td>huge, negative or words</td><td>only which ones appeared</td><td><code>set</code></td></tr>
+<tr><td>huge, negative or words</td><td>how many times each appeared</td><td><code>map</code></td></tr>
+</tbody></table></div>
+<p>An array is the fastest. A set or map is a little slower - each step costs about <code>log n</code> - but it works for any values and keeps them sorted.</p>
+<h2 id="cheat">6. Cheat sheet &mdash; memorise this page</h2>
+<p>Cover the right-hand column and try to write each line from memory.</p>
+<div class="tblwrap"><table class="cheat"><thead><tr><th>You want to&hellip;</th><th>Write</th></tr></thead><tbody>
+<tr><td>A set of numbers</td><td><code>set&lt;int&gt; s;</code> (<code>#include &lt;set&gt;</code>)</td></tr>
+<tr><td>Add / remove / is it there?</td><td><code>s.insert(x)</code>, <code>s.erase(x)</code>, <code>s.count(x)</code></td></tr>
+<tr><td>How many different values</td><td>insert all, then <code>s.size()</code></td></tr>
+<tr><td>A map</td><td><code>map&lt;string, int&gt; m;</code> (<code>#include &lt;map&gt;</code>)</td></tr>
+<tr><td>Count with a map</td><td><code>m[key]++;</code></td></tr>
+<tr><td>Is the key there?</td><td><code>m.count(key)</code> - not <code>m[key]</code></td></tr>
+<tr><td>Walk a set in order</td><td><code>for (int x : s)</code></td></tr>
+<tr><td>Walk a map in key order</td><td><code>for (pair&lt;int, int&gt; p : m)</code> - key <code>p.first</code>, value <code>p.second</code></td></tr>
+<tr><td>Partner with sum S seen before?</td><td><code>seen.count(S - x)</code>, then <code>seen.insert(x)</code></td></tr>
+<tr><td>Small numbers</td><td>a plain array is faster than both</td></tr>
+</tbody></table></div>
+<h2 id="pitfalls">7. 4 pitfalls that cost real marks</h2>
+<div class="tblwrap"><table class="pit"><tbody>
+<tr><td><b>Checking with <code>m[key]</code> adds the key.</b><span class="tech"><code>if (m[x] &gt; 0)</code> creates <code>x</code> with value 0. The map grows, and <code>m.size()</code> becomes wrong. Use <code>m.count(x)</code>.</span></td></tr>
+<tr><td><b>A set forgets repeats.</b><span class="tech"><code>{5, 5, 5}</code> becomes <code>{5}</code>. If you need to know how many times, use a map with counts.</span></td></tr>
+<tr><td><b>Changing <code>p</code> in the loop does not change the map.</b><span class="tech"><code>for (pair&lt;int, int&gt; p : m) p.second = 0;</code> changes a copy. Write <code>m[p.first] = 0;</code> instead.</span></td></tr>
+<tr><td><b>Using a map where an array would do.</b><span class="tech">For values up to a million, <code>cnt[x]</code> is several times faster than <code>m[x]</code>. With a lot of input, that can decide the time limit.</span></td></tr>
+</tbody></table></div>
+<h2 id="complexity">8. Complexity reference</h2>
+<div class="tblwrap"><table><thead><tr><th>Operation</th><th>Cost</th></tr></thead><tbody>
+<tr><td><code>insert</code>, <code>erase</code>, <code>count</code> on a set of <code>n</code> values</td><td>O(log n)</td></tr>
+<tr><td><code>m[key]</code>, <code>m.count(key)</code> on a map</td><td>O(log n)</td></tr>
+<tr><td>Walking a whole set or map</td><td>O(n)</td></tr>
+<tr><td>The same jobs with an array</td><td>O(1) each</td></tr>
+</tbody></table></div>
+<h2 id="problems">9. Practice &mdash; 12 problems, Group D</h2>
+<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
+<div class="pgroup"><h3 id="gA">A. Each value once: set</h3><p class="maps">Theory: sections 1 and 3</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="101343"></td><td><a href="https://arena.olimpiici.com/#/catalog/542/problem/101343" target="_blank" rel="noopener">albums</a><br><span class="tech">Stamp albums</span></td><td class="tech">put one album in a set, then check the other album&#x27;s stamps</td><td class="src">Autumn tournament 2020</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100884"></td><td><a href="https://arena.olimpiici.com/#/catalog/315/problem/100884" target="_blank" rel="noopener">number</a><br><span class="tech">The number</span></td><td class="tech">a set of the values - more than three different means no answer</td><td class="src">Spring tournament 2017</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101922"></td><td><a href="https://arena.olimpiici.com/#/catalog/747/problem/101922" target="_blank" rel="noopener">brackets</a><br><span class="tech">Brackets</span></td><td class="tech">every way of removing brackets goes into a set, so repeats count once</td><td class="src">Regional round 2023</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="102404"></td><td><a href="https://arena.olimpiici.com/#/catalog/873/problem/102404" target="_blank" rel="noopener">tangerine</a><br><span class="tech">Tangerines</span></td><td class="tech">only the different values matter: a set of them, sorted for free</td><td class="src">Spring tournament 2025</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gB">B. Counting with a map</h3><p class="maps">Theory: sections 2 and 3</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="102279"></td><td><a href="https://arena.olimpiici.com/#/catalog/850/problem/102279" target="_blank" rel="noopener">excess</a><br><span class="tech">Excess</span></td><td class="tech"><code>m[x]++</code> for every value, then the ones seen fewer than K times</td><td class="src">Winter tournament 2008</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100990"></td><td><a href="https://arena.olimpiici.com/#/catalog/357/problem/100990" target="_blank" rel="noopener">monitors</a><br><span class="tech">Monitors</span></td><td class="tech">a map from height to total width, then the largest total</td><td class="src">Winter tournament 2014</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101109"></td><td><a href="https://arena.olimpiici.com/#/catalog/407/problem/101109" target="_blank" rel="noopener">progres</a><br><span class="tech">Progression</span></td><td class="tech"><code>m[a[i] - i*d]++</code> - the commonest key is the part that stays</td><td class="src">National round 2019</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100686"></td><td><a href="https://arena.olimpiici.com/#/catalog/246/problem/100686" target="_blank" rel="noopener">scales</a><br><span class="tech">Scales</span></td><td class="tech">a map of how many pairs give each sum, times the count of that weight</td><td class="src">National round 2016</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Is it there? Fast lookups</h3><p class="maps">Theory: section 4</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="101577"></td><td><a href="https://arena.olimpiici.com/#/catalog/627/problem/101577" target="_blank" rel="noopener">squares</a><br><span class="tech">Sums of squares</span></td><td class="tech">keep the squares in a set; for each <code>i*i</code>, is the rest there too?</td><td class="src">Municipal round 2021</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101943"></td><td><a href="https://arena.olimpiici.com/#/catalog/751/problem/101943" target="_blank" rel="noopener">nice</a><br><span class="tech">Nice numbers</span></td><td class="tech">a set of all sums of two earlier values; look each new value up</td><td class="src">National round 2023</td><td class="dif">★★★★☆</td></tr>
+<tr><td><input type="checkbox" data-pid="102087"></td><td><a href="https://arena.olimpiici.com/#/catalog/792/problem/102087" target="_blank" rel="noopener">sumfraction</a><br><span class="tech">Fractions</span></td><td class="tech">reduce each fraction, then group them in a map by denominator</td><td class="src">Municipal round 2024</td><td class="dif">★★★★☆</td></tr>
+<tr><td><input type="checkbox" data-pid="102154"></td><td><a href="https://arena.olimpiici.com/#/catalog/810/problem/102154" target="_blank" rel="noopener">volley</a><br><span class="tech">Volleyball</span></td><td class="tech">store every sum of a yellow pair, then look up each orange pair</td><td class="src">Spring tournament 2024</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 11 · C++17 set and map. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
+</main></div>
+<script>var LESSON_SLUG="11_Sets_And_Maps";var LEGACY_KEY=null;</script>
+<script>
+var THEME_KEY="cpp_lessons_theme";
+var DONE_KEY="cpp_done_"+LESSON_SLUG;
+// ---- theme -------------------------------------------------------------
+var tb=document.getElementById('themeBtn');
+function setTheme(t){
+  if(t) document.documentElement.setAttribute('data-theme',t);
+  else document.documentElement.removeAttribute('data-theme');
+  try{t?localStorage.setItem(THEME_KEY,t):localStorage.removeItem(THEME_KEY)}catch(e){}
+}
+try{var st=localStorage.getItem(THEME_KEY); if(st) setTheme(st);}catch(e){}
+tb.onclick=function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  setTheme(cur==='dark'?'light':'dark');
+};
+
+// ---- progress ----------------------------------------------------------
+var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-pid]'));
+var fill=document.querySelector('#bar .fill'), lbl=document.getElementById('cnt');
+// state lives in memory; localStorage is a best-effort mirror so that ticking
+// still works when storage is blocked (private window, file:// restrictions)
+var state={};
+try{
+  var raw=localStorage.getItem(DONE_KEY);
+  if(raw===null && LEGACY_KEY) raw=localStorage.getItem(LEGACY_KEY);  // one-time adopt
+  state=JSON.parse(raw||'{}')||{};
+}catch(e){state={}}
+function save(){try{localStorage.setItem(DONE_KEY,JSON.stringify(state))}catch(e){}}
+function paint(){
+  var n=0;
+  boxes.forEach(function(b){
+    var on=!!state[b.dataset.pid]; b.checked=on; if(on)n++;
+    b.closest('tr').classList.toggle('done',on);
+  });
+  fill.style.width=(n/boxes.length*100)+'%';
+  lbl.textContent=n+' / '+boxes.length+' solved';
+}
+boxes.forEach(function(b){b.onchange=function(){
+  if(b.checked)state[b.dataset.pid]=1; else delete state[b.dataset.pid];
+  save(); paint();
+};});
+document.getElementById('reset').onclick=function(){
+  if(confirm('Clear all progress?')){state={};save();paint();}
+};
+paint();
+
+// ---- scroll spy --------------------------------------------------------
+var links=[].slice.call(document.querySelectorAll('#nav a[href^="#"]'));
+var map={}; links.forEach(function(a){
+  var el=document.getElementById(a.getAttribute('href').slice(1)); if(el)map[el.id]=a;});
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.remove('on')});
+      if(map[e.target.id])map[e.target.id].classList.add('on');
+    }});
+},{rootMargin:'0px 0px -75% 0px'});
+Object.keys(map).forEach(function(id){obs.observe(document.getElementById(id))});
+
+// ---- C++ highlighter ---------------------------------------------------
+var KW=('alignas|alignof|auto|bool|break|case|catch|char|class|const|constexpr|continue|'+
+ 'decltype|default|delete|do|double|else|enum|explicit|export|extern|false|float|for|friend|'+
+ 'goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|'+
+ 'public|register|return|short|signed|sizeof|static|static_cast|struct|switch|template|this|'+
+ 'throw|true|try|typedef|typename|union|unsigned|using|virtual|void|volatile|while|'+
+ 'string|string_view|vector|size_t|map|unordered_map|set|pair|istringstream|ostringstream').split('|');
+var KWRE=new RegExp('\\b('+KW.join('|')+')\\b','g');
+document.querySelectorAll('pre code').forEach(function(el){
+  var src=el.textContent, out='', i=0;
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  while(i<src.length){
+    var rest=src.slice(i), m;
+    if((m=rest.match(/^\/\/[^\n]*/))){out+='<span class="com">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^#[a-z]+/))){out+='<span class="pp">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^"(?:\\.|[^"\\])*"/))||(m=rest.match(/^'(?:\\.|[^'\\])*'/))){
+      out+='<span class="str">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^\b\d[\w.]*/))){out+='<span class="num">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^[A-Za-z_]\w*/))){
+      out+= KWRE.test(m[0])&&(KWRE.lastIndex=0,true) ? '<span class="kw">'+esc(m[0])+'</span>' : esc(m[0]);
+      i+=m[0].length;continue;}
+    out+=esc(src[i]); i++;
+  }
+  el.innerHTML=out;
+});
+</script>
+</body></html>

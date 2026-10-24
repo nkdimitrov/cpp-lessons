@@ -55,14 +55,18 @@ def pool_for(f):
     return {"n": len(sel), "byd": by_d}
 
 
-def picked_for(slug):
+def pids_for(slug):
     pj = ROOT / slug / "problems.json"
     if not pj.exists():
-        return 0
+        return []
     try:
-        return len(json.loads(pj.read_text(encoding="utf-8")).get("problems", []))
+        return [p["pid"] for p in json.loads(pj.read_text(encoding="utf-8")).get("problems", [])]
     except Exception:
-        return 0
+        return []
+
+
+def picked_for(slug):
+    return len(pids_for(slug))
 
 
 def built(slug):
@@ -200,7 +204,8 @@ var totalDone=0, totalPicked=0;
     var raw=localStorage.getItem('cpp_done_'+slug);
     if(raw===null && card.dataset.legacy) raw=localStorage.getItem(card.dataset.legacy);
     var st=JSON.parse(raw||'{}')||{};
-    for(var k in st) if(st[k]) n++;
+    var ids=(card.dataset.pids||'').split(',');
+    for(var i=0;i<ids.length;i++) if(st[ids[i]]) n++;
   }catch(e){}
   if(n>picked) n=picked;
   totalDone+=n; totalPicked+=picked;
@@ -310,8 +315,8 @@ def main():
             picked = picked_for(slug)
             pool = pool_for(l.get("filters"))
             legacy = ' data-legacy="str_done"' if slug == "03_Strings" else ""
-            a('<article class="panel card" data-slug="%s" data-picked="%d"%s>'
-              % (html.escape(slug), picked, legacy))
+            a('<article class="panel card" data-slug="%s" data-picked="%d" data-pids="%s"%s>'
+              % (html.escape(slug), picked, ",".join(str(x) for x in pids_for(slug)), legacy))
             a('<div class="hd"><span class="num">%s</span>' % html.escape(l["num"]))
             if is_built:
                 a('<h3><a href="%s/%s.html">%s</a></h3>' % (slug, slug, html.escape(l["title"])))

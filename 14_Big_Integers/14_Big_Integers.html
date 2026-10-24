@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C++17 Big integers - sums on paper, done by the computer</title>
+<style>
+:root{
+  --bg:#fbfaf8; --panel:#ffffff; --ink:#1c1b1a; --muted:#6b6763; --line:#e4e0da;
+  --accent:#8a4b1f; --accent-soft:#f3ece4; --code-bg:#f6f3ee; --code-ink:#2d2a26;
+  --kw:#8a4b1f; --str:#3f6b3f; --com:#9a948c; --num:#2f5c8a; --pre:#7a5ea8;
+  --note-bg:#fdf6e7; --note-line:#d9a441; --ok:#3f6b3f;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+    --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+    --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+    --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+  --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+  --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+  --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+code,pre,.mono{font-family:"JetBrains Mono",Consolas,"SF Mono",Menlo,monospace}
+.wrap{display:flex;gap:0;align-items:flex-start;max-width:1220px;margin:0 auto}
+/* ---- sidebar ---- */
+#nav{position:sticky;top:0;flex:0 0 250px;height:100vh;overflow-y:auto;
+  padding:26px 14px 40px 20px;border-right:1px solid var(--line);font-size:13.5px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#nav .brand{font-weight:700;letter-spacing:.02em;color:var(--accent);
+  font-size:12px;text-transform:uppercase;margin-bottom:14px}
+#nav a{display:block;padding:4px 8px;margin:1px 0;border-radius:5px;
+  color:var(--muted);text-decoration:none;line-height:1.35}
+#nav a:hover{background:var(--accent-soft);color:var(--ink)}
+#nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+#nav .grp{margin-top:14px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);opacity:.7;padding:0 8px}
+#nav a.home{display:inline-flex;align-items:center;gap:7px;margin:0 0 16px;padding:5px 12px;
+  border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);
+  font-weight:600}
+#nav a.home svg{width:15px;height:15px}
+#nav a.home:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager{display:flex;gap:8px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+#nav .pager a,#nav .pager span{flex:1 1 0;display:flex;flex-direction:column;align-items:center;
+  margin:0;padding:6px 4px 7px;border:1px solid var(--line);border-radius:6px;
+  background:var(--panel);color:var(--ink);font-size:22px;line-height:1.1}
+#nav .pager small{font-size:11px;color:var(--muted);margin-top:2px}
+#nav .pager a:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager a:hover small{color:var(--accent)}
+#nav .pager span{opacity:.35}
+/* ---- main ---- */
+main{flex:1 1 auto;min-width:0;padding:34px 40px 120px;max-width:900px}
+header.top{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:8px}
+h1{font-size:30px;line-height:1.2;margin:0 0 6px}
+.sub{color:var(--muted);font-size:14.5px;font-family:system-ui,sans-serif}
+h2{font-size:21px;margin:44px 0 12px;padding-top:10px;border-top:1px solid var(--line);
+  scroll-margin-top:16px}
+h2:first-of-type{border-top:none}
+h3{font-size:16.5px;margin:26px 0 8px;color:var(--accent);scroll-margin-top:16px}
+p{margin:11px 0}
+code{background:var(--code-bg);padding:1.5px 5px;border-radius:4px;font-size:.87em;
+  color:var(--code-ink);border:1px solid var(--line)}
+pre{background:var(--code-bg);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:7px;padding:13px 15px;overflow-x:auto;font-size:13px;line-height:1.55;
+  margin:14px 0;color:var(--code-ink)}
+pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
+.kw{color:var(--kw);font-weight:600}.str{color:var(--str)}.com{color:var(--com);font-style:italic}
+.num{color:var(--num)}.pp{color:var(--pre)}
+table{border-collapse:collapse;width:100%;margin:15px 0;font-size:14px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+  border-bottom:1.5px solid var(--line);font-weight:600}
+tbody tr:nth-child(even){background:var(--accent-soft)}
+ul{margin:11px 0;padding-left:22px}
+li{margin:4px 0}
+.note{background:var(--note-bg);border-left:3px solid var(--note-line);border-radius:0 7px 7px 0;
+  padding:11px 15px;margin:15px 0;font-size:14.5px}
+.tblwrap{overflow-x:auto}
+/* ---- problems ---- */
+.pgroup{margin:26px 0 0}
+.pgroup h3{margin-bottom:2px}
+.pgroup .maps{color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif;margin:0 0 8px}
+table.prob td{padding:9px 10px}
+table.prob a{color:var(--accent);text-decoration:none;font-weight:600;
+  font-family:Consolas,monospace;font-size:13.5px}
+table.prob a:hover{text-decoration:underline}
+.tech{color:var(--muted);font-size:13px}
+.src{color:var(--muted);font-size:12px;white-space:nowrap}
+.dif{color:var(--accent);letter-spacing:1px;font-size:11.5px;white-space:nowrap}
+.done td{opacity:.45}
+.done td a{text-decoration:line-through}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+#bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;
+  border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;
+  font-family:system-ui,sans-serif;font-size:13px;flex-wrap:wrap}
+#bar .track{flex:1 1 130px;height:7px;background:var(--line);border-radius:4px;overflow:hidden;
+  min-width:110px}
+#bar .fill{height:100%;background:var(--accent);width:0;transition:width .25s}
+button{font:inherit;font-size:12.5px;padding:4px 11px;border:1px solid var(--line);
+  border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+#themeBtn{position:fixed;top:14px;right:16px;z-index:10}
+.cheat td:first-child{font-family:system-ui,sans-serif;width:33%}
+.pit b{display:block;margin-bottom:2px}
+footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif}
+@media(max-width:900px){
+  #nav{display:none}
+  main{padding:26px 18px 90px}
+  h1{font-size:24px}
+  #themeBtn{top:8px;right:10px}
+}
+</style>
+</head><body>
+<button id="themeBtn" title="Toggle light / dark">&#9681;</button>
+<div class="wrap">
+<nav id="nav"><a class="home" href="../index.html" title="All lessons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>Home</a>
+<div class="brand">Lesson 14 · Big integers</div>
+<div class="grp">Theory</div>
+<a href="#why">1. When long long is not enough</a>
+<a href="#digits">2. A long number as a row of digits</a>
+<a href="#add">3. Adding</a>
+<a href="#mulsmall">4. Multiplying by a small number</a>
+<a href="#sub">5. Subtracting and comparing</a>
+<a href="#mulbig">6. Multiplying two long numbers</a>
+<a href="#div">7. Dividing by a small number</a>
+<div class="grp">Reference</div>
+<a href="#cheat">8. Cheat sheet</a>
+<a href="#pitfalls">9. Pitfalls</a>
+<a href="#complexity">10. Complexity</a>
+<div class="grp">Practice</div>
+<a href="#problems">11. 12 problems</a>
+<a href="#gA" style="padding-left:16px">A. Adding long numbers</a>
+<a href="#gB" style="padding-left:16px">B. Multiplying by a small number</a>
+<a href="#gC" style="padding-left:16px">C. Subtracting, comparing, multiplying two long numbers</a>
+<a href="#gD" style="padding-left:16px">D. Dividing by a small number</a>
+<div class="pager">
+<a href="../13_Algorithm_Library/13_Algorithm_Library.html" title="Previous: Lesson 13 &middot; The &lt;algorithm&gt; toolbox">&larr;<small>Lesson 13</small></a>
+<a href="../15_Recursion/15_Recursion.html" title="Next: Lesson 15 &middot; Recursion">&rarr;<small>Lesson 15</small></a>
+</div>
+</nav>
+<main>
+<header class="top"><h1>C++17 Big integers - sums on paper, done by the computer</h1><div class="sub">Lesson 14 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<h2 id="why">1. When long long is not enough</h2>
+<p>A <code>long long</code> holds 19 digits at most. That is not enough for <code>2^100</code> (31 digits), for <code>50!</code> (65 digits), or for a number that the input gives you with 200 digits.</p>
+<p>There is no bigger number type in C++. So we do what you learnt at school: write the number as a row of digits and work digit by digit, carrying and borrowing by hand.</p>
+<div class="note">Before you start, check whether you really need it. If the statement asks only for the answer modulo some number, or the numbers fit in 18 digits, <code>long long</code> is enough.</div>
+<h2 id="digits">2. A long number as a row of digits</h2>
+<p>Read the number as a <code>string</code>, then keep its digits in a <code>vector&lt;int&gt;</code> <strong>backwards</strong>: <code>d[0]</code> is the ones digit, <code>d[1]</code> the tens, and so on. Backwards is easier, because on paper we also start from the ones, and a new digit at the front is just a <code>push_back</code>.</p>
+<pre><code>vector&lt;int&gt; make(string s) {            // &quot;1234&quot; -&gt; {4, 3, 2, 1}
+    vector&lt;int&gt; d;
+    int n = s.size();
+    for (int i = n - 1; i &gt;= 0; i--) d.push_back(s[i] - &#x27;0&#x27;);
+    return d;
+}
+
+void print(vector&lt;int&gt; d) {             // prints from the last element
+    int n = d.size();
+    for (int i = n - 1; i &gt;= 0; i--) cout &lt;&lt; d[i];
+    cout &lt;&lt; &#x27;\n&#x27;;
+}</code></pre>
+<p>All the functions below use this form. They need <code>#include &lt;vector&gt;</code> and <code>&lt;string&gt;</code>.</p>
+<h2 id="add">3. Adding</h2>
+<p>Add place by place, starting from the ones. Write down <code>s % 10</code> and carry <code>s / 10</code> to the next place - exactly like on paper:</p>
+<pre><code>vector&lt;int&gt; add(vector&lt;int&gt; a, vector&lt;int&gt; b) {
+    vector&lt;int&gt; c;
+    int na = a.size(), nb = b.size();
+    int carry = 0;
+    for (int i = 0; i &lt; na || i &lt; nb || carry &gt; 0; i++) {
+        int s = carry;
+        if (i &lt; na) s += a[i];
+        if (i &lt; nb) s += b[i];
+        c.push_back(s % 10);
+        carry = s / 10;
+    }
+    return c;
+}
+
+print(add(make(&quot;999&quot;), make(&quot;25&quot;)));    // 1024</code></pre>
+<p>The loop goes on while there is a carry left, so the extra digit at the front is never lost.</p>
+<h2 id="mulsmall">4. Multiplying by a small number</h2>
+<p>Multiplying a long number by an ordinary number <code>k</code> is the same loop. The carry can now be bigger than 9, so keep it in a <code>long long</code>:</p>
+<pre><code>vector&lt;int&gt; mul_small(vector&lt;int&gt; a, long long k) {
+    vector&lt;int&gt; c;
+    int n = a.size();
+    long long carry = 0;
+    for (int i = 0; i &lt; n || carry &gt; 0; i++) {
+        long long cur = carry;
+        if (i &lt; n) cur += a[i] * k;
+        c.push_back(cur % 10);
+        carry = cur / 10;
+    }
+    while (c.size() &gt; 1 &amp;&amp; c.back() == 0) c.pop_back();   // k = 0 leaves zeros
+    return c;
+}
+
+vector&lt;int&gt; f = make(&quot;1&quot;);                // 20! = 1 * 2 * 3 * ... * 20
+for (int k = 2; k &lt;= 20; k++) f = mul_small(f, k);
+print(f);                                 // 2432902008176640000</code></pre>
+<p>Powers of two, factorials and &quot;multiply by x again and again&quot; are all this one function in a loop.</p>
+<h2 id="sub">5. Subtracting and comparing</h2>
+<p>Subtract place by place. When a digit would go below 0, add 10 and <strong>borrow</strong> 1 from the next place. This version needs <code>a &gt;= b</code>:</p>
+<pre><code>vector&lt;int&gt; sub(vector&lt;int&gt; a, vector&lt;int&gt; b) {     // a must be &gt;= b
+    int na = a.size(), nb = b.size();
+    int borrow = 0;
+    for (int i = 0; i &lt; na; i++) {
+        int cur = a[i] - borrow;
+        if (i &lt; nb) cur -= b[i];
+        if (cur &lt; 0) { cur += 10; borrow = 1; }
+        else borrow = 0;
+        a[i] = cur;
+    }
+    while (a.size() &gt; 1 &amp;&amp; a.back() == 0) a.pop_back();   // 1000 - 999 = 0001 -&gt; 1
+    return a;
+}</code></pre>
+<p>Comparing: the number with more digits is bigger. With the same number of digits, compare from the first digit (the last element):</p>
+<pre><code>bool smaller(vector&lt;int&gt; a, vector&lt;int&gt; b) {      // is a &lt; b ?
+    if (a.size() != b.size()) return a.size() &lt; b.size();
+    int n = a.size();
+    for (int i = n - 1; i &gt;= 0; i--)
+        if (a[i] != b[i]) return a[i] &lt; b[i];
+    return false;                                  // they are equal
+}</code></pre>
+<h2 id="mulbig">6. Multiplying two long numbers</h2>
+<p>Long multiplication from school: digit <code>i</code> of <code>a</code> times digit <code>j</code> of <code>b</code> lands at place <code>i + j</code>. Add everything up first, then do all the carrying in one pass:</p>
+<pre><code>vector&lt;int&gt; mul_big(vector&lt;int&gt; a, vector&lt;int&gt; b) {
+    int n = a.size(), m = b.size();
+    vector&lt;long long&gt; c(n + m, 0);
+    for (int i = 0; i &lt; n; i++)
+        for (int j = 0; j &lt; m; j++)
+            c[i + j] += a[i] * b[j];
+    vector&lt;int&gt; r;
+    long long carry = 0;
+    for (int i = 0; i &lt; n + m; i++) {
+        long long cur = c[i] + carry;
+        r.push_back(cur % 10);
+        carry = cur / 10;
+    }
+    while (r.size() &gt; 1 &amp;&amp; r.back() == 0) r.pop_back();
+    return r;
+}</code></pre>
+<h2 id="div">7. Dividing by a small number</h2>
+<p>Division goes the other way: from the <strong>first</strong> digit, like on paper. Bring down a digit, divide, keep the remainder:</p>
+<pre><code>vector&lt;int&gt; div_small(vector&lt;int&gt; a, long long k) {
+    int n = a.size();
+    vector&lt;int&gt; q(n, 0);
+    long long r = 0;
+    for (int i = n - 1; i &gt;= 0; i--) {     // from the first digit
+        r = r * 10 + a[i];
+        q[i] = r / k;
+        r = r % k;
+    }
+    while (q.size() &gt; 1 &amp;&amp; q.back() == 0) q.pop_back();
+    return q;
+}
+
+long long mod_small(vector&lt;int&gt; a, long long k) {   // only the remainder
+    int n = a.size();
+    long long r = 0;
+    for (int i = n - 1; i &gt;= 0; i--) r = (r * 10 + a[i]) % k;
+    return r;
+}</code></pre>
+<p><code>mod_small</code> answers &quot;is this 300-digit number divisible by 7?&quot; without building any new number at all.</p>
+<h2 id="cheat">8. Cheat sheet &mdash; memorise this page</h2>
+<p>Cover the right-hand column and try to write each line from memory.</p>
+<div class="tblwrap"><table class="cheat"><thead><tr><th>You want to&hellip;</th><th>Write</th></tr></thead><tbody>
+<tr><td>Store a long number</td><td><code>vector&lt;int&gt;</code> of digits, ones digit first</td></tr>
+<tr><td>String to digits</td><td>walk the string from the end, <code>push_back(s[i] - &#x27;0&#x27;)</code></td></tr>
+<tr><td>Print</td><td>from the last element down to element 0</td></tr>
+<tr><td>Add</td><td><code>s = a[i] + b[i] + carry</code>; write <code>s % 10</code>, carry <code>s / 10</code>; go on while a carry is left</td></tr>
+<tr><td>Times a small <code>k</code></td><td><code>cur = a[i] * k + carry</code> in <code>long long</code></td></tr>
+<tr><td>Subtract (<code>a &gt;= b</code>)</td><td>below 0: add 10 and borrow 1; drop leading zeros at the end</td></tr>
+<tr><td>Compare</td><td>more digits is bigger; else compare from the first digit</td></tr>
+<tr><td>Times a long number</td><td><code>c[i + j] += a[i] * b[j]</code>, then one carrying pass</td></tr>
+<tr><td>Divide by a small <code>k</code></td><td>from the first digit: <code>r = r * 10 + a[i]</code>, <code>q[i] = r / k</code>, <code>r %= k</code></td></tr>
+<tr><td>Remainder only</td><td><code>r = (r * 10 + a[i]) % k</code> from the first digit</td></tr>
+</tbody></table></div>
+<h2 id="pitfalls">9. 5 pitfalls that cost real marks</h2>
+<div class="tblwrap"><table class="pit"><tbody>
+<tr><td><b>Printing the digits in the stored order.</b><span class="tech">They are stored backwards. Print from the last element to element 0.</span></td></tr>
+<tr><td><b>Losing the last carry.</b><span class="tech"><code>999 + 1</code> needs a fourth digit. Keep looping while <code>carry &gt; 0</code>.</span></td></tr>
+<tr><td><b>Leading zeros.</b><span class="tech">After subtracting or dividing, <code>0001</code> must print as <code>1</code>. Pop zeros from the back - but keep at least one digit, so that 0 still prints.</span></td></tr>
+<tr><td><b>Comparing numbers as strings.</b><span class="tech"><code>&quot;9&quot; &gt; &quot;10&quot;</code> is true for strings. Compare the lengths first.</span></td></tr>
+<tr><td><b>Forgetting <code>- &#x27;0&#x27;</code>.</b><span class="tech"><code>s[i]</code> is the character <code>&#x27;7&#x27;</code>, which is 55. The digit is <code>s[i] - &#x27;0&#x27;</code>.</span></td></tr>
+</tbody></table></div>
+<h2 id="complexity">10. Complexity reference</h2>
+<div class="tblwrap"><table><thead><tr><th>Operation</th><th>Cost</th></tr></thead><tbody>
+<tr><td>Adding or subtracting two numbers of <code>n</code> digits</td><td>O(n)</td></tr>
+<tr><td>Multiplying or dividing by a small number</td><td>O(n)</td></tr>
+<tr><td>Comparing</td><td>O(n)</td></tr>
+<tr><td>Multiplying two numbers of <code>n</code> and <code>m</code> digits</td><td>O(n * m)</td></tr>
+</tbody></table></div>
+<h2 id="problems">11. Practice &mdash; 12 problems, Group D</h2>
+<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
+<div class="pgroup"><h3 id="gA">A. Adding long numbers</h3><p class="maps">Theory: sections 2 and 3</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100373"></td><td><a href="https://arena.olimpiici.com/#/catalog/158/problem/100373" target="_blank" rel="noopener">fib</a><br><span class="tech">Fibonacci</span></td><td class="tech">add the last two numbers digit by digit</td><td class="src">Regional round 2010</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100479"></td><td><a href="https://arena.olimpiici.com/#/catalog/200/problem/100479" target="_blank" rel="noopener">degrees</a><br><span class="tech">Powers of two</span></td><td class="tech">double the number by adding it to itself, again and again</td><td class="src">Regional round 2017</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100285"></td><td><a href="https://arena.olimpiici.com/#/catalog/122/problem/100285" target="_blank" rel="noopener">sheeps</a><br><span class="tech">Sheep</span></td><td class="tech"><code>a(k) = a(k-1) + a(k-3)</code> grows past <code>long long</code> - add long numbers</td><td class="src">Municipal round 2014</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gB">B. Multiplying by a small number</h3><p class="maps">Theory: section 4</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100683"></td><td><a href="https://arena.olimpiici.com/#/catalog/246/problem/100683" target="_blank" rel="noopener">nbinpal</a><br><span class="tech">Binary palindromes</span></td><td class="tech">the answer is a power of two: multiply by 2 again and again</td><td class="src">National round 2016</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100494"></td><td><a href="https://arena.olimpiici.com/#/catalog/206/problem/100494" target="_blank" rel="noopener">sdnf</a><br><span class="tech">Factorial digits</span></td><td class="tech">multiply by 2, 3, ..., n, then add up the digits</td><td class="src">Regional round 2018</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100117"></td><td><a href="https://arena.olimpiici.com/#/catalog/56/problem/100117" target="_blank" rel="noopener">seq</a><br><span class="tech">Sequence</span></td><td class="tech">multiply by x digit by digit and count the digits written</td><td class="src">Autumn tournament 2014</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Subtracting, comparing, multiplying two long numbers</h3><p class="maps">Theory: sections 5 and 6</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100360"></td><td><a href="https://arena.olimpiici.com/#/catalog/152/problem/100360" target="_blank" rel="noopener">sub</a><br><span class="tech">Subtraction</span></td><td class="tech">sort the digits both ways and subtract the two long numbers</td><td class="src">Regional round 2009</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100511"></td><td><a href="https://arena.olimpiici.com/#/catalog/211/problem/100511" target="_blank" rel="noopener">ones</a><br><span class="tech">Ones</span></td><td class="tech">111...1 times itself - multiply two long numbers, then spot the pattern</td><td class="src">National round 2009</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100449"></td><td><a href="https://arena.olimpiici.com/#/catalog/188/problem/100449" target="_blank" rel="noopener">maxpro</a><br><span class="tech">Largest product</span></td><td class="tech">cut the ring in two places, multiply, keep the largest</td><td class="src">Regional round 2015</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gD">D. Dividing by a small number</h3><p class="maps">Theory: section 7</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100177"></td><td><a href="https://arena.olimpiici.com/#/catalog/80/problem/100177" target="_blank" rel="noopener">equation</a><br><span class="tech">Equation</span></td><td class="tech">subtract, then divide the long number by <code>a</code></td><td class="src">Autumn tournament 2018</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100493"></td><td><a href="https://arena.olimpiici.com/#/catalog/206/problem/100493" target="_blank" rel="noopener">long</a><br><span class="tech">Long number</span></td><td class="tech">the remainder of a long number divided by k, digit by digit</td><td class="src">Regional round 2018</td><td class="dif">★★★★☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100762"></td><td><a href="https://arena.olimpiici.com/#/catalog/267/problem/100762" target="_blank" rel="noopener">diff</a><br><span class="tech">Bases</span></td><td class="tech">change base by dividing the long number again and again</td><td class="src">Spring tournament 2009</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 14 · C++17 long-number arithmetic. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
+</main></div>
+<script>var LESSON_SLUG="14_Big_Integers";var LEGACY_KEY=null;</script>
+<script>
+var THEME_KEY="cpp_lessons_theme";
+var DONE_KEY="cpp_done_"+LESSON_SLUG;
+// ---- theme -------------------------------------------------------------
+var tb=document.getElementById('themeBtn');
+function setTheme(t){
+  if(t) document.documentElement.setAttribute('data-theme',t);
+  else document.documentElement.removeAttribute('data-theme');
+  try{t?localStorage.setItem(THEME_KEY,t):localStorage.removeItem(THEME_KEY)}catch(e){}
+}
+try{var st=localStorage.getItem(THEME_KEY); if(st) setTheme(st);}catch(e){}
+tb.onclick=function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  setTheme(cur==='dark'?'light':'dark');
+};
+
+// ---- progress ----------------------------------------------------------
+var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-pid]'));
+var fill=document.querySelector('#bar .fill'), lbl=document.getElementById('cnt');
+// state lives in memory; localStorage is a best-effort mirror so that ticking
+// still works when storage is blocked (private window, file:// restrictions)
+var state={};
+try{
+  var raw=localStorage.getItem(DONE_KEY);
+  if(raw===null && LEGACY_KEY) raw=localStorage.getItem(LEGACY_KEY);  // one-time adopt
+  state=JSON.parse(raw||'{}')||{};
+}catch(e){state={}}
+function save(){try{localStorage.setItem(DONE_KEY,JSON.stringify(state))}catch(e){}}
+function paint(){
+  var n=0;
+  boxes.forEach(function(b){
+    var on=!!state[b.dataset.pid]; b.checked=on; if(on)n++;
+    b.closest('tr').classList.toggle('done',on);
+  });
+  fill.style.width=(n/boxes.length*100)+'%';
+  lbl.textContent=n+' / '+boxes.length+' solved';
+}
+boxes.forEach(function(b){b.onchange=function(){
+  if(b.checked)state[b.dataset.pid]=1; else delete state[b.dataset.pid];
+  save(); paint();
+};});
+document.getElementById('reset').onclick=function(){
+  if(confirm('Clear all progress?')){state={};save();paint();}
+};
+paint();
+
+// ---- scroll spy --------------------------------------------------------
+var links=[].slice.call(document.querySelectorAll('#nav a[href^="#"]'));
+var map={}; links.forEach(function(a){
+  var el=document.getElementById(a.getAttribute('href').slice(1)); if(el)map[el.id]=a;});
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.remove('on')});
+      if(map[e.target.id])map[e.target.id].classList.add('on');
+    }});
+},{rootMargin:'0px 0px -75% 0px'});
+Object.keys(map).forEach(function(id){obs.observe(document.getElementById(id))});
+
+// ---- C++ highlighter ---------------------------------------------------
+var KW=('alignas|alignof|auto|bool|break|case|catch|char|class|const|constexpr|continue|'+
+ 'decltype|default|delete|do|double|else|enum|explicit|export|extern|false|float|for|friend|'+
+ 'goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|'+
+ 'public|register|return|short|signed|sizeof|static|static_cast|struct|switch|template|this|'+
+ 'throw|true|try|typedef|typename|union|unsigned|using|virtual|void|volatile|while|'+
+ 'string|string_view|vector|size_t|map|unordered_map|set|pair|istringstream|ostringstream').split('|');
+var KWRE=new RegExp('\\b('+KW.join('|')+')\\b','g');
+document.querySelectorAll('pre code').forEach(function(el){
+  var src=el.textContent, out='', i=0;
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  while(i<src.length){
+    var rest=src.slice(i), m;
+    if((m=rest.match(/^\/\/[^\n]*/))){out+='<span class="com">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^#[a-z]+/))){out+='<span class="pp">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^"(?:\\.|[^"\\])*"/))||(m=rest.match(/^'(?:\\.|[^'\\])*'/))){
+      out+='<span class="str">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^\b\d[\w.]*/))){out+='<span class="num">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^[A-Za-z_]\w*/))){
+      out+= KWRE.test(m[0])&&(KWRE.lastIndex=0,true) ? '<span class="kw">'+esc(m[0])+'</span>' : esc(m[0]);
+      i+=m[0].length;continue;}
+    out+=esc(src[i]); i++;
+  }
+  el.innerHTML=out;
+});
+</script>
+</body></html>

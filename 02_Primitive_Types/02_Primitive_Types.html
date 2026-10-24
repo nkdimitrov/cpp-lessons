@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>C++17 Primitive types - what fits, and when it breaks</title>
+<title>C++17 Numbers - int, long long, bool and double</title>
 <style>
 :root{
   --bg:#fbfaf8; --panel:#ffffff; --ink:#1c1b1a; --muted:#6b6763; --line:#e4e0da;
@@ -42,6 +42,19 @@ code,pre,.mono{font-family:"JetBrains Mono",Consolas,"SF Mono",Menlo,monospace}
 #nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
 #nav .grp{margin-top:14px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
   color:var(--muted);opacity:.7;padding:0 8px}
+#nav a.home{display:inline-flex;align-items:center;gap:7px;margin:0 0 16px;padding:5px 12px;
+  border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);
+  font-weight:600}
+#nav a.home svg{width:15px;height:15px}
+#nav a.home:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager{display:flex;gap:8px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+#nav .pager a,#nav .pager span{flex:1 1 0;display:flex;flex-direction:column;align-items:center;
+  margin:0;padding:6px 4px 7px;border:1px solid var(--line);border-radius:6px;
+  background:var(--panel);color:var(--ink);font-size:22px;line-height:1.1}
+#nav .pager small{font-size:11px;color:var(--muted);margin-top:2px}
+#nav .pager a:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager a:hover small{color:var(--accent)}
+#nav .pager span{opacity:.35}
 /* ---- main ---- */
 main{flex:1 1 auto;min-width:0;padding:34px 40px 120px;max-width:900px}
 header.top{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:8px}
@@ -109,475 +122,162 @@ footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
 </head><body>
 <button id="themeBtn" title="Toggle light / dark">&#9681;</button>
 <div class="wrap">
-<nav id="nav"><div class="brand">Lesson 02 · Primitive types</div>
-<a href="#howto">How to use this lesson</a>
+<nav id="nav"><a class="home" href="../index.html" title="All lessons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>Home</a>
+<div class="brand">Lesson 02 · Primitive types</div>
 <div class="grp">Theory</div>
-<a href="#setup">1. Getting started: headers and fast input</a>
-<a href="#ints">2. The whole numbers: int and long long</a>
-<a href="#overflow">3. Overflow: the silent wrong answer</a>
-<a href="#divmod">4. Integer division and the remainder</a>
-<a href="#negative">5. Negative numbers, division and %</a>
-<a href="#chars">6. char: a letter is a small number</a>
-<a href="#bool">7. bool, comparisons, and the = / == trap</a>
-<a href="#double">8. double: numbers with a decimal point</a>
-<a href="#compare">9. Never compare two doubles with ==</a>
-<a href="#mixing">10. Mixing types: what the compiler does for you</a>
-<a href="#choose">11. Choosing a type</a>
+<a href="#int">1. int and long long</a>
+<a href="#divmod">2. Division and remainder</a>
+<a href="#formula">3. A formula instead of a loop</a>
+<a href="#bool">4. true and false: bool</a>
+<a href="#double">5. Decimal numbers and square roots</a>
 <div class="grp">Reference</div>
-<a href="#cheat">12. Cheat sheet</a>
-<a href="#pitfalls">13. Pitfalls</a>
-<a href="#complexity">14. Complexity</a>
+<a href="#cheat">6. Cheat sheet</a>
+<a href="#pitfalls">7. Pitfalls</a>
+<a href="#complexity">8. Complexity</a>
 <div class="grp">Practice</div>
-<a href="#problems">15. 24 problems</a>
-<a href="#gA" style="padding-left:16px">A. One formula - and it must be a long long</a>
-<a href="#gB" style="padding-left:16px">B. Taking a number apart: / and %</a>
-<a href="#gC" style="padding-left:16px">C. Counting with a formula, not a loop</a>
-<a href="#gD" style="padding-left:16px">D. Try every candidate, and watch the size</a>
-<a href="#gE" style="padding-left:16px">E. Doubles, roots and powers</a>
-<a href="#gF" style="padding-left:16px">F. Bigger arithmetic</a>
+<a href="#problems">9. 12 problems</a>
+<a href="#gA" style="padding-left:16px">A. Big answers need long long</a>
+<a href="#gB" style="padding-left:16px">B. Taking a number apart with / and %</a>
+<a href="#gC" style="padding-left:16px">C. A formula instead of a loop</a>
+<a href="#gD" style="padding-left:16px">D. Square roots and decimals</a>
+<div class="pager">
+<a href="../01_Setup_And_IO/01_Setup_And_IO.html" title="Previous: Lesson 01 &middot; Setup, I/O and the contest toolkit">&larr;<small>Lesson 01</small></a>
+<a href="../03_Strings/03_Strings.html" title="Next: Lesson 03 &middot; Strings">&rarr;<small>Lesson 03</small></a>
+</div>
 </nav>
 <main>
-<header class="top"><h1>C++17 Primitive types - what fits, and when it breaks</h1><div class="sub">Lesson 02 | Theory, cheat sheet and 24 graded problems from arena.olimpiici.com (Group D, with six from Group C)</div></header>
-<h2 id="howto">How to use this lesson</h2>
-<p>This lesson is built to be worked through in three passes. Do not try to do all three in one sitting.</p>
-<p><strong>Pass 1 - Read.</strong> Go through sections 1-11 once, typing every snippet into a compiler and running it. Change a number, run it again, see what happens. Do not try to memorise anything yet; the aim is only to know what exists and where to find it later.</p>
-<p><strong>Pass 2 - Memorise.</strong> Section 12 is the cheat sheet. Cover the right-hand column and write out each line from its description alone. Repeat until they all come out without thinking. Section 13 lists the mistakes that cost marks, and section 14 says what each operation costs.</p>
-<p><strong>Pass 3 - Solve.</strong> Section 15 lists 24 problems from the Olimpiici Arena, ordered from easiest to hardest and grouped by technique. Solve them in order. Each group points back at the theory sections that solve it, so when a problem stalls you, re-read that section instead of looking up a solution.</p>
-<p>This is the shortest lesson in the course and the one that wins the most marks per page. Nothing here is an algorithm. It is all about the boxes your numbers live in, what happens when a number is too big for its box, and the handful of arithmetic rules that quietly decide whether a perfectly sensible solution scores 100 or 30.</p>
-<h2 id="setup">1. Getting started: headers and fast input</h2>
-<p>Every program in this lesson begins the same way. These headers cover everything the lesson uses, so include them all at the top.</p>
-<pre><code>#include &lt;iostream&gt;
-#include &lt;cmath&gt;        // sqrt, pow, fabs, round
-#include &lt;climits&gt;      // INT_MAX, LLONG_MAX
-#include &lt;iomanip&gt;      // setprecision, fixed
-#include &lt;cctype&gt;       // isdigit, isalpha, toupper, tolower
-
-using namespace std;</code></pre>
-<p><code>cin</code> and <code>cout</code> are slow out of the box, because they keep themselves in step with the older C functions <code>scanf</code> and <code>printf</code>. A problem that reads 200000 numbers can run out of time for that reason alone. Switch the syncing off with two lines at the start of <code>main</code>:</p>
-<pre><code>int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    // your solution goes here
-}</code></pre>
-<div class="note">Two rules come with those two lines. Do not mix <code>cin</code>/<code>cout</code> with <code>scanf</code>/<code>printf</code> in the same program - pick one. And print <code>&#x27;\n&#x27;</code> instead of <code>endl</code>: <code>endl</code> empties the output buffer after every single line, which on its own is enough to fail a time limit.</div>
-<h2 id="ints">2. The whole numbers: int and long long</h2>
-<p>A variable is a box, and every box has a fixed size. A whole number that is too big for its box does not make the box bigger and does not stop the program. It quietly becomes a different number. So the first question to ask about any value in a problem is <strong>how large can this get</strong>.</p>
+<header class="top"><h1>C++17 Numbers - int, long long, bool and double</h1><div class="sub">Lesson 02 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<h2 id="int">1. int and long long</h2>
+<p>An <code>int</code> holds whole numbers from about -2 billion to +2 billion. The exact limits are -2147483648 and 2147483647.</p>
+<p>When a result goes past that limit, it does not stop with an error. It quietly turns into a wrong number. This is called <strong>overflow</strong>.</p>
+<pre><code>int a = 100000;
+int b = a * a;               // should be 10000000000
+cout &lt;&lt; b &lt;&lt; &#x27;\n&#x27;;           // prints 1410065408 - wrong!</code></pre>
+<p>A <code>long long</code> holds whole numbers up to about 9 000 000 000 000 000 000 - a 9 followed by 18 digits. Use it when the numbers can be big:</p>
+<pre><code>long long a = 100000;
+long long b = a * a;         // 10000000000 - correct</code></pre>
+<div class="note">The computer decides the type of <code>a * a</code> from <code>a</code>, not from where you put the answer. With <code>int a</code>, the line <code>long long b = a * a;</code> still overflows, because the multiplying happens in <code>int</code> first. Make the numbers themselves <code>long long</code>, or write <code>1LL * a * a</code>.</div>
+<p>A simple rule: if a number in the statement can be bigger than about a billion, or you multiply two big numbers together, use <code>long long</code> for everything.</p>
+<h2 id="divmod">2. Division and remainder</h2>
+<p>For whole numbers, <code>/</code> throws away the part after the point, and <code>%</code> gives what is left over:</p>
+<pre><code>cout &lt;&lt; 17 / 5 &lt;&lt; &#x27;\n&#x27;;      // 3
+cout &lt;&lt; 17 % 5 &lt;&lt; &#x27;\n&#x27;;      // 2       because 17 = 3 * 5 + 2</code></pre>
 <div class="tblwrap"><table><thead><tr>
-<th>Type</th>
-<th>Bytes</th>
-<th>Smallest</th>
-<th>Largest</th>
-<th>Read it as</th>
-</tr></thead><tbody>
-<tr><td><code>int</code></td><td>4</td><td>-2 147 483 648</td><td>2 147 483 647</td><td>about 2 thousand million</td></tr>
-<tr><td><code>long long</code></td><td>8</td><td>about -9.2 * 10^18</td><td>about 9.2 * 10^18</td><td>about 9 million million million</td></tr>
-<tr><td><code>unsigned int</code></td><td>4</td><td>0</td><td>4 294 967 295</td><td>about 4 thousand million, never negative</td></tr>
-<tr><td><code>char</code></td><td>1</td><td>-128</td><td>127</td><td>one character, or a very small number</td></tr>
-<tr><td><code>bool</code></td><td>1</td><td><code>false</code></td><td><code>true</code></td><td>a yes/no answer</td></tr>
-</tbody></table></div>
-<p>In practice you need only two of them: <code>int</code> up to about 2 * 10^9, and <code>long long</code> for anything beyond that. <code>&lt;climits&gt;</code> gives you the exact edges by name, which is how you start a search for a minimum:</p>
-<pre><code>cout &lt;&lt; INT_MAX;      // 2147483647
-cout &lt;&lt; LLONG_MAX;    // 9223372036854775807
-
-int  best  = INT_MAX;         // nothing read will be larger, so the first value wins
-long long worst = LLONG_MIN;</code></pre>
-<p>Writing a <code>long long</code> needs two small habits. A big constant needs the <code>LL</code> ending, and reading and printing are unchanged:</p>
-<pre><code>long long big = 3000000000LL;      // without LL the compiler reads it as an int first
-long long x;
-cin &gt;&gt; x;
-cout &lt;&lt; x &lt;&lt; &#x27;\n&#x27;;</code></pre>
-<div class="note">On the judges used for Groups C and D, <code>long long</code> arithmetic is just as fast as <code>int</code> arithmetic. It costs twice the memory, which only matters for very large arrays. <strong>When in doubt, use the bigger box.</strong> A wrong answer from overflow costs far more than eight bytes ever will.</div>
-<h2 id="overflow">3. Overflow: the silent wrong answer</h2>
-<p>This is the most expensive single idea in the lesson. When a result does not fit, the extra is thrown away and what is left over may even be negative. There is no crash and no warning - the program runs happily to the end and prints something wrong.</p>
-<pre><code>int a = 2000000000;
-int b = 2000000000;
-cout &lt;&lt; a + b &lt;&lt; &#x27;\n&#x27;;         // -294967296     not 4000000000
-
-int n = 100000;
-cout &lt;&lt; n * n &lt;&lt; &#x27;\n&#x27;;         // 1410065408     not 10000000000</code></pre>
-<h3>Where it actually happens</h3>
-<p>The trap is that <strong>the type of the answer is decided by the things being multiplied, not by the box you put it in</strong>. In the first line below, <code>n * n</code> is worked out as an <code>int</code>, overflows, and only then is the broken result copied into the <code>long long</code>:</p>
-<pre><code>int n = 100000;
-
-long long bad  = n * n;                 // WRONG: int * int is an int, and it overflows
-long long good = (long long)n * n;      // RIGHT: one side is 64-bit, so the whole sum is
-long long also = 1LL * n * n;           // RIGHT: the same trick, a common shorthand</code></pre>
-<p>The cure is a habit, not a calculation: <strong>decide the type before you write the formula.</strong> Declare every counting and summing variable <code>long long</code> from the start, and the multiplication is then safe without any casting at all:</p>
-<pre><code>long long n;
-cin &gt;&gt; n;
-cout &lt;&lt; n * n &lt;&lt; &#x27;\n&#x27;;          // fine: long long * long long</code></pre>
-<h3>Seeing it coming</h3>
-<p>Before you write a formula, put in the largest numbers the statement allows and multiply them out roughly. If the answer passes 2 * 10^9, you need <code>long long</code>. These are the shapes that catch people out:</p>
-<div class="tblwrap"><table><thead><tr>
-<th>Formula</th>
-<th>With the usual limits</th>
-<th>Fits in</th>
-</tr></thead><tbody>
-<tr><td><code>n * (n - 1) / 2</code> with <code>n</code> up to 10^5</td><td>about 5 * 10^9</td><td><code>long long</code></td></tr>
-<tr><td>A sum of 10^5 values of up to 10^6</td><td>about 10^11</td><td><code>long long</code></td></tr>
-<tr><td><code>a * b</code> with <code>a</code>, <code>b</code> up to 10^6</td><td>10^12</td><td><code>long long</code></td></tr>
-<tr><td>A count of pairs among 10^5 things</td><td>about 5 * 10^9</td><td><code>long long</code></td></tr>
-<tr><td><code>2^40</code></td><td>about 10^12</td><td><code>long long</code></td></tr>
-<tr><td>A sum of 1000 values of up to 1000</td><td>10^6</td><td><code>int</code> is fine</td></tr>
-</tbody></table></div>
-<div class="note">A negative answer where only positive ones make sense is the classic sign of overflow. If a program prints a sensible number on the samples and a strange negative one on the big test, look for an <code>int</code> that should have been a <code>long long</code> before you look anywhere else.</div>
-<h2 id="divmod">4. Integer division and the remainder</h2>
-<p>When both sides are whole numbers, <code>/</code> gives a whole number. The part after the decimal point is thrown away - not rounded, thrown away. <code>%</code> gives what is left over.</p>
-<pre><code>cout &lt;&lt; 7 / 2;      // 3      not 3.5, and not 4
-cout &lt;&lt; 7 % 2;      // 1
-cout &lt;&lt; 10 / 5;     // 2
-cout &lt;&lt; 10 % 5;     // 0
-
-cout &lt;&lt; 7 / 2.0;    // 3.5    one side has a decimal point, so the answer does too</code></pre>
-<p>Those two together are how you take a number apart. <code>% 10</code> is the last digit and <code>/ 10</code> removes it, so this loop visits every digit from the right:</p>
-<pre><code>int n = 9251;
-int sum = 0;
-
-while (n &gt; 0) {
-    int d = n % 10;      // 1, then 5, then 2, then 9
-    sum += d;
-    n = n / 10;          // 925, then 92, then 9, then 0
-}
-cout &lt;&lt; sum &lt;&lt; &#x27;\n&#x27;;     // 17</code></pre>
-<div class="note">That loop prints nothing at all when <code>n</code> is 0, because the condition is false straight away. If 0 is a possible input and its digit sum should be 0, that is fine; if you needed the program to say &quot;one digit&quot;, handle <code>n == 0</code> separately before the loop.</div>
-<h3>The two units trick</h3>
-<p>Anything measured in small units splits into big and small with one division and one remainder. Learn the shape once and it works for money, for time, and for anything else:</p>
-<pre><code>int total = 1234;                // stotinki
-
-int leva     = total / 100;      // 12
-int stotinki = total % 100;      // 34
-
-int seconds = 3725;
-int h = seconds / 3600;                 // 1
-int m = (seconds % 3600) / 60;          // 2
-int s = seconds % 60;                   // 5</code></pre>
-<h3>Rounding up without a double</h3>
-<p>&quot;How many boxes of 7 do I need for 30 things?&quot; is not <code>30 / 7</code>, which is 4 and leaves six things on the floor. Rounding up is done with whole numbers, and the phrase to memorise is <code>(a + b - 1) / b</code>:</p>
-<pre><code>int a = 30, b = 7;
-
-cout &lt;&lt; a / b;                  // 4      rounded down
-cout &lt;&lt; (a + b - 1) / b;        // 5      rounded up
-
-// never write this - see section 9
-// cout &lt;&lt; (int)ceil(a / (double)b);</code></pre>
-<h3>Counting multiples</h3>
-<p>How many numbers from 1 to <code>n</code> are multiples of <code>k</code>? Exactly <code>n / k</code>. For a range that does not start at 1, count up to the top and take away the ones below the bottom - and mind that <code>a</code> itself belongs to the range:</p>
-<pre><code>long long n, k;
-cin &gt;&gt; n &gt;&gt; k;
-cout &lt;&lt; n / k &lt;&lt; &#x27;\n&#x27;;                   // multiples of k in 1..n
-
-long long a, b;
-cin &gt;&gt; a &gt;&gt; b;
-cout &lt;&lt; b / k - (a - 1) / k &lt;&lt; &#x27;\n&#x27;;     // multiples of k in a..b</code></pre>
-<h2 id="negative">5. Negative numbers, division and %</h2>
-<p>Everything above assumed positive numbers. With a negative number on the left, C++ throws away the decimal part by moving <strong>towards zero</strong>, and the remainder keeps the sign of the left-hand side. That is not what most people expect, and it is not what mathematics does.</p>
-<pre><code>cout &lt;&lt; 7 / 2;       //  3
-cout &lt;&lt; -7 / 2;      // -3      towards zero, NOT -4
-cout &lt;&lt; 7 % 2;       //  1
-cout &lt;&lt; -7 % 2;      // -1      NOT 1
-cout &lt;&lt; 7 % -2;      //  1      the sign comes from the LEFT side</code></pre>
-<p>The place this bites is wrapping round a circle. Stepping backwards past 0 gives -1, and <code>-1 % n</code> is <code>-1</code>, not <code>n - 1</code>. Adding <code>n</code> first keeps everything positive:</p>
-<pre><code>int n = 5;
-int i = 0;
-
-cout &lt;&lt; (i - 1) % n;          // -1     out of range
-cout &lt;&lt; (i - 1 + n) % n;      //  4     what you wanted</code></pre>
-<p>The same fix works whenever the number could be more than <code>n</code> below zero - add a multiple of <code>n</code> big enough to clear it:</p>
-<pre><code>int shift = -37;
-int n = 10;
-cout &lt;&lt; ((shift % n) + n) % n &lt;&lt; &#x27;\n&#x27;;     // 3, and always in 0..n-1</code></pre>
-<div class="note"><code>abs(x)</code> gives the size of a number without its sign, and lives in <code>&lt;cmath&gt;</code>. For whole numbers use <code>abs</code>; for a <code>double</code> use <code>fabs</code>. Watch the one case that breaks: <code>abs</code> of the most negative <code>int</code> cannot be represented, so it comes back negative. You will almost never meet it, but now you know what you are looking at if you do.</div>
-<h2 id="chars">6. char: a letter is a small number</h2>
-<p>A <code>char</code> holds one character, but underneath it is just a small whole number - the character&#x27;s ASCII code - and you may do arithmetic on it. The codes worth knowing:</p>
-<div class="tblwrap"><table><thead><tr>
-<th>Characters</th>
-<th>Codes</th>
-</tr></thead><tbody>
-<tr><td><code>&#x27;0&#x27;</code> ... <code>&#x27;9&#x27;</code></td><td>48 ... 57</td></tr>
-<tr><td><code>&#x27;A&#x27;</code> ... <code>&#x27;Z&#x27;</code></td><td>65 ... 90</td></tr>
-<tr><td><code>&#x27;a&#x27;</code> ... <code>&#x27;z&#x27;</code></td><td>97 ... 122</td></tr>
-<tr><td><code>&#x27; &#x27;</code> (space)</td><td>32</td></tr>
-</tbody></table></div>
-<p>You almost never need the numbers themselves, because the digits and the letters are stored in order. Subtracting the first character of a run turns a character into a small number, and adding it turns the number back into a character:</p>
-<pre><code>char c = &#x27;7&#x27;;
-int  d = c - &#x27;0&#x27;;               // 7       digit character -&gt; its value
-char e = char(&#x27;0&#x27; + 7);         // &#x27;7&#x27;     value -&gt; digit character
-
-int  i  = &#x27;c&#x27; - &#x27;a&#x27;;            // 2       letter -&gt; 0..25
-char c2 = char(&#x27;a&#x27; + 2);        // &#x27;c&#x27;     0..25 -&gt; letter</code></pre>
-<p><code>&lt;cctype&gt;</code> names the tests you would otherwise write by hand:</p>
-<div class="tblwrap"><table><thead><tr>
-<th>Function</th>
-<th>True for</th>
-</tr></thead><tbody>
-<tr><td><code>isdigit(c)</code></td><td>0-9</td></tr>
-<tr><td><code>isalpha(c)</code></td><td>A-Z, a-z</td></tr>
-<tr><td><code>isalnum(c)</code></td><td>a letter or a digit</td></tr>
-<tr><td><code>isspace(c)</code></td><td>space, tab, newline</td></tr>
-<tr><td><code>isupper(c)</code> / <code>islower(c)</code></td><td>a capital / a small letter</td></tr>
-<tr><td><code>toupper(c)</code> / <code>tolower(c)</code></td><td><strong>not a test</strong> - gives back the converted character</td></tr>
-</tbody></table></div>
-<div class="note"><code>cin &gt;&gt; c</code> into a <code>char</code> skips spaces and newlines and gives you the next real character. That is usually what you want. It also means you cannot read a space that way - and reading whole lines of text is Lesson 03, which takes this section much further.</div>
-<h2 id="bool">7. bool, comparisons, and the = / == trap</h2>
-<p>A <code>bool</code> is one of two values, <code>true</code> and <code>false</code>. Every comparison produces one, and printing one gives 1 or 0 rather than the words.</p>
-<pre><code>bool ok = (5 &gt; 3);
-cout &lt;&lt; ok;                  // 1
-cout &lt;&lt; (2 == 2) &lt;&lt; &#x27;\n&#x27;;    // 1
-cout &lt;&lt; (2 != 2) &lt;&lt; &#x27;\n&#x27;;    // 0</code></pre>
-<p>The three ways to join conditions together. <code>&amp;&amp;</code> and <code>||</code> are <strong>short-circuit</strong>: as soon as the answer is settled, the rest is not even looked at.</p>
-<div class="tblwrap"><table><thead><tr>
-<th>Written</th>
-<th>Means</th>
-<th>True when</th>
-</tr></thead><tbody>
-<tr><td><code>a &amp;&amp; b</code></td><td>and</td><td>both are true</td></tr>
-<tr><td><code>a || b</code></td><td>or</td><td>at least one is true</td></tr>
-<tr><td><code>!a</code></td><td>not</td><td><code>a</code> is false</td></tr>
-</tbody></table></div>
-<p>Short-circuiting is not a detail, it is a tool. It lets you check that something is safe before you use it, in one condition, because the right-hand side never runs when the left-hand side has already said no:</p>
-<pre><code>int n = 0, total = 10;
-
-if (n != 0 &amp;&amp; total / n &gt; 3)          // safe: the division never happens when n is 0
-    cout &lt;&lt; &quot;big average\n&quot;;
-
-if (n &gt; 0 || n &lt; -5)                  // the second test is skipped when the first is true
-    cout &lt;&lt; &quot;outside\n&quot;;</code></pre>
-<h3>The trap</h3>
-<p><code>=</code> puts a value into a variable. <code>==</code> asks whether two values are equal. Writing one where you meant the other compiles cleanly and gives nonsense:</p>
-<pre><code>int x = 5;
-
-if (x == 3) cout &lt;&lt; &quot;three\n&quot;;     // asks a question - prints nothing, correctly
-if (x = 3)  cout &lt;&lt; &quot;three\n&quot;;     // PUTS 3 into x, then treats 3 as true - always prints</code></pre>
-<div class="note">The rule for reading conditions: any number that is not 0 counts as true, and 0 counts as false. That is why <code>if (x = 3)</code> is always true and <code>if (x = 0)</code> is always false - and why the compiler cannot tell that you made a mistake.</div>
-<h2 id="double">8. double: numbers with a decimal point</h2>
-<p>A <code>double</code> holds a number with a decimal point. It has about <strong>15 or 16 correct digits in all</strong>, counting both sides of the point - not 15 after it. Beyond that the value is an approximation, and the errors add up.</p>
-<pre><code>double x = 7 / 2;            // 3.0    !!  7/2 is worked out as INTEGERS first
-double y = 7 / 2.0;          // 3.5        one side has a point, so the division does too
-double z = (double)7 / 2;    // 3.5        the same, written with a cast
-
-cout &lt;&lt; 1.0 / 3.0 &lt;&lt; &#x27;\n&#x27;;   // 0.333333   only six digits are shown by default</code></pre>
-<div class="note"><code>double x = 7 / 2;</code> is the single most common floating-point mistake in Groups C and D. The division happens <strong>before</strong> anything is copied into <code>x</code>, and at that moment both sides are still whole numbers. Put a <code>.0</code> on one of them, or cast one of them.</div>
-<h3>Printing</h3>
-<p>By default <code>cout</code> shows about six digits and switches to scientific notation for large numbers, which a judge will mark wrong. When a statement asks for a fixed number of decimal places, say so once, at the start, and then print normally:</p>
-<pre><code>#include &lt;iomanip&gt;
-
-cout &lt;&lt; fixed &lt;&lt; setprecision(2);
-cout &lt;&lt; 3.14159 &lt;&lt; &#x27;\n&#x27;;      // 3.14
-cout &lt;&lt; 2.0 &lt;&lt; &#x27;\n&#x27;;          // 2.00     the zeros are kept, which is what is wanted</code></pre>
-<h3>The tools in <code>&lt;cmath&gt;</code></h3>
-<div class="tblwrap"><table><thead><tr>
-<th>Call</th>
-<th>What it gives</th>
-<th>Careful</th>
-</tr></thead><tbody>
-<tr><td><code>sqrt(x)</code></td><td>the square root</td><td>a <code>double</code>, even for a perfect square</td></tr>
-<tr><td><code>pow(a, b)</code></td><td><code>a</code> to the power <code>b</code></td><td>a <code>double</code> - see section 9</td></tr>
-<tr><td><code>fabs(x)</code></td><td>size without the sign, for a <code>double</code></td><td><code>abs</code> is the one for whole numbers</td></tr>
-<tr><td><code>round(x)</code></td><td>to the nearest whole number</td><td>still a <code>double</code>; cast it</td></tr>
-<tr><td><code>floor(x)</code> / <code>ceil(x)</code></td><td>down / up to a whole number</td><td>still a <code>double</code>; cast it</td></tr>
-</tbody></table></div>
-<p>Casting a <code>double</code> to an <code>int</code> does <strong>not</strong> round - it throws the decimal part away, towards zero. If you want the nearest whole number, say so:</p>
-<pre><code>double d = 2.99;
-
-cout &lt;&lt; (int)d;                // 2
-cout &lt;&lt; (int)round(d);         // 3
-cout &lt;&lt; (int)(-2.7);           // -2      towards zero, not -3</code></pre>
-<h2 id="compare">9. Never compare two doubles with ==</h2>
-<p>A <code>double</code> cannot hold most numbers exactly - not even 0.1, in the same way you cannot write one third exactly as a decimal. Small errors are stored, and then they add up. So two values that ought to be equal usually are not:</p>
-<pre><code>double a = 0.1 + 0.2;
-double b = 0.3;
-
-cout &lt;&lt; (a == b) &lt;&lt; &#x27;\n&#x27;;        // 0 - they are NOT equal
-cout &lt;&lt; fixed &lt;&lt; setprecision(20);
-cout &lt;&lt; a &lt;&lt; &#x27;\n&#x27;;               // 0.30000000000000004441
-cout &lt;&lt; b &lt;&lt; &#x27;\n&#x27;;               // 0.29999999999999998890</code></pre>
-<p>The fix is to ask whether they are *close enough*. Pick a tolerance small compared with the numbers in the problem - <code>1e-9</code> is the usual choice - and compare the gap against it:</p>
-<pre><code>const double EPS = 1e-9;
-
-if (fabs(a - b) &lt; EPS) cout &lt;&lt; &quot;equal enough\n&quot;;
-if (a &gt; b + EPS)       cout &lt;&lt; &quot;a is really bigger\n&quot;;
-if (a &lt; b - EPS)       cout &lt;&lt; &quot;a is really smaller\n&quot;;</code></pre>
-<h3>The better fix: stay with whole numbers</h3>
-<p>In most Group C and D problems the doubles are not needed at all, and the honest answer is to avoid them. Three exchanges worth knowing:</p>
-<div class="tblwrap"><table><thead><tr>
-<th>Instead of</th>
+<th>You want</th>
 <th>Write</th>
+<th>Example with 4728</th>
 </tr></thead><tbody>
-<tr><td><code>a / b &gt; c / d</code></td><td><code>a * d &gt; c * b</code> (when <code>b</code> and <code>d</code> are positive)</td></tr>
-<tr><td><code>(int)ceil(a / (double)b)</code></td><td><code>(a + b - 1) / b</code></td></tr>
-<tr><td>A price in leva as a <code>double</code></td><td>the price in stotinki as a <code>long long</code></td></tr>
-<tr><td><code>if (x == y)</code> on doubles</td><td>keep <code>x</code> and <code>y</code> as whole numbers, then <code>==</code> is exact</td></tr>
+<tr><td>the last digit</td><td><code>n % 10</code></td><td>8</td></tr>
+<tr><td>the number without its last digit</td><td><code>n / 10</code></td><td>472</td></tr>
+<tr><td>is it even?</td><td><code>n % 2 == 0</code></td><td>true</td></tr>
+<tr><td>is it divisible by k?</td><td><code>n % k == 0</code></td><td>with k = 3: false</td></tr>
 </tbody></table></div>
-<h3>sqrt and pow lie</h3>
-<p><code>sqrt(x)</code> and <code>pow(a, b)</code> do their work in <code>double</code>, so they may come back a hair below the whole number you were expecting. Casting then throws that hair away and you get an answer one too small. Always check the result with whole-number arithmetic:</p>
-<pre><code>long long x = 1000000000000LL;       // 10^12, and 10^6 squared exactly
-
-long long r = (long long)sqrt((double)x);    // might be 999999 rather than 1000000
-while (r * r &lt; x) r++;                       // nudge it up
-while (r * r &gt; x) r--;                       // and down
-if (r * r == x) cout &lt;&lt; &quot;a perfect square\n&quot;;</code></pre>
-<div class="note">The same goes for powers. <code>pow(10, 2)</code> can come back as 99.999999... on some compilers, and the cast then throws the 0.999... away and leaves you with 99. For a whole-number power, multiply in a loop - it is three lines, it is exact, and for the sizes in this course it is also faster.</div>
-<h2 id="mixing">10. Mixing types: what the compiler does for you</h2>
-<p>When the two sides of an operator have different types, C++ quietly converts one of them before doing the work. The rule is short: <strong>the wider type wins.</strong></p>
+<p>Put the first two together in a loop and you can take any number apart, digit by digit:</p>
+<pre><code>int n = 4728, sum = 0;
+while (n &gt; 0) {
+    sum += n % 10;           // add the last digit
+    n /= 10;                 // and drop it
+}
+cout &lt;&lt; sum &lt;&lt; &#x27;\n&#x27;;         // 4 + 7 + 2 + 8 = 21</code></pre>
+<p>The same two signs change units. 135 minutes is <code>135 / 60 = 2</code> hours and <code>135 % 60 = 15</code> minutes.</p>
+<p>Rounding <strong>up</strong>: how many boxes of 6 do you need for 20 eggs? <code>20 / 6</code> is only 3. The trick is <code>(a + b - 1) / b</code>, so <code>(20 + 5) / 6 = 4</code>.</p>
+<h2 id="formula">3. A formula instead of a loop</h2>
+<p>Some answers can be counted with a loop, but the loop would take far too long when the numbers are big. A formula gives the answer in one step.</p>
+<p><strong>Adding 1 to n.</strong> <code>1 + 2 + ... + n = n * (n + 1) / 2</code>. For n = 100 that is <code>100 * 101 / 2 = 5050</code>.</p>
+<p><strong>Counting multiples.</strong> From 1 to b there are <code>b / c</code> multiples of c. From a to b, take away the ones below a:</p>
+<pre><code>long long a, b, c;
+cin &gt;&gt; a &gt;&gt; b &gt;&gt; c;
+cout &lt;&lt; b / c - (a - 1) / c &lt;&lt; &#x27;\n&#x27;;</code></pre>
+<p><strong>Counting whole numbers between two others.</strong> Strictly between 3 and 8 lie 4, 5, 6 and 7: that is <code>8 - 3 - 1 = 4</code> numbers.</p>
+<div class="note">Always test a formula on a small example by hand. Multiples of 3 from 4 to 10 are 6 and 9. The formula gives <code>10 / 3 - 3 / 3 = 3 - 1 = 2</code>. Correct.</div>
+<h2 id="bool">4. true and false: bool</h2>
+<p>A <code>bool</code> holds one of two values: <code>true</code> or <code>false</code>. Every comparison gives a <code>bool</code>:</p>
+<pre><code>int n = 12;
+bool even = (n % 2 == 0);        // true
+if (even) cout &lt;&lt; &quot;even\n&quot;;</code></pre>
 <div class="tblwrap"><table><thead><tr>
-<th>Left and right</th>
-<th>Worked out as</th>
+<th>Sign</th>
+<th>Means</th>
+<th>Example</th>
 </tr></thead><tbody>
-<tr><td><code>int</code> and <code>int</code></td><td><code>int</code> - this is where overflow lives</td></tr>
-<tr><td><code>int</code> and <code>long long</code></td><td><code>long long</code></td></tr>
-<tr><td><code>int</code> and <code>double</code></td><td><code>double</code></td></tr>
-<tr><td><code>char</code> and <code>int</code></td><td><code>int</code></td></tr>
-<tr><td><code>bool</code> and <code>int</code></td><td><code>int</code>, with <code>true</code> as 1</td></tr>
-<tr><td><code>int</code> and <code>unsigned</code></td><td><code>unsigned</code> - <strong>and this one is a trap</strong></td></tr>
+<tr><td><code>&amp;&amp;</code></td><td>and - both must be true</td><td><code>x &gt;= 1 &amp;&amp; x &lt;= 10</code></td></tr>
+<tr><td><code>||</code></td><td>or - at least one must be true</td><td><code>c == &#x27;a&#x27; || c == &#x27;e&#x27;</code></td></tr>
+<tr><td><code>!</code></td><td>not</td><td><code>!even</code></td></tr>
 </tbody></table></div>
-<p>The last row is the surprising one. Put a negative <code>int</code> next to an <code>unsigned</code> and the negative number is converted first, becoming an enormous positive one:</p>
-<pre><code>int i = -1;
-unsigned u = 1;
-
-cout &lt;&lt; (i &lt; u) &lt;&lt; &#x27;\n&#x27;;        // 0 - it says -1 is NOT less than 1</code></pre>
-<div class="note">You will rarely write <code>unsigned</code> on purpose. You will meet it anyway, because <code>.size()</code> hands one back - which is why Lesson 03 insists on <code>int n = s.size();</code> before a loop. The habit to build now: keep everything <code>int</code> or <code>long long</code>, and put the length into an ordinary <code>int</code> the moment you get it.</div>
-<h3>Casting on purpose</h3>
-<p>A cast says &quot;treat this value as that type, here, now&quot;. The two you will actually write:</p>
-<pre><code>int a = 7, b = 2;
-
-double d = (double)a / b;        // 3.5     force the division to be a double one
-long long big = (long long)a * b;  // force the multiplication to be 64-bit
-
-cout &lt;&lt; (int)3.99;               // 3       double -&gt; int throws the decimals away
-cout &lt;&lt; (int)&#x27;A&#x27;;                // 65      char -&gt; int gives the ASCII code</code></pre>
-<div class="note">Put the cast on the <strong>operand</strong>, never on the answer. <code>(long long)(a * b)</code> is too late - the multiplication has already overflowed by then, and you are only widening the wreckage.</div>
-<h2 id="choose">11. Choosing a type</h2>
-<p>Nothing in this lesson is hard once the decision is made early. Make it before you write the formula, not after the judge has told you the answer is wrong.</p>
-<div class="tblwrap"><table><thead><tr>
-<th>What the value is</th>
-<th>Use</th>
-</tr></thead><tbody>
-<tr><td>A counter, an index, a size up to 10^9</td><td><code>int</code></td></tr>
-<tr><td>A sum, a product, or anything past 2 * 10^9</td><td><code>long long</code></td></tr>
-<tr><td>A count of pairs, or <code>n * n</code> with <code>n</code> past 46340</td><td><code>long long</code></td></tr>
-<tr><td>A yes/no answer</td><td><code>bool</code></td></tr>
-<tr><td>One character</td><td><code>char</code></td></tr>
-<tr><td>Money, or a measurement given to two decimals</td><td>a <code>long long</code> of the small unit</td></tr>
-<tr><td>A genuine measurement - an angle, a distance</td><td><code>double</code></td></tr>
-<tr><td>Anything at all, when you are not sure</td><td><code>long long</code></td></tr>
-</tbody></table></div>
-<p>Two questions, asked in this order, before every formula you write:</p>
-<ul><li><strong>How big can this get?</strong> Put the largest numbers the statement allows into the formula and multiply them out roughly. Past 2 * 10^9 means <code>long long</code> - and <code>long long</code> for the variables, not a cast bolted on at the end.</li><li><strong>Is any of this really fractional?</strong> If the answer is a whole number, keep every step a whole number. Most of section 9 is about damage you can simply decline to take.</li></ul>
-<div class="note">There are more types than these - <code>short</code>, <code>unsigned long long</code>, <code>long double</code>, <code>float</code>. You do not need any of them in Groups C and D. <code>int</code>, <code>long long</code>, <code>char</code>, <code>bool</code> and <code>double</code> will carry you through every problem in this course.</div>
-<h2 id="cheat">12. Cheat sheet &mdash; memorise this page</h2>
-<p>Cover the right-hand column and reproduce each idiom from its description alone.</p>
+<div class="note"><code>=</code> puts a value into a variable; <code>==</code> compares. <code>if (x = 5)</code> sets x to 5 and is always true. It compiles, so the compiler will not save you.</div>
+<h2 id="double">5. Decimal numbers and square roots</h2>
+<p>A <code>double</code> holds numbers with a decimal point, such as <code>3.75</code>. If both numbers in a division are whole, the answer is whole too. Make one of them a <code>double</code> to keep the part after the point:</p>
+<pre><code>cout &lt;&lt; 7 / 2 &lt;&lt; &#x27;\n&#x27;;        // 3
+cout &lt;&lt; 7.0 / 2 &lt;&lt; &#x27;\n&#x27;;      // 3.5</code></pre>
+<p>To print exactly two digits after the point, add <code>#include &lt;iomanip&gt;</code> and write:</p>
+<pre><code>double x = 2.0 / 3;
+cout &lt;&lt; fixed &lt;&lt; setprecision(2) &lt;&lt; x &lt;&lt; &#x27;\n&#x27;;      // 0.67</code></pre>
+<p><code>sqrt(x)</code> from <code>&lt;cmath&gt;</code> gives the square root. But a <code>double</code> is not always exact: <code>sqrt(49)</code> may come out as <code>6.9999999</code>, and turning that into an <code>int</code> gives 6. So when you need a <strong>whole</strong> square root, correct it with whole numbers:</p>
+<pre><code>long long n = 49;
+long long r = sqrt(n);
+while (r * r &gt; n) r--;                 // r was one too big
+while ((r + 1) * (r + 1) &lt;= n) r++;    // r was one too small
+if (r * r == n) cout &lt;&lt; &quot;perfect square\n&quot;;</code></pre>
+<div class="note">Use <code>double</code> only when the problem really has decimals. Whole numbers are always exact; decimals are not - even <code>0.1 + 0.2</code> is not exactly <code>0.3</code>.</div>
+<h2 id="cheat">6. Cheat sheet &mdash; memorise this page</h2>
+<p>Cover the right-hand column and try to write each line from memory.</p>
 <div class="tblwrap"><table class="cheat"><thead><tr><th>You want to&hellip;</th><th>Write</th></tr></thead><tbody>
-<tr><td>Whole number up to 2 * 10^9</td><td><code>int</code></td></tr>
-<tr><td>Whole number beyond that</td><td><code>long long</code></td></tr>
-<tr><td>The exact edges</td><td><code>INT_MAX</code>, <code>INT_MIN</code>, <code>LLONG_MAX</code>, <code>LLONG_MIN</code> from <code>&lt;climits&gt;</code></td></tr>
-<tr><td>A big constant</td><td><code>3000000000LL</code> - the <code>LL</code> is needed</td></tr>
-<tr><td>Start a search for a minimum</td><td><code>int best = INT_MAX;</code></td></tr>
-<tr><td>Start a search for a maximum</td><td><code>long long best = LLONG_MIN;</code></td></tr>
-<tr><td>Multiply two ints safely</td><td><code>(long long)a * b</code> or <code>1LL * a * b</code></td></tr>
-<tr><td>Cast in the right place</td><td>on an <strong>operand</strong>, never on the finished answer</td></tr>
-<tr><td>Last digit / drop last digit</td><td><code>n % 10</code> / <code>n / 10</code></td></tr>
-<tr><td>Digit loop</td><td><code>while (n &gt; 0) { d = n % 10; n /= 10; }</code></td></tr>
-<tr><td>Split into two units</td><td><code>big = t / 100;</code> <code>small = t % 100;</code></td></tr>
-<tr><td>Round down</td><td><code>a / b</code></td></tr>
-<tr><td>Round up</td><td><code>(a + b - 1) / b</code> - never with <code>ceil</code></td></tr>
-<tr><td>Multiples of k in 1..n</td><td><code>n / k</code></td></tr>
-<tr><td>Multiples of k in a..b</td><td><code>b / k - (a - 1) / k</code></td></tr>
-<tr><td>Is it even?</td><td><code>n % 2 == 0</code></td></tr>
-<tr><td>Negative division</td><td><code>-7 / 2</code> is <code>-3</code>, towards zero</td></tr>
-<tr><td>Negative remainder</td><td><code>-7 % 2</code> is <code>-1</code> - the sign follows the left side</td></tr>
-<tr><td>Wrap round a circle</td><td><code>(i - 1 + n) % n</code>, and <code>((x % n) + n) % n</code> in general</td></tr>
-<tr><td>Size without the sign</td><td><code>abs(x)</code> for whole numbers, <code>fabs(x)</code> for a <code>double</code></td></tr>
-<tr><td>Digit character to value</td><td><code>c - &#x27;0&#x27;</code>; back again <code>char(&#x27;0&#x27; + d)</code></td></tr>
-<tr><td>Letter to 0..25</td><td><code>c - &#x27;a&#x27;</code>; back again <code>char(&#x27;a&#x27; + i)</code></td></tr>
-<tr><td>Classify a character</td><td><code>isdigit</code>, <code>isalpha</code>, <code>isalnum</code>, <code>isspace</code>, <code>isupper</code>, <code>islower</code></td></tr>
-<tr><td>Integer division into a double</td><td><code>(double)a / b</code> - putting <code>.0</code> on one side works too</td></tr>
-<tr><td>Print two decimal places</td><td><code>cout &lt;&lt; fixed &lt;&lt; setprecision(2);</code> once, at the start</td></tr>
-<tr><td>Compare two doubles</td><td><code>fabs(a - b) &lt; 1e-9</code> - <strong>never</strong> <code>a == b</code></td></tr>
-<tr><td>Really bigger</td><td><code>a &gt; b + EPS</code></td></tr>
-<tr><td>Avoid the division entirely</td><td><code>a / b &gt; c / d</code> becomes <code>a * d &gt; c * b</code></td></tr>
-<tr><td>Check a square root</td><td>cast, then nudge with <code>while (r * r &lt; x) r++;</code></td></tr>
-<tr><td>Whole-number power</td><td>multiply in a loop - <code>pow</code> returns a <code>double</code> and may be low</td></tr>
-<tr><td>Nearest whole number</td><td><code>(int)round(d)</code> - a plain cast throws the decimals away</td></tr>
-<tr><td><code>=</code> versus <code>==</code></td><td><code>=</code> stores, <code>==</code> asks; <code>if (x = 3)</code> is always true</td></tr>
+<tr><td>Whole numbers above 2 billion</td><td><code>long long</code></td></tr>
+<tr><td>Multiply two <code>int</code>s safely</td><td><code>1LL * a * b</code></td></tr>
+<tr><td>Last digit / drop the last digit</td><td><code>n % 10</code> / <code>n / 10</code></td></tr>
+<tr><td>Even? Divisible by k?</td><td><code>n % 2 == 0</code>, <code>n % k == 0</code></td></tr>
+<tr><td>Sum of the digits</td><td><code>while (n &gt; 0) { s += n % 10; n /= 10; }</code></td></tr>
+<tr><td><code>a / b</code> rounded up</td><td><code>(a + b - 1) / b</code></td></tr>
+<tr><td><code>1 + 2 + ... + n</code></td><td><code>n * (n + 1) / 2</code></td></tr>
+<tr><td>Multiples of c from a to b</td><td><code>b / c - (a - 1) / c</code></td></tr>
+<tr><td>and, or, not</td><td><code>&amp;&amp;</code>, <code>||</code>, <code>!</code></td></tr>
+<tr><td>Division with decimals</td><td><code>7.0 / 2</code></td></tr>
+<tr><td>Two digits after the point</td><td><code>cout &lt;&lt; fixed &lt;&lt; setprecision(2) &lt;&lt; x;</code></td></tr>
+<tr><td>Whole square root</td><td><code>long long r = sqrt(n);</code> then correct it with two <code>while</code> loops</td></tr>
 </tbody></table></div>
-<h2 id="pitfalls">13. Twelve pitfalls that cost real marks</h2>
+<h2 id="pitfalls">7. 5 pitfalls that cost real marks</h2>
 <div class="tblwrap"><table class="pit"><tbody>
-<tr><td><b><code>int * int</code> is an <code>int</code>, whatever you store it in.</b><span class="tech"><code>long long s = n * n;</code> overflows before the copy happens. Write <code>(long long)n * n</code>, or make <code>n</code> a <code>long long</code> in the first place.</span></td></tr>
-<tr><td><b>A sum of many values needs a <code>long long</code>.</b><span class="tech">100000 values of up to a million is 10^11, and an <code>int</code> stops at about 2 * 10^9. The wrong answer is silent - no crash, no warning.</span></td></tr>
-<tr><td><b><code>n * (n - 1) / 2</code> overflows an <code>int</code> from n = 46342.</b><span class="tech">The trap is the multiplication, not the answer. <code>n * (n - 1)</code> passes <code>INT_MAX</code> at n = 46342, while the halved result would have fitted all the way to n = 65536 - so the damage is done before the <code>/ 2</code> ever runs. Counting pairs is the commonest overflow in Groups C and D.</span></td></tr>
-<tr><td><b>A negative answer where only positive ones make sense means overflow.</b><span class="tech">It is the fastest diagnosis in competitive programming. Check the types before you check the logic.</span></td></tr>
-<tr><td><b><code>7 / 2</code> is 3, and <code>double x = 7 / 2;</code> is 3.0.</b><span class="tech">The division is done in whole numbers first and the result is copied afterwards. Put a <code>.0</code> on one side, or cast one side.</span></td></tr>
-<tr><td><b><code>-7 / 2</code> is -3 and <code>-7 % 2</code> is -1.</b><span class="tech">Division moves towards zero, and the remainder keeps the sign of the left-hand side. On a circle write <code>(i - 1 + n) % n</code>, never <code>(i - 1) % n</code>.</span></td></tr>
-<tr><td><b>Rounding up with <code>ceil</code> on a division.</b><span class="tech"><code>ceil(a / b)</code> divides in whole numbers first, so it rounds nothing at all; <code>ceil(a / (double)b)</code> works but can be a hair out. Write <code>(a + b - 1) / b</code>.</span></td></tr>
-<tr><td><b><code>==</code> between two doubles.</b><span class="tech"><code>0.1 + 0.2 == 0.3</code> is false. Compare with <code>fabs(a - b) &lt; 1e-9</code>, or keep the values as whole numbers and avoid the question.</span></td></tr>
-<tr><td><b><code>(int)sqrt(x)</code> and <code>(int)pow(a, b)</code> can be one too small.</b><span class="tech">They are worked out in <code>double</code> and the cast throws the remainder away. Nudge the result with a <code>while</code> loop, or multiply in a loop for powers.</span></td></tr>
-<tr><td><b>Casting a <code>double</code> to an <code>int</code> does not round.</b><span class="tech"><code>(int)2.99</code> is 2 and <code>(int)(-2.7)</code> is -2. For the nearest whole number write <code>(int)round(d)</code>.</span></td></tr>
-<tr><td><b><code>if (x = 3)</code> stores 3 and is always true.</b><span class="tech"><code>=</code> stores, <code>==</code> compares. Any value other than 0 counts as true, so the compiler sees nothing wrong. Read every <code>if</code> twice.</span></td></tr>
-<tr><td><b>A negative <code>int</code> compared with an <code>unsigned</code> becomes enormous.</b><span class="tech"><code>-1 &lt; 1u</code> is false. Put any length into an ordinary <code>int</code> the moment you receive it, and keep <code>unsigned</code> out of your arithmetic.</span></td></tr>
+<tr><td><b>An <code>int</code> that overflows gives a wrong number and no warning.</b><span class="tech">If the answer can pass two billion, use <code>long long</code> - for the answer and for the numbers that make it.</span></td></tr>
+<tr><td><b><code>long long x = a * b;</code> with <code>int a, b</code> still overflows.</b><span class="tech">The multiplication happens in <code>int</code> first. Write <code>1LL * a * b</code> or make <code>a</code> and <code>b</code> <code>long long</code>.</span></td></tr>
+<tr><td><b><code>7 / 2</code> is 3, not 3.5.</b><span class="tech">Whole numbers divide to a whole number. Write <code>7.0 / 2</code> when you want the decimals.</span></td></tr>
+<tr><td><b><code>=</code> instead of <code>==</code> inside an <code>if</code>.</b><span class="tech"><code>if (x = 0)</code> changes x and is never true. Compare with <code>==</code>.</span></td></tr>
+<tr><td><b>Trusting <code>sqrt</code> to be exact.</b><span class="tech"><code>(int)sqrt(49)</code> can be 6. Correct the root with whole numbers before you use it.</span></td></tr>
 </tbody></table></div>
-<h2 id="complexity">14. Complexity reference</h2>
+<h2 id="complexity">8. Complexity reference</h2>
 <div class="tblwrap"><table><thead><tr><th>Operation</th><th>Cost</th></tr></thead><tbody>
-<tr><td><code>+</code>, <code>-</code>, comparisons, <code>&amp;&amp;</code>, <code>||</code></td><td>the fastest things the processor does</td></tr>
-<tr><td><code>*</code> on <code>int</code> or <code>long long</code></td><td>a few times slower than <code>+</code>, still one step</td></tr>
-<tr><td><code>/</code> and <code>%</code> on whole numbers</td><td>roughly 20-40 times slower than <code>+</code></td></tr>
-<tr><td><code>/</code> and <code>%</code> by a constant power of two</td><td>as fast as <code>+</code> - the compiler rewrites it</td></tr>
-<tr><td><code>long long</code> arithmetic on a 64-bit judge</td><td>the same speed as <code>int</code></td></tr>
-<tr><td><code>double</code> <code>+</code>, <code>-</code>, <code>*</code></td><td>about as fast as the whole-number versions</td></tr>
-<tr><td><code>double</code> division</td><td>slower again than whole-number division</td></tr>
-<tr><td><code>sqrt(x)</code></td><td>slow, and only about 15 correct digits</td></tr>
-<tr><td><code>pow(a, b)</code></td><td>slow <strong>and</strong> inexact - multiply in a loop instead</td></tr>
-<tr><td>A digit loop over <code>n</code></td><td>about 10 steps for an <code>int</code>, 19 for a <code>long long</code></td></tr>
-<tr><td>Reading one number with <code>cin &gt;&gt;</code></td><td>fast once <code>sync_with_stdio(false)</code> is set</td></tr>
-<tr><td>Printing with <code>endl</code></td><td>slow - it empties the buffer every time; use <code>&#x27;\n&#x27;</code></td></tr>
-<tr><td>Casting between types</td><td>free, or nearly so</td></tr>
-<tr><td>Overflow</td><td>free - which is exactly why it is dangerous</td></tr>
+<tr><td><code>+ - * / %</code> on two numbers</td><td>O(1) - a single step</td></tr>
+<tr><td>Taking a number apart digit by digit</td><td>O(number of digits) - about 19 steps for a <code>long long</code></td></tr>
+<tr><td>A formula such as <code>n * (n + 1) / 2</code></td><td>O(1), where a loop would be O(n)</td></tr>
+<tr><td><code>sqrt(x)</code></td><td>O(1)</td></tr>
 </tbody></table></div>
-<h2 id="problems">15. Practice &mdash; 24 problems, Group D, with six from Group C</h2>
-<p>All 24 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, with six from Group C, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<h2 id="problems">9. Practice &mdash; 12 problems, Group D</h2>
+<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
 <div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
-<div class="pgroup"><h3 id="gA">A. One formula - and it must be a long long</h3><p class="maps">Theory: sections 2 and 3</p>
+<div class="pgroup"><h3 id="gA">A. Big answers need long long</h3><p class="maps">Theory: section 1</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100012"></td><td><a href="https://arena.olimpiici.com/#/catalog/14/problem/100012" target="_blank" rel="noopener">div</a><br><span class="tech">Multiples</span></td><td class="tech"><code>b/c - (a-1)/c</code> - the count does not fit in an <code>int</code></td><td class="src">Autumn tournament 2007</td><td class="dif">★☆☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100825"></td><td><a href="https://arena.olimpiici.com/#/catalog/291/problem/100825" target="_blank" rel="noopener">pentagonal</a><br><span class="tech">Pentagonal</span></td><td class="tech"><code>k(3k-1)/2</code> - one line, one overflow trap</td><td class="src">Spring tournament 2013</td><td class="dif">★☆☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100329"></td><td><a href="https://arena.olimpiici.com/#/catalog/140/problem/100329" target="_blank" rel="noopener">klas</a><br><span class="tech">Handshakes</span></td><td class="tech"><code>N(N-1)/2</code> and a second closed formula</td><td class="src">Municipal round 2017</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100913"></td><td><a href="https://arena.olimpiici.com/#/catalog/327/problem/100913" target="_blank" rel="noopener">box</a><br><span class="tech">Three parts</span></td><td class="tech">how many ways to split N into three positive parts</td><td class="src">Winter tournament 2009</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100329"></td><td><a href="https://arena.olimpiici.com/#/catalog/140/problem/100329" target="_blank" rel="noopener">klas</a><br><span class="tech">Handshakes</span></td><td class="tech"><code>N(N-1)/2</code> and a second formula; multiply in <code>long long</code></td><td class="src">Municipal round 2017</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100913"></td><td><a href="https://arena.olimpiici.com/#/catalog/327/problem/100913" target="_blank" rel="noopener">box</a><br><span class="tech">Three parts</span></td><td class="tech">the ways to split N into three positive parts: <code>(N-1)(N-2)/2</code></td><td class="src">Winter tournament 2009</td><td class="dif">★★☆☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gB">B. Taking a number apart: / and %</h3><p class="maps">Theory: section 4</p>
+<div class="pgroup"><h3 id="gB">B. Taking a number apart with / and %</h3><p class="maps">Theory: section 2</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="100025"></td><td><a href="https://arena.olimpiici.com/#/catalog/20/problem/100025" target="_blank" rel="noopener">digit</a><br><span class="tech">Digits</span></td><td class="tech">split each number with <code>% 10</code> and <code>/ 10</code></td><td class="src">Autumn tournament 2008</td><td class="dif">★☆☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="102493"></td><td><a href="https://arena.olimpiici.com/#/catalog/900/problem/102493" target="_blank" rel="noopener">tail</a><br><span class="tech">Trailing zeros</span></td><td class="tech">divide by 10, then 100, then 1000</td><td class="src">Municipal round 2026</td><td class="dif">★★☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100268"></td><td><a href="https://arena.olimpiici.com/#/catalog/116/problem/100268" target="_blank" rel="noopener">tailor</a><br><span class="tech">The tailor</span></td><td class="tech">stotinki into leva and stotinki: <code>/ 100</code> and <code>% 100</code></td><td class="src">Municipal round 2013</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100974"></td><td><a href="https://arena.olimpiici.com/#/catalog/351/problem/100974" target="_blank" rel="noopener">angles</a><br><span class="tech">Angles</span></td><td class="tech">degrees, minutes and seconds, with carrying</td><td class="src">Winter tournament 2013</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100974"></td><td><a href="https://arena.olimpiici.com/#/catalog/351/problem/100974" target="_blank" rel="noopener">angles</a><br><span class="tech">Angles</span></td><td class="tech">degrees, minutes and seconds, carried with <code>/ 60</code> and <code>% 60</code></td><td class="src">Winter tournament 2013</td><td class="dif">★★☆☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gC">C. Counting with a formula, not a loop</h3><p class="maps">Theory: sections 3 and 4</p>
+<div class="pgroup"><h3 id="gC">C. A formula instead of a loop</h3><p class="maps">Theory: section 3</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100235"></td><td><a href="https://arena.olimpiici.com/#/catalog/103/problem/100235" target="_blank" rel="noopener">segments</a><br><span class="tech">Overlap</span></td><td class="tech"><code>min</code> of the right ends minus <code>max</code> of the left ends</td><td class="src">Municipal round 2011</td><td class="dif">★☆☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101044"></td><td><a href="https://arena.olimpiici.com/#/catalog/382/problem/101044" target="_blank" rel="noopener">triangle</a><br><span class="tech">Third side</span></td><td class="tech">how many integers lie strictly inside a range</td><td class="src">Municipal round 2019</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="102109"></td><td><a href="https://arena.olimpiici.com/#/catalog/799/problem/102109" target="_blank" rel="noopener">rectcut</a><br><span class="tech">Cutting</span></td><td class="tech">each cut clamps one coordinate; the area follows</td><td class="src">Regional round 2024</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100210"></td><td><a href="https://arena.olimpiici.com/#/catalog/92/problem/100210" target="_blank" rel="noopener">princess</a><br><span class="tech">The princess</span></td><td class="tech"><code>a(a+1)/2</code>, then the largest odd share that divides</td><td class="src">Municipal round 2009</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100012"></td><td><a href="https://arena.olimpiici.com/#/catalog/14/problem/100012" target="_blank" rel="noopener">div</a><br><span class="tech">Multiples</span></td><td class="tech"><code>b/c - (a-1)/c</code> counts the multiples without a loop</td><td class="src">Autumn tournament 2007</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101044"></td><td><a href="https://arena.olimpiici.com/#/catalog/382/problem/101044" target="_blank" rel="noopener">triangle</a><br><span class="tech">Third side</span></td><td class="tech">how many whole numbers lie strictly between <code>|a-b|</code> and <code>a+b</code></td><td class="src">Municipal round 2019</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100616"></td><td><a href="https://arena.olimpiici.com/#/catalog/231/problem/100616" target="_blank" rel="noopener">nine</a><br><span class="tech">Nines</span></td><td class="tech"><code>s(N) = s(9N)</code> holds exactly for the multiples of 9 - count them</td><td class="src">National round 2013</td><td class="dif">★★★☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gD">D. Try every candidate, and watch the size</h3><p class="maps">Theory: sections 2 and 3</p>
+<div class="pgroup"><h3 id="gD">D. Square roots and decimals</h3><p class="maps">Theory: section 5</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100587"></td><td><a href="https://arena.olimpiici.com/#/catalog/226/problem/100587" target="_blank" rel="noopener">decision</a><br><span class="tech">Buses and taxis</span></td><td class="tech">try every count, keep the cheapest</td><td class="src">National round 2012</td><td class="dif">★★☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100661"></td><td><a href="https://arena.olimpiici.com/#/catalog/241/problem/100661" target="_blank" rel="noopener">cubes</a><br><span class="tech">Cubes</span></td><td class="tech">take off the largest cube that still fits, and repeat</td><td class="src">National round 2015</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101366"></td><td><a href="https://arena.olimpiici.com/#/catalog/555/problem/101366" target="_blank" rel="noopener">int</a><br><span class="tech">Digit product</span></td><td class="tech">at most 100001 candidates, so test them all</td><td class="src">Municipal round 2020</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101635"></td><td><a href="https://arena.olimpiici.com/#/catalog/651/problem/101635" target="_blank" rel="noopener">vector</a><br><span class="tech">Vectors</span></td><td class="tech">a product of two counts - check it fits before you write it</td><td class="src">Municipal round 2022</td><td class="dif">★★☆☆☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gE">E. Doubles, roots and powers</h3><p class="maps">Theory: sections 8 and 9</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100557"></td><td><a href="https://arena.olimpiici.com/#/catalog/220/problem/100557" target="_blank" rel="noopener">clock</a><br><span class="tech">Clock hands</span></td><td class="tech"><code>|30H - 5.5M|</code>, folded into 0-180</td><td class="src">National round 2011</td><td class="dif">★☆☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100808"></td><td><a href="https://arena.olimpiici.com/#/catalog/285/problem/100808" target="_blank" rel="noopener">degree</a><br><span class="tech">Exact power</span></td><td class="tech">is the root, raised back, really equal to x?</td><td class="src">Spring tournament 2012</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100297"></td><td><a href="https://arena.olimpiici.com/#/catalog/127/problem/100297" target="_blank" rel="noopener">two</a><br><span class="tech">Two arcs</span></td><td class="tech">normalise both modulo 360, then test the overlap</td><td class="src">Municipal round 2015</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100311"></td><td><a href="https://arena.olimpiici.com/#/catalog/133/problem/100311" target="_blank" rel="noopener">stepen</a><br><span class="tech">Every exponent</span></td><td class="tech">the same root question, for every exponent b</td><td class="src">Municipal round 2016</td><td class="dif">★★★☆☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gF">F. Bigger arithmetic</h3><p class="maps">Theory: sections 2-5 and 10</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100616"></td><td><a href="https://arena.olimpiici.com/#/catalog/231/problem/100616" target="_blank" rel="noopener">nine</a><br><span class="tech">Nines</span></td><td class="tech"><code>s(N) = s(9N)</code> holds exactly for the multiples of 9</td><td class="src">National round 2013</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100808"></td><td><a href="https://arena.olimpiici.com/#/catalog/285/problem/100808" target="_blank" rel="noopener">degree</a><br><span class="tech">Exact power</span></td><td class="tech">is the root, rounded and raised back, really equal to x?</td><td class="src">Spring tournament 2012</td><td class="dif">★★☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100746"></td><td><a href="https://arena.olimpiici.com/#/catalog/261/problem/100746" target="_blank" rel="noopener">lamps</a><br><span class="tech">Lamps</span></td><td class="tech">a lamp stays on when its number is a perfect square</td><td class="src">Spring tournament 2008</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100450"></td><td><a href="https://arena.olimpiici.com/#/catalog/188/problem/100450" target="_blank" rel="noopener">digits</a><br><span class="tech">Counting a digit</span></td><td class="tech">how often digit k appears, up to 10^18</td><td class="src">Regional round 2015</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100883"></td><td><a href="https://arena.olimpiici.com/#/catalog/315/problem/100883" target="_blank" rel="noopener">zcount</a><br><span class="tech">Counting zeros</span></td><td class="tech">the same idea, one position at a time, up to 10^16</td><td class="src">Spring tournament 2017</td><td class="dif">★★★★☆</td></tr>
 </tbody></table></div></div>
-<footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 02 · C++17 primitive types. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
+<footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 02 · C++17 numbers, characters and truth values. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
 </main></div>
 <script>var LESSON_SLUG="02_Primitive_Types";var LEGACY_KEY=null;</script>
 <script>

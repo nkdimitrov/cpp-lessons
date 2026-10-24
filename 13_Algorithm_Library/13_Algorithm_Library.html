@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C++17 The &lt;algorithm&gt; toolbox - loops you do not have to write</title>
+<style>
+:root{
+  --bg:#fbfaf8; --panel:#ffffff; --ink:#1c1b1a; --muted:#6b6763; --line:#e4e0da;
+  --accent:#8a4b1f; --accent-soft:#f3ece4; --code-bg:#f6f3ee; --code-ink:#2d2a26;
+  --kw:#8a4b1f; --str:#3f6b3f; --com:#9a948c; --num:#2f5c8a; --pre:#7a5ea8;
+  --note-bg:#fdf6e7; --note-line:#d9a441; --ok:#3f6b3f;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+    --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+    --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+    --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+  --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+  --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+  --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+code,pre,.mono{font-family:"JetBrains Mono",Consolas,"SF Mono",Menlo,monospace}
+.wrap{display:flex;gap:0;align-items:flex-start;max-width:1220px;margin:0 auto}
+/* ---- sidebar ---- */
+#nav{position:sticky;top:0;flex:0 0 250px;height:100vh;overflow-y:auto;
+  padding:26px 14px 40px 20px;border-right:1px solid var(--line);font-size:13.5px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#nav .brand{font-weight:700;letter-spacing:.02em;color:var(--accent);
+  font-size:12px;text-transform:uppercase;margin-bottom:14px}
+#nav a{display:block;padding:4px 8px;margin:1px 0;border-radius:5px;
+  color:var(--muted);text-decoration:none;line-height:1.35}
+#nav a:hover{background:var(--accent-soft);color:var(--ink)}
+#nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+#nav .grp{margin-top:14px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);opacity:.7;padding:0 8px}
+#nav a.home{display:inline-flex;align-items:center;gap:7px;margin:0 0 16px;padding:5px 12px;
+  border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);
+  font-weight:600}
+#nav a.home svg{width:15px;height:15px}
+#nav a.home:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager{display:flex;gap:8px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+#nav .pager a,#nav .pager span{flex:1 1 0;display:flex;flex-direction:column;align-items:center;
+  margin:0;padding:6px 4px 7px;border:1px solid var(--line);border-radius:6px;
+  background:var(--panel);color:var(--ink);font-size:22px;line-height:1.1}
+#nav .pager small{font-size:11px;color:var(--muted);margin-top:2px}
+#nav .pager a:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager a:hover small{color:var(--accent)}
+#nav .pager span{opacity:.35}
+/* ---- main ---- */
+main{flex:1 1 auto;min-width:0;padding:34px 40px 120px;max-width:900px}
+header.top{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:8px}
+h1{font-size:30px;line-height:1.2;margin:0 0 6px}
+.sub{color:var(--muted);font-size:14.5px;font-family:system-ui,sans-serif}
+h2{font-size:21px;margin:44px 0 12px;padding-top:10px;border-top:1px solid var(--line);
+  scroll-margin-top:16px}
+h2:first-of-type{border-top:none}
+h3{font-size:16.5px;margin:26px 0 8px;color:var(--accent);scroll-margin-top:16px}
+p{margin:11px 0}
+code{background:var(--code-bg);padding:1.5px 5px;border-radius:4px;font-size:.87em;
+  color:var(--code-ink);border:1px solid var(--line)}
+pre{background:var(--code-bg);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:7px;padding:13px 15px;overflow-x:auto;font-size:13px;line-height:1.55;
+  margin:14px 0;color:var(--code-ink)}
+pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
+.kw{color:var(--kw);font-weight:600}.str{color:var(--str)}.com{color:var(--com);font-style:italic}
+.num{color:var(--num)}.pp{color:var(--pre)}
+table{border-collapse:collapse;width:100%;margin:15px 0;font-size:14px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+  border-bottom:1.5px solid var(--line);font-weight:600}
+tbody tr:nth-child(even){background:var(--accent-soft)}
+ul{margin:11px 0;padding-left:22px}
+li{margin:4px 0}
+.note{background:var(--note-bg);border-left:3px solid var(--note-line);border-radius:0 7px 7px 0;
+  padding:11px 15px;margin:15px 0;font-size:14.5px}
+.tblwrap{overflow-x:auto}
+/* ---- problems ---- */
+.pgroup{margin:26px 0 0}
+.pgroup h3{margin-bottom:2px}
+.pgroup .maps{color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif;margin:0 0 8px}
+table.prob td{padding:9px 10px}
+table.prob a{color:var(--accent);text-decoration:none;font-weight:600;
+  font-family:Consolas,monospace;font-size:13.5px}
+table.prob a:hover{text-decoration:underline}
+.tech{color:var(--muted);font-size:13px}
+.src{color:var(--muted);font-size:12px;white-space:nowrap}
+.dif{color:var(--accent);letter-spacing:1px;font-size:11.5px;white-space:nowrap}
+.done td{opacity:.45}
+.done td a{text-decoration:line-through}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+#bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;
+  border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;
+  font-family:system-ui,sans-serif;font-size:13px;flex-wrap:wrap}
+#bar .track{flex:1 1 130px;height:7px;background:var(--line);border-radius:4px;overflow:hidden;
+  min-width:110px}
+#bar .fill{height:100%;background:var(--accent);width:0;transition:width .25s}
+button{font:inherit;font-size:12.5px;padding:4px 11px;border:1px solid var(--line);
+  border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+#themeBtn{position:fixed;top:14px;right:16px;z-index:10}
+.cheat td:first-child{font-family:system-ui,sans-serif;width:33%}
+.pit b{display:block;margin-bottom:2px}
+footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif}
+@media(max-width:900px){
+  #nav{display:none}
+  main{padding:26px 18px 90px}
+  h1{font-size:24px}
+  #themeBtn{top:8px;right:10px}
+}
+</style>
+</head><body>
+<button id="themeBtn" title="Toggle light / dark">&#9681;</button>
+<div class="wrap">
+<nav id="nav"><a class="home" href="../index.html" title="All lessons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>Home</a>
+<div class="brand">Lesson 13 · The algorithm toolbox</div>
+<div class="grp">Theory</div>
+<a href="#range">1. Telling a tool where to work</a>
+<a href="#find">2. min, max, count and find</a>
+<a href="#reorder">3. reverse, rotate and unique</a>
+<a href="#perm">4. Every order: next_permutation</a>
+<a href="#bsearch">5. Searching sorted data</a>
+<div class="grp">Reference</div>
+<a href="#cheat">6. Cheat sheet</a>
+<a href="#pitfalls">7. Pitfalls</a>
+<a href="#complexity">8. Complexity</a>
+<div class="grp">Practice</div>
+<a href="#problems">9. 12 problems</a>
+<a href="#gA" style="padding-left:16px">A. min, max, count and find</a>
+<a href="#gB" style="padding-left:16px">B. reverse, rotate and unique</a>
+<a href="#gC" style="padding-left:16px">C. Every order: next_permutation</a>
+<a href="#gD" style="padding-left:16px">D. Searching sorted data</a>
+<div class="pager">
+<a href="../12_Priority_Queues/12_Priority_Queues.html" title="Previous: Lesson 12 &middot; Priority queues">&larr;<small>Lesson 12</small></a>
+<a href="../14_Big_Integers/14_Big_Integers.html" title="Next: Lesson 14 &middot; Big integers - arithmetic beyond long long">&rarr;<small>Lesson 14</small></a>
+</div>
+</nav>
+<main>
+<header class="top"><h1>C++17 The &lt;algorithm&gt; toolbox - loops you do not have to write</h1><div class="sub">Lesson 13 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<h2 id="range">1. Telling a tool where to work</h2>
+<p><code>#include &lt;algorithm&gt;</code> gives you ready-made loops. You already know one: <code>sort</code>. Every tool in this lesson is told where to start and where to stop, in the same way:</p>
+<div class="tblwrap"><table><thead><tr>
+<th>You write</th>
+<th>It means</th>
+</tr></thead><tbody>
+<tr><td><code>a, a + n</code></td><td>the first <code>n</code> boxes of the array <code>a</code></td></tr>
+<tr><td><code>a + l, a + r</code></td><td>boxes <code>l</code>, <code>l + 1</code>, ..., <code>r - 1</code> - the stop box is <strong>not</strong> included</td></tr>
+<tr><td><code>v.begin(), v.end()</code></td><td>the whole vector <code>v</code> (or string <code>v</code>)</td></tr>
+</tbody></table></div>
+<p>Some tools give back a <strong>place</strong> instead of a number. Subtract the start to turn it into an index: <code>max_element(a, a + n) - a</code> is the index of the largest box.</p>
+<h2 id="find">2. min, max, count and find</h2>
+<pre><code>int x = 4, y = 9;
+cout &lt;&lt; min(x, y) &lt;&lt; &#x27; &#x27; &lt;&lt; max(x, y) &lt;&lt; &#x27;\n&#x27;;   // 4 9
+swap(x, y);                                       // x = 9, y = 4
+
+int a[] = {3, 8, 1, 8, 5};
+int n = 5;
+int big = *max_element(a, a + n);         // 8 - the * gives the value
+int where = max_element(a, a + n) - a;    // 1 - the first place with the largest
+int least = *min_element(a, a + n);       // 1
+
+int eights = count(a, a + n, 8);          // 2
+int p = find(a, a + n, 5) - a;            // 4 - the first place holding 5
+int q = find(a, a + n, 7) - a;            // 5 = n - means &quot;not found&quot;</code></pre>
+<p>They all work on a part of the array too. How many 1s are among the four boxes starting at place <code>i</code>? <code>count(a + i, a + i + 4, 1)</code>.</p>
+<h2 id="reorder">3. reverse, rotate and unique</h2>
+<pre><code>int a[] = {1, 2, 3, 4, 5};
+reverse(a, a + 5);               // 5 4 3 2 1
+reverse(a, a + 5);               // back to 1 2 3 4 5
+
+rotate(a, a + 2, a + 5);         // 3 4 5 1 2 - box 2 becomes the first</code></pre>
+<p><code>unique</code> removes repeats that stand <strong>next to each other</strong>. So sort first. It gives back the new end, which tells you how many different values there are:</p>
+<pre><code>int b[] = {4, 1, 4, 2, 1};
+int n = 5;
+sort(b, b + n);                  // 1 1 2 4 4
+int m = unique(b, b + n) - b;    // 3 - the first 3 boxes are 1 2 4
+
+vector&lt;int&gt; v = {4, 1, 4, 2, 1};             // the same for a vector:
+sort(v.begin(), v.end());
+v.erase(unique(v.begin(), v.end()), v.end()); // v is {1, 2, 4}</code></pre>
+<p><code>reverse</code> also turns round the digits of a number once it is a string: <code>string s = to_string(n); reverse(s.begin(), s.end());</code>.</p>
+<h2 id="perm">4. Every order: next_permutation</h2>
+<p><code>next_permutation</code> changes the array into the next order in dictionary order. Start from the sorted order and loop until it says there is no next one, and you visit <strong>every</strong> order exactly once:</p>
+<pre><code>int a[] = {1, 2, 3};
+do {
+    cout &lt;&lt; a[0] &lt;&lt; a[1] &lt;&lt; a[2] &lt;&lt; &#x27; &#x27;;
+} while (next_permutation(a, a + 3));
+// 123 132 213 231 312 321</code></pre>
+<p>It works on strings too: <code>sort(s.begin(), s.end())</code>, then <code>do { ... } while (next_permutation(s.begin(), s.end()));</code>.</p>
+<div class="note">There are <code>n!</code> orders: 6 for 3 things, 40320 for 8, 3628800 for 10. Up to about 10 things, trying every order is fast enough. For 12 or more it is far too slow.</div>
+<h2 id="bsearch">5. Searching sorted data</h2>
+<p>In a <strong>sorted</strong> array you can find things very quickly. The tool looks at the middle, throws away the half that cannot hold the answer, and repeats. For a million numbers that is only about 20 steps.</p>
+<pre><code>int a[] = {2, 4, 4, 4, 7, 9};
+int n = 6;
+bool has = binary_search(a, a + n, 7);        // true
+
+int lo = lower_bound(a, a + n, 4) - a;        // 1 - first place with a value &gt;= 4
+int hi = upper_bound(a, a + n, 4) - a;        // 4 - first place with a value &gt;  4
+cout &lt;&lt; hi - lo &lt;&lt; &#x27;\n&#x27;;                      // 3 - how many 4s
+cout &lt;&lt; lo &lt;&lt; &#x27;\n&#x27;;                           // 1 - how many values are smaller than 4</code></pre>
+<p>If every number is smaller than the one you search for, <code>lower_bound</code> gives <code>n</code>. Check for that before you read <code>a[lo]</code>.</p>
+<h2 id="cheat">6. Cheat sheet &mdash; memorise this page</h2>
+<p>Cover the right-hand column and try to write each line from memory.</p>
+<div class="tblwrap"><table class="cheat"><thead><tr><th>You want to&hellip;</th><th>Write</th></tr></thead><tbody>
+<tr><td>The whole array / vector</td><td><code>a, a + n</code> / <code>v.begin(), v.end()</code></td></tr>
+<tr><td>Smaller / larger of two, swap</td><td><code>min(x, y)</code>, <code>max(x, y)</code>, <code>swap(x, y)</code></td></tr>
+<tr><td>Largest value / its index</td><td><code>*max_element(a, a + n)</code> / <code>max_element(a, a + n) - a</code></td></tr>
+<tr><td>How many equal to <code>x</code></td><td><code>count(a, a + n, x)</code></td></tr>
+<tr><td>Where is <code>x</code>?</td><td><code>find(a, a + n, x) - a</code> - equals <code>n</code> when not found</td></tr>
+<tr><td>Back to front</td><td><code>reverse(a, a + n)</code></td></tr>
+<tr><td>Start from box <code>k</code></td><td><code>rotate(a, a + k, a + n)</code></td></tr>
+<tr><td>Different values</td><td><code>sort</code>, then <code>m = unique(a, a + n) - a</code></td></tr>
+<tr><td>Every order</td><td><code>sort</code>, then <code>do { ... } while (next_permutation(a, a + n));</code></td></tr>
+<tr><td>Is <code>x</code> in a sorted array?</td><td><code>binary_search(a, a + n, x)</code></td></tr>
+<tr><td>First <code>&gt;= x</code> / first <code>&gt; x</code></td><td><code>lower_bound(a, a + n, x) - a</code> / <code>upper_bound(a, a + n, x) - a</code></td></tr>
+</tbody></table></div>
+<h2 id="pitfalls">7. 5 pitfalls that cost real marks</h2>
+<div class="tblwrap"><table class="pit"><tbody>
+<tr><td><b>Forgetting to sort first.</b><span class="tech"><code>unique</code>, <code>binary_search</code>, <code>lower_bound</code> and the full <code>next_permutation</code> loop all expect sorted data. On unsorted data they give wrong answers without any warning.</span></td></tr>
+<tr><td><b><code>max_element</code> gives a place, not a value.</b><span class="tech">Write <code>*max_element(...)</code> for the value and <code>max_element(...) - a</code> for the index.</span></td></tr>
+<tr><td><b><code>find</code> that finds nothing.</b><span class="tech">It gives the end place, so the index is <code>n</code>. Reading <code>a[n]</code> then is outside the array.</span></td></tr>
+<tr><td><b><code>unique</code> does not shrink anything by itself.</b><span class="tech">Use the number it gives back, or <code>erase</code> the tail of a vector.</span></td></tr>
+<tr><td><b>Trying every order for too many things.</b><span class="tech">11 things already have almost 40 million orders. Count <code>n!</code> before you start.</span></td></tr>
+</tbody></table></div>
+<h2 id="complexity">8. Complexity reference</h2>
+<div class="tblwrap"><table><thead><tr><th>Operation</th><th>Cost</th></tr></thead><tbody>
+<tr><td><code>min</code>, <code>max</code>, <code>swap</code></td><td>O(1)</td></tr>
+<tr><td><code>count</code>, <code>find</code>, <code>max_element</code>, <code>reverse</code>, <code>rotate</code>, <code>unique</code></td><td>O(n)</td></tr>
+<tr><td><code>sort</code></td><td>O(n log n)</td></tr>
+<tr><td><code>binary_search</code>, <code>lower_bound</code>, <code>upper_bound</code></td><td>O(log n) - about 20 steps for a million</td></tr>
+<tr><td>All orders with <code>next_permutation</code></td><td>O(n!) - only for small n</td></tr>
+</tbody></table></div>
+<h2 id="problems">9. Practice &mdash; 12 problems, Group D</h2>
+<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
+<div class="pgroup"><h3 id="gA">A. min, max, count and find</h3><p class="maps">Theory: sections 1 and 2</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100055"></td><td><a href="https://arena.olimpiici.com/#/catalog/32/problem/100055" target="_blank" rel="noopener">seq</a><br><span class="tech">Sequence</span></td><td class="tech"><code>count</code> and <code>find</code> on each window of four values</td><td class="src">Autumn tournament 2010</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100898"></td><td><a href="https://arena.olimpiici.com/#/catalog/321/problem/100898" target="_blank" rel="noopener">distance</a><br><span class="tech">Distance</span></td><td class="tech">remember where x and y were seen last; <code>min</code> keeps the closest</td><td class="src">Spring tournament 2018</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="102156"></td><td><a href="https://arena.olimpiici.com/#/catalog/810/problem/102156" target="_blank" rel="noopener">alarm</a><br><span class="tech">Alarm</span></td><td class="tech">try every time that fits and keep the <code>min</code> effort</td><td class="src">Spring tournament 2024</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gB">B. reverse, rotate and unique</h3><p class="maps">Theory: section 3</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100794"></td><td><a href="https://arena.olimpiici.com/#/catalog/279/problem/100794" target="_blank" rel="noopener">uncommon</a><br><span class="tech">Uncommon</span></td><td class="tech"><code>reverse</code> the digits of each number, then compare the products</td><td class="src">Spring tournament 2011</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101716"></td><td><a href="https://arena.olimpiici.com/#/catalog/674/problem/101716" target="_blank" rel="noopener">sumpow</a><br><span class="tech">Sums of powers</span></td><td class="tech">list every <code>2^b - 2^a</code>, then <code>sort</code> and <code>unique</code> before counting</td><td class="src">National round 2022</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100727"></td><td><a href="https://arena.olimpiici.com/#/catalog/255/problem/100727" target="_blank" rel="noopener">puzzle</a><br><span class="tech">Puzzle</span></td><td class="tech"><code>rotate</code> each row until they all match; keep the smallest total turn</td><td class="src">National round 2018</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Every order: next_permutation</h3><p class="maps">Theory: section 4</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100102"></td><td><a href="https://arena.olimpiici.com/#/catalog/50/problem/100102" target="_blank" rel="noopener">sport</a><br><span class="tech">Sport</span></td><td class="tech"><code>sort</code> the letters, then <code>next_permutation</code> lists every order</td><td class="src">Autumn tournament 2013</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100611"></td><td><a href="https://arena.olimpiici.com/#/catalog/231/problem/100611" target="_blank" rel="noopener">dates</a><br><span class="tech">Dates</span></td><td class="tech">the six orders of day, month and year come from <code>next_permutation</code></td><td class="src">National round 2013</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101020"></td><td><a href="https://arena.olimpiici.com/#/catalog/369/problem/101020" target="_blank" rel="noopener">alarm</a><br><span class="tech">Alarm clocks</span></td><td class="tech">at most 9 alarms - try every order with <code>next_permutation</code></td><td class="src">Winter tournament 2016</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gD">D. Searching sorted data</h3><p class="maps">Theory: section 5</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="101019"></td><td><a href="https://arena.olimpiici.com/#/catalog/369/problem/101019" target="_blank" rel="noopener">monument</a><br><span class="tech">Monuments</span></td><td class="tech">sort the positions; <code>lower_bound</code> counts how many are close</td><td class="src">Winter tournament 2016</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="102531"></td><td><a href="https://arena.olimpiici.com/#/catalog/912/problem/102531" target="_blank" rel="noopener">metro</a><br><span class="tech">Metro</span></td><td class="tech"><code>lower_bound</code> finds the big stops on either side</td><td class="src">Winter tournament 2026</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101806"></td><td><a href="https://arena.olimpiici.com/#/catalog/711/problem/101806" target="_blank" rel="noopener">points</a><br><span class="tech">Shooting</span></td><td class="tech"><code>upper_bound</code> finds the box each bullet reaches</td><td class="src">Summer tournament 2022</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 13 · C++17 &lt;algorithm&gt;. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
+</main></div>
+<script>var LESSON_SLUG="13_Algorithm_Library";var LEGACY_KEY=null;</script>
+<script>
+var THEME_KEY="cpp_lessons_theme";
+var DONE_KEY="cpp_done_"+LESSON_SLUG;
+// ---- theme -------------------------------------------------------------
+var tb=document.getElementById('themeBtn');
+function setTheme(t){
+  if(t) document.documentElement.setAttribute('data-theme',t);
+  else document.documentElement.removeAttribute('data-theme');
+  try{t?localStorage.setItem(THEME_KEY,t):localStorage.removeItem(THEME_KEY)}catch(e){}
+}
+try{var st=localStorage.getItem(THEME_KEY); if(st) setTheme(st);}catch(e){}
+tb.onclick=function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  setTheme(cur==='dark'?'light':'dark');
+};
+
+// ---- progress ----------------------------------------------------------
+var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-pid]'));
+var fill=document.querySelector('#bar .fill'), lbl=document.getElementById('cnt');
+// state lives in memory; localStorage is a best-effort mirror so that ticking
+// still works when storage is blocked (private window, file:// restrictions)
+var state={};
+try{
+  var raw=localStorage.getItem(DONE_KEY);
+  if(raw===null && LEGACY_KEY) raw=localStorage.getItem(LEGACY_KEY);  // one-time adopt
+  state=JSON.parse(raw||'{}')||{};
+}catch(e){state={}}
+function save(){try{localStorage.setItem(DONE_KEY,JSON.stringify(state))}catch(e){}}
+function paint(){
+  var n=0;
+  boxes.forEach(function(b){
+    var on=!!state[b.dataset.pid]; b.checked=on; if(on)n++;
+    b.closest('tr').classList.toggle('done',on);
+  });
+  fill.style.width=(n/boxes.length*100)+'%';
+  lbl.textContent=n+' / '+boxes.length+' solved';
+}
+boxes.forEach(function(b){b.onchange=function(){
+  if(b.checked)state[b.dataset.pid]=1; else delete state[b.dataset.pid];
+  save(); paint();
+};});
+document.getElementById('reset').onclick=function(){
+  if(confirm('Clear all progress?')){state={};save();paint();}
+};
+paint();
+
+// ---- scroll spy --------------------------------------------------------
+var links=[].slice.call(document.querySelectorAll('#nav a[href^="#"]'));
+var map={}; links.forEach(function(a){
+  var el=document.getElementById(a.getAttribute('href').slice(1)); if(el)map[el.id]=a;});
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.remove('on')});
+      if(map[e.target.id])map[e.target.id].classList.add('on');
+    }});
+},{rootMargin:'0px 0px -75% 0px'});
+Object.keys(map).forEach(function(id){obs.observe(document.getElementById(id))});
+
+// ---- C++ highlighter ---------------------------------------------------
+var KW=('alignas|alignof|auto|bool|break|case|catch|char|class|const|constexpr|continue|'+
+ 'decltype|default|delete|do|double|else|enum|explicit|export|extern|false|float|for|friend|'+
+ 'goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|'+
+ 'public|register|return|short|signed|sizeof|static|static_cast|struct|switch|template|this|'+
+ 'throw|true|try|typedef|typename|union|unsigned|using|virtual|void|volatile|while|'+
+ 'string|string_view|vector|size_t|map|unordered_map|set|pair|istringstream|ostringstream').split('|');
+var KWRE=new RegExp('\\b('+KW.join('|')+')\\b','g');
+document.querySelectorAll('pre code').forEach(function(el){
+  var src=el.textContent, out='', i=0;
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  while(i<src.length){
+    var rest=src.slice(i), m;
+    if((m=rest.match(/^\/\/[^\n]*/))){out+='<span class="com">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^#[a-z]+/))){out+='<span class="pp">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^"(?:\\.|[^"\\])*"/))||(m=rest.match(/^'(?:\\.|[^'\\])*'/))){
+      out+='<span class="str">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^\b\d[\w.]*/))){out+='<span class="num">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^[A-Za-z_]\w*/))){
+      out+= KWRE.test(m[0])&&(KWRE.lastIndex=0,true) ? '<span class="kw">'+esc(m[0])+'</span>' : esc(m[0]);
+      i+=m[0].length;continue;}
+    out+=esc(src[i]); i++;
+  }
+  el.innerHTML=out;
+});
+</script>
+</body></html>

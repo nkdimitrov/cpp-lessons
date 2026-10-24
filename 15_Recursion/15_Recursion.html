@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C++17 Recursion - a function that calls itself</title>
+<style>
+:root{
+  --bg:#fbfaf8; --panel:#ffffff; --ink:#1c1b1a; --muted:#6b6763; --line:#e4e0da;
+  --accent:#8a4b1f; --accent-soft:#f3ece4; --code-bg:#f6f3ee; --code-ink:#2d2a26;
+  --kw:#8a4b1f; --str:#3f6b3f; --com:#9a948c; --num:#2f5c8a; --pre:#7a5ea8;
+  --note-bg:#fdf6e7; --note-line:#d9a441; --ok:#3f6b3f;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+    --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+    --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+    --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+  --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+  --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+  --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+code,pre,.mono{font-family:"JetBrains Mono",Consolas,"SF Mono",Menlo,monospace}
+.wrap{display:flex;gap:0;align-items:flex-start;max-width:1220px;margin:0 auto}
+/* ---- sidebar ---- */
+#nav{position:sticky;top:0;flex:0 0 250px;height:100vh;overflow-y:auto;
+  padding:26px 14px 40px 20px;border-right:1px solid var(--line);font-size:13.5px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#nav .brand{font-weight:700;letter-spacing:.02em;color:var(--accent);
+  font-size:12px;text-transform:uppercase;margin-bottom:14px}
+#nav a{display:block;padding:4px 8px;margin:1px 0;border-radius:5px;
+  color:var(--muted);text-decoration:none;line-height:1.35}
+#nav a:hover{background:var(--accent-soft);color:var(--ink)}
+#nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+#nav .grp{margin-top:14px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);opacity:.7;padding:0 8px}
+#nav a.home{display:inline-flex;align-items:center;gap:7px;margin:0 0 16px;padding:5px 12px;
+  border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);
+  font-weight:600}
+#nav a.home svg{width:15px;height:15px}
+#nav a.home:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager{display:flex;gap:8px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+#nav .pager a,#nav .pager span{flex:1 1 0;display:flex;flex-direction:column;align-items:center;
+  margin:0;padding:6px 4px 7px;border:1px solid var(--line);border-radius:6px;
+  background:var(--panel);color:var(--ink);font-size:22px;line-height:1.1}
+#nav .pager small{font-size:11px;color:var(--muted);margin-top:2px}
+#nav .pager a:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager a:hover small{color:var(--accent)}
+#nav .pager span{opacity:.35}
+/* ---- main ---- */
+main{flex:1 1 auto;min-width:0;padding:34px 40px 120px;max-width:900px}
+header.top{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:8px}
+h1{font-size:30px;line-height:1.2;margin:0 0 6px}
+.sub{color:var(--muted);font-size:14.5px;font-family:system-ui,sans-serif}
+h2{font-size:21px;margin:44px 0 12px;padding-top:10px;border-top:1px solid var(--line);
+  scroll-margin-top:16px}
+h2:first-of-type{border-top:none}
+h3{font-size:16.5px;margin:26px 0 8px;color:var(--accent);scroll-margin-top:16px}
+p{margin:11px 0}
+code{background:var(--code-bg);padding:1.5px 5px;border-radius:4px;font-size:.87em;
+  color:var(--code-ink);border:1px solid var(--line)}
+pre{background:var(--code-bg);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:7px;padding:13px 15px;overflow-x:auto;font-size:13px;line-height:1.55;
+  margin:14px 0;color:var(--code-ink)}
+pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
+.kw{color:var(--kw);font-weight:600}.str{color:var(--str)}.com{color:var(--com);font-style:italic}
+.num{color:var(--num)}.pp{color:var(--pre)}
+table{border-collapse:collapse;width:100%;margin:15px 0;font-size:14px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+  border-bottom:1.5px solid var(--line);font-weight:600}
+tbody tr:nth-child(even){background:var(--accent-soft)}
+ul{margin:11px 0;padding-left:22px}
+li{margin:4px 0}
+.note{background:var(--note-bg);border-left:3px solid var(--note-line);border-radius:0 7px 7px 0;
+  padding:11px 15px;margin:15px 0;font-size:14.5px}
+.tblwrap{overflow-x:auto}
+/* ---- problems ---- */
+.pgroup{margin:26px 0 0}
+.pgroup h3{margin-bottom:2px}
+.pgroup .maps{color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif;margin:0 0 8px}
+table.prob td{padding:9px 10px}
+table.prob a{color:var(--accent);text-decoration:none;font-weight:600;
+  font-family:Consolas,monospace;font-size:13.5px}
+table.prob a:hover{text-decoration:underline}
+.tech{color:var(--muted);font-size:13px}
+.src{color:var(--muted);font-size:12px;white-space:nowrap}
+.dif{color:var(--accent);letter-spacing:1px;font-size:11.5px;white-space:nowrap}
+.done td{opacity:.45}
+.done td a{text-decoration:line-through}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+#bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;
+  border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;
+  font-family:system-ui,sans-serif;font-size:13px;flex-wrap:wrap}
+#bar .track{flex:1 1 130px;height:7px;background:var(--line);border-radius:4px;overflow:hidden;
+  min-width:110px}
+#bar .fill{height:100%;background:var(--accent);width:0;transition:width .25s}
+button{font:inherit;font-size:12.5px;padding:4px 11px;border:1px solid var(--line);
+  border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+#themeBtn{position:fixed;top:14px;right:16px;z-index:10}
+.cheat td:first-child{font-family:system-ui,sans-serif;width:33%}
+.pit b{display:block;margin-bottom:2px}
+footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif}
+@media(max-width:900px){
+  #nav{display:none}
+  main{padding:26px 18px 90px}
+  h1{font-size:24px}
+  #themeBtn{top:8px;right:10px}
+}
+</style>
+</head><body>
+<button id="themeBtn" title="Toggle light / dark">&#9681;</button>
+<div class="wrap">
+<nav id="nav"><a class="home" href="../index.html" title="All lessons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>Home</a>
+<div class="brand">Lesson 15 · Recursion</div>
+<div class="grp">Theory</div>
+<a href="#idea">1. A function that calls itself</a>
+<a href="#calls">2. How the computer keeps track</a>
+<a href="#memo">3. Remembering answers</a>
+<a href="#all">4. Trying every choice</a>
+<a href="#back">5. Going back: backtracking</a>
+<div class="grp">Reference</div>
+<a href="#cheat">6. Cheat sheet</a>
+<a href="#pitfalls">7. Pitfalls</a>
+<a href="#complexity">8. Complexity</a>
+<div class="grp">Practice</div>
+<a href="#problems">9. 12 problems</a>
+<a href="#gA" style="padding-left:16px">A. A function that calls itself</a>
+<a href="#gB" style="padding-left:16px">B. Remembering answers</a>
+<a href="#gC" style="padding-left:16px">C. Trying every choice</a>
+<a href="#gD" style="padding-left:16px">D. Going back: backtracking</a>
+<div class="pager">
+<a href="../14_Big_Integers/14_Big_Integers.html" title="Previous: Lesson 14 &middot; Big integers - arithmetic beyond long long">&larr;<small>Lesson 14</small></a>
+<a href="../16_Complexity_And_Limits/16_Complexity_And_Limits.html" title="Next: Lesson 16 &middot; Time and memory limits">&rarr;<small>Lesson 16</small></a>
+</div>
+</nav>
+<main>
+<header class="top"><h1>C++17 Recursion - a function that calls itself</h1><div class="sub">Lesson 15 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<h2 id="idea">1. A function that calls itself</h2>
+<p>A <strong>recursive</strong> function solves a problem by calling itself on a smaller copy of the same problem. It always has two parts:</p>
+<ul><li>the <strong>base case</strong> - a problem so small that the answer is known at once;</li><li>the <strong>step</strong> - make the problem smaller and call yourself.</li></ul>
+<pre><code>// n! = 1 * 2 * ... * n
+long long fact(int n) {
+    if (n == 0) return 1;            // base case: 0! = 1
+    return n * fact(n - 1);          // step: n! = n * (n-1)!
+}
+
+// the sum of the digits
+int sd(int n) {
+    if (n == 0) return 0;
+    return n % 10 + sd(n / 10);
+}
+
+// the greatest common divisor - Euclid&#x27;s rule
+int gcd(int a, int b) {
+    if (b == 0) return a;
+    return gcd(b, a % b);
+}</code></pre>
+<p><code>gcd(12, 18)</code> calls <code>gcd(18, 12)</code>, then <code>gcd(12, 6)</code>, then <code>gcd(6, 0)</code>, which answers 6. Each call is smaller than the one before, so the base case is always reached.</p>
+<h2 id="calls">2. How the computer keeps track</h2>
+<p>When <code>fact(3)</code> calls <code>fact(2)</code>, the first call waits. It continues only when <code>fact(2)</code> has answered. The waiting calls pile up like a stack of plates:</p>
+<div class="tblwrap"><table><thead><tr>
+<th>Call</th>
+<th>What happens</th>
+</tr></thead><tbody>
+<tr><td><code>fact(3)</code></td><td>waits for <code>fact(2)</code></td></tr>
+<tr><td><code>fact(2)</code></td><td>waits for <code>fact(1)</code></td></tr>
+<tr><td><code>fact(1)</code></td><td>waits for <code>fact(0)</code></td></tr>
+<tr><td><code>fact(0)</code></td><td>the base case answers 1</td></tr>
+<tr><td><code>fact(1)</code></td><td>gets 1 and answers <code>1 * 1 = 1</code></td></tr>
+<tr><td><code>fact(2)</code></td><td>gets 1 and answers <code>2 * 1 = 2</code></td></tr>
+<tr><td><code>fact(3)</code></td><td>gets 2 and answers <code>3 * 2 = 6</code></td></tr>
+</tbody></table></div>
+<p>If the base case is missing, or never reached, the pile grows until memory runs out and the program crashes. Even a correct recursion crashes if it goes too deep: a few thousand calls inside each other are fine, a million are not.</p>
+<h2 id="memo">3. Remembering answers</h2>
+<p>Fibonacci numbers: <code>F(0) = 0</code>, <code>F(1) = 1</code>, and every next one is the sum of the two before. The obvious recursion is correct but terribly slow:</p>
+<pre><code>long long fib(int n) {
+    if (n &lt; 2) return n;
+    return fib(n - 1) + fib(n - 2);   // fib(40) makes over 300 million calls
+}</code></pre>
+<p>It is slow because it works out the same small values again and again. Fix it by <strong>remembering</strong>: the first time you know <code>fib(n)</code>, write it down in an array; next time, just read it:</p>
+<pre><code>long long memo[100];
+bool known[100];
+
+long long fib(int n) {
+    if (n &lt; 2) return n;
+    if (known[n]) return memo[n];     // worked out before: just read it
+    memo[n] = fib(n - 1) + fib(n - 2);
+    known[n] = true;
+    return memo[n];
+}</code></pre>
+<p>Now every value is worked out only once, and <code>fib(90)</code> is instant. The same trick works for any recursion with a few numbers as its input, for example <code>f(steps, row, col)</code> with a three-dimensional array.</p>
+<h2 id="all">4. Trying every choice</h2>
+<p>Recursion is the easiest way to try <strong>every</strong> possibility. Each call makes one choice and leaves the rest to the next call. All strings of 0s and 1s of length <code>n</code>:</p>
+<pre><code>int n;
+
+void gen(string s) {
+    if ((int)s.size() == n) {         // a whole string is ready
+        cout &lt;&lt; s &lt;&lt; &#x27;\n&#x27;;
+        return;
+    }
+    gen(s + &#x27;0&#x27;);                     // choice 1: the next digit is 0
+    gen(s + &#x27;1&#x27;);                     // choice 2: the next digit is 1
+}
+
+// gen(&quot;&quot;) with n = 3 prints 000 001 010 011 100 101 110 111</code></pre>
+<p>The same shape gives every <strong>group</strong> chosen from <code>n</code> people: for person <code>i</code>, either take them or leave them, then go on to person <code>i + 1</code>:</p>
+<pre><code>int a[20];
+
+void go(int i, int sum) {
+    if (i == n) {                     // decided about everybody
+        // look at sum here
+        return;
+    }
+    go(i + 1, sum + a[i]);            // take person i
+    go(i + 1, sum);                   // leave person i
+}</code></pre>
+<div class="note">There are <code>2^n</code> groups: about a thousand for 10 people and a million for 20. More than about 25 is too many.</div>
+<h2 id="back">5. Going back: backtracking</h2>
+<p>To try every <strong>order</strong> of the numbers 1 to <code>n</code>, put a number in each place, but only a number that is not used yet. When the call comes back, <strong>undo</strong> the choice, so that the next number can be tried in its place:</p>
+<pre><code>int n, p[10];
+bool used[10];
+
+void perm(int k) {                    // fill place k
+    if (k == n) {
+        for (int i = 0; i &lt; n; i++) cout &lt;&lt; p[i] &lt;&lt; &#x27; &#x27;;
+        cout &lt;&lt; &#x27;\n&#x27;;
+        return;
+    }
+    for (int v = 1; v &lt;= n; v++) {
+        if (used[v]) continue;
+        used[v] = true;  p[k] = v;    // choose
+        perm(k + 1);                  // try everything after it
+        used[v] = false;              // undo
+    }
+}</code></pre>
+<p>This &quot;choose, try, undo&quot; pattern is called <strong>backtracking</strong>. It becomes really strong when you stop early: if a choice already breaks the rules, do not call any further - go back at once and try the next choice.</p>
+<h2 id="cheat">6. Cheat sheet &mdash; memorise this page</h2>
+<p>Cover the right-hand column and try to write each line from memory.</p>
+<div class="tblwrap"><table class="cheat"><thead><tr><th>You want to&hellip;</th><th>Write</th></tr></thead><tbody>
+<tr><td>Every recursion</td><td>a base case that answers at once, and a step that calls on a smaller problem</td></tr>
+<tr><td>Factorial</td><td><code>if (n == 0) return 1; return n * fact(n - 1);</code></td></tr>
+<tr><td>Sum of digits</td><td><code>if (n == 0) return 0; return n % 10 + sd(n / 10);</code></td></tr>
+<tr><td>Greatest common divisor</td><td><code>if (b == 0) return a; return gcd(b, a % b);</code></td></tr>
+<tr><td>Remember answers</td><td><code>if (known[n]) return memo[n];</code> ... <code>known[n] = true;</code></td></tr>
+<tr><td>All 0/1 strings</td><td><code>gen(s + &#x27;0&#x27;); gen(s + &#x27;1&#x27;);</code></td></tr>
+<tr><td>All groups</td><td><code>go(i + 1, take); go(i + 1, leave);</code></td></tr>
+<tr><td>All orders</td><td>for each unused <code>v</code>: mark, place, <code>perm(k + 1)</code>, unmark</td></tr>
+<tr><td>Stop early</td><td>if a choice already breaks the rules, do not call further</td></tr>
+</tbody></table></div>
+<h2 id="pitfalls">7. 5 pitfalls that cost real marks</h2>
+<div class="tblwrap"><table class="pit"><tbody>
+<tr><td><b>No base case, or one that is never reached.</b><span class="tech"><code>f(n)</code> calling <code>f(n - 2)</code> with base case <code>n == 0</code> never stops for odd <code>n</code>. Check that every path reaches a base case.</span></td></tr>
+<tr><td><b>The same values worked out again and again.</b><span class="tech">Plain recursive Fibonacci takes seconds for <code>n = 45</code>. Remember the answers in an array.</span></td></tr>
+<tr><td><b>Forgetting to undo.</b><span class="tech">Without <code>used[v] = false;</code> after the call, every later branch thinks <code>v</code> is taken, and most answers are never found.</span></td></tr>
+<tr><td><b>Recursion that goes too deep.</b><span class="tech">A million calls inside each other crash the program. For long chains, write a loop instead.</span></td></tr>
+<tr><td><b>Too many possibilities.</b><span class="tech"><code>2^n</code> and <code>n!</code> grow very fast. Count them before you write the recursion.</span></td></tr>
+</tbody></table></div>
+<h2 id="complexity">8. Complexity reference</h2>
+<div class="tblwrap"><table><thead><tr><th>Operation</th><th>Cost</th></tr></thead><tbody>
+<tr><td><code>fact(n)</code>, <code>sd(n)</code></td><td>O(n) and O(number of digits)</td></tr>
+<tr><td><code>gcd(a, b)</code></td><td>very few calls - about 90 at most for <code>long long</code> numbers</td></tr>
+<tr><td>Fibonacci without remembering</td><td>about O(2^n) - hopeless for n = 50</td></tr>
+<tr><td>Fibonacci with remembering</td><td>O(n)</td></tr>
+<tr><td>All 0/1 strings or all groups of <code>n</code></td><td>O(2^n)</td></tr>
+<tr><td>All orders of <code>n</code> numbers</td><td>O(n!)</td></tr>
+</tbody></table></div>
+<h2 id="problems">9. Practice &mdash; 12 problems, Group D</h2>
+<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
+<div class="pgroup"><h3 id="gA">A. A function that calls itself</h3><p class="maps">Theory: sections 1 and 2</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100209"></td><td><a href="https://arena.olimpiici.com/#/catalog/92/problem/100209" target="_blank" rel="noopener">square</a><br><span class="tech">Squares</span></td><td class="tech">cut off the biggest square and call yourself on what is left</td><td class="src">Municipal round 2009</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100663"></td><td><a href="https://arena.olimpiici.com/#/catalog/241/problem/100663" target="_blank" rel="noopener">parade</a><br><span class="tech">Parade</span></td><td class="tech">the parade doubles each step; find place p in the half it came from</td><td class="src">National round 2015</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101175"></td><td><a href="https://arena.olimpiici.com/#/catalog/434/problem/101175" target="_blank" rel="noopener">numbers</a><br><span class="tech">Numbers</span></td><td class="tech">run the rule backwards, one call per step, until the start</td><td class="src">Spring tournament 2019</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gB">B. Remembering answers</h3><p class="maps">Theory: section 3</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100253"></td><td><a href="https://arena.olimpiici.com/#/catalog/110/problem/100253" target="_blank" rel="noopener">fish_globe</a><br><span class="tech">Fish bowl</span></td><td class="tech">each day depends on earlier days; keep the answers in an array</td><td class="src">Municipal round 2012</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100853"></td><td><a href="https://arena.olimpiici.com/#/catalog/303/problem/100853" target="_blank" rel="noopener">robot</a><br><span class="tech">Robot</span></td><td class="tech">walks of k steps that end at (i, j): <code>f(k, i, j)</code>, remembered</td><td class="src">Spring tournament 2015</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101923"></td><td><a href="https://arena.olimpiici.com/#/catalog/747/problem/101923" target="_blank" rel="noopener">minesweeper</a><br><span class="tech">Minesweeper</span></td><td class="tech">count the ways cell by cell; remember each count once found</td><td class="src">Regional round 2023</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Trying every choice</h3><p class="maps">Theory: section 4</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100900"></td><td><a href="https://arena.olimpiici.com/#/catalog/321/problem/100900" target="_blank" rel="noopener">delimost</a><br><span class="tech">Divisibility</span></td><td class="tech">build every 0/1 number digit by digit and test each one</td><td class="src">Spring tournament 2018</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100793"></td><td><a href="https://arena.olimpiici.com/#/catalog/279/problem/100793" target="_blank" rel="noopener">competitors</a><br><span class="tech">Competitors</span></td><td class="tech">take or leave each person: every team of up to 10</td><td class="src">Spring tournament 2011</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100568"></td><td><a href="https://arena.olimpiici.com/#/catalog/221/problem/100568" target="_blank" rel="noopener">super</a><br><span class="tech">Super primes</span></td><td class="tech">grow primes one digit at a time; each call adds a digit</td><td class="src">National round 2011</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gD">D. Going back: backtracking</h3><p class="maps">Theory: section 5</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100011"></td><td><a href="https://arena.olimpiici.com/#/catalog/14/problem/100011" target="_blank" rel="noopener">words</a><br><span class="tech">Words</span></td><td class="tech">chain words by first and last letter; step back when stuck</td><td class="src">Autumn tournament 2007</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100975"></td><td><a href="https://arena.olimpiici.com/#/catalog/351/problem/100975" target="_blank" rel="noopener">conundrum</a><br><span class="tech">Word search</span></td><td class="tech">follow each word through neighbouring cells; undo and try another way</td><td class="src">Winter tournament 2013</td><td class="dif">★★★★☆</td></tr>
+<tr><td><input type="checkbox" data-pid="102723"></td><td><a href="https://arena.olimpiici.com/#/catalog/961/problem/102723" target="_blank" rel="noopener">sum</a><br><span class="tech">Sum</span></td><td class="tech">place the digits column by column; undo a choice that cannot work</td><td class="src">Summer tournament 2026</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 15 · C++17 recursion. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
+</main></div>
+<script>var LESSON_SLUG="15_Recursion";var LEGACY_KEY=null;</script>
+<script>
+var THEME_KEY="cpp_lessons_theme";
+var DONE_KEY="cpp_done_"+LESSON_SLUG;
+// ---- theme -------------------------------------------------------------
+var tb=document.getElementById('themeBtn');
+function setTheme(t){
+  if(t) document.documentElement.setAttribute('data-theme',t);
+  else document.documentElement.removeAttribute('data-theme');
+  try{t?localStorage.setItem(THEME_KEY,t):localStorage.removeItem(THEME_KEY)}catch(e){}
+}
+try{var st=localStorage.getItem(THEME_KEY); if(st) setTheme(st);}catch(e){}
+tb.onclick=function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  setTheme(cur==='dark'?'light':'dark');
+};
+
+// ---- progress ----------------------------------------------------------
+var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-pid]'));
+var fill=document.querySelector('#bar .fill'), lbl=document.getElementById('cnt');
+// state lives in memory; localStorage is a best-effort mirror so that ticking
+// still works when storage is blocked (private window, file:// restrictions)
+var state={};
+try{
+  var raw=localStorage.getItem(DONE_KEY);
+  if(raw===null && LEGACY_KEY) raw=localStorage.getItem(LEGACY_KEY);  // one-time adopt
+  state=JSON.parse(raw||'{}')||{};
+}catch(e){state={}}
+function save(){try{localStorage.setItem(DONE_KEY,JSON.stringify(state))}catch(e){}}
+function paint(){
+  var n=0;
+  boxes.forEach(function(b){
+    var on=!!state[b.dataset.pid]; b.checked=on; if(on)n++;
+    b.closest('tr').classList.toggle('done',on);
+  });
+  fill.style.width=(n/boxes.length*100)+'%';
+  lbl.textContent=n+' / '+boxes.length+' solved';
+}
+boxes.forEach(function(b){b.onchange=function(){
+  if(b.checked)state[b.dataset.pid]=1; else delete state[b.dataset.pid];
+  save(); paint();
+};});
+document.getElementById('reset').onclick=function(){
+  if(confirm('Clear all progress?')){state={};save();paint();}
+};
+paint();
+
+// ---- scroll spy --------------------------------------------------------
+var links=[].slice.call(document.querySelectorAll('#nav a[href^="#"]'));
+var map={}; links.forEach(function(a){
+  var el=document.getElementById(a.getAttribute('href').slice(1)); if(el)map[el.id]=a;});
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.remove('on')});
+      if(map[e.target.id])map[e.target.id].classList.add('on');
+    }});
+},{rootMargin:'0px 0px -75% 0px'});
+Object.keys(map).forEach(function(id){obs.observe(document.getElementById(id))});
+
+// ---- C++ highlighter ---------------------------------------------------
+var KW=('alignas|alignof|auto|bool|break|case|catch|char|class|const|constexpr|continue|'+
+ 'decltype|default|delete|do|double|else|enum|explicit|export|extern|false|float|for|friend|'+
+ 'goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|'+
+ 'public|register|return|short|signed|sizeof|static|static_cast|struct|switch|template|this|'+
+ 'throw|true|try|typedef|typename|union|unsigned|using|virtual|void|volatile|while|'+
+ 'string|string_view|vector|size_t|map|unordered_map|set|pair|istringstream|ostringstream').split('|');
+var KWRE=new RegExp('\\b('+KW.join('|')+')\\b','g');
+document.querySelectorAll('pre code').forEach(function(el){
+  var src=el.textContent, out='', i=0;
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  while(i<src.length){
+    var rest=src.slice(i), m;
+    if((m=rest.match(/^\/\/[^\n]*/))){out+='<span class="com">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^#[a-z]+/))){out+='<span class="pp">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^"(?:\\.|[^"\\])*"/))||(m=rest.match(/^'(?:\\.|[^'\\])*'/))){
+      out+='<span class="str">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^\b\d[\w.]*/))){out+='<span class="num">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^[A-Za-z_]\w*/))){
+      out+= KWRE.test(m[0])&&(KWRE.lastIndex=0,true) ? '<span class="kw">'+esc(m[0])+'</span>' : esc(m[0]);
+      i+=m[0].length;continue;}
+    out+=esc(src[i]); i++;
+  }
+  el.innerHTML=out;
+});
+</script>
+</body></html>

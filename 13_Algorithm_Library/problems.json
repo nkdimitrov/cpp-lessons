@@ -1,0 +1,159 @@
+{
+ "group": "D",
+ "groups": [
+  {
+   "key": "A",
+   "name": "A. min, max, count and find",
+   "maps": "Theory: sections 1 and 2"
+  },
+  {
+   "key": "B",
+   "name": "B. reverse, rotate and unique",
+   "maps": "Theory: section 3"
+  },
+  {
+   "key": "C",
+   "name": "C. Every order: next_permutation",
+   "maps": "Theory: section 4"
+  },
+  {
+   "key": "D",
+   "name": "D. Searching sorted data",
+   "maps": "Theory: section 5"
+  }
+ ],
+ "problems": [
+  {
+   "section": "A",
+   "pid": 100055,
+   "title": "seq",
+   "en": "Sequence",
+   "tech": "`count` and `find` on each window of four values",
+   "family": "Autumn tournament",
+   "year": 2010,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/32/problem/100055"
+  },
+  {
+   "section": "A",
+   "pid": 100898,
+   "title": "distance",
+   "en": "Distance",
+   "tech": "remember where x and y were seen last; `min` keeps the closest",
+   "family": "Spring tournament",
+   "year": 2018,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/321/problem/100898"
+  },
+  {
+   "section": "A",
+   "pid": 102156,
+   "title": "alarm",
+   "en": "Alarm",
+   "tech": "try every time that fits and keep the `min` effort",
+   "family": "Spring tournament",
+   "year": 2024,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/810/problem/102156"
+  },
+  {
+   "section": "B",
+   "pid": 100794,
+   "title": "uncommon",
+   "en": "Uncommon",
+   "tech": "`reverse` the digits of each number, then compare the products",
+   "family": "Spring tournament",
+   "year": 2011,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/279/problem/100794"
+  },
+  {
+   "section": "B",
+   "pid": 101716,
+   "title": "sumpow",
+   "en": "Sums of powers",
+   "tech": "list every `2^b - 2^a`, then `sort` and `unique` before counting",
+   "family": "National round",
+   "year": 2022,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/674/problem/101716"
+  },
+  {
+   "section": "B",
+   "pid": 100727,
+   "title": "puzzle",
+   "en": "Puzzle",
+   "tech": "`rotate` each row until they all match; keep the smallest total turn",
+   "family": "National round",
+   "year": 2018,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/255/problem/100727"
+  },
+  {
+   "section": "C",
+   "pid": 100102,
+   "title": "sport",
+   "en": "Sport",
+   "tech": "`sort` the letters, then `next_permutation` lists every order",
+   "family": "Autumn tournament",
+   "year": 2013,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/50/problem/100102"
+  },
+  {
+   "section": "C",
+   "pid": 100611,
+   "title": "dates",
+   "en": "Dates",
+   "tech": "the six orders of day, month and year come from `next_permutation`",
+   "family": "National round",
+   "year": 2013,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/231/problem/100611"
+  },
+  {
+   "section": "C",
+   "pid": 101020,
+   "title": "alarm",
+   "en": "Alarm clocks",
+   "tech": "at most 9 alarms - try every order with `next_permutation`",
+   "family": "Winter tournament",
+   "year": 2016,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/369/problem/101020"
+  },
+  {
+   "section": "D",
+   "pid": 101019,
+   "title": "monument",
+   "en": "Monuments",
+   "tech": "sort the positions; `lower_bound` counts how many are close",
+   "family": "Winter tournament",
+   "year": 2016,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/369/problem/101019"
+  },
+  {
+   "section": "D",
+   "pid": 102531,
+   "title": "metro",
+   "en": "Metro",
+   "tech": "`lower_bound` finds the big stops on either side",
+   "family": "Winter tournament",
+   "year": 2026,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/912/problem/102531"
+  },
+  {
+   "section": "D",
+   "pid": 101806,
+   "title": "points",
+   "en": "Shooting",
+   "tech": "`upper_bound` finds the box each bullet reaches",
+   "family": "Summer tournament",
+   "year": 2022,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/711/problem/101806"
+  }
+ ]
+}

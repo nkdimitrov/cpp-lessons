@@ -1,0 +1,159 @@
+{
+ "group": "D",
+ "groups": [
+  {
+   "key": "A",
+   "name": "A. Adding long numbers",
+   "maps": "Theory: sections 2 and 3"
+  },
+  {
+   "key": "B",
+   "name": "B. Multiplying by a small number",
+   "maps": "Theory: section 4"
+  },
+  {
+   "key": "C",
+   "name": "C. Subtracting, comparing, multiplying two long numbers",
+   "maps": "Theory: sections 5 and 6"
+  },
+  {
+   "key": "D",
+   "name": "D. Dividing by a small number",
+   "maps": "Theory: section 7"
+  }
+ ],
+ "problems": [
+  {
+   "section": "A",
+   "pid": 100373,
+   "title": "fib",
+   "en": "Fibonacci",
+   "tech": "add the last two numbers digit by digit",
+   "family": "Regional round",
+   "year": 2010,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/158/problem/100373"
+  },
+  {
+   "section": "A",
+   "pid": 100479,
+   "title": "degrees",
+   "en": "Powers of two",
+   "tech": "double the number by adding it to itself, again and again",
+   "family": "Regional round",
+   "year": 2017,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/200/problem/100479"
+  },
+  {
+   "section": "A",
+   "pid": 100285,
+   "title": "sheeps",
+   "en": "Sheep",
+   "tech": "`a(k) = a(k-1) + a(k-3)` grows past `long long` - add long numbers",
+   "family": "Municipal round",
+   "year": 2014,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/122/problem/100285"
+  },
+  {
+   "section": "B",
+   "pid": 100683,
+   "title": "nbinpal",
+   "en": "Binary palindromes",
+   "tech": "the answer is a power of two: multiply by 2 again and again",
+   "family": "National round",
+   "year": 2016,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/246/problem/100683"
+  },
+  {
+   "section": "B",
+   "pid": 100494,
+   "title": "sdnf",
+   "en": "Factorial digits",
+   "tech": "multiply by 2, 3, ..., n, then add up the digits",
+   "family": "Regional round",
+   "year": 2018,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/206/problem/100494"
+  },
+  {
+   "section": "B",
+   "pid": 100117,
+   "title": "seq",
+   "en": "Sequence",
+   "tech": "multiply by x digit by digit and count the digits written",
+   "family": "Autumn tournament",
+   "year": 2014,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/56/problem/100117"
+  },
+  {
+   "section": "C",
+   "pid": 100360,
+   "title": "sub",
+   "en": "Subtraction",
+   "tech": "sort the digits both ways and subtract the two long numbers",
+   "family": "Regional round",
+   "year": 2009,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/152/problem/100360"
+  },
+  {
+   "section": "C",
+   "pid": 100511,
+   "title": "ones",
+   "en": "Ones",
+   "tech": "111...1 times itself - multiply two long numbers, then spot the pattern",
+   "family": "National round",
+   "year": 2009,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/211/problem/100511"
+  },
+  {
+   "section": "C",
+   "pid": 100449,
+   "title": "maxpro",
+   "en": "Largest product",
+   "tech": "cut the ring in two places, multiply, keep the largest",
+   "family": "Regional round",
+   "year": 2015,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/188/problem/100449"
+  },
+  {
+   "section": "D",
+   "pid": 100177,
+   "title": "equation",
+   "en": "Equation",
+   "tech": "subtract, then divide the long number by `a`",
+   "family": "Autumn tournament",
+   "year": 2018,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/80/problem/100177"
+  },
+  {
+   "section": "D",
+   "pid": 100493,
+   "title": "long",
+   "en": "Long number",
+   "tech": "the remainder of a long number divided by k, digit by digit",
+   "family": "Regional round",
+   "year": 2018,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/206/problem/100493"
+  },
+  {
+   "section": "D",
+   "pid": 100762,
+   "title": "diff",
+   "en": "Bases",
+   "tech": "change base by dividing the long number again and again",
+   "family": "Spring tournament",
+   "year": 2009,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/267/problem/100762"
+  }
+ ]
+}

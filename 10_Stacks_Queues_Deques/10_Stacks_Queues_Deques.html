@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C++17 Stacks, queues and deques - piles and lines</title>
+<style>
+:root{
+  --bg:#fbfaf8; --panel:#ffffff; --ink:#1c1b1a; --muted:#6b6763; --line:#e4e0da;
+  --accent:#8a4b1f; --accent-soft:#f3ece4; --code-bg:#f6f3ee; --code-ink:#2d2a26;
+  --kw:#8a4b1f; --str:#3f6b3f; --com:#9a948c; --num:#2f5c8a; --pre:#7a5ea8;
+  --note-bg:#fdf6e7; --note-line:#d9a441; --ok:#3f6b3f;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+    --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+    --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+    --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+  --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+  --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+  --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+code,pre,.mono{font-family:"JetBrains Mono",Consolas,"SF Mono",Menlo,monospace}
+.wrap{display:flex;gap:0;align-items:flex-start;max-width:1220px;margin:0 auto}
+/* ---- sidebar ---- */
+#nav{position:sticky;top:0;flex:0 0 250px;height:100vh;overflow-y:auto;
+  padding:26px 14px 40px 20px;border-right:1px solid var(--line);font-size:13.5px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#nav .brand{font-weight:700;letter-spacing:.02em;color:var(--accent);
+  font-size:12px;text-transform:uppercase;margin-bottom:14px}
+#nav a{display:block;padding:4px 8px;margin:1px 0;border-radius:5px;
+  color:var(--muted);text-decoration:none;line-height:1.35}
+#nav a:hover{background:var(--accent-soft);color:var(--ink)}
+#nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+#nav .grp{margin-top:14px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);opacity:.7;padding:0 8px}
+#nav a.home{display:inline-flex;align-items:center;gap:7px;margin:0 0 16px;padding:5px 12px;
+  border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);
+  font-weight:600}
+#nav a.home svg{width:15px;height:15px}
+#nav a.home:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager{display:flex;gap:8px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+#nav .pager a,#nav .pager span{flex:1 1 0;display:flex;flex-direction:column;align-items:center;
+  margin:0;padding:6px 4px 7px;border:1px solid var(--line);border-radius:6px;
+  background:var(--panel);color:var(--ink);font-size:22px;line-height:1.1}
+#nav .pager small{font-size:11px;color:var(--muted);margin-top:2px}
+#nav .pager a:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager a:hover small{color:var(--accent)}
+#nav .pager span{opacity:.35}
+/* ---- main ---- */
+main{flex:1 1 auto;min-width:0;padding:34px 40px 120px;max-width:900px}
+header.top{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:8px}
+h1{font-size:30px;line-height:1.2;margin:0 0 6px}
+.sub{color:var(--muted);font-size:14.5px;font-family:system-ui,sans-serif}
+h2{font-size:21px;margin:44px 0 12px;padding-top:10px;border-top:1px solid var(--line);
+  scroll-margin-top:16px}
+h2:first-of-type{border-top:none}
+h3{font-size:16.5px;margin:26px 0 8px;color:var(--accent);scroll-margin-top:16px}
+p{margin:11px 0}
+code{background:var(--code-bg);padding:1.5px 5px;border-radius:4px;font-size:.87em;
+  color:var(--code-ink);border:1px solid var(--line)}
+pre{background:var(--code-bg);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:7px;padding:13px 15px;overflow-x:auto;font-size:13px;line-height:1.55;
+  margin:14px 0;color:var(--code-ink)}
+pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
+.kw{color:var(--kw);font-weight:600}.str{color:var(--str)}.com{color:var(--com);font-style:italic}
+.num{color:var(--num)}.pp{color:var(--pre)}
+table{border-collapse:collapse;width:100%;margin:15px 0;font-size:14px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+  border-bottom:1.5px solid var(--line);font-weight:600}
+tbody tr:nth-child(even){background:var(--accent-soft)}
+ul{margin:11px 0;padding-left:22px}
+li{margin:4px 0}
+.note{background:var(--note-bg);border-left:3px solid var(--note-line);border-radius:0 7px 7px 0;
+  padding:11px 15px;margin:15px 0;font-size:14.5px}
+.tblwrap{overflow-x:auto}
+/* ---- problems ---- */
+.pgroup{margin:26px 0 0}
+.pgroup h3{margin-bottom:2px}
+.pgroup .maps{color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif;margin:0 0 8px}
+table.prob td{padding:9px 10px}
+table.prob a{color:var(--accent);text-decoration:none;font-weight:600;
+  font-family:Consolas,monospace;font-size:13.5px}
+table.prob a:hover{text-decoration:underline}
+.tech{color:var(--muted);font-size:13px}
+.src{color:var(--muted);font-size:12px;white-space:nowrap}
+.dif{color:var(--accent);letter-spacing:1px;font-size:11.5px;white-space:nowrap}
+.done td{opacity:.45}
+.done td a{text-decoration:line-through}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+#bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;
+  border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;
+  font-family:system-ui,sans-serif;font-size:13px;flex-wrap:wrap}
+#bar .track{flex:1 1 130px;height:7px;background:var(--line);border-radius:4px;overflow:hidden;
+  min-width:110px}
+#bar .fill{height:100%;background:var(--accent);width:0;transition:width .25s}
+button{font:inherit;font-size:12.5px;padding:4px 11px;border:1px solid var(--line);
+  border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+#themeBtn{position:fixed;top:14px;right:16px;z-index:10}
+.cheat td:first-child{font-family:system-ui,sans-serif;width:33%}
+.pit b{display:block;margin-bottom:2px}
+footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif}
+@media(max-width:900px){
+  #nav{display:none}
+  main{padding:26px 18px 90px}
+  h1{font-size:24px}
+  #themeBtn{top:8px;right:10px}
+}
+</style>
+</head><body>
+<button id="themeBtn" title="Toggle light / dark">&#9681;</button>
+<div class="wrap">
+<nav id="nav"><a class="home" href="../index.html" title="All lessons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>Home</a>
+<div class="brand">Lesson 10 · Stacks and queues</div>
+<div class="grp">Theory</div>
+<a href="#stack">1. stack: a pile of plates</a>
+<a href="#queue">2. queue: a line at the shop</a>
+<a href="#deque">3. deque: a line with two ends</a>
+<a href="#brackets">4. Brackets</a>
+<a href="#keep">5. A stack that keeps only what matters</a>
+<div class="grp">Reference</div>
+<a href="#cheat">6. Cheat sheet</a>
+<a href="#pitfalls">7. Pitfalls</a>
+<a href="#complexity">8. Complexity</a>
+<div class="grp">Practice</div>
+<a href="#problems">9. 12 problems</a>
+<a href="#gA" style="padding-left:16px">A. A pile of plates: stack</a>
+<a href="#gB" style="padding-left:16px">B. A line, and a line with two ends: queue and deque</a>
+<a href="#gC" style="padding-left:16px">C. Brackets, and stacks that keep only what matters</a>
+<div class="pager">
+<a href="../09_Pairs_And_Structs/09_Pairs_And_Structs.html" title="Previous: Lesson 09 &middot; Pairs and structs">&larr;<small>Lesson 09</small></a>
+<a href="../11_Sets_And_Maps/11_Sets_And_Maps.html" title="Next: Lesson 11 &middot; Sets and maps">&rarr;<small>Lesson 11</small></a>
+</div>
+</nav>
+<main>
+<header class="top"><h1>C++17 Stacks, queues and deques - piles and lines</h1><div class="sub">Lesson 10 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<h2 id="stack">1. stack: a pile of plates</h2>
+<p>A stack is like a pile of plates. You put a plate on <strong>top</strong>, and you can take only the plate on top. The last one in is the first one out. Add <code>#include &lt;stack&gt;</code>:</p>
+<pre><code>stack&lt;int&gt; st;
+st.push(1);
+st.push(2);
+st.push(3);                      // 3 is on top
+
+cout &lt;&lt; st.top() &lt;&lt; &#x27;\n&#x27;;        // 3
+st.pop();                        // throws 3 away
+cout &lt;&lt; st.top() &lt;&lt; &#x27;\n&#x27;;        // 2
+cout &lt;&lt; st.size() &lt;&lt; &#x27;\n&#x27;;       // 2</code></pre>
+<div class="tblwrap"><table><thead><tr>
+<th>Call</th>
+<th>Does</th>
+</tr></thead><tbody>
+<tr><td><code>st.push(x)</code></td><td>puts <code>x</code> on top</td></tr>
+<tr><td><code>st.top()</code></td><td>the value on top (it stays there)</td></tr>
+<tr><td><code>st.pop()</code></td><td>removes the top - and gives nothing back</td></tr>
+<tr><td><code>st.empty()</code></td><td>true when the stack has nothing in it</td></tr>
+</tbody></table></div>
+<p>A stack turns things round. Push everything, then pop everything, and it comes out backwards:</p>
+<pre><code>while (!st.empty()) {
+    cout &lt;&lt; st.top() &lt;&lt; &#x27; &#x27;;
+    st.pop();
+}</code></pre>
+<div class="note"><code>top()</code> or <code>pop()</code> on an empty stack crashes the program. Check <code>!st.empty()</code> first.</div>
+<h2 id="queue">2. queue: a line at the shop</h2>
+<p>A queue is a line of people. New people join at the <strong>back</strong>; the person at the <strong>front</strong> is served and leaves. The first one in is the first one out. Add <code>#include &lt;queue&gt;</code>:</p>
+<pre><code>queue&lt;int&gt; q;
+q.push(1);
+q.push(2);
+q.push(3);                       // front: 1   back: 3
+
+cout &lt;&lt; q.front() &lt;&lt; &#x27;\n&#x27;;       // 1
+q.pop();                         // 1 leaves
+cout &lt;&lt; q.front() &lt;&lt; &#x27;\n&#x27;;       // 2</code></pre>
+<p>A pack of cards where the top card goes to the bottom is a queue. So is a circle of children where every k-th one leaves the game:</p>
+<pre><code>queue&lt;int&gt; q;
+for (int i = 1; i &lt;= n; i++) q.push(i);
+while (q.size() &gt; 1) {
+    for (int s = 1; s &lt; k; s++) {      // k - 1 children move to the back
+        q.push(q.front());
+        q.pop();
+    }
+    q.pop();                           // the k-th child leaves
+}
+cout &lt;&lt; q.front() &lt;&lt; &#x27;\n&#x27;;             // the last one left</code></pre>
+<h2 id="deque">3. deque: a line with two ends</h2>
+<p>A <code>deque</code> (say &quot;deck&quot;) lets you add and remove at <strong>both</strong> ends. Add <code>#include &lt;deque&gt;</code>:</p>
+<pre><code>deque&lt;int&gt; d;
+d.push_back(2);
+d.push_back(3);
+d.push_front(1);                 // 1 2 3
+
+cout &lt;&lt; d.front() &lt;&lt; &#x27; &#x27; &lt;&lt; d.back() &lt;&lt; &#x27;\n&#x27;;   // 1 3
+d.pop_front();                   // 2 3
+d.pop_back();                    // 2
+cout &lt;&lt; d[0] &lt;&lt; &#x27;\n&#x27;;            // 2 - you may also use places, like a vector</code></pre>
+<p>When a problem keeps taking from one end and adding to the other end - or turns the whole line round - a deque does each step at once, without moving the other elements.</p>
+<h2 id="brackets">4. Brackets</h2>
+<p>Is <code>([]{})</code> correctly closed? Read the characters one by one. Push every opening bracket. A closing bracket must match the bracket on top of the stack - then pop it. At the end the stack must be empty:</p>
+<pre><code>bool ok(string s) {
+    stack&lt;char&gt; st;
+    for (char c : s) {
+        if (c == &#x27;(&#x27; || c == &#x27;[&#x27; || c == &#x27;{&#x27;) st.push(c);
+        else {
+            if (st.empty()) return false;          // nothing to close
+            char o = st.top();
+            st.pop();
+            if (c == &#x27;)&#x27; &amp;&amp; o != &#x27;(&#x27;) return false;
+            if (c == &#x27;]&#x27; &amp;&amp; o != &#x27;[&#x27;) return false;
+            if (c == &#x27;}&#x27; &amp;&amp; o != &#x27;{&#x27;) return false;
+        }
+    }
+    return st.empty();                             // nothing left open
+}</code></pre>
+<p>The size of the stack at any moment is how <strong>deep</strong> you are inside the brackets.</p>
+<h2 id="keep">5. A stack that keeps only what matters</h2>
+<p>Sometimes, when a new value arrives, the smaller values before it can never be useful again. Pop them! For example: for every number, find the nearest <strong>bigger</strong> number to its left.</p>
+<pre><code>stack&lt;int&gt; st;                   // only numbers that may still be an answer
+for (int i = 0; i &lt; n; i++) {
+    while (!st.empty() &amp;&amp; st.top() &lt;= a[i]) st.pop();   // too small: never an answer again
+    if (st.empty()) cout &lt;&lt; -1 &lt;&lt; &#x27; &#x27;;
+    else cout &lt;&lt; st.top() &lt;&lt; &#x27; &#x27;;
+    st.push(a[i]);
+}</code></pre>
+<p>For <code>5 3 1 4 6</code> this prints <code>-1 5 3 5 -1</code>. Every number is pushed once and popped at most once, so the whole loop is fast even though there is a <code>while</code> inside.</p>
+<h2 id="cheat">6. Cheat sheet &mdash; memorise this page</h2>
+<p>Cover the right-hand column and try to write each line from memory.</p>
+<div class="tblwrap"><table class="cheat"><thead><tr><th>You want to&hellip;</th><th>Write</th></tr></thead><tbody>
+<tr><td>Stack: add, look, remove</td><td><code>st.push(x)</code>, <code>st.top()</code>, <code>st.pop()</code></td></tr>
+<tr><td>Queue: add at the back, look at the front, remove</td><td><code>q.push(x)</code>, <code>q.front()</code>, <code>q.pop()</code></td></tr>
+<tr><td>Deque: both ends</td><td><code>push_front</code>, <code>push_back</code>, <code>pop_front</code>, <code>pop_back</code>, <code>front</code>, <code>back</code></td></tr>
+<tr><td>Is it empty? How many?</td><td><code>.empty()</code>, <code>.size()</code></td></tr>
+<tr><td>Empty it</td><td><code>while (!st.empty()) st.pop();</code></td></tr>
+<tr><td>Print a stack top first</td><td><code>while (!st.empty()) { cout &lt;&lt; st.top(); st.pop(); }</code></td></tr>
+<tr><td>Move the front to the back</td><td><code>q.push(q.front()); q.pop();</code></td></tr>
+<tr><td>Brackets</td><td>push openers; a closer must match <code>top()</code>; empty at the end</td></tr>
+<tr><td>Nearest bigger to the left</td><td>pop while <code>top() &lt;= a[i]</code>, then <code>top()</code> is the answer</td></tr>
+</tbody></table></div>
+<h2 id="pitfalls">7. 5 pitfalls that cost real marks</h2>
+<div class="tblwrap"><table class="pit"><tbody>
+<tr><td><b><code>top()</code>, <code>front()</code> or <code>pop()</code> on an empty container.</b><span class="tech">The program crashes. Always check <code>.empty()</code> first.</span></td></tr>
+<tr><td><b><code>pop()</code> gives nothing back.</b><span class="tech"><code>int x = st.pop();</code> does not compile. Read <code>top()</code> first, then <code>pop()</code>.</span></td></tr>
+<tr><td><b>Using <code>top()</code> on a queue.</b><span class="tech">A queue has <code>front()</code> (and <code>back()</code>). Only a stack has <code>top()</code>.</span></td></tr>
+<tr><td><b>Forgetting the last check for brackets.</b><span class="tech"><code>((</code> never meets a wrong closer, but it is not balanced. The stack must be empty at the end.</span></td></tr>
+<tr><td><b>Old values left from the previous test.</b><span class="tech">A stack or queue keeps its contents. Empty it, or make a new one, before each test.</span></td></tr>
+</tbody></table></div>
+<h2 id="complexity">8. Complexity reference</h2>
+<div class="tblwrap"><table><thead><tr><th>Operation</th><th>Cost</th></tr></thead><tbody>
+<tr><td><code>push</code>, <code>pop</code>, <code>top</code>, <code>front</code>, <code>back</code>, <code>empty</code>, <code>size</code></td><td>O(1)</td></tr>
+<tr><td><code>push_front</code>, <code>pop_front</code> on a deque</td><td>O(1)</td></tr>
+<tr><td>Checking a bracket string of length <code>n</code></td><td>O(n)</td></tr>
+<tr><td>The keep-only-what-matters loop</td><td>O(n) - each value is pushed once and popped once</td></tr>
+</tbody></table></div>
+<h2 id="problems">9. Practice &mdash; 12 problems, Group D</h2>
+<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
+<div class="pgroup"><h3 id="gA">A. A pile of plates: stack</h3><p class="maps">Theory: section 1</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100464"></td><td><a href="https://arena.olimpiici.com/#/catalog/194/problem/100464" target="_blank" rel="noopener">leaders</a><br><span class="tech">Leaders</span></td><td class="tech">walk from the right keeping the largest; a stack turns the answer round</td><td class="src">Regional round 2016</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100930"></td><td><a href="https://arena.olimpiici.com/#/catalog/333/problem/100930" target="_blank" rel="noopener">balls</a><br><span class="tech">Balls</span></td><td class="tech">the pipe is a stack: push and pop as the commands say</td><td class="src">Winter tournament 2010</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100405"></td><td><a href="https://arena.olimpiici.com/#/catalog/170/problem/100405" target="_blank" rel="noopener">marbles</a><br><span class="tech">Marbles</span></td><td class="tech">a stack of (colour, count); three or more of one colour vanish</td><td class="src">Regional round 2012</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100590"></td><td><a href="https://arena.olimpiici.com/#/catalog/226/problem/100590" target="_blank" rel="noopener">gifts</a><br><span class="tech">Gifts</span></td><td class="tech">chute 2 is a stack - can the gifts come out in the right order?</td><td class="src">National round 2012</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gB">B. A line, and a line with two ends: queue and deque</h3><p class="maps">Theory: sections 2 and 3</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100659"></td><td><a href="https://arena.olimpiici.com/#/catalog/241/problem/100659" target="_blank" rel="noopener">blackd</a><br><span class="tech">Black card</span></td><td class="tech">the deck is a queue: cards leave the front and join the back</td><td class="src">National round 2015</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101638"></td><td><a href="https://arena.olimpiici.com/#/catalog/652/problem/101638" target="_blank" rel="noopener">skip</a><br><span class="tech">Skipping</span></td><td class="tech">each round, walk the queue once and keep only the survivors</td><td class="src">Municipal round 2022</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101605"></td><td><a href="https://arena.olimpiici.com/#/catalog/639/problem/101605" target="_blank" rel="noopener">third</a><br><span class="tech">Every third</span></td><td class="tech">a deque: drop every third letter and turn the rest round</td><td class="src">Autumn tournament 2021</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101034"></td><td><a href="https://arena.olimpiici.com/#/catalog/375/problem/101034" target="_blank" rel="noopener">worldclock</a><br><span class="tech">Ball clock</span></td><td class="tech">queues and stacks of balls, run until the order comes back</td><td class="src">Winter tournament 2017</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Brackets, and stacks that keep only what matters</h3><p class="maps">Theory: sections 4 and 5</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="101941"></td><td><a href="https://arena.olimpiici.com/#/catalog/751/problem/101941" target="_blank" rel="noopener">brackets</a><br><span class="tech">Brackets</span></td><td class="tech">match the brackets with a stack and count the balanced endings</td><td class="src">National round 2023</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101176"></td><td><a href="https://arena.olimpiici.com/#/catalog/434/problem/101176" target="_blank" rel="noopener">maxred</a><br><span class="tech">Largest number</span></td><td class="tech">a stack of digits: pop the smaller ones while you may still remove</td><td class="src">Spring tournament 2019</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101227"></td><td><a href="https://arena.olimpiici.com/#/catalog/452/problem/101227" target="_blank" rel="noopener">colorp</a><br><span class="tech">Painting</span></td><td class="tech">1 opens and 0 closes, like brackets; the stack depth is the height</td><td class="src">Summer tournament 2019</td><td class="dif">★★★★☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101107"></td><td><a href="https://arena.olimpiici.com/#/catalog/407/problem/101107" target="_blank" rel="noopener">stairs</a><br><span class="tech">Stairs</span></td><td class="tech">a stack of heights: two equal heights meet when everything between is gone</td><td class="src">National round 2019</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 10 · C++17 stack, queue and deque. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
+</main></div>
+<script>var LESSON_SLUG="10_Stacks_Queues_Deques";var LEGACY_KEY=null;</script>
+<script>
+var THEME_KEY="cpp_lessons_theme";
+var DONE_KEY="cpp_done_"+LESSON_SLUG;
+// ---- theme -------------------------------------------------------------
+var tb=document.getElementById('themeBtn');
+function setTheme(t){
+  if(t) document.documentElement.setAttribute('data-theme',t);
+  else document.documentElement.removeAttribute('data-theme');
+  try{t?localStorage.setItem(THEME_KEY,t):localStorage.removeItem(THEME_KEY)}catch(e){}
+}
+try{var st=localStorage.getItem(THEME_KEY); if(st) setTheme(st);}catch(e){}
+tb.onclick=function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  setTheme(cur==='dark'?'light':'dark');
+};
+
+// ---- progress ----------------------------------------------------------
+var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-pid]'));
+var fill=document.querySelector('#bar .fill'), lbl=document.getElementById('cnt');
+// state lives in memory; localStorage is a best-effort mirror so that ticking
+// still works when storage is blocked (private window, file:// restrictions)
+var state={};
+try{
+  var raw=localStorage.getItem(DONE_KEY);
+  if(raw===null && LEGACY_KEY) raw=localStorage.getItem(LEGACY_KEY);  // one-time adopt
+  state=JSON.parse(raw||'{}')||{};
+}catch(e){state={}}
+function save(){try{localStorage.setItem(DONE_KEY,JSON.stringify(state))}catch(e){}}
+function paint(){
+  var n=0;
+  boxes.forEach(function(b){
+    var on=!!state[b.dataset.pid]; b.checked=on; if(on)n++;
+    b.closest('tr').classList.toggle('done',on);
+  });
+  fill.style.width=(n/boxes.length*100)+'%';
+  lbl.textContent=n+' / '+boxes.length+' solved';
+}
+boxes.forEach(function(b){b.onchange=function(){
+  if(b.checked)state[b.dataset.pid]=1; else delete state[b.dataset.pid];
+  save(); paint();
+};});
+document.getElementById('reset').onclick=function(){
+  if(confirm('Clear all progress?')){state={};save();paint();}
+};
+paint();
+
+// ---- scroll spy --------------------------------------------------------
+var links=[].slice.call(document.querySelectorAll('#nav a[href^="#"]'));
+var map={}; links.forEach(function(a){
+  var el=document.getElementById(a.getAttribute('href').slice(1)); if(el)map[el.id]=a;});
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.remove('on')});
+      if(map[e.target.id])map[e.target.id].classList.add('on');
+    }});
+},{rootMargin:'0px 0px -75% 0px'});
+Object.keys(map).forEach(function(id){obs.observe(document.getElementById(id))});
+
+// ---- C++ highlighter ---------------------------------------------------
+var KW=('alignas|alignof|auto|bool|break|case|catch|char|class|const|constexpr|continue|'+
+ 'decltype|default|delete|do|double|else|enum|explicit|export|extern|false|float|for|friend|'+
+ 'goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|'+
+ 'public|register|return|short|signed|sizeof|static|static_cast|struct|switch|template|this|'+
+ 'throw|true|try|typedef|typename|union|unsigned|using|virtual|void|volatile|while|'+
+ 'string|string_view|vector|size_t|map|unordered_map|set|pair|istringstream|ostringstream').split('|');
+var KWRE=new RegExp('\\b('+KW.join('|')+')\\b','g');
+document.querySelectorAll('pre code').forEach(function(el){
+  var src=el.textContent, out='', i=0;
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  while(i<src.length){
+    var rest=src.slice(i), m;
+    if((m=rest.match(/^\/\/[^\n]*/))){out+='<span class="com">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^#[a-z]+/))){out+='<span class="pp">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^"(?:\\.|[^"\\])*"/))||(m=rest.match(/^'(?:\\.|[^'\\])*'/))){
+      out+='<span class="str">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^\b\d[\w.]*/))){out+='<span class="num">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^[A-Za-z_]\w*/))){
+      out+= KWRE.test(m[0])&&(KWRE.lastIndex=0,true) ? '<span class="kw">'+esc(m[0])+'</span>' : esc(m[0]);
+      i+=m[0].length;continue;}
+    out+=esc(src[i]); i++;
+  }
+  el.innerHTML=out;
+});
+</script>
+</body></html>

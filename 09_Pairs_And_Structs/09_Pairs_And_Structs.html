@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C++17 Pairs and structs - keeping things that belong together</title>
+<style>
+:root{
+  --bg:#fbfaf8; --panel:#ffffff; --ink:#1c1b1a; --muted:#6b6763; --line:#e4e0da;
+  --accent:#8a4b1f; --accent-soft:#f3ece4; --code-bg:#f6f3ee; --code-ink:#2d2a26;
+  --kw:#8a4b1f; --str:#3f6b3f; --com:#9a948c; --num:#2f5c8a; --pre:#7a5ea8;
+  --note-bg:#fdf6e7; --note-line:#d9a441; --ok:#3f6b3f;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+    --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+    --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+    --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+  --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+  --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+  --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+code,pre,.mono{font-family:"JetBrains Mono",Consolas,"SF Mono",Menlo,monospace}
+.wrap{display:flex;gap:0;align-items:flex-start;max-width:1220px;margin:0 auto}
+/* ---- sidebar ---- */
+#nav{position:sticky;top:0;flex:0 0 250px;height:100vh;overflow-y:auto;
+  padding:26px 14px 40px 20px;border-right:1px solid var(--line);font-size:13.5px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#nav .brand{font-weight:700;letter-spacing:.02em;color:var(--accent);
+  font-size:12px;text-transform:uppercase;margin-bottom:14px}
+#nav a{display:block;padding:4px 8px;margin:1px 0;border-radius:5px;
+  color:var(--muted);text-decoration:none;line-height:1.35}
+#nav a:hover{background:var(--accent-soft);color:var(--ink)}
+#nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+#nav .grp{margin-top:14px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);opacity:.7;padding:0 8px}
+#nav a.home{display:inline-flex;align-items:center;gap:7px;margin:0 0 16px;padding:5px 12px;
+  border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);
+  font-weight:600}
+#nav a.home svg{width:15px;height:15px}
+#nav a.home:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager{display:flex;gap:8px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+#nav .pager a,#nav .pager span{flex:1 1 0;display:flex;flex-direction:column;align-items:center;
+  margin:0;padding:6px 4px 7px;border:1px solid var(--line);border-radius:6px;
+  background:var(--panel);color:var(--ink);font-size:22px;line-height:1.1}
+#nav .pager small{font-size:11px;color:var(--muted);margin-top:2px}
+#nav .pager a:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager a:hover small{color:var(--accent)}
+#nav .pager span{opacity:.35}
+/* ---- main ---- */
+main{flex:1 1 auto;min-width:0;padding:34px 40px 120px;max-width:900px}
+header.top{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:8px}
+h1{font-size:30px;line-height:1.2;margin:0 0 6px}
+.sub{color:var(--muted);font-size:14.5px;font-family:system-ui,sans-serif}
+h2{font-size:21px;margin:44px 0 12px;padding-top:10px;border-top:1px solid var(--line);
+  scroll-margin-top:16px}
+h2:first-of-type{border-top:none}
+h3{font-size:16.5px;margin:26px 0 8px;color:var(--accent);scroll-margin-top:16px}
+p{margin:11px 0}
+code{background:var(--code-bg);padding:1.5px 5px;border-radius:4px;font-size:.87em;
+  color:var(--code-ink);border:1px solid var(--line)}
+pre{background:var(--code-bg);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:7px;padding:13px 15px;overflow-x:auto;font-size:13px;line-height:1.55;
+  margin:14px 0;color:var(--code-ink)}
+pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
+.kw{color:var(--kw);font-weight:600}.str{color:var(--str)}.com{color:var(--com);font-style:italic}
+.num{color:var(--num)}.pp{color:var(--pre)}
+table{border-collapse:collapse;width:100%;margin:15px 0;font-size:14px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+  border-bottom:1.5px solid var(--line);font-weight:600}
+tbody tr:nth-child(even){background:var(--accent-soft)}
+ul{margin:11px 0;padding-left:22px}
+li{margin:4px 0}
+.note{background:var(--note-bg);border-left:3px solid var(--note-line);border-radius:0 7px 7px 0;
+  padding:11px 15px;margin:15px 0;font-size:14.5px}
+.tblwrap{overflow-x:auto}
+/* ---- problems ---- */
+.pgroup{margin:26px 0 0}
+.pgroup h3{margin-bottom:2px}
+.pgroup .maps{color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif;margin:0 0 8px}
+table.prob td{padding:9px 10px}
+table.prob a{color:var(--accent);text-decoration:none;font-weight:600;
+  font-family:Consolas,monospace;font-size:13.5px}
+table.prob a:hover{text-decoration:underline}
+.tech{color:var(--muted);font-size:13px}
+.src{color:var(--muted);font-size:12px;white-space:nowrap}
+.dif{color:var(--accent);letter-spacing:1px;font-size:11.5px;white-space:nowrap}
+.done td{opacity:.45}
+.done td a{text-decoration:line-through}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+#bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;
+  border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;
+  font-family:system-ui,sans-serif;font-size:13px;flex-wrap:wrap}
+#bar .track{flex:1 1 130px;height:7px;background:var(--line);border-radius:4px;overflow:hidden;
+  min-width:110px}
+#bar .fill{height:100%;background:var(--accent);width:0;transition:width .25s}
+button{font:inherit;font-size:12.5px;padding:4px 11px;border:1px solid var(--line);
+  border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+#themeBtn{position:fixed;top:14px;right:16px;z-index:10}
+.cheat td:first-child{font-family:system-ui,sans-serif;width:33%}
+.pit b{display:block;margin-bottom:2px}
+footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif}
+@media(max-width:900px){
+  #nav{display:none}
+  main{padding:26px 18px 90px}
+  h1{font-size:24px}
+  #themeBtn{top:8px;right:10px}
+}
+</style>
+</head><body>
+<button id="themeBtn" title="Toggle light / dark">&#9681;</button>
+<div class="wrap">
+<nav id="nav"><a class="home" href="../index.html" title="All lessons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>Home</a>
+<div class="brand">Lesson 09 · Pairs and structs</div>
+<div class="grp">Theory</div>
+<a href="#pair">1. pair: two values in one</a>
+<a href="#pairsort">2. Sorting pairs</a>
+<a href="#struct">3. struct: your own record</a>
+<a href="#structsort">4. Sorting structs by several rules</a>
+<a href="#return">5. A function that gives back two things</a>
+<div class="grp">Reference</div>
+<a href="#cheat">6. Cheat sheet</a>
+<a href="#pitfalls">7. Pitfalls</a>
+<a href="#complexity">8. Complexity</a>
+<div class="grp">Practice</div>
+<a href="#problems">9. 12 problems</a>
+<a href="#gA" style="padding-left:16px">A. Two values in one: pair</a>
+<a href="#gB" style="padding-left:16px">B. Sorting pairs</a>
+<a href="#gC" style="padding-left:16px">C. Your own record: struct</a>
+<a href="#gD" style="padding-left:16px">D. Sorting records by several rules</a>
+<div class="pager">
+<a href="../08_Sorting/08_Sorting.html" title="Previous: Lesson 08 &middot; Sorting">&larr;<small>Lesson 08</small></a>
+<a href="../10_Stacks_Queues_Deques/10_Stacks_Queues_Deques.html" title="Next: Lesson 10 &middot; Stacks, queues and deques">&rarr;<small>Lesson 10</small></a>
+</div>
+</nav>
+<main>
+<header class="top"><h1>C++17 Pairs and structs - keeping things that belong together</h1><div class="sub">Lesson 09 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<h2 id="pair">1. pair: two values in one</h2>
+<p>Many things come as two numbers that belong together: a row and a column, a start and an end, a time and a runner&#x27;s number. A <code>pair</code> keeps them together. Its two parts are called <code>first</code> and <code>second</code>:</p>
+<pre><code>pair&lt;int, int&gt; p = {3, 7};
+cout &lt;&lt; p.first &lt;&lt; &#x27; &#x27; &lt;&lt; p.second &lt;&lt; &#x27;\n&#x27;;     // 3 7
+p.second = 10;                                    // now {3, 10}</code></pre>
+<p>An array of pairs keeps one pair per thing. Here <code>pos[k]</code> remembers where number <code>k</code> stands on a board:</p>
+<pre><code>pair&lt;int, int&gt; pos[101];
+
+for (int r = 0; r &lt; 4; r++)
+    for (int c = 0; c &lt; 5; c++) {
+        int k;
+        cin &gt;&gt; k;
+        pos[k] = {r, c};          // number k is in row r, column c
+    }
+
+// how far apart are the numbers 1 and 2?
+int dr = pos[2].first - pos[1].first;
+int dc = pos[2].second - pos[1].second;</code></pre>
+<p>The two parts may have different types: <code>pair&lt;string, int&gt;</code> holds a name and a score.</p>
+<h2 id="pairsort">2. Sorting pairs</h2>
+<p><code>sort</code> already knows how to compare pairs: first by <code>first</code>; when those are equal, by <code>second</code>. You get a two-rule order for free:</p>
+<pre><code>pair&lt;int, int&gt; a[5] = {{5, 2}, {3, 9}, {5, 1}, {3, 4}, {1, 8}};
+sort(a, a + 5);
+// {1, 8} {3, 4} {3, 9} {5, 1} {5, 2}</code></pre>
+<p>So put the most important rule in <code>first</code>. A very common trick: store the <strong>value</strong> in <code>first</code> and the <strong>original number</strong> in <code>second</code>. After sorting you still know who is who, and equal values come out in the order of their numbers:</p>
+<pre><code>pair&lt;int, int&gt; r[100005];         // (time, runner&#x27;s number)
+for (int i = 0; i &lt; n; i++) {
+    int t;
+    cin &gt;&gt; t;
+    r[i] = {t, i + 1};
+}
+sort(r, r + n);
+cout &lt;&lt; &quot;the winner is runner &quot; &lt;&lt; r[0].second &lt;&lt; &#x27;\n&#x27;;</code></pre>
+<div class="note">Want the largest value first but the smaller number on ties? Store <code>-value</code> in <code>first</code>. Then a plain <code>sort</code> does both jobs.</div>
+<h2 id="struct">3. struct: your own record</h2>
+<p>When a thing has more than two parts, or the parts deserve real names, make your own type with <code>struct</code>. Write it above <code>main</code>:</p>
+<pre><code>struct Site {
+    int num;          // the site&#x27;s number
+    int depth;
+    int width;
+};                    // note the semicolon
+
+Site s[1005];
+
+int main() {
+    int n;
+    cin &gt;&gt; n;
+    for (int i = 0; i &lt; n; i++) {
+        s[i].num = i + 1;
+        cin &gt;&gt; s[i].depth &gt;&gt; s[i].width;
+    }
+}</code></pre>
+<p><code>s[i].depth</code> reads as &quot;the depth of site i&quot;. This is much easier to read than three separate arrays, and the parts can never get out of step.</p>
+<h2 id="structsort">4. Sorting structs by several rules</h2>
+<p><code>sort</code> does not know how to compare two <code>Site</code>s, so you tell it with a compare function, exactly as in lesson 08. Check the rules one after another:</p>
+<pre><code>// deeper first; equal depth: wider first; still equal: smaller number first
+bool cmp(Site x, Site y) {
+    if (x.depth != y.depth) return x.depth &gt; y.depth;
+    if (x.width != y.width) return x.width &gt; y.width;
+    return x.num &lt; y.num;
+}
+
+sort(s, s + n, cmp);</code></pre>
+<p>Every rule except the last one has the form *if they differ, decide by this*. The last rule decides everything that is left.</p>
+<h2 id="return">5. A function that gives back two things</h2>
+<p>A function can return only one value. Return a pair - or a struct - and it gives back as many as you need:</p>
+<pre><code>// numbers 1, 2, 3, ... fill a grid with m columns, row by row
+pair&lt;int, int&gt; place(int k, int m) {
+    int row = (k - 1) / m;
+    int col = (k - 1) % m;
+    return {row, col};
+}
+
+pair&lt;int, int&gt; p = place(7, 3);
+cout &lt;&lt; p.first &lt;&lt; &#x27; &#x27; &lt;&lt; p.second &lt;&lt; &#x27;\n&#x27;;     // 2 0</code></pre>
+<h2 id="cheat">6. Cheat sheet &mdash; memorise this page</h2>
+<p>Cover the right-hand column and try to write each line from memory.</p>
+<div class="tblwrap"><table class="cheat"><thead><tr><th>You want to&hellip;</th><th>Write</th></tr></thead><tbody>
+<tr><td>Make a pair</td><td><code>pair&lt;int, int&gt; p = {3, 7};</code></td></tr>
+<tr><td>Its two parts</td><td><code>p.first</code>, <code>p.second</code></td></tr>
+<tr><td>Array of pairs</td><td><code>pair&lt;int, int&gt; a[100005];</code> and <code>a[i] = {x, y};</code></td></tr>
+<tr><td>Sort pairs</td><td><code>sort(a, a + n)</code> - by <code>first</code>, then by <code>second</code></td></tr>
+<tr><td>Remember who is who</td><td><code>{value, number}</code>, then sort</td></tr>
+<tr><td>Largest first, ties by number</td><td>store <code>{-value, number}</code></td></tr>
+<tr><td>Your own type</td><td><code>struct Name { int a; int b; };</code> above <code>main</code></td></tr>
+<tr><td>Use a part</td><td><code>s[i].depth</code></td></tr>
+<tr><td>Sort structs</td><td><code>bool cmp(Site x, Site y)</code> with one <code>if</code> per rule; <code>sort(s, s + n, cmp)</code></td></tr>
+<tr><td>Return two values</td><td><code>pair&lt;int, int&gt; f(...) { return {a, b}; }</code></td></tr>
+</tbody></table></div>
+<h2 id="pitfalls">7. 5 pitfalls that cost real marks</h2>
+<div class="tblwrap"><table class="pit"><tbody>
+<tr><td><b>Forgetting the semicolon after a struct.</b><span class="tech"><code>struct Site { ... };</code> - without the <code>;</code> the compiler reports a confusing error a few lines further down.</span></td></tr>
+<tr><td><b>The important rule in <code>second</code>.</b><span class="tech">Pairs sort by <code>first</code> first. If you want to sort by time, the time must be in <code>first</code>.</span></td></tr>
+<tr><td><b>Sorting structs without a compare function.</b><span class="tech"><code>sort(s, s + n)</code> on a struct does not compile. Give it <code>cmp</code>.</span></td></tr>
+<tr><td><b>A missing tie rule.</b><span class="tech">If two records are equal by every rule you wrote, their order is not fixed. When the statement says &quot;on a tie, the smaller number first&quot;, that is one more rule.</span></td></tr>
+<tr><td><b><code>first</code> and <code>second</code> mixed up.</b><span class="tech">Write a comment next to the array: <code>// (time, number)</code>. It saves a lot of guessing later.</span></td></tr>
+</tbody></table></div>
+<h2 id="complexity">8. Complexity reference</h2>
+<div class="tblwrap"><table><thead><tr><th>Operation</th><th>Cost</th></tr></thead><tbody>
+<tr><td>Reading or changing <code>p.first</code>, <code>s[i].depth</code></td><td>O(1)</td></tr>
+<tr><td>Comparing two pairs</td><td>O(1)</td></tr>
+<tr><td>Sorting <code>n</code> pairs or structs</td><td>O(n log n)</td></tr>
+</tbody></table></div>
+<h2 id="problems">9. Practice &mdash; 12 problems, Group D</h2>
+<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
+<div class="pgroup"><h3 id="gA">A. Two values in one: pair</h3><p class="maps">Theory: sections 1 and 5</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100087"></td><td><a href="https://arena.olimpiici.com/#/catalog/44/problem/100087" target="_blank" rel="noopener">board</a><br><span class="tech">Knight&#x27;s moves</span></td><td class="tech">store where each number stands as a (row, column) pair, then check each step</td><td class="src">Autumn tournament 2012</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101367"></td><td><a href="https://arena.olimpiici.com/#/catalog/555/problem/101367" target="_blank" rel="noopener">seg</a><br><span class="tech">Segments</span></td><td class="tech">each segment is a pair; compare every segment with every other</td><td class="src">Municipal round 2020</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100763"></td><td><a href="https://arena.olimpiici.com/#/catalog/267/problem/100763" target="_blank" rel="noopener">line</a><br><span class="tech">Lines</span></td><td class="tech">a function turns a node number into a (row, place) pair</td><td class="src">Spring tournament 2009</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gB">B. Sorting pairs</h3><p class="maps">Theory: section 2</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100284"></td><td><a href="https://arena.olimpiici.com/#/catalog/122/problem/100284" target="_blank" rel="noopener">klassir</a><br><span class="tech">Classification</span></td><td class="tech">sort (time, number) pairs - the second value breaks ties for free</td><td class="src">Municipal round 2014</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101021"></td><td><a href="https://arena.olimpiici.com/#/catalog/369/problem/101021" target="_blank" rel="noopener">sock</a><br><span class="tech">Socks</span></td><td class="tech">every two socks as a (difference, length) pair, then sort</td><td class="src">Winter tournament 2016</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101111"></td><td><a href="https://arena.olimpiici.com/#/catalog/407/problem/101111" target="_blank" rel="noopener">sim</a><br><span class="tech">Symmetry</span></td><td class="tech">cells as (row, column) pairs: sort them and drop the repeats</td><td class="src">National round 2019</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Your own record: struct</h3><p class="maps">Theory: section 3</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100514"></td><td><a href="https://arena.olimpiici.com/#/catalog/211/problem/100514" target="_blank" rel="noopener">soil</a><br><span class="tech">Soil</span></td><td class="tech">a struct per site with its volume and its number, then sort</td><td class="src">National round 2009</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100747"></td><td><a href="https://arena.olimpiici.com/#/catalog/261/problem/100747" target="_blank" rel="noopener">numbers</a><br><span class="tech">Rectangles</span></td><td class="tech">a struct per rectangle: how many points are inside, and its area</td><td class="src">Spring tournament 2008</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100591"></td><td><a href="https://arena.olimpiici.com/#/catalog/226/problem/100591" target="_blank" rel="noopener">goldbox</a><br><span class="tech">Gold box</span></td><td class="tech">a struct per ingot: smallest and largest row and column</td><td class="src">National round 2012</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gD">D. Sorting records by several rules</h3><p class="maps">Theory: section 4</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100839"></td><td><a href="https://arena.olimpiici.com/#/catalog/297/problem/100839" target="_blank" rel="noopener">fina</a><br><span class="tech">Swimming</span></td><td class="tech">sort each swimmer&#x27;s times, then compare swimmers time by time</td><td class="src">Spring tournament 2014</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101224"></td><td><a href="https://arena.olimpiici.com/#/catalog/452/problem/101224" target="_blank" rel="noopener">mutexes</a><br><span class="tech">Mutexes</span></td><td class="tech">a struct per thread; they take turns until nobody can move</td><td class="src">Summer tournament 2019</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100778"></td><td><a href="https://arena.olimpiici.com/#/catalog/273/problem/100778" target="_blank" rel="noopener">runners</a><br><span class="tech">Runners</span></td><td class="tech">a struct per runner; work out when each one passes, then count meetings</td><td class="src">Spring tournament 2010</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 09 · C++17 pairs and structs. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
+</main></div>
+<script>var LESSON_SLUG="09_Pairs_And_Structs";var LEGACY_KEY=null;</script>
+<script>
+var THEME_KEY="cpp_lessons_theme";
+var DONE_KEY="cpp_done_"+LESSON_SLUG;
+// ---- theme -------------------------------------------------------------
+var tb=document.getElementById('themeBtn');
+function setTheme(t){
+  if(t) document.documentElement.setAttribute('data-theme',t);
+  else document.documentElement.removeAttribute('data-theme');
+  try{t?localStorage.setItem(THEME_KEY,t):localStorage.removeItem(THEME_KEY)}catch(e){}
+}
+try{var st=localStorage.getItem(THEME_KEY); if(st) setTheme(st);}catch(e){}
+tb.onclick=function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  setTheme(cur==='dark'?'light':'dark');
+};
+
+// ---- progress ----------------------------------------------------------
+var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-pid]'));
+var fill=document.querySelector('#bar .fill'), lbl=document.getElementById('cnt');
+// state lives in memory; localStorage is a best-effort mirror so that ticking
+// still works when storage is blocked (private window, file:// restrictions)
+var state={};
+try{
+  var raw=localStorage.getItem(DONE_KEY);
+  if(raw===null && LEGACY_KEY) raw=localStorage.getItem(LEGACY_KEY);  // one-time adopt
+  state=JSON.parse(raw||'{}')||{};
+}catch(e){state={}}
+function save(){try{localStorage.setItem(DONE_KEY,JSON.stringify(state))}catch(e){}}
+function paint(){
+  var n=0;
+  boxes.forEach(function(b){
+    var on=!!state[b.dataset.pid]; b.checked=on; if(on)n++;
+    b.closest('tr').classList.toggle('done',on);
+  });
+  fill.style.width=(n/boxes.length*100)+'%';
+  lbl.textContent=n+' / '+boxes.length+' solved';
+}
+boxes.forEach(function(b){b.onchange=function(){
+  if(b.checked)state[b.dataset.pid]=1; else delete state[b.dataset.pid];
+  save(); paint();
+};});
+document.getElementById('reset').onclick=function(){
+  if(confirm('Clear all progress?')){state={};save();paint();}
+};
+paint();
+
+// ---- scroll spy --------------------------------------------------------
+var links=[].slice.call(document.querySelectorAll('#nav a[href^="#"]'));
+var map={}; links.forEach(function(a){
+  var el=document.getElementById(a.getAttribute('href').slice(1)); if(el)map[el.id]=a;});
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.remove('on')});
+      if(map[e.target.id])map[e.target.id].classList.add('on');
+    }});
+},{rootMargin:'0px 0px -75% 0px'});
+Object.keys(map).forEach(function(id){obs.observe(document.getElementById(id))});
+
+// ---- C++ highlighter ---------------------------------------------------
+var KW=('alignas|alignof|auto|bool|break|case|catch|char|class|const|constexpr|continue|'+
+ 'decltype|default|delete|do|double|else|enum|explicit|export|extern|false|float|for|friend|'+
+ 'goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|'+
+ 'public|register|return|short|signed|sizeof|static|static_cast|struct|switch|template|this|'+
+ 'throw|true|try|typedef|typename|union|unsigned|using|virtual|void|volatile|while|'+
+ 'string|string_view|vector|size_t|map|unordered_map|set|pair|istringstream|ostringstream').split('|');
+var KWRE=new RegExp('\\b('+KW.join('|')+')\\b','g');
+document.querySelectorAll('pre code').forEach(function(el){
+  var src=el.textContent, out='', i=0;
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  while(i<src.length){
+    var rest=src.slice(i), m;
+    if((m=rest.match(/^\/\/[^\n]*/))){out+='<span class="com">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^#[a-z]+/))){out+='<span class="pp">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^"(?:\\.|[^"\\])*"/))||(m=rest.match(/^'(?:\\.|[^'\\])*'/))){
+      out+='<span class="str">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^\b\d[\w.]*/))){out+='<span class="num">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^[A-Za-z_]\w*/))){
+      out+= KWRE.test(m[0])&&(KWRE.lastIndex=0,true) ? '<span class="kw">'+esc(m[0])+'</span>' : esc(m[0]);
+      i+=m[0].length;continue;}
+    out+=esc(src[i]); i++;
+  }
+  el.innerHTML=out;
+});
+</script>
+</body></html>
