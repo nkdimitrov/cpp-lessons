@@ -1,0 +1,154 @@
+{
+ "group": "D",
+ "groups": [
+  {
+   "key": "A",
+   "name": "A. Count the steps: is trying everything fast enough?",
+   "maps": "Theory: sections 1 and 2"
+  },
+  {
+   "key": "B",
+   "name": "B. Too slow - find a shortcut",
+   "maps": "Theory: section 3"
+  },
+  {
+   "key": "C",
+   "name": "C. Too big to store",
+   "maps": "Theory: section 4"
+  }
+ ],
+ "problems": [
+  {
+   "section": "A",
+   "pid": 100587,
+   "title": "decision",
+   "en": "Buses and taxis",
+   "tech": "try every number of buses - there are not many",
+   "family": "National round",
+   "year": 2012,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/226/problem/100587"
+  },
+  {
+   "section": "A",
+   "pid": 101366,
+   "title": "int",
+   "en": "Digit product",
+   "tech": "at most 100001 numbers in the range: test each one",
+   "family": "Municipal round",
+   "year": 2020,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/555/problem/101366"
+  },
+  {
+   "section": "A",
+   "pid": 100145,
+   "title": "sherlok",
+   "en": "Sherlock",
+   "tech": "try every third volume - count the steps first",
+   "family": "Autumn tournament",
+   "year": 2016,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/68/problem/100145"
+  },
+  {
+   "section": "A",
+   "pid": 101368,
+   "title": "sum",
+   "en": "Sum",
+   "tech": "three loops with X up to 1500 - count the steps before you write them",
+   "family": "Municipal round",
+   "year": 2020,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/555/problem/101368"
+  },
+  {
+   "section": "B",
+   "pid": 102070,
+   "title": "sum",
+   "en": "The sum",
+   "tech": "`n(n+1)/2` grows fast: find n without adding one by one",
+   "family": "Autumn tournament",
+   "year": 2023,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/790/problem/102070"
+  },
+  {
+   "section": "B",
+   "pid": 100040,
+   "title": "rect",
+   "en": "Rectangle",
+   "tech": "divisors come in pairs, so stop at the square root",
+   "family": "Autumn tournament",
+   "year": 2009,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/26/problem/100040"
+  },
+  {
+   "section": "B",
+   "pid": 100450,
+   "title": "digits",
+   "en": "Counting a digit",
+   "tech": "up to 10^18: count position by position, not number by number",
+   "family": "Regional round",
+   "year": 2015,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/188/problem/100450"
+  },
+  {
+   "section": "B",
+   "pid": 100883,
+   "title": "zcount",
+   "en": "Counting zeros",
+   "tech": "the same shortcut for the zeros, up to 10^16",
+   "family": "Spring tournament",
+   "year": 2017,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/315/problem/100883"
+  },
+  {
+   "section": "C",
+   "pid": 102529,
+   "title": "prices",
+   "en": "Prices",
+   "tech": "the list will not fit - keep the cheapest price so far",
+   "family": "Winter tournament",
+   "year": 2026,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/912/problem/102529"
+  },
+  {
+   "section": "C",
+   "pid": 100726,
+   "title": "major",
+   "en": "Majority",
+   "tech": "inside 2 MB: one candidate and one counter",
+   "family": "National round",
+   "year": 2018,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/255/problem/100726"
+  },
+  {
+   "section": "C",
+   "pid": 102132,
+   "title": "rank",
+   "en": "The k-th score",
+   "tech": "the scores will not fit in 2 MB - keep only what you need",
+   "family": "National round",
+   "year": 2024,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/803/problem/102132"
+  },
+  {
+   "section": "C",
+   "pid": 102005,
+   "title": "flowers",
+   "en": "Flowers",
+   "tech": "only the commonest flower matters - work out what to keep instead of storing every flower",
+   "family": "Summer tournament",
+   "year": 2023,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/771/problem/102005"
+  }
+ ]
+}

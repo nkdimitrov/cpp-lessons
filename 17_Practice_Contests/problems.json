@@ -1,0 +1,425 @@
+{
+ "group": "D",
+ "groups": [
+  {
+   "key": "A",
+   "name": "A. Round 1 - warm-up",
+   "maps": "Theory: sections 1–6 · tools from lessons 02, 03, 06 and 15"
+  },
+  {
+   "key": "B",
+   "name": "B. Round 2",
+   "maps": "Theory: sections 1–6 · tools from lessons 02, 03 and 16"
+  },
+  {
+   "key": "C",
+   "name": "C. Round 3",
+   "maps": "Theory: sections 1–6 · tools from lessons 02, 04 and 16"
+  },
+  {
+   "key": "D",
+   "name": "D. Round 4",
+   "maps": "Theory: sections 1–6 · tools from lessons 02, 03, 04 and 15"
+  },
+  {
+   "key": "E",
+   "name": "E. Round 5",
+   "maps": "Theory: sections 1–6 · tools from lessons 02, 05 and 16"
+  },
+  {
+   "key": "F",
+   "name": "F. Round 6",
+   "maps": "Theory: sections 1–6 · tools from lessons 02, 03, 04 and 16"
+  },
+  {
+   "key": "G",
+   "name": "G. Round 7",
+   "maps": "Theory: sections 1–6 · tools from lessons 02, 06, 07 and 15"
+  },
+  {
+   "key": "H",
+   "name": "H. Round 8",
+   "maps": "Theory: sections 1–6 · tools from lessons 02, 04, 06 and 07"
+  },
+  {
+   "key": "I",
+   "name": "I. Round 9 - harder",
+   "maps": "Theory: sections 1–6 · tools from lessons 02, 03, 07 and 16"
+  },
+  {
+   "key": "J",
+   "name": "J. Round 10 - harder",
+   "maps": "Theory: sections 1–6 · tools from lessons 06, 07 and 14"
+  },
+  {
+   "key": "K",
+   "name": "K. Round 11 - the hardest",
+   "maps": "Theory: sections 1–6 · tools from lessons 03, 07, 14 and 15"
+  }
+ ],
+ "problems": [
+  {
+   "section": "A",
+   "pid": 100162,
+   "title": "palin",
+   "en": "Palindrome",
+   "tech": "count each letter with `cnt[26]`; the letters seen an odd number of times decide the answer",
+   "family": "Autumn tournament",
+   "year": 2017,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/74/problem/100162"
+  },
+  {
+   "section": "A",
+   "pid": 100269,
+   "title": "orange",
+   "en": "Oranges",
+   "tech": "the pieces per orange are `n / gcd(n, m)`",
+   "family": "Municipal round",
+   "year": 2013,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/116/problem/100269"
+  },
+  {
+   "section": "A",
+   "pid": 100314,
+   "title": "paper",
+   "en": "Paper",
+   "tech": "every fold halves one side: halve while the side is even and count the folds",
+   "family": "Municipal round",
+   "year": 2016,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/134/problem/100314"
+  },
+  {
+   "section": "B",
+   "pid": 100239,
+   "title": "div",
+   "en": "Divisibility",
+   "tech": "the number is a string: the last digit decides 2 and 5, the digit sum decides 3",
+   "family": "Municipal round",
+   "year": 2011,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/104/problem/100239"
+  },
+  {
+   "section": "B",
+   "pid": 100210,
+   "title": "princess",
+   "en": "The princess",
+   "tech": "`a(a+1)/2` flowers in all; try the shares one by one",
+   "family": "Municipal round",
+   "year": 2009,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/92/problem/100210"
+  },
+  {
+   "section": "B",
+   "pid": 100343,
+   "title": "bact",
+   "en": "Bacteria",
+   "tech": "`K` goes up to 10^18, but the count soon stops changing: simulate until it does",
+   "family": "Municipal round",
+   "year": 2018,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/146/problem/100343"
+  },
+  {
+   "section": "C",
+   "pid": 100299,
+   "title": "mobile",
+   "en": "Mobile",
+   "tech": "days since 1 January 2015 from an array of month lengths, then `% 7`",
+   "family": "Municipal round",
+   "year": 2015,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/128/problem/100299"
+  },
+  {
+   "section": "C",
+   "pid": 100223,
+   "title": "deliteli",
+   "en": "Divisors",
+   "tech": "count the divisors of each number, stopping at the square root",
+   "family": "Municipal round",
+   "year": 2010,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/98/problem/100223"
+  },
+  {
+   "section": "C",
+   "pid": 100195,
+   "title": "grump",
+   "en": "Grump",
+   "tech": "play the board game move by move: an array for the squares, a counter for skipped turns",
+   "family": "Summer tournament",
+   "year": 2018,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/86/problem/100195"
+  },
+  {
+   "section": "D",
+   "pid": 100419,
+   "title": "painting",
+   "en": "Painting",
+   "tech": "corners, edges, faces and the inside of the cube: one formula for each",
+   "family": "Regional round",
+   "year": 2013,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/176/problem/100419"
+  },
+  {
+   "section": "D",
+   "pid": 100929,
+   "title": "treasure",
+   "en": "Treasure",
+   "tech": "`k * a` is divisible by `b` once every `b / gcd(a, b)` days",
+   "family": "Winter tournament",
+   "year": 2010,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/333/problem/100929"
+  },
+  {
+   "section": "D",
+   "pid": 102488,
+   "title": "mermaid",
+   "en": "Mermaid",
+   "tech": "look at the neighbours of every `'*'` first; otherwise simulate the swim along the string",
+   "family": "Municipal round",
+   "year": 2026,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/901/problem/102488"
+  },
+  {
+   "section": "E",
+   "pid": 102109,
+   "title": "rectcut",
+   "en": "Cutting a rectangle",
+   "tech": "each cut moves one border: keep the four borders, then multiply in `long long`",
+   "family": "Regional round",
+   "year": 2024,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/799/problem/102109"
+  },
+  {
+   "section": "E",
+   "pid": 100328,
+   "title": "number",
+   "en": "Number",
+   "tech": "numbers of the form `y(y+1)`: count the `y` that land in `[M, N]`, in `long long`",
+   "family": "Municipal round",
+   "year": 2017,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/140/problem/100328"
+  },
+  {
+   "section": "E",
+   "pid": 101045,
+   "title": "odd",
+   "en": "Odd digits",
+   "tech": "five odd digits count like base 5: take the digits of `n` in base 5, then turn 0..4 into 1, 3, 5, 7, 9",
+   "family": "Municipal round",
+   "year": 2019,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/382/problem/101045"
+  },
+  {
+   "section": "F",
+   "pid": 100915,
+   "title": "shisho",
+   "en": "Shisho",
+   "tech": "reverse each four-digit number with `/` and `%`, then test it for a prime up to the square root",
+   "family": "Winter tournament",
+   "year": 2009,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/327/problem/100915"
+  },
+  {
+   "section": "F",
+   "pid": 100563,
+   "title": "word",
+   "en": "Words",
+   "tech": "turn `'*'` into spaces, drop the punctuation, then check each word against the rules",
+   "family": "National round",
+   "year": 2011,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/221/problem/100563"
+  },
+  {
+   "section": "F",
+   "pid": 101094,
+   "title": "grip",
+   "en": "Flu",
+   "tech": "step through the calendar day by day, counting only the weekdays",
+   "family": "Regional round",
+   "year": 2019,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/401/problem/101094"
+  },
+  {
+   "section": "G",
+   "pid": 100588,
+   "title": "sum",
+   "en": "Sum",
+   "tech": "the multiples of `lcm(P, Q)` in `[A, B]`: count them, then add them with the `n(n+1)/2` idea, in `long long`",
+   "family": "National round",
+   "year": 2012,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/226/problem/100588"
+  },
+  {
+   "section": "G",
+   "pid": 100194,
+   "title": "triplet",
+   "en": "Triplets",
+   "tech": "counting as you go: `cnt[26]` for the letters before and after each middle letter, then multiply",
+   "family": "Summer tournament",
+   "year": 2018,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/86/problem/100194"
+  },
+  {
+   "section": "G",
+   "pid": 101760,
+   "title": "pyramid",
+   "en": "Pyramid",
+   "tech": "fill the layers in spiral order with `dr` / `dc`, then print level by level",
+   "family": "Summer tournament",
+   "year": 2021,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/691/problem/101760"
+  },
+  {
+   "section": "H",
+   "pid": 102635,
+   "title": "segments",
+   "en": "Segments",
+   "tech": "do not list the pieces: `a[i]` lies inside `i * (n - i + 1)` of them, in `long long`",
+   "family": "National round",
+   "year": 2026,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/934/problem/102635"
+  },
+  {
+   "section": "H",
+   "pid": 101639,
+   "title": "equation",
+   "en": "The equation",
+   "tech": "mark every `x*a + y*b` up to `L` in a `seen[]` array, then count the unmarked values",
+   "family": "Municipal round",
+   "year": 2022,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/652/problem/101639"
+  },
+  {
+   "section": "H",
+   "pid": 100725,
+   "title": "trimino",
+   "en": "Triominoes",
+   "tech": "for each piece number collect its cells; check there are three and that they touch",
+   "family": "National round",
+   "year": 2018,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/255/problem/100725"
+  },
+  {
+   "section": "I",
+   "pid": 101036,
+   "title": "div3",
+   "en": "Divisible by 3",
+   "tech": "digit sum `% 3`: raise the leftmost digit that can fix it",
+   "family": "Winter tournament",
+   "year": 2017,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/375/problem/101036"
+  },
+  {
+   "section": "I",
+   "pid": 100160,
+   "title": "hidepencil",
+   "en": "Hide the pencil",
+   "tech": "for every cell look along the four directions for the tallest neighbour",
+   "family": "Autumn tournament",
+   "year": 2017,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/74/problem/100160"
+  },
+  {
+   "section": "I",
+   "pid": 101690,
+   "title": "parts",
+   "en": "Parts",
+   "tech": "`K` different parts need at least `K(K+1)/2`; try the divisors of `N` up to the square root",
+   "family": "Regional round",
+   "year": 2022,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/670/problem/101690"
+  },
+  {
+   "section": "J",
+   "pid": 102110,
+   "title": "number",
+   "en": "The number",
+   "tech": "100 digits in base `b`: multiply the big number by `b`, add the next digit, repeat",
+   "family": "Regional round",
+   "year": 2024,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/799/problem/102110"
+  },
+  {
+   "section": "J",
+   "pid": 102615,
+   "title": "period",
+   "en": "Period",
+   "tech": "long division of `1 / n`; remember where each remainder first appeared to find the repeating part",
+   "family": "Regional round",
+   "year": 2026,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/929/problem/102615"
+  },
+  {
+   "section": "J",
+   "pid": 101110,
+   "title": "rocks",
+   "en": "Rocks",
+   "tech": "drop the stones one at a time on the grid and apply the sliding rules",
+   "family": "National round",
+   "year": 2019,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/407/problem/101110"
+  },
+  {
+   "section": "K",
+   "pid": 100810,
+   "title": "robo",
+   "en": "Robot",
+   "tech": "follow the commands keeping position and direction, then build the shortest command list to the same state",
+   "family": "Spring tournament",
+   "year": 2012,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/285/problem/100810"
+  },
+  {
+   "section": "K",
+   "pid": 101035,
+   "title": "like",
+   "en": "Likeness",
+   "tech": "try every shift of one word against the other, count matching letters, reduce with `gcd`",
+   "family": "Winter tournament",
+   "year": 2017,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/375/problem/101035"
+  },
+  {
+   "section": "K",
+   "pid": 100779,
+   "title": "equ",
+   "en": "Equality",
+   "tech": "for each base 2..10, add or multiply the long numbers digit by digit and compare with `C`",
+   "family": "Spring tournament",
+   "year": 2010,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/273/problem/100779"
+  }
+ ]
+}

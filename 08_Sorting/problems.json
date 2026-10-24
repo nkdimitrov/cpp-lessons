@@ -1,0 +1,159 @@
+{
+ "group": "D",
+ "groups": [
+  {
+   "key": "A",
+   "name": "A. Sort, then look at the neighbours",
+   "maps": "Theory: sections 1 and 3"
+  },
+  {
+   "key": "B",
+   "name": "B. Your own order",
+   "maps": "Theory: sections 2 and 4"
+  },
+  {
+   "key": "C",
+   "name": "C. Two sorted lists side by side",
+   "maps": "Theory: section 5"
+  },
+  {
+   "key": "D",
+   "name": "D. Sort first, then decide",
+   "maps": "Theory: section 6"
+  }
+ ],
+ "problems": [
+  {
+   "section": "A",
+   "pid": 100300,
+   "title": "gap",
+   "en": "The largest gap",
+   "tech": "sort, then the biggest difference between neighbours",
+   "family": "Municipal round",
+   "year": 2015,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/128/problem/100300"
+  },
+  {
+   "section": "A",
+   "pid": 101226,
+   "title": "frame",
+   "en": "Frame",
+   "tech": "sort the sticks; equal lengths end up side by side and pair off",
+   "family": "Summer tournament",
+   "year": 2019,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/452/problem/101226"
+  },
+  {
+   "section": "A",
+   "pid": 101691,
+   "title": "skok",
+   "en": "Jumps",
+   "tech": "sort the rotten planks; the stretch between two neighbours decides the jumps",
+   "family": "Regional round",
+   "year": 2022,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/670/problem/101691"
+  },
+  {
+   "section": "B",
+   "pid": 102277,
+   "title": "books",
+   "en": "Books",
+   "tech": "`sort` with a rule of your own: digit sum, then digit product",
+   "family": "Winter tournament",
+   "year": 2008,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/850/problem/102277"
+  },
+  {
+   "section": "B",
+   "pid": 100914,
+   "title": "digits",
+   "en": "Digit weights",
+   "tech": "a weight for each digit, then sort by weight and by value",
+   "family": "Winter tournament",
+   "year": 2009,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/327/problem/100914"
+  },
+  {
+   "section": "B",
+   "pid": 101409,
+   "title": "maxc",
+   "en": "Largest join",
+   "tech": "put `a` before `b` when `a + b` glues to a bigger number than `b + a`",
+   "family": "National round",
+   "year": 2021,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/570/problem/101409"
+  },
+  {
+   "section": "C",
+   "pid": 100071,
+   "title": "profit",
+   "en": "Profit",
+   "tech": "sort both lists, then pair the largest with the largest",
+   "family": "Autumn tournament",
+   "year": 2011,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/38/problem/100071"
+  },
+  {
+   "section": "C",
+   "pid": 101006,
+   "title": "pots",
+   "en": "Pans and lids",
+   "tech": "two sorted lists walked with one index each",
+   "family": "Winter tournament",
+   "year": 2015,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/363/problem/101006"
+  },
+  {
+   "section": "C",
+   "pid": 100538,
+   "title": "water",
+   "en": "Water",
+   "tech": "sort, then pair the largest with the smallest that still fits",
+   "family": "National round",
+   "year": 2010,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/216/problem/100538"
+  },
+  {
+   "section": "D",
+   "pid": 100515,
+   "title": "pigfarm",
+   "en": "Pig farm",
+   "tech": "sort the arrivals and the removals, then pair them up",
+   "family": "National round",
+   "year": 2009,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/211/problem/100515"
+  },
+  {
+   "section": "D",
+   "pid": 102232,
+   "title": "city",
+   "en": "City",
+   "tech": "sort the streets; every gap must be a multiple of the house side",
+   "family": "Autumn tournament",
+   "year": 2024,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/834/problem/102232"
+  },
+  {
+   "section": "D",
+   "pid": 102686,
+   "title": "battery",
+   "en": "Batteries",
+   "tech": "sort the charges once, then try every number of steps",
+   "family": "Spring tournament",
+   "year": 2026,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/949/problem/102686"
+  }
+ ]
+}

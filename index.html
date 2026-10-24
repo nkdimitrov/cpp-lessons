@@ -98,323 +98,340 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <a class="chipbtn" href="SYLLABUS.md">Syllabus (markdown)</a>
 </div>
 <div class="summary">
-<div class="panel stat"><b>42</b><span>lessons planned</span></div>
-<div class="panel stat"><b>5</b><span>lessons written</span></div>
-<div class="panel stat"><b>108</b><span>problems assigned</span></div>
+<div class="panel stat"><b>43</b><span>lessons planned</span></div>
+<div class="panel stat"><b>17</b><span>lessons written</span></div>
+<div class="panel stat"><b>225</b><span>problems assigned</span></div>
 <div class="panel stat"><b>768</b><span>in the catalogue</span></div>
 <div class="panel stat" id="solvedStat"><b>0</b><span>problems solved</span></div>
 </div>
 <section class="track">
 <h2>Part I - Language and data structures</h2>
-<p>The C++17 you actually type in a contest. Every lesson is self-contained, follows the shape of Lesson 03, and ends with graded problems drawn from the catalogue.</p>
+<p>The C++17 you actually type in a contest, at the level of a 5th or 6th grader: only the basics. Lessons 01 to 16 are self-contained, follow the shape of Lesson 03, and end with 12 Group D problems from the catalogue, grouped by subtopic and getting harder as you go. Lesson 17 closes the part with 33 more problems in rounds of three, like a real contest.</p>
 <div class="grid">
-<article class="panel card" data-slug="01_Setup_And_IO" data-picked="12">
+<article class="panel card" data-slug="01_Setup_And_IO" data-picked="12" data-pids="100283,100344,100512,100389,100225,100613,100748,100041,100027,100315,100330,101259">
 <div class="hd"><span class="num">01</span>
 <h3><a href="01_Setup_And_IO/01_Setup_And_IO.html">Setup, I/O and the contest toolkit</a></h3>
 <span class="badge done">written</span>
 </div>
-<p class="sm">The skeleton of a solution: headers, fast I/O, reading until EOF, whitespace vs lines, file I/O, formatted output, and how to compile and test locally.</p>
+<p class="sm">The skeleton of every solution: reading numbers and characters, printing exactly what is asked, and checking before you send.</p>
 <ul class="covers">
-<li>the five-line skeleton every solution starts from</li>
-<li>compiling with g++ -std=c++17 -O2 -Wall, and reading the warnings</li>
-<li>cin &gt;&gt; skips whitespace, so the input layout never matters</li>
-<li>a count then that many values; answering while reading, storing nothing</li>
-<li>reading until EOF, T test cases, and stopping at a marker value</li>
-<li>printing: separators, and why endl fails time limits</li>
-<li class="more">+4 more</li>
+<li>the program skeleton, compiling and running</li>
+<li>cin &gt;&gt; and cout &lt;&lt;, spaces and new lines</li>
+<li>a count, then that many numbers - answering while reading</li>
+<li>the best so far and the longest streak</li>
+<li>reading characters one at a time, and until the input ends</li>
+<li>inputs like 12+7 and 21.05.2015</li>
+<li class="more">+2 more</li>
 </ul>
 <div class="foot">
 <span class="plabel">0/12 solved</span>
 <span class="prog"><i></i></span>
 </div>
 </article>
-<article class="panel card" data-slug="02_Primitive_Types" data-picked="24">
+<article class="panel card" data-slug="02_Primitive_Types" data-picked="12" data-pids="100825,100329,100913,100025,100268,100974,100012,101044,100616,100661,100808,100746">
 <div class="hd"><span class="num">02</span>
-<h3><a href="02_Primitive_Types/02_Primitive_Types.html">Primitive types: integers, characters, booleans, floating point</a></h3>
+<h3><a href="02_Primitive_Types/02_Primitive_Types.html">Numbers: int, long long, bool and double</a></h3>
 <span class="badge done">written</span>
 </div>
-<p class="sm">What fits in what, when it silently breaks, and the arithmetic rules that decide half the wrong answers in Group C and D.</p>
+<p class="sm">Which number type to use, how / and % take a number apart, and when a formula beats a loop.</p>
 <ul class="covers">
-<li>int / long long / unsigned and their ranges</li>
-<li>overflow: where it happens and how to see it coming</li>
-<li>`int * int` is an `int` - casting the operand, not the answer</li>
-<li>integer division and truncation toward zero</li>
-<li>the sign of % for negative operands, and `(i - 1 + n) % n`</li>
-<li>taking a number apart with / and %; rounding up as `(a + b - 1) / b`</li>
-<li class="more">+6 more</li>
+<li>int and long long - and overflow</li>
+<li>1LL * a * b</li>
+<li>/ and %: digits, units, rounding up</li>
+<li>n(n+1)/2 and counting multiples with a formula</li>
+<li>bool, &amp;&amp;, ||, !</li>
+<li>double, setprecision, and exact square roots</li>
 </ul>
 <div class="foot">
-<span class="plabel">0/24 solved</span>
+<span class="plabel">0/12 solved</span>
 <span class="prog"><i></i></span>
 </div>
 </article>
-<article class="panel card" data-slug="03_Strings" data-picked="24" data-legacy="str_done">
+<article class="panel card" data-slug="03_Strings" data-picked="12" data-pids="208,238,434,100,388,1486,2065,313,116,1894,70,564" data-legacy="str_done">
 <div class="hd"><span class="num">03</span>
 <h3><a href="03_Strings/03_Strings.html">Strings</a></h3>
 <span class="badge done">written</span>
 </div>
-<p class="sm">std::string for beginners: characters as numbers, search, modification, conversion, frequency counting, and the patterns that keep reappearing.</p>
+<p class="sm">Words and text: characters as numbers, walking along a string, counting letters and palindromes.</p>
 <ul class="covers">
-<li>construction, size, element access</li>
-<li>characters as ASCII numbers, &lt;cctype&gt; classification</li>
-<li>find / rfind / substr / replace / erase / insert</li>
-<li>comparison and dictionary order</li>
-<li>stoi / stoll / to_string, conversion by hand, other bases</li>
-<li>&lt;algorithm&gt; on strings: sort, reverse, unique, next_permutation</li>
-<li class="more">+3 more</li>
+<li>s[i], s.size(), cin &gt;&gt; s</li>
+<li>characters as numbers: c - &#x27;a&#x27;, c - &#x27;0&#x27;</li>
+<li>&lt;cctype&gt; tests and changes</li>
+<li>runs of equal characters, and find</li>
+<li>+=, substr, reverse, comparing words</li>
+<li>getline and cin.ignore()</li>
+<li class="more">+2 more</li>
 </ul>
 <div class="foot">
-<span class="plabel">0/24 solved</span>
+<span class="plabel">0/12 solved</span>
 <span class="prog"><i></i></span>
 </div>
 </article>
-<article class="panel card" data-slug="04_Arrays" data-picked="24">
+<article class="panel card" data-slug="04_Arrays" data-picked="12" data-pids="100254,100026,100010,101637,100056,100240,100224,100513,100057,101295,100390,100809">
 <div class="hd"><span class="num">04</span>
-<h3><a href="04_Arrays/04_Arrays.html">Arrays - fixed storage and the loop patterns</a></h3>
+<h3><a href="04_Arrays/04_Arrays.html">Arrays - a row of numbered boxes</a></h3>
 <span class="badge done">written</span>
 </div>
-<p class="sm">The raw C array is still the fastest thing in the language and the most common source of a zero. Declaration, bounds, global vs local, and the scan patterns every problem reuses.</p>
+<p class="sm">Filling and scanning an array, looking at neighbours, going round a circle and sliding a window.</p>
 <ul class="covers">
-<li>declaration, initialisation, `{}` and fill</li>
-<li>global arrays vs stack arrays and why size limits differ</li>
-<li>off-by-one and out-of-bounds: what actually happens</li>
-<li>the six standard scans: sum, max, min, count, index-of, contains</li>
-<li>keeping a running answer in a single pass; runs and streaks</li>
-<li>neighbouring pairs, local maxima and windows of fixed width</li>
-<li class="more">+5 more</li>
+<li>declaring arrays outside main</li>
+<li>reading and printing, forwards and backwards</li>
+<li>sum, largest, smallest, count</li>
+<li>neighbours a[i-1] and a[i+1]</li>
+<li>going round a circle with %</li>
+<li>sliding a window of k boxes</li>
+<li class="more">+1 more</li>
 </ul>
 <div class="foot">
-<span class="plabel">0/24 solved</span>
+<span class="plabel">0/12 solved</span>
 <span class="prog"><i></i></span>
 </div>
 </article>
-<article class="panel card" data-slug="05_Vectors" data-picked="24">
+<article class="panel card" data-slug="05_Vectors" data-picked="12" data-pids="100072,100270,100420,100592,100612,101870,100101,101575,101296,100638,101924,100824">
 <div class="hd"><span class="num">05</span>
-<h3><a href="05_Vectors/05_Vectors.html">std::vector - dynamic arrays</a></h3>
+<h3><a href="05_Vectors/05_Vectors.html">std::vector - a list that grows</a></h3>
 <span class="badge done">written</span>
 </div>
-<p class="sm">When the size is not known until runtime. Growth, cost, the copy traps, and the vector idioms that replace a page of manual array code.</p>
+<p class="sm">When you do not know the size in advance: push_back, digits in a vector, building new lists, and one list per group.</p>
 <ul class="covers">
-<li>why a fixed-size array is not always enough</li>
-<li>construction: `v`, `v(n)`, `v(n, x)`, `{...}`; resize and clear</li>
-<li>push_back / pop_back / back, and reading a list of unknown length</li>
-<li>iteration: index, range-for, range-for by reference</li>
-<li>passing by value vs const reference (the classic TLE)</li>
-<li>building a new vector instead of erasing in a loop</li>
-<li class="more">+6 more</li>
+<li>push_back, size, back, pop_back</li>
+<li>vector&lt;int&gt; a(n) when the size is known</li>
+<li>sort and reverse on a vector</li>
+<li>the digits of a number in a vector</li>
+<li>building a new vector instead of erasing</li>
+<li>insert in the middle, and what it costs</li>
+<li class="more">+1 more</li>
 </ul>
 <div class="foot">
-<span class="plabel">0/24 solved</span>
+<span class="plabel">0/12 solved</span>
 <span class="prog"><i></i></span>
 </div>
 </article>
-<article class="panel card" data-slug="06_Counting_Arrays" data-picked="0">
+<article class="panel card" data-slug="06_Counting_Arrays" data-picked="12" data-pids="100255,100539,102262,102487,100885,102687,101043,100991,101979,100869,100345,101773">
 <div class="hd"><span class="num">06</span>
-<h3>Counting and frequency arrays</h3>
-<span class="badge plan">planned</span>
+<h3><a href="06_Counting_Arrays/06_Counting_Arrays.html">Counting and frequency arrays</a></h3>
+<span class="badge done">written</span>
 </div>
-<p class="sm">The single highest-yield technique in Groups C and D: turn a loop over values into an index into an array.</p>
+<p class="sm">The value becomes the box number: counting, marking, the commonest value and counting sort.</p>
 <ul class="covers">
-<li>the count[] pattern and choosing its size</li>
-<li>counting sort in O(n + k)</li>
-<li>histograms and mode</li>
-<li>presence arrays vs counting arrays</li>
-<li>offsetting negative keys</li>
-<li>counting pairs without enumerating pairs</li>
-<li class="more">+3 more</li>
+<li>cnt[x]++ and choosing the size</li>
+<li>shifting negative values</li>
+<li>seen[] for marking</li>
+<li>the commonest value</li>
+<li>c * (c - 1) / 2 pairs</li>
+<li>counting as you go</li>
+<li class="more">+1 more</li>
 </ul>
 <div class="foot">
-<span class="pool" title="Counting / Frequency arrays · level 2-4">102 candidate problems</span>
+<span class="plabel">0/12 solved</span>
+<span class="prog"><i></i></span>
 </div>
 </article>
-<article class="panel card" data-slug="07_Grids_And_Matrices" data-picked="0">
+<article class="panel card" data-slug="07_Grids_And_Matrices" data-picked="12" data-pids="100946,100375,100928,102486,102263,100637,100403,101906,100688,100615,100589,100566">
 <div class="hd"><span class="num">07</span>
-<h3>Two-dimensional arrays, grids and matrices</h3>
-<span class="badge plan">planned</span>
+<h3><a href="07_Grids_And_Matrices/07_Grids_And_Matrices.html">Two-dimensional arrays and grids</a></h3>
+<span class="badge done">written</span>
 </div>
-<p class="sm">Rows, columns, diagonals and neighbours. The indexing discipline that makes grid problems routine instead of error-prone.</p>
+<p class="sm">Tables of rows and columns: row and column scans, neighbours, spirals and diagonals.</p>
 <ul class="covers">
-<li>declaration of 2D and 3D arrays; memory layout</li>
-<li>row-major traversal and cache behaviour</li>
-<li>the dx/dy direction-array idiom (4- and 8-neighbourhood)</li>
-<li>bounds checking in one helper</li>
-<li>diagonals: i+j and i-j indexing</li>
-<li>transpose, rotate 90, mirror</li>
-<li class="more">+4 more</li>
+<li>a[i][j]: row first, then column</li>
+<li>row sums and column sums</li>
+<li>grids of characters</li>
+<li>the four neighbours with dr / dc</li>
+<li>snake order, spiral and turning by 90 degrees</li>
+<li>diagonals and runs along a line</li>
 </ul>
 <div class="foot">
-<span class="pool" title="2D arrays · level 2-4">93 candidate problems</span>
+<span class="plabel">0/12 solved</span>
+<span class="prog"><i></i></span>
 </div>
 </article>
-<article class="panel card" data-slug="08_Sorting" data-picked="0">
+<article class="panel card" data-slug="08_Sorting" data-picked="12" data-pids="100300,101226,101691,102277,100914,101409,100071,101006,100538,100515,102232,102686">
 <div class="hd"><span class="num">08</span>
-<h3>Sorting and custom comparators</h3>
-<span class="badge plan">planned</span>
+<h3><a href="08_Sorting/08_Sorting.html">Sorting</a></h3>
+<span class="badge done">written</span>
 </div>
-<p class="sm">std::sort and everything around it - stability, comparators, sorting by more than one key, and the problems that become trivial once sorted.</p>
+<p class="sm">sort in one line, sorting by your own rule, and the problems that become easy once things are in order.</p>
 <ul class="covers">
-<li>sort, stable_sort, partial_sort, nth_element</li>
-<li>comparator functions, lambdas, and the strict-weak-ordering rule</li>
-<li>sorting pairs and structs by several keys</li>
-<li>descending order: greater&lt;&gt; vs reversing the comparator</li>
-<li>sorting indices instead of values</li>
-<li>unique + erase to deduplicate</li>
-<li class="more">+3 more</li>
+<li>sort on arrays, vectors and strings</li>
+<li>largest first with greater&lt;int&gt;()</li>
+<li>neighbours after sorting, counting different values</li>
+<li>compare functions with several rules</li>
+<li>two sorted lists side by side</li>
+<li>sort first, then decide</li>
 </ul>
 <div class="foot">
-<span class="pool" title="Sorting · level 2-4">67 candidate problems</span>
+<span class="plabel">0/12 solved</span>
+<span class="prog"><i></i></span>
 </div>
 </article>
-<article class="panel card" data-slug="09_Pairs_Structs_Tuples" data-picked="0">
+<article class="panel card" data-slug="09_Pairs_And_Structs" data-picked="12" data-pids="100087,101367,100763,100284,101021,101111,100514,100747,100591,100839,101224,100778">
 <div class="hd"><span class="num">09</span>
-<h3>Pairs, structs and tuples</h3>
-<span class="badge plan">planned</span>
+<h3><a href="09_Pairs_And_Structs/09_Pairs_And_Structs.html">Pairs and structs</a></h3>
+<span class="badge done">written</span>
 </div>
-<p class="sm">Grouping related values so that sorting, comparing and returning them stops being painful.</p>
+<p class="sm">Keeping values that belong together, sorting them, and returning two things from a function.</p>
 <ul class="covers">
-<li>std::pair, make_pair, .first / .second</li>
-<li>lexicographic comparison of pairs - and how to exploit it</li>
-<li>structs with named fields; when to prefer them</li>
-<li>operator&lt; on a struct</li>
-<li>std::tuple, tie and structured bindings (C++17)</li>
-<li>returning several values from a function</li>
-<li class="more">+2 more</li>
+<li>pair, .first and .second</li>
+<li>sorting pairs: by first, then by second</li>
+<li>{value, number} to remember who is who</li>
+<li>struct with named fields</li>
+<li>sorting structs with a compare function</li>
+<li>returning a pair from a function</li>
 </ul>
 <div class="foot">
-<span class="pool" title="Pairs / Structs · level 2-4">26 candidate problems</span>
+<span class="plabel">0/12 solved</span>
+<span class="prog"><i></i></span>
 </div>
 </article>
-<article class="panel card" data-slug="10_Stacks_Queues_Deques" data-picked="0">
+<article class="panel card" data-slug="10_Stacks_Queues_Deques" data-picked="12" data-pids="100464,100930,100405,100590,100659,101638,101605,101034,101941,101176,101227,101107">
 <div class="hd"><span class="num">10</span>
-<h3>Stacks, queues and deques</h3>
-<span class="badge plan">planned</span>
+<h3><a href="10_Stacks_Queues_Deques/10_Stacks_Queues_Deques.html">Stacks, queues and deques</a></h3>
+<span class="badge done">written</span>
 </div>
-<p class="sm">Three containers with one rule each, and the problem shapes that announce them.</p>
+<p class="sm">Piles and lines: three containers with one simple rule each.</p>
 <ul class="covers">
-<li>std::stack: push, pop, top, empty</li>
-<li>bracket matching and expression evaluation</li>
-<li>the monotonic stack (next greater element, largest rectangle)</li>
-<li>std::queue: push, pop, front - and BFS&#x27;s data structure</li>
-<li>simulation queues (service, rotation, Josephus)</li>
-<li>std::deque: both-ends insertion</li>
-<li class="more">+2 more</li>
+<li>stack: push, top, pop, empty</li>
+<li>queue: push, front, pop</li>
+<li>deque: both ends</li>
+<li>the circle game with a queue</li>
+<li>checking brackets</li>
+<li>a stack that keeps only what matters</li>
 </ul>
 <div class="foot">
-<span class="pool" title="Stacks / Queues / Deque · level 2-4">45 candidate problems</span>
+<span class="plabel">0/12 solved</span>
+<span class="prog"><i></i></span>
 </div>
 </article>
-<article class="panel card" data-slug="11_Sets_And_Maps" data-picked="0">
+<article class="panel card" data-slug="11_Sets_And_Maps" data-picked="12" data-pids="101343,100884,101922,102404,102279,100990,101109,100686,101577,101943,102087,102154">
 <div class="hd"><span class="num">11</span>
-<h3>Sets and maps, ordered and unordered</h3>
-<span class="badge plan">planned</span>
+<h3><a href="11_Sets_And_Maps/11_Sets_And_Maps.html">Sets and maps</a></h3>
+<span class="badge done">written</span>
 </div>
-<p class="sm">Associative containers: what they cost, what order they give back, and when a plain array beats both.</p>
+<p class="sm">Remembering what you have seen, for any values: different values, counts and fast lookups.</p>
 <ul class="covers">
-<li>set / multiset: insert, erase, count, find</li>
-<li>ordered traversal and lower_bound on a set</li>
-<li>map / multimap: operator[] vs at vs find</li>
-<li>the operator[] insertion trap</li>
-<li>unordered_set / unordered_map and hashing</li>
-<li>when unordered is slower (collisions, reserve, max_load_factor)</li>
-<li class="more">+3 more</li>
+<li>set: insert, count, erase, size</li>
+<li>map: m[key]++ and the m[key] trap</li>
+<li>walking a set or a map in order</li>
+<li>looking up a partner with S - x</li>
+<li>array, set or map?</li>
 </ul>
 <div class="foot">
-<span class="pool" title="Maps / Sets · level 2-4">32 candidate problems</span>
+<span class="plabel">0/12 solved</span>
+<span class="prog"><i></i></span>
 </div>
 </article>
-<article class="panel card" data-slug="12_Priority_Queues" data-picked="0">
+<article class="panel card" data-slug="12_Priority_Queues" data-picked="12" data-pids="100358,100298,100542,100130,102469,100959,102068,101774,102296,100730,100478,101762">
 <div class="hd"><span class="num">12</span>
-<h3>Priority queues and heaps</h3>
-<span class="badge plan">planned</span>
+<h3><a href="12_Priority_Queues/12_Priority_Queues.html">Priority queues</a></h3>
+<span class="badge done">written</span>
 </div>
-<p class="sm">Repeatedly taking the best element without re-sorting.</p>
+<p class="sm">A box that always hands you the largest - or the smallest - value.</p>
 <ul class="covers">
-<li>priority_queue basics: push, top, pop</li>
-<li>min-heap via greater&lt;&gt; or negated keys</li>
-<li>priority_queue of pairs and structs; custom comparators</li>
-<li>heap of a fixed size (k largest)</li>
-<li>make_heap / push_heap / pop_heap on a vector</li>
-<li>scheduling and merging problems</li>
-<li class="more">+2 more</li>
+<li>priority_queue: push, top, pop</li>
+<li>smallest first with greater&lt;int&gt;</li>
+<li>joining the two smallest</li>
+<li>pairs in a priority queue</li>
+<li>events in time order</li>
+<li>priority queue or sort?</li>
 </ul>
 <div class="foot">
-<span class="pool" title="Priority queue · level 3-5">14 candidate problems</span>
+<span class="plabel">0/12 solved</span>
+<span class="prog"><i></i></span>
 </div>
 </article>
-<article class="panel card" data-slug="13_Algorithm_Library" data-picked="0">
+<article class="panel card" data-slug="13_Algorithm_Library" data-picked="12" data-pids="100055,100898,102156,100794,101716,100727,100102,100611,101020,101019,102531,101806">
 <div class="hd"><span class="num">13</span>
-<h3>Iterators and the &lt;algorithm&gt; toolbox</h3>
-<span class="badge plan">planned</span>
+<h3><a href="13_Algorithm_Library/13_Algorithm_Library.html">The &lt;algorithm&gt; toolbox</a></h3>
+<span class="badge done">written</span>
 </div>
-<p class="sm">The standard library functions that replace hand-written loops, and the iterator vocabulary they all speak.</p>
+<p class="sm">Ready-made loops: min, max, count, find, reverse, unique, next_permutation and binary search.</p>
 <ul class="covers">
-<li>iterator basics: begin/end, half-open ranges</li>
-<li>min_element / max_element / minmax_element</li>
-<li>accumulate, count, count_if, find, find_if</li>
-<li>all_of / any_of / none_of</li>
-<li>reverse, rotate, next_permutation</li>
-<li>fill, iota, copy, transform</li>
-<li class="more">+3 more</li>
+<li>a, a + n and v.begin(), v.end()</li>
+<li>min, max, swap, min_element, max_element</li>
+<li>count and find</li>
+<li>reverse, rotate, unique</li>
+<li>next_permutation: every order</li>
+<li>binary_search, lower_bound, upper_bound</li>
 </ul>
 <div class="foot">
-<span class="pool" title="Vectors · level 2-3">20 candidate problems</span>
+<span class="plabel">0/12 solved</span>
+<span class="prog"><i></i></span>
 </div>
 </article>
-<article class="panel card" data-slug="14_Big_Integers" data-picked="0">
+<article class="panel card" data-slug="14_Big_Integers" data-picked="12" data-pids="100373,100479,100285,100683,100494,100117,100360,100511,100449,100177,100493,100762">
 <div class="hd"><span class="num">14</span>
-<h3>Big integers - arithmetic beyond long long</h3>
-<span class="badge plan">planned</span>
+<h3><a href="14_Big_Integers/14_Big_Integers.html">Big integers - arithmetic beyond long long</a></h3>
+<span class="badge done">written</span>
 </div>
-<p class="sm">When the answer has 200 digits. Representation, the four operations, and how to keep them fast enough.</p>
+<p class="sm">Numbers with hundreds of digits, handled digit by digit like sums on paper.</p>
 <ul class="covers">
-<li>deciding that long long is not enough</li>
-<li>representation: digit vector, little-endian, base 10 vs base 10^9</li>
-<li>addition and subtraction with carry/borrow</li>
-<li>multiplication by a small integer, and long multiplication</li>
-<li>division and modulo by a small integer</li>
-<li>comparison and normalisation (leading zeros)</li>
-<li class="more">+3 more</li>
+<li>digits stored backwards in a vector</li>
+<li>adding with a carry</li>
+<li>multiplying by a small number</li>
+<li>subtracting and comparing</li>
+<li>multiplying two long numbers</li>
+<li>dividing by a small number, and the remainder</li>
 </ul>
 <div class="foot">
-<span class="pool" title="Big numbers · level 2-5">40 candidate problems</span>
+<span class="plabel">0/12 solved</span>
+<span class="prog"><i></i></span>
 </div>
 </article>
-<article class="panel card" data-slug="15_Recursion" data-picked="0">
+<article class="panel card" data-slug="15_Recursion" data-picked="12" data-pids="100209,100663,101175,100253,100853,101923,100900,100793,100568,100011,100975,102723">
 <div class="hd"><span class="num">15</span>
-<h3>Recursion and the call stack</h3>
-<span class="badge plan">planned</span>
+<h3><a href="15_Recursion/15_Recursion.html">Recursion</a></h3>
+<span class="badge done">written</span>
 </div>
-<p class="sm">Writing a function that calls itself, reasoning about it, and knowing what it costs.</p>
+<p class="sm">A function that calls itself: the base case, remembering answers, and trying every choice.</p>
 <ul class="covers">
-<li>base case and recursive case</li>
-<li>the call stack; what a stack overflow looks like</li>
-<li>recursion vs iteration; converting between them</li>
-<li>recursive array and string processing</li>
-<li>divide and conquer: binary search, merge sort</li>
-<li>recursion with an accumulator vs with a return value</li>
-<li class="more">+3 more</li>
+<li>base case and step: factorial, digit sum, gcd</li>
+<li>how the calls wait for each other</li>
+<li>remembering answers (Fibonacci)</li>
+<li>all 0/1 strings and all groups</li>
+<li>all orders with backtracking</li>
 </ul>
 <div class="foot">
-<span class="pool" title="Recursion · level 2-4">30 candidate problems</span>
+<span class="plabel">0/12 solved</span>
+<span class="prog"><i></i></span>
 </div>
 </article>
-<article class="panel card" data-slug="16_Complexity_And_Limits" data-picked="0">
+<article class="panel card" data-slug="16_Complexity_And_Limits" data-picked="12" data-pids="100587,101366,100145,101368,102070,100040,100450,100883,102529,100726,102132,102005">
 <div class="hd"><span class="num">16</span>
-<h3>Complexity, memory limits and choosing a container</h3>
-<span class="badge plan">planned</span>
+<h3><a href="16_Complexity_And_Limits/16_Complexity_And_Limits.html">Time and memory limits</a></h3>
+<span class="badge done">written</span>
 </div>
-<p class="sm">Reading the constraints and deciding, before writing a line, which approach can pass.</p>
+<p class="sm">Counting steps and bytes before you write a line, and the shortcuts that make a slow idea fast.</p>
 <ul class="covers">
-<li>big-O in practice: the 10^8 operations rule of thumb</li>
-<li>mapping n to an allowed complexity</li>
-<li>memory: bytes per element for every container</li>
-<li>the 1 MB and 16 MB limits in older NOI tasks</li>
-<li>time cost of I/O and of endl</li>
-<li>cache behaviour: why a flat array beats a vector of vectors</li>
-<li class="more">+3 more</li>
+<li>counting steps: O(n), O(n * n), O(log n)</li>
+<li>about 10^8 steps per second</li>
+<li>which n allows which solution</li>
+<li>formulas and the square-root shortcut</li>
+<li>bytes per value and the memory limit</li>
+<li>a checklist before coding</li>
 </ul>
 <div class="foot">
-<span class="pool" title="Memory optimization · level 3-5">15 candidate problems</span>
+<span class="plabel">0/12 solved</span>
+<span class="prog"><i></i></span>
+</div>
+</article>
+<article class="panel card" data-slug="17_Practice_Contests" data-picked="33" data-pids="100162,100269,100314,100239,100210,100343,100299,100223,100195,100419,100929,102488,102109,100328,101045,100915,100563,101094,100588,100194,101760,102635,101639,100725,101036,100160,101690,102110,102615,101110,100810,101035,100779">
+<div class="hd"><span class="num">17</span>
+<h3><a href="17_Practice_Contests/17_Practice_Contests.html">Practice contests - eleven rounds of three</a></h3>
+<span class="badge done">written</span>
+</div>
+<p class="sm">All of Part I at once: 33 new Group D problems in rounds of three, like a real olympiad, from warm-up rounds to hard ones.</p>
+<ul class="covers">
+<li>a contest at home: three problems and a timer</li>
+<li>reading all three, then choosing an order</li>
+<li>spotting which Part I tool a problem needs</li>
+<li>reading the limits before you code</li>
+<li>testing before you send</li>
+<li>after the round: learning from what you missed</li>
+</ul>
+<div class="foot">
+<span class="plabel">0/33 solved</span>
+<span class="prog"><i></i></span>
 </div>
 </article>
 </div></section>
@@ -422,8 +439,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <h2>Part II - Algorithms and techniques</h2>
 <p>One technique per lesson, in the order the catalogue rewards. Each assumes Part I and nothing else.</p>
 <div class="grid">
-<article class="panel card" data-slug="17_Brute_Force" data-picked="0">
-<div class="hd"><span class="num">17</span>
+<article class="panel card" data-slug="18_Brute_Force" data-picked="0" data-pids="">
+<div class="hd"><span class="num">18</span>
 <h3>Brute force and complete search</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -440,8 +457,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Brute force · level 2-4">54 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="18_Simulation" data-picked="0">
-<div class="hd"><span class="num">18</span>
+<article class="panel card" data-slug="19_Simulation" data-picked="0" data-pids="">
+<div class="hd"><span class="num">19</span>
 <h3>Simulation and implementation discipline</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -458,8 +475,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Implementation / Simulation · level 2-4">82 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="19_Prefix_Sums" data-picked="0">
-<div class="hd"><span class="num">19</span>
+<article class="panel card" data-slug="20_Prefix_Sums" data-picked="0" data-pids="">
+<div class="hd"><span class="num">20</span>
 <h3>Prefix sums and difference arrays</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -477,8 +494,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Prefix sums · level 2-5">71 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="20_Two_Pointers" data-picked="0">
-<div class="hd"><span class="num">20</span>
+<article class="panel card" data-slug="21_Two_Pointers" data-picked="0" data-pids="">
+<div class="hd"><span class="num">21</span>
 <h3>Two pointers and sliding window</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -496,8 +513,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Two pointers · level 2-5">45 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="21_Binary_Search" data-picked="0">
-<div class="hd"><span class="num">21</span>
+<article class="panel card" data-slug="22_Binary_Search" data-picked="0" data-pids="">
+<div class="hd"><span class="num">22</span>
 <h3>Binary search, including binary search on the answer</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -515,8 +532,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Binary search · level 3-5">32 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="22_Greedy" data-picked="0">
-<div class="hd"><span class="num">22</span>
+<article class="panel card" data-slug="23_Greedy" data-picked="0" data-pids="">
+<div class="hd"><span class="num">23</span>
 <h3>Greedy - and how to prove it</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -534,8 +551,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Greedy · level 2-5">118 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="23_Sorting_Techniques" data-picked="0">
-<div class="hd"><span class="num">23</span>
+<article class="panel card" data-slug="24_Sorting_Techniques" data-picked="0" data-pids="">
+<div class="hd"><span class="num">24</span>
 <h3>Sorting-based techniques: sweep line and coordinate compression</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -552,8 +569,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Sorting · level 3-5">58 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="24_Number_Theory_I" data-picked="0">
-<div class="hd"><span class="num">24</span>
+<article class="panel card" data-slug="25_Number_Theory_I" data-picked="0" data-pids="">
+<div class="hd"><span class="num">25</span>
 <h3>Number theory I: divisibility, primes and GCD</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -571,8 +588,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Number theory · level 2-4">128 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="25_Number_Theory_II" data-picked="0">
-<div class="hd"><span class="num">25</span>
+<article class="panel card" data-slug="26_Number_Theory_II" data-picked="0" data-pids="">
+<div class="hd"><span class="num">26</span>
 <h3>Number theory II: modular arithmetic and fast exponentiation</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -590,8 +607,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Modular arithmetic · level 3-5">30 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="26_Combinatorics" data-picked="0">
-<div class="hd"><span class="num">26</span>
+<article class="panel card" data-slug="27_Combinatorics" data-picked="0" data-pids="">
+<div class="hd"><span class="num">27</span>
 <h3>Combinatorics and counting</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -609,8 +626,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Combinatorics · level 3-5">50 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="27_Backtracking" data-picked="0">
-<div class="hd"><span class="num">27</span>
+<article class="panel card" data-slug="28_Backtracking" data-picked="0" data-pids="">
+<div class="hd"><span class="num">28</span>
 <h3>Backtracking and generating combinatorial objects</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -628,8 +645,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Recursion / Backtracking · level 3-5">17 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="28_Bitmasks" data-picked="0">
-<div class="hd"><span class="num">28</span>
+<article class="panel card" data-slug="29_Bitmasks" data-picked="0" data-pids="">
+<div class="hd"><span class="num">29</span>
 <h3>Bitmasks and subset enumeration</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -647,8 +664,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Bit manipulation · level 3-5">22 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="29_DP_I" data-picked="0">
-<div class="hd"><span class="num">29</span>
+<article class="panel card" data-slug="30_DP_I" data-picked="0" data-pids="">
+<div class="hd"><span class="num">30</span>
 <h3>Dynamic programming I: one dimension</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -666,8 +683,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Dynamic programming · level 3-4">76 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="30_DP_II" data-picked="0">
-<div class="hd"><span class="num">30</span>
+<article class="panel card" data-slug="31_DP_II" data-picked="0" data-pids="">
+<div class="hd"><span class="num">31</span>
 <h3>Dynamic programming II: two dimensions and grids</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -685,8 +702,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Dynamic programming · 2D arrays · level 3-5">39 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="31_DP_III" data-picked="0">
-<div class="hd"><span class="num">31</span>
+<article class="panel card" data-slug="32_DP_III" data-picked="0" data-pids="">
+<div class="hd"><span class="num">32</span>
 <h3>Dynamic programming III: interval, digit and bitmask DP</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -703,8 +720,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Dynamic programming · level 5">21 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="32_Graphs_Traversal" data-picked="0">
-<div class="hd"><span class="num">32</span>
+<article class="panel card" data-slug="33_Graphs_Traversal" data-picked="0" data-pids="">
+<div class="hd"><span class="num">33</span>
 <h3>Graphs: representation and traversal</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -722,8 +739,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Graph traversal · level 3-5">56 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="33_Flood_Fill" data-picked="0">
-<div class="hd"><span class="num">33</span>
+<article class="panel card" data-slug="34_Flood_Fill" data-picked="0" data-pids="">
+<div class="hd"><span class="num">34</span>
 <h3>Flood fill and grid graphs</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -741,8 +758,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Flood fill / Grid/Matrix · level 2-5">64 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="34_Shortest_Paths" data-picked="0">
-<div class="hd"><span class="num">34</span>
+<article class="panel card" data-slug="35_Shortest_Paths" data-picked="0" data-pids="">
+<div class="hd"><span class="num">35</span>
 <h3>Shortest paths</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -760,8 +777,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Shortest path · level 3-5">14 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="35_Trees" data-picked="0">
-<div class="hd"><span class="num">35</span>
+<article class="panel card" data-slug="36_Trees" data-picked="0" data-pids="">
+<div class="hd"><span class="num">36</span>
 <h3>Trees</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -779,8 +796,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Trees · level 3-5">10 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="36_DSU" data-picked="0">
-<div class="hd"><span class="num">36</span>
+<article class="panel card" data-slug="37_DSU" data-picked="0" data-pids="">
+<div class="hd"><span class="num">37</span>
 <h3>Disjoint set union (union-find)</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -798,8 +815,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Data structures · level 4-5">37 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="37_Fenwick_Segment_Trees" data-picked="0">
-<div class="hd"><span class="num">37</span>
+<article class="panel card" data-slug="38_Fenwick_Segment_Trees" data-picked="0" data-pids="">
+<div class="hd"><span class="num">38</span>
 <h3>Fenwick and segment trees</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -817,8 +834,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Data structures · level 5">20 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="38_String_Algorithms" data-picked="0">
-<div class="hd"><span class="num">38</span>
+<article class="panel card" data-slug="39_String_Algorithms" data-picked="0" data-pids="">
+<div class="hd"><span class="num">39</span>
 <h3>String algorithms: KMP, Z, hashing and tries</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -836,8 +853,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="String processing · level 4-5">20 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="39_Geometry" data-picked="0">
-<div class="hd"><span class="num">39</span>
+<article class="panel card" data-slug="40_Geometry" data-picked="0" data-pids="">
+<div class="hd"><span class="num">40</span>
 <h3>Geometry basics</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -855,8 +872,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Geometry · level 3-5">13 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="40_Game_Theory" data-picked="0">
-<div class="hd"><span class="num">40</span>
+<article class="panel card" data-slug="41_Game_Theory" data-picked="0" data-pids="">
+<div class="hd"><span class="num">41</span>
 <h3>Game theory</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -873,8 +890,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Game theory · level 3-5">7 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="41_Ad_Hoc_Constructive" data-picked="0">
-<div class="hd"><span class="num">41</span>
+<article class="panel card" data-slug="42_Ad_Hoc_Constructive" data-picked="0" data-pids="">
+<div class="hd"><span class="num">42</span>
 <h3>Ad hoc, constructive problems and invariants</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -892,8 +909,8 @@ footer{margin-top:44px;padding-top:16px;border-top:1px solid var(--line);
 <span class="pool" title="Ad hoc · level 3-5">28 candidate problems</span>
 </div>
 </article>
-<article class="panel card" data-slug="42_Contest_Craft" data-picked="0">
-<div class="hd"><span class="num">42</span>
+<article class="panel card" data-slug="43_Contest_Craft" data-picked="0" data-pids="">
+<div class="hd"><span class="num">43</span>
 <h3>Contest craft: strategy, testing and debugging</h3>
 <span class="badge plan">planned</span>
 </div>
@@ -939,7 +956,8 @@ var totalDone=0, totalPicked=0;
     var raw=localStorage.getItem('cpp_done_'+slug);
     if(raw===null && card.dataset.legacy) raw=localStorage.getItem(card.dataset.legacy);
     var st=JSON.parse(raw||'{}')||{};
-    for(var k in st) if(st[k]) n++;
+    var ids=(card.dataset.pids||'').split(',');
+    for(var i=0;i<ids.length;i++) if(st[ids[i]]) n++;
   }catch(e){}
   if(n>picked) n=picked;
   totalDone+=n; totalPicked+=picked;

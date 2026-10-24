@@ -1,0 +1,159 @@
+{
+ "group": "D",
+ "groups": [
+  {
+   "key": "A",
+   "name": "A. A function that calls itself",
+   "maps": "Theory: sections 1 and 2"
+  },
+  {
+   "key": "B",
+   "name": "B. Remembering answers",
+   "maps": "Theory: section 3"
+  },
+  {
+   "key": "C",
+   "name": "C. Trying every choice",
+   "maps": "Theory: section 4"
+  },
+  {
+   "key": "D",
+   "name": "D. Going back: backtracking",
+   "maps": "Theory: section 5"
+  }
+ ],
+ "problems": [
+  {
+   "section": "A",
+   "pid": 100209,
+   "title": "square",
+   "en": "Squares",
+   "tech": "cut off the biggest square and call yourself on what is left",
+   "family": "Municipal round",
+   "year": 2009,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/92/problem/100209"
+  },
+  {
+   "section": "A",
+   "pid": 100663,
+   "title": "parade",
+   "en": "Parade",
+   "tech": "the parade doubles each step; find place p in the half it came from",
+   "family": "National round",
+   "year": 2015,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/241/problem/100663"
+  },
+  {
+   "section": "A",
+   "pid": 101175,
+   "title": "numbers",
+   "en": "Numbers",
+   "tech": "run the rule backwards, one call per step, until the start",
+   "family": "Spring tournament",
+   "year": 2019,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/434/problem/101175"
+  },
+  {
+   "section": "B",
+   "pid": 100253,
+   "title": "fish_globe",
+   "en": "Fish bowl",
+   "tech": "each day depends on earlier days; keep the answers in an array",
+   "family": "Municipal round",
+   "year": 2012,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/110/problem/100253"
+  },
+  {
+   "section": "B",
+   "pid": 100853,
+   "title": "robot",
+   "en": "Robot",
+   "tech": "walks of k steps that end at (i, j): `f(k, i, j)`, remembered",
+   "family": "Spring tournament",
+   "year": 2015,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/303/problem/100853"
+  },
+  {
+   "section": "B",
+   "pid": 101923,
+   "title": "minesweeper",
+   "en": "Minesweeper",
+   "tech": "count the ways cell by cell; remember each count once found",
+   "family": "Regional round",
+   "year": 2023,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/747/problem/101923"
+  },
+  {
+   "section": "C",
+   "pid": 100900,
+   "title": "delimost",
+   "en": "Divisibility",
+   "tech": "build every 0/1 number digit by digit and test each one",
+   "family": "Spring tournament",
+   "year": 2018,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/321/problem/100900"
+  },
+  {
+   "section": "C",
+   "pid": 100793,
+   "title": "competitors",
+   "en": "Competitors",
+   "tech": "take or leave each person: every team of up to 10",
+   "family": "Spring tournament",
+   "year": 2011,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/279/problem/100793"
+  },
+  {
+   "section": "C",
+   "pid": 100568,
+   "title": "super",
+   "en": "Super primes",
+   "tech": "grow primes one digit at a time; each call adds a digit",
+   "family": "National round",
+   "year": 2011,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/221/problem/100568"
+  },
+  {
+   "section": "D",
+   "pid": 100011,
+   "title": "words",
+   "en": "Words",
+   "tech": "chain words by first and last letter; step back when stuck",
+   "family": "Autumn tournament",
+   "year": 2007,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/14/problem/100011"
+  },
+  {
+   "section": "D",
+   "pid": 100975,
+   "title": "conundrum",
+   "en": "Word search",
+   "tech": "follow each word through neighbouring cells; undo and try another way",
+   "family": "Winter tournament",
+   "year": 2013,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/351/problem/100975"
+  },
+  {
+   "section": "D",
+   "pid": 102723,
+   "title": "sum",
+   "en": "Sum",
+   "tech": "place the digits column by column; undo a choice that cannot work",
+   "family": "Summer tournament",
+   "year": 2026,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/961/problem/102723"
+  }
+ ]
+}

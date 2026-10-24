@@ -1,35 +1,25 @@
 {
- "group": "D and C",
+ "group": "D",
  "groups": [
   {
    "key": "A",
-   "name": "A. The list whose length you learn as you go",
-   "maps": "Theory: sections 4 and 7"
+   "name": "A. A list whose length you learn as you go",
+   "maps": "Theory: sections 1 and 3"
   },
   {
    "key": "B",
-   "name": "B. Build a vector, then sort it",
-   "maps": "Theory: section 8"
+   "name": "B. Digits and numbers in a vector",
+   "maps": "Theory: section 4"
   },
   {
    "key": "C",
-   "name": "C. Two vectors kept side by side",
-   "maps": "Theory: sections 5 and 8"
+   "name": "C. Building a new vector",
+   "maps": "Theory: section 5"
   },
   {
    "key": "D",
-   "name": "D. When the answer is itself a list",
-   "maps": "Theory: sections 7 and 9"
-  },
-  {
-   "key": "E",
-   "name": "E. Many lists at once",
-   "maps": "Theory: section 10"
-  },
-  {
-   "key": "F",
-   "name": "F. Bigger builds",
-   "maps": "Theory: sections 7-10"
+   "name": "D. One list for each group",
+   "maps": "Theory: section 6"
   }
  ],
  "problems": [
@@ -38,7 +28,7 @@
    "pid": 100072,
    "title": "frequency",
    "en": "Letter chart",
-   "tech": "read until `@`, so the count is not known in advance",
+   "tech": "read until `@`, so the number of letters is not known in advance",
    "family": "Autumn tournament",
    "year": 2011,
    "diff": 2,
@@ -46,21 +36,10 @@
   },
   {
    "section": "A",
-   "pid": 100267,
-   "title": "barcode",
-   "en": "Barcodes",
-   "tech": "split the input into pieces, one vector entry each",
-   "family": "Municipal round",
-   "year": 2013,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/115/problem/100267"
-  },
-  {
-   "section": "A",
    "pid": 100270,
    "title": "all",
    "en": "Everyone",
-   "tech": "collect the ids that turn up in every contest",
+   "tech": "collect the ids of each contest, keep those that are in every one",
    "family": "Municipal round",
    "year": 2013,
    "diff": 2,
@@ -71,7 +50,7 @@
    "pid": 100420,
    "title": "tststsbreh",
    "en": "Consonants",
-   "tech": "split the text into sentences, then test each one",
+   "tech": "cut the text into sentences, one vector entry each, then test each",
    "family": "Regional round",
    "year": 2013,
    "diff": 2,
@@ -79,204 +58,61 @@
   },
   {
    "section": "B",
-   "pid": 100298,
-   "title": "difference",
-   "en": "Difference",
-   "tech": "the digits into a vector, sorted both ways",
-   "family": "Municipal round",
-   "year": 2015,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/128/problem/100298"
-  },
-  {
-   "section": "B",
-   "pid": 100542,
-   "title": "machine",
-   "en": "Time machine",
-   "tech": "digits out, sorted, glued back together",
+   "pid": 100592,
+   "title": "number",
+   "en": "Palindrome number",
+   "tech": "the digits of n in base b go into a vector - same backwards?",
    "family": "National round",
-   "year": 2010,
+   "year": 2012,
    "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/216/problem/100542"
+   "url": "https://arena.olimpiici.com/#/catalog/226/problem/100592"
   },
   {
    "section": "B",
-   "pid": 102277,
-   "title": "books",
-   "en": "Books",
-   "tech": "`sort` with a rule of your own",
-   "family": "Winter tournament",
-   "year": 2008,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/850/problem/102277"
-  },
-  {
-   "section": "B",
-   "pid": 100914,
-   "title": "digits",
-   "en": "Digit weights",
-   "tech": "group the digits, then sort by weight and value",
-   "family": "Winter tournament",
-   "year": 2009,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/327/problem/100914"
-  },
-  {
-   "section": "C",
-   "pid": 100071,
-   "title": "profit",
-   "en": "Profit",
-   "tech": "two vectors, both sorted, matched end to end",
-   "family": "Autumn tournament",
-   "year": 2011,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/38/problem/100071"
-  },
-  {
-   "section": "C",
-   "pid": 101006,
-   "title": "pots",
-   "en": "Pans and lids",
-   "tech": "two sorted vectors walked with one index each",
-   "family": "Winter tournament",
-   "year": 2015,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/363/problem/101006"
-  },
-  {
-   "section": "C",
-   "pid": 100284,
-   "title": "klassir",
-   "en": "Classification",
-   "tech": "times and numbers kept side by side",
-   "family": "Municipal round",
-   "year": 2014,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/122/problem/100284"
-  },
-  {
-   "section": "C",
-   "pid": 101367,
-   "title": "seg",
-   "en": "Segments",
-   "tech": "every segment against every other, n < 1000",
-   "family": "Municipal round",
-   "year": 2020,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/555/problem/101367"
-  },
-  {
-   "section": "D",
-   "pid": 100326,
-   "title": "set",
-   "en": "Intervals",
-   "tech": "merge what overlaps - the result length is unknown",
-   "family": "Municipal round",
-   "year": 2017,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/139/problem/100326"
-  },
-  {
-   "section": "D",
-   "pid": 100128,
-   "title": "swap",
-   "en": "Swaps",
-   "tech": "collect the swaps, however many there turn out to be",
-   "family": "Autumn tournament",
-   "year": 2015,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/61/problem/100128"
-  },
-  {
-   "section": "D",
-   "pid": 100610,
-   "title": "perm",
-   "en": "Permutation",
-   "tech": "`reverse` a stretch inside the vector",
+   "pid": 100612,
+   "title": "pres",
+   "en": "Fibonacci sum",
+   "tech": "the Fibonacci numbers into a vector, then take the largest that fits",
    "family": "National round",
    "year": 2013,
    "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/230/problem/100610"
+   "url": "https://arena.olimpiici.com/#/catalog/231/problem/100612"
   },
   {
-   "section": "D",
-   "pid": 101001,
-   "title": "encryption",
-   "en": "Encryption",
-   "tech": "undo an alternating front/back build",
-   "family": "Winter tournament",
-   "year": 2015,
+   "section": "B",
+   "pid": 101870,
+   "title": "numbers",
+   "en": "Nearly equal digits",
+   "tech": "every candidate number into a vector, then the smallest big enough",
+   "family": "Autumn tournament",
+   "year": 2022,
    "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/362/problem/101001"
+   "url": "https://arena.olimpiici.com/#/catalog/732/problem/101870"
   },
   {
-   "section": "E",
-   "pid": 100702,
-   "title": "comp",
-   "en": "Song contest",
-   "tech": "a running total per song, then sorted",
-   "family": "National round",
-   "year": 2017,
+   "section": "C",
+   "pid": 100101,
+   "title": "salary",
+   "en": "Salary",
+   "tech": "push the digits of 1, 8, 27, ... until the vector reaches position k",
+   "family": "Autumn tournament",
+   "year": 2013,
    "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/250/problem/100702"
+   "url": "https://arena.olimpiici.com/#/catalog/50/problem/100101"
   },
   {
-   "section": "E",
-   "pid": 100340,
-   "title": "colors",
-   "en": "Balloons",
-   "tech": "one list per colour",
+   "section": "C",
+   "pid": 101575,
+   "title": "wheel",
+   "en": "Wheel",
+   "tech": "a vector of N blanks; each spin fills one place, found with `%`",
    "family": "Municipal round",
-   "year": 2018,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/145/problem/100340"
-  },
-  {
-   "section": "E",
-   "pid": 101409,
-   "title": "maxc",
-   "en": "Largest join",
-   "tech": "a vector of words, ordered so the join is largest",
-   "family": "National round",
    "year": 2021,
    "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/570/problem/101409"
+   "url": "https://arena.olimpiici.com/#/catalog/627/problem/101575"
   },
   {
-   "section": "E",
-   "pid": 101021,
-   "title": "sock",
-   "en": "Socks",
-   "tech": "every pair in one long vector - how long is it?",
-   "family": "Winter tournament",
-   "year": 2016,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/369/problem/101021"
-  },
-  {
-   "section": "F",
-   "pid": 102132,
-   "title": "rank",
-   "en": "The k-th score",
-   "tech": "the k-th distinct score, inside 2 MB",
-   "family": "National round",
-   "year": 2024,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/803/problem/102132"
-  },
-  {
-   "section": "F",
-   "pid": 100658,
-   "title": "segments",
-   "en": "Merging",
-   "tech": "merging again, with awkward bounds",
-   "family": "National round",
-   "year": 2015,
-   "diff": 4,
-   "url": "https://arena.olimpiici.com/#/catalog/240/problem/100658"
-  },
-  {
-   "section": "F",
+   "section": "C",
    "pid": 101296,
    "title": "restore",
    "en": "Restore",
@@ -287,15 +123,37 @@
    "url": "https://arena.olimpiici.com/#/catalog/476/problem/101296"
   },
   {
-   "section": "F",
-   "pid": 100776,
-   "title": "wordfix",
-   "en": "Word repair",
-   "tech": "the positions of each letter, in 26 separate lists",
+   "section": "D",
+   "pid": 100638,
+   "title": "letters",
+   "en": "Letters",
+   "tech": "one list of correspondents per person - how many different ones?",
+   "family": "National round",
+   "year": 2014,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/236/problem/100638"
+  },
+  {
+   "section": "D",
+   "pid": 101924,
+   "title": "red",
+   "en": "The row",
+   "tech": "one list of positions per value; the next one is the neighbour in it",
+   "family": "Regional round",
+   "year": 2023,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/747/problem/101924"
+  },
+  {
+   "section": "D",
+   "pid": 100824,
+   "title": "travel",
+   "en": "Travel",
+   "tech": "one list of neighbours per city, then walk from city 0",
    "family": "Spring tournament",
-   "year": 2010,
-   "diff": 4,
-   "url": "https://arena.olimpiici.com/#/catalog/272/problem/100776"
+   "year": 2013,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/291/problem/100824"
   }
  ]
 }

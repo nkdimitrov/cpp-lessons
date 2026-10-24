@@ -1,0 +1,154 @@
+{
+ "group": "D",
+ "groups": [
+  {
+   "key": "A",
+   "name": "A. A pile of plates: stack",
+   "maps": "Theory: section 1"
+  },
+  {
+   "key": "B",
+   "name": "B. A line, and a line with two ends: queue and deque",
+   "maps": "Theory: sections 2 and 3"
+  },
+  {
+   "key": "C",
+   "name": "C. Brackets, and stacks that keep only what matters",
+   "maps": "Theory: sections 4 and 5"
+  }
+ ],
+ "problems": [
+  {
+   "section": "A",
+   "pid": 100464,
+   "title": "leaders",
+   "en": "Leaders",
+   "tech": "walk from the right keeping the largest; a stack turns the answer round",
+   "family": "Regional round",
+   "year": 2016,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/194/problem/100464"
+  },
+  {
+   "section": "A",
+   "pid": 100930,
+   "title": "balls",
+   "en": "Balls",
+   "tech": "the pipe is a stack: push and pop as the commands say",
+   "family": "Winter tournament",
+   "year": 2010,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/333/problem/100930"
+  },
+  {
+   "section": "A",
+   "pid": 100405,
+   "title": "marbles",
+   "en": "Marbles",
+   "tech": "a stack of (colour, count); three or more of one colour vanish",
+   "family": "Regional round",
+   "year": 2012,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/170/problem/100405"
+  },
+  {
+   "section": "A",
+   "pid": 100590,
+   "title": "gifts",
+   "en": "Gifts",
+   "tech": "chute 2 is a stack - can the gifts come out in the right order?",
+   "family": "National round",
+   "year": 2012,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/226/problem/100590"
+  },
+  {
+   "section": "B",
+   "pid": 100659,
+   "title": "blackd",
+   "en": "Black card",
+   "tech": "the deck is a queue: cards leave the front and join the back",
+   "family": "National round",
+   "year": 2015,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/241/problem/100659"
+  },
+  {
+   "section": "B",
+   "pid": 101638,
+   "title": "skip",
+   "en": "Skipping",
+   "tech": "each round, walk the queue once and keep only the survivors",
+   "family": "Municipal round",
+   "year": 2022,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/652/problem/101638"
+  },
+  {
+   "section": "B",
+   "pid": 101605,
+   "title": "third",
+   "en": "Every third",
+   "tech": "a deque: drop every third letter and turn the rest round",
+   "family": "Autumn tournament",
+   "year": 2021,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/639/problem/101605"
+  },
+  {
+   "section": "B",
+   "pid": 101034,
+   "title": "worldclock",
+   "en": "Ball clock",
+   "tech": "queues and stacks of balls, run until the order comes back",
+   "family": "Winter tournament",
+   "year": 2017,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/375/problem/101034"
+  },
+  {
+   "section": "C",
+   "pid": 101941,
+   "title": "brackets",
+   "en": "Brackets",
+   "tech": "match the brackets with a stack and count the balanced endings",
+   "family": "National round",
+   "year": 2023,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/751/problem/101941"
+  },
+  {
+   "section": "C",
+   "pid": 101176,
+   "title": "maxred",
+   "en": "Largest number",
+   "tech": "a stack of digits: pop the smaller ones while you may still remove",
+   "family": "Spring tournament",
+   "year": 2019,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/434/problem/101176"
+  },
+  {
+   "section": "C",
+   "pid": 101227,
+   "title": "colorp",
+   "en": "Painting",
+   "tech": "1 opens and 0 closes, like brackets; the stack depth is the height",
+   "family": "Summer tournament",
+   "year": 2019,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/452/problem/101227"
+  },
+  {
+   "section": "C",
+   "pid": 101107,
+   "title": "stairs",
+   "en": "Stairs",
+   "tech": "a stack of heights: two equal heights meet when everything between is gone",
+   "family": "National round",
+   "year": 2019,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/407/problem/101107"
+  }
+ ]
+}

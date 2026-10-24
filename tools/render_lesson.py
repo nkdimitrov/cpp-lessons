@@ -4,7 +4,7 @@
 Usage:  python tools/render_lesson.py <lesson-dir>        e.g. 03_Strings
 
 A lesson directory must contain:
-  content.py    -- SLUG, TITLE, SUBTITLE, BRAND, FOOTER, HOWTO, SECTIONS,
+  content.py    -- SLUG, TITLE, SUBTITLE, BRAND, FOOTER, SECTIONS,
                    CHEATSHEET, PITFALLS, COMPLEXITY
   problems.json -- {"group": "D", "groups": [{key,name,maps}], "problems": [...]}
 
@@ -44,6 +44,12 @@ PIT_T  = getattr(C, "PITFALLS_TITLE", "%d pitfalls that cost real marks" % len(C
 NSEC   = len(C.SECTIONS)
 N_CHE, N_PIT, N_CPX, N_PRB = NSEC + 1, NSEC + 2, NSEC + 3, NSEC + 4
 NPROB  = len(SEL)
+_syl   = json.loads((ROOT / "syllabus.json").read_text(encoding="utf-8"))
+ORDER  = [l for t in _syl["tracks"] for l in t["lessons"]
+          if (ROOT / l["slug"] / "content.py").exists()]
+_pos   = next((i for i, l in enumerate(ORDER) if l["slug"] == SLUG), None)
+PREV   = ORDER[_pos - 1] if _pos else None
+NEXT   = ORDER[_pos + 1] if _pos is not None and _pos + 1 < len(ORDER) else None
 ROUND_EN = {"Общински кръг": "Municipal round", "Областен кръг": "Regional round",
             "Национален кръг": "National round", "Есенен турнир": "Autumn tournament",
             "Зимен турнир": "Winter tournament", "Пролетен турнир": "Spring tournament",
@@ -117,6 +123,19 @@ code,pre,.mono{font-family:"JetBrains Mono",Consolas,"SF Mono",Menlo,monospace}
 #nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
 #nav .grp{margin-top:14px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
   color:var(--muted);opacity:.7;padding:0 8px}
+#nav a.home{display:inline-flex;align-items:center;gap:7px;margin:0 0 16px;padding:5px 12px;
+  border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);
+  font-weight:600}
+#nav a.home svg{width:15px;height:15px}
+#nav a.home:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager{display:flex;gap:8px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+#nav .pager a,#nav .pager span{flex:1 1 0;display:flex;flex-direction:column;align-items:center;
+  margin:0;padding:6px 4px 7px;border:1px solid var(--line);border-radius:6px;
+  background:var(--panel);color:var(--ink);font-size:22px;line-height:1.1}
+#nav .pager small{font-size:11px;color:var(--muted);margin-top:2px}
+#nav .pager a:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager a:hover small{color:var(--accent)}
+#nav .pager span{opacity:.35}
 /* ---- main ---- */
 main{flex:1 1 auto;min-width:0;padding:34px 40px 120px;max-width:900px}
 header.top{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:8px}
@@ -284,8 +303,11 @@ def build_html():
     a('<div class="wrap">')
 
     # ---------------- sidebar
-    a('<nav id="nav"><div class="brand">%s</div>' % html.escape(BRAND))
-    a('<a href="#howto">How to use this lesson</a>')
+    a('<nav id="nav"><a class="home" href="../index.html" title="All lessons">'
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" '
+      'stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/>'
+      '<path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>Home</a>')
+    a('<div class="brand">%s</div>' % html.escape(BRAND))
     a('<div class="grp">Theory</div>')
     for sid, title, _ in C.SECTIONS:
         a('<a href="#%s">%s</a>' % (sid, html.escape(title)))
@@ -297,16 +319,21 @@ def build_html():
     a('<a href="#problems">%d. %d problems</a>' % (N_PRB, NPROB))
     for k, name, _ in GROUPS:
         a('<a href="#g%s" style="padding-left:16px">%s</a>' % (k, html.escape(name)))
+    if _pos is not None:
+        a('<div class="pager">')
+        for l, arrow, word in ((PREV, '&larr;', 'Previous'), (NEXT, '&rarr;', 'Next')):
+            if l:
+                a('<a href="../%s/%s.html" title="%s: Lesson %s &middot; %s">%s<small>Lesson %s</small></a>'
+                  % (l["slug"], l["slug"], word, l["num"], html.escape(l["title"]), arrow, l["num"]))
+            else:
+                a('<span>%s<small>&nbsp;</small></span>' % arrow)
+        a('</div>')
     a('</nav>')
 
     # ---------------- main
     a('<main>')
     a('<header class="top"><h1>%s</h1><div class="sub">%s</div></header>'
       % (html.escape(C.TITLE), html.escape(C.SUBTITLE)))
-
-    a('<h2 id="howto">How to use this lesson</h2>')
-    for para in C.HOWTO:
-        a('<p>%s</p>' % h_inline(para))
 
     for sid, title, blocks in C.SECTIONS:
         a('<h2 id="%s">%s</h2>' % (sid, html.escape(title)))
@@ -333,7 +360,7 @@ def build_html():
 
     # cheat sheet
     a('<h2 id="cheat">%d. Cheat sheet &mdash; memorise this page</h2>' % N_CHE)
-    a('<p>Cover the right-hand column and reproduce each idiom from its description alone.</p>')
+    a('<p>Cover the right-hand column and try to write each line from memory.</p>')
     a('<div class="tblwrap"><table class="cheat"><thead><tr><th>You want to&hellip;</th>'
       '<th>Write</th></tr></thead><tbody>')
     for what, how in C.CHEATSHEET:
@@ -528,11 +555,6 @@ def build_docx():
     inner.append(it); fld.append(inner); p._p.append(fld)
     doc.add_page_break()
 
-    # ---------------- how to
-    doc.add_heading('How to use this lesson', level=1)
-    for t in C.HOWTO:
-        para(t)
-
     # ---------------- theory
     for sid, title, blocks in C.SECTIONS:
         doc.add_heading(title, level=1)
@@ -557,7 +579,7 @@ def build_docx():
     # ---------------- cheat sheet
     doc.add_page_break()
     doc.add_heading('%d. Cheat sheet \u2014 memorise this page' % N_CHE, level=1)
-    para('Cover the right-hand column and reproduce each idiom from its description alone.')
+    para('Cover the right-hand column and try to write each line from memory.')
     make_table(['You want to\u2026', 'Write'], [[a_, b_] for a_, b_ in C.CHEATSHEET], [2.2, 4.1])
 
     # ---------------- pitfalls

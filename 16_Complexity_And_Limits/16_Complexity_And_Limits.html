@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C++17 Time and memory - will it be fast enough?</title>
+<style>
+:root{
+  --bg:#fbfaf8; --panel:#ffffff; --ink:#1c1b1a; --muted:#6b6763; --line:#e4e0da;
+  --accent:#8a4b1f; --accent-soft:#f3ece4; --code-bg:#f6f3ee; --code-ink:#2d2a26;
+  --kw:#8a4b1f; --str:#3f6b3f; --com:#9a948c; --num:#2f5c8a; --pre:#7a5ea8;
+  --note-bg:#fdf6e7; --note-line:#d9a441; --ok:#3f6b3f;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+    --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+    --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+    --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+  --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+  --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+  --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+code,pre,.mono{font-family:"JetBrains Mono",Consolas,"SF Mono",Menlo,monospace}
+.wrap{display:flex;gap:0;align-items:flex-start;max-width:1220px;margin:0 auto}
+/* ---- sidebar ---- */
+#nav{position:sticky;top:0;flex:0 0 250px;height:100vh;overflow-y:auto;
+  padding:26px 14px 40px 20px;border-right:1px solid var(--line);font-size:13.5px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#nav .brand{font-weight:700;letter-spacing:.02em;color:var(--accent);
+  font-size:12px;text-transform:uppercase;margin-bottom:14px}
+#nav a{display:block;padding:4px 8px;margin:1px 0;border-radius:5px;
+  color:var(--muted);text-decoration:none;line-height:1.35}
+#nav a:hover{background:var(--accent-soft);color:var(--ink)}
+#nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+#nav .grp{margin-top:14px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);opacity:.7;padding:0 8px}
+#nav a.home{display:inline-flex;align-items:center;gap:7px;margin:0 0 16px;padding:5px 12px;
+  border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);
+  font-weight:600}
+#nav a.home svg{width:15px;height:15px}
+#nav a.home:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager{display:flex;gap:8px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+#nav .pager a,#nav .pager span{flex:1 1 0;display:flex;flex-direction:column;align-items:center;
+  margin:0;padding:6px 4px 7px;border:1px solid var(--line);border-radius:6px;
+  background:var(--panel);color:var(--ink);font-size:22px;line-height:1.1}
+#nav .pager small{font-size:11px;color:var(--muted);margin-top:2px}
+#nav .pager a:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager a:hover small{color:var(--accent)}
+#nav .pager span{opacity:.35}
+/* ---- main ---- */
+main{flex:1 1 auto;min-width:0;padding:34px 40px 120px;max-width:900px}
+header.top{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:8px}
+h1{font-size:30px;line-height:1.2;margin:0 0 6px}
+.sub{color:var(--muted);font-size:14.5px;font-family:system-ui,sans-serif}
+h2{font-size:21px;margin:44px 0 12px;padding-top:10px;border-top:1px solid var(--line);
+  scroll-margin-top:16px}
+h2:first-of-type{border-top:none}
+h3{font-size:16.5px;margin:26px 0 8px;color:var(--accent);scroll-margin-top:16px}
+p{margin:11px 0}
+code{background:var(--code-bg);padding:1.5px 5px;border-radius:4px;font-size:.87em;
+  color:var(--code-ink);border:1px solid var(--line)}
+pre{background:var(--code-bg);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:7px;padding:13px 15px;overflow-x:auto;font-size:13px;line-height:1.55;
+  margin:14px 0;color:var(--code-ink)}
+pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
+.kw{color:var(--kw);font-weight:600}.str{color:var(--str)}.com{color:var(--com);font-style:italic}
+.num{color:var(--num)}.pp{color:var(--pre)}
+table{border-collapse:collapse;width:100%;margin:15px 0;font-size:14px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+  border-bottom:1.5px solid var(--line);font-weight:600}
+tbody tr:nth-child(even){background:var(--accent-soft)}
+ul{margin:11px 0;padding-left:22px}
+li{margin:4px 0}
+.note{background:var(--note-bg);border-left:3px solid var(--note-line);border-radius:0 7px 7px 0;
+  padding:11px 15px;margin:15px 0;font-size:14.5px}
+.tblwrap{overflow-x:auto}
+/* ---- problems ---- */
+.pgroup{margin:26px 0 0}
+.pgroup h3{margin-bottom:2px}
+.pgroup .maps{color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif;margin:0 0 8px}
+table.prob td{padding:9px 10px}
+table.prob a{color:var(--accent);text-decoration:none;font-weight:600;
+  font-family:Consolas,monospace;font-size:13.5px}
+table.prob a:hover{text-decoration:underline}
+.tech{color:var(--muted);font-size:13px}
+.src{color:var(--muted);font-size:12px;white-space:nowrap}
+.dif{color:var(--accent);letter-spacing:1px;font-size:11.5px;white-space:nowrap}
+.done td{opacity:.45}
+.done td a{text-decoration:line-through}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+#bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;
+  border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;
+  font-family:system-ui,sans-serif;font-size:13px;flex-wrap:wrap}
+#bar .track{flex:1 1 130px;height:7px;background:var(--line);border-radius:4px;overflow:hidden;
+  min-width:110px}
+#bar .fill{height:100%;background:var(--accent);width:0;transition:width .25s}
+button{font:inherit;font-size:12.5px;padding:4px 11px;border:1px solid var(--line);
+  border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+#themeBtn{position:fixed;top:14px;right:16px;z-index:10}
+.cheat td:first-child{font-family:system-ui,sans-serif;width:33%}
+.pit b{display:block;margin-bottom:2px}
+footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif}
+@media(max-width:900px){
+  #nav{display:none}
+  main{padding:26px 18px 90px}
+  h1{font-size:24px}
+  #themeBtn{top:8px;right:10px}
+}
+</style>
+</head><body>
+<button id="themeBtn" title="Toggle light / dark">&#9681;</button>
+<div class="wrap">
+<nav id="nav"><a class="home" href="../index.html" title="All lessons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>Home</a>
+<div class="brand">Lesson 16 · Time and memory</div>
+<div class="grp">Theory</div>
+<a href="#steps">1. Counting steps</a>
+<a href="#second">2. How much fits in one second</a>
+<a href="#shortcut">3. Too slow? Find a shortcut</a>
+<a href="#memory">4. Memory</a>
+<a href="#plan">5. Before you write code</a>
+<div class="grp">Reference</div>
+<a href="#cheat">6. Cheat sheet</a>
+<a href="#pitfalls">7. Pitfalls</a>
+<a href="#complexity">8. Complexity</a>
+<div class="grp">Practice</div>
+<a href="#problems">9. 12 problems</a>
+<a href="#gA" style="padding-left:16px">A. Count the steps: is trying everything fast enough?</a>
+<a href="#gB" style="padding-left:16px">B. Too slow - find a shortcut</a>
+<a href="#gC" style="padding-left:16px">C. Too big to store</a>
+<div class="pager">
+<a href="../15_Recursion/15_Recursion.html" title="Previous: Lesson 15 &middot; Recursion">&larr;<small>Lesson 15</small></a>
+<a href="../17_Practice_Contests/17_Practice_Contests.html" title="Next: Lesson 17 &middot; Practice contests - eleven rounds of three">&rarr;<small>Lesson 17</small></a>
+</div>
+</nav>
+<main>
+<header class="top"><h1>C++17 Time and memory - will it be fast enough?</h1><div class="sub">Lesson 16 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<h2 id="steps">1. Counting steps</h2>
+<p>Before you write a solution, count roughly how many steps it will make. You do not need the exact number - only how it grows when <code>n</code> grows:</p>
+<pre><code>for (int i = 0; i &lt; n; i++) s += a[i];          // n steps
+
+for (int i = 0; i &lt; n; i++)                       // n * n steps
+    for (int j = 0; j &lt; n; j++) cnt++;
+
+while (n &gt; 1) n /= 2;                             // about log n steps:
+                                                  // 20 for a million</code></pre>
+<p>We write these as O(n), O(n * n) and O(log n) - lesson by lesson you have seen this in the complexity tables. The <strong>O</strong> says: &quot;about this many steps, give or take a small factor&quot;.</p>
+<h2 id="second">2. How much fits in one second</h2>
+<p>A judge&#x27;s computer makes about <strong>100 million</strong> (10^8) simple steps per second. Put the biggest <code>n</code> from the statement into your step count and compare:</p>
+<div class="tblwrap"><table><thead><tr>
+<th>If n is at most...</th>
+<th>these solutions are fast enough</th>
+</tr></thead><tbody>
+<tr><td>10</td><td>trying every order: O(n!)</td></tr>
+<tr><td>20</td><td>trying every group: O(2^n)</td></tr>
+<tr><td>500</td><td>three loops inside each other: O(n^3)</td></tr>
+<tr><td>5 000</td><td>two loops inside each other: O(n^2)</td></tr>
+<tr><td>1 000 000</td><td>sorting, O(n log n), or one loop, O(n)</td></tr>
+<tr><td>10^18</td><td>a formula, O(1), or halving, O(log n)</td></tr>
+</tbody></table></div>
+<p>Example: <code>n = 100000</code> and you planned to compare every pair. That is about 10^10 steps - a hundred seconds. Too slow by far; you need something else.</p>
+<p>But the opposite matters just as much: if <code>n</code> is at most 1000, comparing every pair (a million steps) is perfectly fine. Do not invent something clever when the simple way is fast enough.</p>
+<h2 id="shortcut">3. Too slow? Find a shortcut</h2>
+<p>Three shortcuts that solve a lot of problems:</p>
+<ul><li><strong>A formula instead of a loop.</strong> <code>1 + 2 + ... + n</code> is <code>n * (n + 1) / 2</code> - one step instead of <code>n</code> (lesson 02).</li><li><strong>Stop at the square root.</strong> Divisors come in pairs: if <code>i</code> divides <code>n</code>, so does <code>n / i</code>, and one of the two is at most the square root of <code>n</code>.</li><li><strong>Sort or count once, then answer quickly.</strong> Instead of comparing every pair, sort (lesson 08) or count (lesson 06) once.</li></ul>
+<pre><code>// all divisors of n in about sqrt(n) steps - 1000 steps instead of a million
+for (long long i = 1; i * i &lt;= n; i++) {
+    if (n % i == 0) {
+        cout &lt;&lt; i &lt;&lt; &#x27; &#x27;;
+        if (i != n / i) cout &lt;&lt; n / i &lt;&lt; &#x27; &#x27;;
+    }
+}</code></pre>
+<p>When even one step per number is too slow - say, counting something among all numbers up to 10^18 - work digit position by digit position instead of number by number.</p>
+<h2 id="memory">4. Memory</h2>
+<p>The statement also gives a <strong>memory limit</strong>, for example 64 MB. One MB is about a million bytes. Each value takes a fixed number of bytes:</p>
+<div class="tblwrap"><table><thead><tr>
+<th>Type</th>
+<th>Bytes</th>
+<th>How many fit in 64 MB</th>
+</tr></thead><tbody>
+<tr><td><code>char</code>, <code>bool</code></td><td>1</td><td>about 64 million</td></tr>
+<tr><td><code>int</code></td><td>4</td><td>about 16 million</td></tr>
+<tr><td><code>long long</code>, <code>double</code></td><td>8</td><td>about 8 million</td></tr>
+</tbody></table></div>
+<p>So <code>int a[10000000];</code> (ten million) uses 40 MB, and <code>int g[5000][5000];</code> uses 100 MB - too much for 64 MB.</p>
+<p>When the data does not fit, ask: <strong>do I really need to keep all of it?</strong> Very often a few numbers kept while reading are enough - the smallest so far, a count, a sum (lesson 01). Or keep counts of the values instead of the values themselves (lesson 06).</p>
+<h2 id="plan">5. Before you write code</h2>
+<ul><li>Find the biggest <code>n</code> (and the biggest values) in the statement.</li><li>Count the steps of your idea for that <code>n</code>. Under 10^8? Go ahead.</li><li>Count the memory: how many numbers will you store, and of which type?</li><li>Check whether the answer fits in an <code>int</code>, or needs <code>long long</code>.</li><li>Only then start typing.</li></ul>
+<p>Two minutes of counting can save an hour of writing a solution that was never going to pass.</p>
+<h2 id="cheat">6. Cheat sheet &mdash; memorise this page</h2>
+<p>Cover the right-hand column and try to write each line from memory.</p>
+<div class="tblwrap"><table class="cheat"><thead><tr><th>You want to&hellip;</th><th>Write</th></tr></thead><tbody>
+<tr><td>One loop over n</td><td>O(n)</td></tr>
+<tr><td>A loop inside a loop</td><td>O(n * n)</td></tr>
+<tr><td>Halving until 1</td><td>O(log n) - about 20 for a million, 60 for 10^18</td></tr>
+<tr><td>Steps per second</td><td>about 10^8</td></tr>
+<tr><td>n up to 5000</td><td>two nested loops are fine</td></tr>
+<tr><td>n up to a million</td><td>sort, or a single loop</td></tr>
+<tr><td>n up to 10^18</td><td>a formula, or halving</td></tr>
+<tr><td>Divisors quickly</td><td><code>for (i = 1; i * i &lt;= n; i++)</code> - take <code>i</code> and <code>n / i</code></td></tr>
+<tr><td>Memory per value</td><td><code>char</code> 1, <code>int</code> 4, <code>long long</code> 8 bytes</td></tr>
+<tr><td>Too big to store</td><td>keep only what you need while reading, or count instead</td></tr>
+</tbody></table></div>
+<h2 id="pitfalls">7. 5 pitfalls that cost real marks</h2>
+<div class="tblwrap"><table class="pit"><tbody>
+<tr><td><b>Never looking at the limits.</b><span class="tech">An O(n * n) solution for <code>n = 100000</code> gets &quot;Time limit exceeded&quot; on the big tests, however correct it is.</span></td></tr>
+<tr><td><b>Something clever where a simple loop would do.</b><span class="tech">If <code>n</code> is small, trying everything is fast enough, and it is much easier to get right.</span></td></tr>
+<tr><td><b><code>i * i &lt;= n</code> with <code>int i</code> and a big <code>n</code>.</b><span class="tech"><code>i * i</code> overflows before the loop ends. Use <code>long long i</code>.</span></td></tr>
+<tr><td><b>An array that does not fit.</b><span class="tech">Count the bytes before you declare it: number of values times bytes per value.</span></td></tr>
+<tr><td><b>Forgetting that reading takes time too.</b><span class="tech">A million numbers with slow <code>cin</code> can cost a second on its own. Use the two fast-input lines from lesson 01.</span></td></tr>
+</tbody></table></div>
+<h2 id="complexity">8. Complexity reference</h2>
+<div class="tblwrap"><table><thead><tr><th>Operation</th><th>Cost</th></tr></thead><tbody>
+<tr><td>O(1), O(log n)</td><td>instant, even for n = 10^18</td></tr>
+<tr><td>O(n), O(n log n)</td><td>fine up to a few million</td></tr>
+<tr><td>O(n * n)</td><td>fine up to about 5000</td></tr>
+<tr><td>O(n^3)</td><td>fine up to about 500</td></tr>
+<tr><td>O(2^n), O(n!)</td><td>only for about 20 and about 10</td></tr>
+</tbody></table></div>
+<h2 id="problems">9. Practice &mdash; 12 problems, Group D</h2>
+<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
+<div class="pgroup"><h3 id="gA">A. Count the steps: is trying everything fast enough?</h3><p class="maps">Theory: sections 1 and 2</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100587"></td><td><a href="https://arena.olimpiici.com/#/catalog/226/problem/100587" target="_blank" rel="noopener">decision</a><br><span class="tech">Buses and taxis</span></td><td class="tech">try every number of buses - there are not many</td><td class="src">National round 2012</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101366"></td><td><a href="https://arena.olimpiici.com/#/catalog/555/problem/101366" target="_blank" rel="noopener">int</a><br><span class="tech">Digit product</span></td><td class="tech">at most 100001 numbers in the range: test each one</td><td class="src">Municipal round 2020</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100145"></td><td><a href="https://arena.olimpiici.com/#/catalog/68/problem/100145" target="_blank" rel="noopener">sherlok</a><br><span class="tech">Sherlock</span></td><td class="tech">try every third volume - count the steps first</td><td class="src">Autumn tournament 2016</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101368"></td><td><a href="https://arena.olimpiici.com/#/catalog/555/problem/101368" target="_blank" rel="noopener">sum</a><br><span class="tech">Sum</span></td><td class="tech">three loops with X up to 1500 - count the steps before you write them</td><td class="src">Municipal round 2020</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gB">B. Too slow - find a shortcut</h3><p class="maps">Theory: section 3</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="102070"></td><td><a href="https://arena.olimpiici.com/#/catalog/790/problem/102070" target="_blank" rel="noopener">sum</a><br><span class="tech">The sum</span></td><td class="tech"><code>n(n+1)/2</code> grows fast: find n without adding one by one</td><td class="src">Autumn tournament 2023</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100040"></td><td><a href="https://arena.olimpiici.com/#/catalog/26/problem/100040" target="_blank" rel="noopener">rect</a><br><span class="tech">Rectangle</span></td><td class="tech">divisors come in pairs, so stop at the square root</td><td class="src">Autumn tournament 2009</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100450"></td><td><a href="https://arena.olimpiici.com/#/catalog/188/problem/100450" target="_blank" rel="noopener">digits</a><br><span class="tech">Counting a digit</span></td><td class="tech">up to 10^18: count position by position, not number by number</td><td class="src">Regional round 2015</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100883"></td><td><a href="https://arena.olimpiici.com/#/catalog/315/problem/100883" target="_blank" rel="noopener">zcount</a><br><span class="tech">Counting zeros</span></td><td class="tech">the same shortcut for the zeros, up to 10^16</td><td class="src">Spring tournament 2017</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Too big to store</h3><p class="maps">Theory: section 4</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="102529"></td><td><a href="https://arena.olimpiici.com/#/catalog/912/problem/102529" target="_blank" rel="noopener">prices</a><br><span class="tech">Prices</span></td><td class="tech">the list will not fit - keep the cheapest price so far</td><td class="src">Winter tournament 2026</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100726"></td><td><a href="https://arena.olimpiici.com/#/catalog/255/problem/100726" target="_blank" rel="noopener">major</a><br><span class="tech">Majority</span></td><td class="tech">inside 2 MB: one candidate and one counter</td><td class="src">National round 2018</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="102132"></td><td><a href="https://arena.olimpiici.com/#/catalog/803/problem/102132" target="_blank" rel="noopener">rank</a><br><span class="tech">The k-th score</span></td><td class="tech">the scores will not fit in 2 MB - keep only what you need</td><td class="src">National round 2024</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="102005"></td><td><a href="https://arena.olimpiici.com/#/catalog/771/problem/102005" target="_blank" rel="noopener">flowers</a><br><span class="tech">Flowers</span></td><td class="tech">only the commonest flower matters - work out what to keep instead of storing every flower</td><td class="src">Summer tournament 2023</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 16 · C++17 time and memory limits. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
+</main></div>
+<script>var LESSON_SLUG="16_Complexity_And_Limits";var LEGACY_KEY=null;</script>
+<script>
+var THEME_KEY="cpp_lessons_theme";
+var DONE_KEY="cpp_done_"+LESSON_SLUG;
+// ---- theme -------------------------------------------------------------
+var tb=document.getElementById('themeBtn');
+function setTheme(t){
+  if(t) document.documentElement.setAttribute('data-theme',t);
+  else document.documentElement.removeAttribute('data-theme');
+  try{t?localStorage.setItem(THEME_KEY,t):localStorage.removeItem(THEME_KEY)}catch(e){}
+}
+try{var st=localStorage.getItem(THEME_KEY); if(st) setTheme(st);}catch(e){}
+tb.onclick=function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  setTheme(cur==='dark'?'light':'dark');
+};
+
+// ---- progress ----------------------------------------------------------
+var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-pid]'));
+var fill=document.querySelector('#bar .fill'), lbl=document.getElementById('cnt');
+// state lives in memory; localStorage is a best-effort mirror so that ticking
+// still works when storage is blocked (private window, file:// restrictions)
+var state={};
+try{
+  var raw=localStorage.getItem(DONE_KEY);
+  if(raw===null && LEGACY_KEY) raw=localStorage.getItem(LEGACY_KEY);  // one-time adopt
+  state=JSON.parse(raw||'{}')||{};
+}catch(e){state={}}
+function save(){try{localStorage.setItem(DONE_KEY,JSON.stringify(state))}catch(e){}}
+function paint(){
+  var n=0;
+  boxes.forEach(function(b){
+    var on=!!state[b.dataset.pid]; b.checked=on; if(on)n++;
+    b.closest('tr').classList.toggle('done',on);
+  });
+  fill.style.width=(n/boxes.length*100)+'%';
+  lbl.textContent=n+' / '+boxes.length+' solved';
+}
+boxes.forEach(function(b){b.onchange=function(){
+  if(b.checked)state[b.dataset.pid]=1; else delete state[b.dataset.pid];
+  save(); paint();
+};});
+document.getElementById('reset').onclick=function(){
+  if(confirm('Clear all progress?')){state={};save();paint();}
+};
+paint();
+
+// ---- scroll spy --------------------------------------------------------
+var links=[].slice.call(document.querySelectorAll('#nav a[href^="#"]'));
+var map={}; links.forEach(function(a){
+  var el=document.getElementById(a.getAttribute('href').slice(1)); if(el)map[el.id]=a;});
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.remove('on')});
+      if(map[e.target.id])map[e.target.id].classList.add('on');
+    }});
+},{rootMargin:'0px 0px -75% 0px'});
+Object.keys(map).forEach(function(id){obs.observe(document.getElementById(id))});
+
+// ---- C++ highlighter ---------------------------------------------------
+var KW=('alignas|alignof|auto|bool|break|case|catch|char|class|const|constexpr|continue|'+
+ 'decltype|default|delete|do|double|else|enum|explicit|export|extern|false|float|for|friend|'+
+ 'goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|'+
+ 'public|register|return|short|signed|sizeof|static|static_cast|struct|switch|template|this|'+
+ 'throw|true|try|typedef|typename|union|unsigned|using|virtual|void|volatile|while|'+
+ 'string|string_view|vector|size_t|map|unordered_map|set|pair|istringstream|ostringstream').split('|');
+var KWRE=new RegExp('\\b('+KW.join('|')+')\\b','g');
+document.querySelectorAll('pre code').forEach(function(el){
+  var src=el.textContent, out='', i=0;
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  while(i<src.length){
+    var rest=src.slice(i), m;
+    if((m=rest.match(/^\/\/[^\n]*/))){out+='<span class="com">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^#[a-z]+/))){out+='<span class="pp">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^"(?:\\.|[^"\\])*"/))||(m=rest.match(/^'(?:\\.|[^'\\])*'/))){
+      out+='<span class="str">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^\b\d[\w.]*/))){out+='<span class="num">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^[A-Za-z_]\w*/))){
+      out+= KWRE.test(m[0])&&(KWRE.lastIndex=0,true) ? '<span class="kw">'+esc(m[0])+'</span>' : esc(m[0]);
+      i+=m[0].length;continue;}
+    out+=esc(src[i]); i++;
+  }
+  el.innerHTML=out;
+});
+</script>
+</body></html>

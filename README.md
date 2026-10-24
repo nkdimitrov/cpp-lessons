@@ -1,7 +1,7 @@
 # C++17 for Competitive Programming
 
 A C++17 course for Bulgarian olympiad preparation — NOI Groups C and D — written for
-6th–7th graders, together with a searchable catalogue of 768 classified competition
+5th–6th graders, together with a searchable catalogue of 768 classified competition
 problems from the Olimpiici Arena (2007–2026).
 
 The whole thing is a static site: a hub that lists the lessons, one page per lesson,
@@ -16,13 +16,14 @@ Once GitHub Pages is enabled for this repository (Settings → Pages → deploy 
 
 | | |
 |---|---|
-| **42 lessons planned** | 16 on the language and its data structures, 26 on algorithms and techniques |
-| **5 lessons written** | setup and I/O, primitive types, strings, arrays, vectors |
+| **43 lessons planned** | 17 on the language and its data structures, 26 on algorithms and techniques |
+| **17 lessons written** | all of Part I: setup and I/O, numbers, strings, arrays, vectors, counting arrays, grids, sorting, pairs and structs, stacks and queues, sets and maps, priority queues, the `<algorithm>` toolbox, big integers, recursion, time and memory limits, and practice contests |
 | **768 problems classified** | difficulty 1–5, primary and secondary algorithm, technique tags, a one-line hint and a link to the Arena statement |
 
 Each lesson page carries theory, a cheat sheet, the pitfalls that actually cost marks,
-a complexity table, and a graded practice set drawn from the catalogue — every practice
-group mapped back to the theory section that solves it. Progress ticks and the light/dark
+a complexity table, and 12 practice problems from Group D, grouped by subtopic and getting
+harder as you go — every practice group mapped back to the theory section that solves it.
+Lesson 17 closes Part I with 33 unused Group D problems in eleven contest-style rounds of three. Progress ticks and the light/dark
 theme are stored per browser in `localStorage`.
 
 Lesson pages are also exported to Word (`NN_Topic/NN_Topic.docx`) for printing.
@@ -81,7 +82,7 @@ python tools/catalog.py find --any-tech Stacks --any-tech Queues --diff 2-3 --li
 ```
 
 ```bash
-python tools/catalog.py pick --alg "Greedy" --diff 2-3 --limit 6 --section A --out 22_Greedy/problems.json
+python tools/catalog.py pick --alg "Greedy" --diff 2-3 --limit 6 --section A --out 23_Greedy/problems.json
 ```
 
 Filters: `--alg`, `--any-alg`, `--exclude-alg`, `--tech`, `--any-tech`, `--group`,
@@ -91,9 +92,9 @@ placed in some lesson so the same problem is not assigned twice.
 ## Writing a lesson
 
 [CLAUDE.md](CLAUDE.md) is the working specification: the content conventions (how much
-C++ a 6th-grader may be shown, contest style over production style, British English),
-the problem-selection rules (18–26 problems, 4–6 lettered groups, easiest first, start
-at difficulty 1–2 and end at 4–5), and the shape of `content.py`. [03_Strings](03_Strings/)
+C++ a 5th-grader may be shown, only the basics, contest style over production style, British
+English), the problem-selection rules (12 Group D problems, grouped by subtopic, difficulty
+rising from 1–2 to 3–4), and the shape of `content.py`. [03_Strings](03_Strings/)
 is the reference lesson — match it.
 
 ## Note on the statements

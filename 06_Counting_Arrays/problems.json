@@ -1,0 +1,159 @@
+{
+ "group": "D",
+ "groups": [
+  {
+   "key": "A",
+   "name": "A. One box per value",
+   "maps": "Theory: sections 1 and 2"
+  },
+  {
+   "key": "B",
+   "name": "B. Marking: seen or not seen",
+   "maps": "Theory: section 3"
+  },
+  {
+   "key": "C",
+   "name": "C. The commonest value, and pairs",
+   "maps": "Theory: section 4"
+  },
+  {
+   "key": "D",
+   "name": "D. Counting as you go, and counting sort",
+   "maps": "Theory: sections 5 and 6"
+  }
+ ],
+ "problems": [
+  {
+   "section": "A",
+   "pid": 100255,
+   "title": "lottery",
+   "en": "Lottery",
+   "tech": "ten boxes, one per digit - which digit turns up again?",
+   "family": "Municipal round",
+   "year": 2012,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/110/problem/100255"
+  },
+  {
+   "section": "A",
+   "pid": 100539,
+   "title": "poker",
+   "en": "Poker",
+   "tech": "count each card value, then read the hand off the counts",
+   "family": "National round",
+   "year": 2010,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/216/problem/100539"
+  },
+  {
+   "section": "A",
+   "pid": 102262,
+   "title": "digit",
+   "en": "Leading digit",
+   "tech": "every product of the table goes into the box of its first digit",
+   "family": "Municipal round",
+   "year": 2025,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/845/problem/102262"
+  },
+  {
+   "section": "B",
+   "pid": 102487,
+   "title": "pair",
+   "en": "Pairs with sum S",
+   "tech": "before marking `x`, ask whether `S - x` is already marked",
+   "family": "Municipal round",
+   "year": 2026,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/901/problem/102487"
+  },
+  {
+   "section": "B",
+   "pid": 100885,
+   "title": "long",
+   "en": "The longest run",
+   "tech": "mark the values, then the longest run of marked boxes",
+   "family": "Spring tournament",
+   "year": 2017,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/315/problem/100885"
+  },
+  {
+   "section": "B",
+   "pid": 102687,
+   "title": "triplet",
+   "en": "Pythagorean triples",
+   "tech": "mark the values, try each pair, look the third side up",
+   "family": "Spring tournament",
+   "year": 2026,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/949/problem/102687"
+  },
+  {
+   "section": "C",
+   "pid": 101043,
+   "title": "postagestamps",
+   "en": "Postage stamps",
+   "tech": "count the stamps of each value, then pages and albums by rounding up",
+   "family": "Municipal round",
+   "year": 2019,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/382/problem/101043"
+  },
+  {
+   "section": "C",
+   "pid": 100991,
+   "title": "students",
+   "en": "Students",
+   "tech": "every wish votes for one shift; the commonest shift wins",
+   "family": "Winter tournament",
+   "year": 2014,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/357/problem/100991"
+  },
+  {
+   "section": "C",
+   "pid": 101979,
+   "title": "alike",
+   "en": "Alike numbers",
+   "tech": "a count per digit, then `c * (c - 1) / 2` pairs from each box",
+   "family": "Spring tournament",
+   "year": 2023,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/762/problem/101979"
+  },
+  {
+   "section": "D",
+   "pid": 100869,
+   "title": "necklace",
+   "en": "Necklace",
+   "tech": "count as you go: each pair adds the count of its first letter so far",
+   "family": "Spring tournament",
+   "year": 2016,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/309/problem/100869"
+  },
+  {
+   "section": "D",
+   "pid": 100345,
+   "title": "red",
+   "en": "The row",
+   "tech": "how many equal values lie before, and after, each position",
+   "family": "Municipal round",
+   "year": 2018,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/146/problem/100345"
+  },
+  {
+   "section": "D",
+   "pid": 101773,
+   "title": "searching",
+   "en": "Searching",
+   "tech": "count the values instead of storing them, then walk to the k-th",
+   "family": "Spring tournament",
+   "year": 2022,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/695/problem/101773"
+  }
+ ]
+}

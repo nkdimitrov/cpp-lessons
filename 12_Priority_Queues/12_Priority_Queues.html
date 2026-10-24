@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>C++17 Priority queues - always the best one first</title>
+<style>
+:root{
+  --bg:#fbfaf8; --panel:#ffffff; --ink:#1c1b1a; --muted:#6b6763; --line:#e4e0da;
+  --accent:#8a4b1f; --accent-soft:#f3ece4; --code-bg:#f6f3ee; --code-ink:#2d2a26;
+  --kw:#8a4b1f; --str:#3f6b3f; --com:#9a948c; --num:#2f5c8a; --pre:#7a5ea8;
+  --note-bg:#fdf6e7; --note-line:#d9a441; --ok:#3f6b3f;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+    --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+    --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+    --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#17161a; --panel:#1e1d22; --ink:#e9e6e1; --muted:#9a948c; --line:#33313a;
+  --accent:#e0a06a; --accent-soft:#2a2530; --code-bg:#232128; --code-ink:#ddd8d1;
+  --kw:#e0a06a; --str:#9ac48a; --com:#7b757f; --num:#84b4dd; --pre:#c0a2e8;
+  --note-bg:#2b2618; --note-line:#a8813a; --ok:#9ac48a;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:16px/1.65 "Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+code,pre,.mono{font-family:"JetBrains Mono",Consolas,"SF Mono",Menlo,monospace}
+.wrap{display:flex;gap:0;align-items:flex-start;max-width:1220px;margin:0 auto}
+/* ---- sidebar ---- */
+#nav{position:sticky;top:0;flex:0 0 250px;height:100vh;overflow-y:auto;
+  padding:26px 14px 40px 20px;border-right:1px solid var(--line);font-size:13.5px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+#nav .brand{font-weight:700;letter-spacing:.02em;color:var(--accent);
+  font-size:12px;text-transform:uppercase;margin-bottom:14px}
+#nav a{display:block;padding:4px 8px;margin:1px 0;border-radius:5px;
+  color:var(--muted);text-decoration:none;line-height:1.35}
+#nav a:hover{background:var(--accent-soft);color:var(--ink)}
+#nav a.on{background:var(--accent-soft);color:var(--accent);font-weight:600}
+#nav .grp{margin-top:14px;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--muted);opacity:.7;padding:0 8px}
+#nav a.home{display:inline-flex;align-items:center;gap:7px;margin:0 0 16px;padding:5px 12px;
+  border:1px solid var(--line);border-radius:6px;background:var(--panel);color:var(--ink);
+  font-weight:600}
+#nav a.home svg{width:15px;height:15px}
+#nav a.home:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager{display:flex;gap:8px;margin-top:22px;padding-top:16px;border-top:1px solid var(--line)}
+#nav .pager a,#nav .pager span{flex:1 1 0;display:flex;flex-direction:column;align-items:center;
+  margin:0;padding:6px 4px 7px;border:1px solid var(--line);border-radius:6px;
+  background:var(--panel);color:var(--ink);font-size:22px;line-height:1.1}
+#nav .pager small{font-size:11px;color:var(--muted);margin-top:2px}
+#nav .pager a:hover{border-color:var(--accent);color:var(--accent);background:var(--panel)}
+#nav .pager a:hover small{color:var(--accent)}
+#nav .pager span{opacity:.35}
+/* ---- main ---- */
+main{flex:1 1 auto;min-width:0;padding:34px 40px 120px;max-width:900px}
+header.top{border-bottom:2px solid var(--accent);padding-bottom:18px;margin-bottom:8px}
+h1{font-size:30px;line-height:1.2;margin:0 0 6px}
+.sub{color:var(--muted);font-size:14.5px;font-family:system-ui,sans-serif}
+h2{font-size:21px;margin:44px 0 12px;padding-top:10px;border-top:1px solid var(--line);
+  scroll-margin-top:16px}
+h2:first-of-type{border-top:none}
+h3{font-size:16.5px;margin:26px 0 8px;color:var(--accent);scroll-margin-top:16px}
+p{margin:11px 0}
+code{background:var(--code-bg);padding:1.5px 5px;border-radius:4px;font-size:.87em;
+  color:var(--code-ink);border:1px solid var(--line)}
+pre{background:var(--code-bg);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:7px;padding:13px 15px;overflow-x:auto;font-size:13px;line-height:1.55;
+  margin:14px 0;color:var(--code-ink)}
+pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
+.kw{color:var(--kw);font-weight:600}.str{color:var(--str)}.com{color:var(--com);font-style:italic}
+.num{color:var(--num)}.pp{color:var(--pre)}
+table{border-collapse:collapse;width:100%;margin:15px 0;font-size:14px;
+  font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:11.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);
+  border-bottom:1.5px solid var(--line);font-weight:600}
+tbody tr:nth-child(even){background:var(--accent-soft)}
+ul{margin:11px 0;padding-left:22px}
+li{margin:4px 0}
+.note{background:var(--note-bg);border-left:3px solid var(--note-line);border-radius:0 7px 7px 0;
+  padding:11px 15px;margin:15px 0;font-size:14.5px}
+.tblwrap{overflow-x:auto}
+/* ---- problems ---- */
+.pgroup{margin:26px 0 0}
+.pgroup h3{margin-bottom:2px}
+.pgroup .maps{color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif;margin:0 0 8px}
+table.prob td{padding:9px 10px}
+table.prob a{color:var(--accent);text-decoration:none;font-weight:600;
+  font-family:Consolas,monospace;font-size:13.5px}
+table.prob a:hover{text-decoration:underline}
+.tech{color:var(--muted);font-size:13px}
+.src{color:var(--muted);font-size:12px;white-space:nowrap}
+.dif{color:var(--accent);letter-spacing:1px;font-size:11.5px;white-space:nowrap}
+.done td{opacity:.45}
+.done td a{text-decoration:line-through}
+input[type=checkbox]{width:16px;height:16px;accent-color:var(--accent);cursor:pointer}
+#bar{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 8px;
+  border-bottom:1px solid var(--line);display:flex;gap:12px;align-items:center;
+  font-family:system-ui,sans-serif;font-size:13px;flex-wrap:wrap}
+#bar .track{flex:1 1 130px;height:7px;background:var(--line);border-radius:4px;overflow:hidden;
+  min-width:110px}
+#bar .fill{height:100%;background:var(--accent);width:0;transition:width .25s}
+button{font:inherit;font-size:12.5px;padding:4px 11px;border:1px solid var(--line);
+  border-radius:6px;background:var(--panel);color:var(--ink);cursor:pointer}
+button:hover{border-color:var(--accent);color:var(--accent)}
+#themeBtn{position:fixed;top:14px;right:16px;z-index:10}
+.cheat td:first-child{font-family:system-ui,sans-serif;width:33%}
+.pit b{display:block;margin-bottom:2px}
+footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
+  color:var(--muted);font-size:12.5px;font-family:system-ui,sans-serif}
+@media(max-width:900px){
+  #nav{display:none}
+  main{padding:26px 18px 90px}
+  h1{font-size:24px}
+  #themeBtn{top:8px;right:10px}
+}
+</style>
+</head><body>
+<button id="themeBtn" title="Toggle light / dark">&#9681;</button>
+<div class="wrap">
+<nav id="nav"><a class="home" href="../index.html" title="All lessons"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-8 9 8"/><path d="M5 9.5V21h5v-6h4v6h5V9.5"/></svg>Home</a>
+<div class="brand">Lesson 12 · Priority queues</div>
+<div class="grp">Theory</div>
+<a href="#pq">1. The largest is always on top</a>
+<a href="#min">2. The smallest first</a>
+<a href="#pairs">3. Pairs in the queue</a>
+<a href="#when">4. Priority queue or sort?</a>
+<div class="grp">Reference</div>
+<a href="#cheat">5. Cheat sheet</a>
+<a href="#pitfalls">6. Pitfalls</a>
+<a href="#complexity">7. Complexity</a>
+<div class="grp">Practice</div>
+<a href="#problems">8. 12 problems</a>
+<a href="#gA" style="padding-left:16px">A. The biggest first</a>
+<a href="#gB" style="padding-left:16px">B. The smallest first</a>
+<a href="#gC" style="padding-left:16px">C. Pairs in the queue</a>
+<div class="pager">
+<a href="../11_Sets_And_Maps/11_Sets_And_Maps.html" title="Previous: Lesson 11 &middot; Sets and maps">&larr;<small>Lesson 11</small></a>
+<a href="../13_Algorithm_Library/13_Algorithm_Library.html" title="Next: Lesson 13 &middot; The &lt;algorithm&gt; toolbox">&rarr;<small>Lesson 13</small></a>
+</div>
+</nav>
+<main>
+<header class="top"><h1>C++17 Priority queues - always the best one first</h1><div class="sub">Lesson 12 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<h2 id="pq">1. The largest is always on top</h2>
+<p>A <code>priority_queue</code> is a box you can throw numbers into in any order. Whenever you look, the <strong>largest</strong> one is on top. It is also called a <strong>heap</strong>. Add <code>#include &lt;queue&gt;</code>:</p>
+<pre><code>priority_queue&lt;int&gt; pq;
+pq.push(5);
+pq.push(1);
+pq.push(8);
+pq.push(3);
+
+cout &lt;&lt; pq.top() &lt;&lt; &#x27;\n&#x27;;        // 8
+pq.pop();                        // 8 is gone
+cout &lt;&lt; pq.top() &lt;&lt; &#x27;\n&#x27;;        // 5</code></pre>
+<p>The calls are the same as for a stack: <code>push</code>, <code>top</code>, <code>pop</code>, <code>empty</code>, <code>size</code>. Only the order is different: not the newest, but the largest.</p>
+<p>Pop everything and the numbers come out from the largest to the smallest:</p>
+<pre><code>while (!pq.empty()) {
+    cout &lt;&lt; pq.top() &lt;&lt; &#x27; &#x27;;     // 5 3 1
+    pq.pop();
+}</code></pre>
+<h2 id="min">2. The smallest first</h2>
+<p>To get the <strong>smallest</strong> on top, write the type like this. Learn it as one phrase:</p>
+<pre><code>priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; pq;
+pq.push(5);
+pq.push(1);
+pq.push(8);
+cout &lt;&lt; pq.top() &lt;&lt; &#x27;\n&#x27;;        // 1</code></pre>
+<p>A trick that does the same job: push <code>-x</code> into an ordinary priority queue, and remember to turn the sign back when you take it out.</p>
+<p>The classic job for a smallest-first queue: <strong>keep joining the two smallest</strong>. Piles of sand are joined two at a time, and each join costs the sum of the two piles. The cheapest way is to always join the two smallest piles - and the new pile goes back in:</p>
+<pre><code>priority_queue&lt;long long, vector&lt;long long&gt;, greater&lt;long long&gt;&gt; pq;
+// ... push every pile ...
+long long cost = 0;
+while (pq.size() &gt; 1) {
+    long long a = pq.top(); pq.pop();
+    long long b = pq.top(); pq.pop();
+    cost += a + b;
+    pq.push(a + b);              // the new pile joins the others
+}</code></pre>
+<h2 id="pairs">3. Pairs in the queue</h2>
+<p>A priority queue of pairs compares them like <code>sort</code> does: by <code>first</code>, then by <code>second</code>. Put the thing that decides the order in <code>first</code>, and a number that says <strong>who</strong> it is in <code>second</code>:</p>
+<pre><code>priority_queue&lt;pair&lt;int, int&gt;&gt; pq;     // (score, player)
+pq.push({70, 1});
+pq.push({95, 2});
+pq.push({95, 3});
+cout &lt;&lt; pq.top().second &lt;&lt; &#x27;\n&#x27;;         // 3 - on equal scores, the larger second wins</code></pre>
+<p>With <code>greater&lt;pair&lt;int, int&gt;&gt;</code> the smallest pair is on top. That is perfect for <strong>time</strong>: the earliest event comes out first.</p>
+<p>Example: people come into a room and leave later. How many are inside at most? Go through them in order of arrival. Keep the leaving times in a smallest-first queue; before each arrival, let out everybody who has already left:</p>
+<pre><code>// in[i], out[i]: arrival and leaving time, already sorted by arrival
+priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; leaving;
+int most = 0;
+for (int i = 0; i &lt; n; i++) {
+    while (!leaving.empty() &amp;&amp; leaving.top() &lt;= in[i]) leaving.pop();
+    leaving.push(out[i]);
+    if ((int)leaving.size() &gt; most) most = leaving.size();
+}</code></pre>
+<h2 id="when">4. Priority queue or sort?</h2>
+<div class="tblwrap"><table><thead><tr>
+<th>The situation</th>
+<th>Use</th>
+</tr></thead><tbody>
+<tr><td>All the numbers are known at the start, and you need them all in order</td><td><code>sort</code> - simpler</td></tr>
+<tr><td>New numbers keep arriving while you keep taking out the best one</td><td>a priority queue</td></tr>
+<tr><td>You only need the best one, once</td><td>a single loop with <code>max</code></td></tr>
+</tbody></table></div>
+<p>A priority queue can only show you the top. You cannot look at the second one without popping the first, and you cannot search inside it.</p>
+<h2 id="cheat">5. Cheat sheet &mdash; memorise this page</h2>
+<p>Cover the right-hand column and try to write each line from memory.</p>
+<div class="tblwrap"><table class="cheat"><thead><tr><th>You want to&hellip;</th><th>Write</th></tr></thead><tbody>
+<tr><td>Largest on top</td><td><code>priority_queue&lt;int&gt; pq;</code> (<code>#include &lt;queue&gt;</code>)</td></tr>
+<tr><td>Smallest on top</td><td><code>priority_queue&lt;int, vector&lt;int&gt;, greater&lt;int&gt;&gt; pq;</code></td></tr>
+<tr><td>Add / look / remove</td><td><code>pq.push(x)</code>, <code>pq.top()</code>, <code>pq.pop()</code></td></tr>
+<tr><td>Is it empty? How many?</td><td><code>pq.empty()</code>, <code>pq.size()</code></td></tr>
+<tr><td>Smallest first without <code>greater</code></td><td>push <code>-x</code>, read <code>-pq.top()</code></td></tr>
+<tr><td>Pairs</td><td><code>priority_queue&lt;pair&lt;int, int&gt;&gt;</code> - by <code>first</code>, then <code>second</code></td></tr>
+<tr><td>Earliest event first</td><td><code>priority_queue&lt;pair&lt;int, int&gt;, vector&lt;pair&lt;int, int&gt;&gt;, greater&lt;pair&lt;int, int&gt;&gt;&gt;</code></td></tr>
+<tr><td>Join the two smallest</td><td>pop two, push their sum, repeat while <code>size() &gt; 1</code></td></tr>
+</tbody></table></div>
+<h2 id="pitfalls">6. 5 pitfalls that cost real marks</h2>
+<div class="tblwrap"><table class="pit"><tbody>
+<tr><td><b>Expecting the smallest on top.</b><span class="tech">A plain <code>priority_queue&lt;int&gt;</code> gives the <strong>largest</strong>. For the smallest, add <code>greater&lt;int&gt;</code> or push negative numbers.</span></td></tr>
+<tr><td><b><code>top()</code> or <code>pop()</code> on an empty queue.</b><span class="tech">The program crashes. Check <code>!pq.empty()</code> first.</span></td></tr>
+<tr><td><b><code>pop()</code> gives nothing back.</b><span class="tech">Read <code>top()</code>, then <code>pop()</code>.</span></td></tr>
+<tr><td><b>Overflow when adding.</b><span class="tech">Joined piles get big quickly. Use <code>long long</code> for sums.</span></td></tr>
+<tr><td><b>Looking for a value inside.</b><span class="tech">A priority queue shows only its top. If you need to find or remove any value, use a <code>set</code> (lesson 11).</span></td></tr>
+</tbody></table></div>
+<h2 id="complexity">7. Complexity reference</h2>
+<div class="tblwrap"><table><thead><tr><th>Operation</th><th>Cost</th></tr></thead><tbody>
+<tr><td><code>top()</code>, <code>empty()</code>, <code>size()</code></td><td>O(1)</td></tr>
+<tr><td><code>push(x)</code>, <code>pop()</code> with <code>n</code> values inside</td><td>O(log n)</td></tr>
+<tr><td>Putting in <code>n</code> values and taking them all out</td><td>O(n log n) - the same as sorting</td></tr>
+</tbody></table></div>
+<h2 id="problems">8. Practice &mdash; 12 problems, Group D</h2>
+<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
+<div class="pgroup"><h3 id="gA">A. The biggest first</h3><p class="maps">Theory: section 1</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100358"></td><td><a href="https://arena.olimpiici.com/#/catalog/152/problem/100358" target="_blank" rel="noopener">stones</a><br><span class="tech">Stones</span></td><td class="tech">push every weight; pop them and count how often the value changes</td><td class="src">Regional round 2009</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100298"></td><td><a href="https://arena.olimpiici.com/#/catalog/128/problem/100298" target="_blank" rel="noopener">difference</a><br><span class="tech">Difference</span></td><td class="tech">digits from a max-heap give the largest number, from a min-heap the smallest</td><td class="src">Municipal round 2015</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100542"></td><td><a href="https://arena.olimpiici.com/#/catalog/216/problem/100542" target="_blank" rel="noopener">machine</a><br><span class="tech">Time machine</span></td><td class="tech">the same trick with the digits of a year</td><td class="src">National round 2010</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100130"></td><td><a href="https://arena.olimpiici.com/#/catalog/62/problem/100130" target="_blank" rel="noopener">shop</a><br><span class="tech">The shop</span></td><td class="tech">pop the prices largest first; every k-th one is free</td><td class="src">Autumn tournament 2015</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gB">B. The smallest first</h3><p class="maps">Theory: section 2</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="102469"></td><td><a href="https://arena.olimpiici.com/#/catalog/894/problem/102469" target="_blank" rel="noopener">agent</a><br><span class="tech">Agent</span></td><td class="tech">find the digits, push them into a min-heap, pop them smallest first</td><td class="src">Autumn tournament 2025</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100959"></td><td><a href="https://arena.olimpiici.com/#/catalog/345/problem/100959" target="_blank" rel="noopener">clock</a><br><span class="tech">Alarm clock</span></td><td class="tech">minutes until each alarm go into a min-heap; the top rings first</td><td class="src">Winter tournament 2012</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="102068"></td><td><a href="https://arena.olimpiici.com/#/catalog/790/problem/102068" target="_blank" rel="noopener">stairs</a><br><span class="tech">Stairs</span></td><td class="tech">pop the heights smallest first; build the longest chain of steps</td><td class="src">Autumn tournament 2023</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101774"></td><td><a href="https://arena.olimpiici.com/#/catalog/695/problem/101774" target="_blank" rel="noopener">duets</a><br><span class="tech">Duets</span></td><td class="tech">pop the singers smallest first and pair each with the next one</td><td class="src">Spring tournament 2022</td><td class="dif">★★★★☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Pairs in the queue</h3><p class="maps">Theory: section 3</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="102296"></td><td><a href="https://arena.olimpiici.com/#/catalog/857/problem/102296" target="_blank" rel="noopener">courier</a><br><span class="tech">Courier</span></td><td class="tech">a smallest-first queue of <code>{distance, {|a|, number}}</code> - a pair inside a pair; pop k times</td><td class="src">Winter tournament 2025</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100730"></td><td><a href="https://arena.olimpiici.com/#/catalog/255/problem/100730" target="_blank" rel="noopener">visitors</a><br><span class="tech">Visitors</span></td><td class="tech">a min-heap of leaving times: who has gone when the next one comes?</td><td class="src">National round 2018</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100478"></td><td><a href="https://arena.olimpiici.com/#/catalog/200/problem/100478" target="_blank" rel="noopener">dentist</a><br><span class="tech">The dentist</span></td><td class="tech">patients come out of a min-heap by arrival; each waits for the last</td><td class="src">Regional round 2017</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101762"></td><td><a href="https://arena.olimpiici.com/#/catalog/691/problem/101762" target="_blank" rel="noopener">maxsum</a><br><span class="tech">Largest sums</span></td><td class="tech">a heap of (sum, i): pop the largest, then give i its next partner</td><td class="src">Summer tournament 2021</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 12 · C++17 priority_queue. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
+</main></div>
+<script>var LESSON_SLUG="12_Priority_Queues";var LEGACY_KEY=null;</script>
+<script>
+var THEME_KEY="cpp_lessons_theme";
+var DONE_KEY="cpp_done_"+LESSON_SLUG;
+// ---- theme -------------------------------------------------------------
+var tb=document.getElementById('themeBtn');
+function setTheme(t){
+  if(t) document.documentElement.setAttribute('data-theme',t);
+  else document.documentElement.removeAttribute('data-theme');
+  try{t?localStorage.setItem(THEME_KEY,t):localStorage.removeItem(THEME_KEY)}catch(e){}
+}
+try{var st=localStorage.getItem(THEME_KEY); if(st) setTheme(st);}catch(e){}
+tb.onclick=function(){
+  var cur=document.documentElement.getAttribute('data-theme');
+  if(!cur){cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';}
+  setTheme(cur==='dark'?'light':'dark');
+};
+
+// ---- progress ----------------------------------------------------------
+var boxes=[].slice.call(document.querySelectorAll('input[type=checkbox][data-pid]'));
+var fill=document.querySelector('#bar .fill'), lbl=document.getElementById('cnt');
+// state lives in memory; localStorage is a best-effort mirror so that ticking
+// still works when storage is blocked (private window, file:// restrictions)
+var state={};
+try{
+  var raw=localStorage.getItem(DONE_KEY);
+  if(raw===null && LEGACY_KEY) raw=localStorage.getItem(LEGACY_KEY);  // one-time adopt
+  state=JSON.parse(raw||'{}')||{};
+}catch(e){state={}}
+function save(){try{localStorage.setItem(DONE_KEY,JSON.stringify(state))}catch(e){}}
+function paint(){
+  var n=0;
+  boxes.forEach(function(b){
+    var on=!!state[b.dataset.pid]; b.checked=on; if(on)n++;
+    b.closest('tr').classList.toggle('done',on);
+  });
+  fill.style.width=(n/boxes.length*100)+'%';
+  lbl.textContent=n+' / '+boxes.length+' solved';
+}
+boxes.forEach(function(b){b.onchange=function(){
+  if(b.checked)state[b.dataset.pid]=1; else delete state[b.dataset.pid];
+  save(); paint();
+};});
+document.getElementById('reset').onclick=function(){
+  if(confirm('Clear all progress?')){state={};save();paint();}
+};
+paint();
+
+// ---- scroll spy --------------------------------------------------------
+var links=[].slice.call(document.querySelectorAll('#nav a[href^="#"]'));
+var map={}; links.forEach(function(a){
+  var el=document.getElementById(a.getAttribute('href').slice(1)); if(el)map[el.id]=a;});
+var obs=new IntersectionObserver(function(es){
+  es.forEach(function(e){
+    if(e.isIntersecting){
+      links.forEach(function(a){a.classList.remove('on')});
+      if(map[e.target.id])map[e.target.id].classList.add('on');
+    }});
+},{rootMargin:'0px 0px -75% 0px'});
+Object.keys(map).forEach(function(id){obs.observe(document.getElementById(id))});
+
+// ---- C++ highlighter ---------------------------------------------------
+var KW=('alignas|alignof|auto|bool|break|case|catch|char|class|const|constexpr|continue|'+
+ 'decltype|default|delete|do|double|else|enum|explicit|export|extern|false|float|for|friend|'+
+ 'goto|if|inline|int|long|mutable|namespace|new|noexcept|nullptr|operator|private|protected|'+
+ 'public|register|return|short|signed|sizeof|static|static_cast|struct|switch|template|this|'+
+ 'throw|true|try|typedef|typename|union|unsigned|using|virtual|void|volatile|while|'+
+ 'string|string_view|vector|size_t|map|unordered_map|set|pair|istringstream|ostringstream').split('|');
+var KWRE=new RegExp('\\b('+KW.join('|')+')\\b','g');
+document.querySelectorAll('pre code').forEach(function(el){
+  var src=el.textContent, out='', i=0;
+  function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  while(i<src.length){
+    var rest=src.slice(i), m;
+    if((m=rest.match(/^\/\/[^\n]*/))){out+='<span class="com">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^#[a-z]+/))){out+='<span class="pp">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^"(?:\\.|[^"\\])*"/))||(m=rest.match(/^'(?:\\.|[^'\\])*'/))){
+      out+='<span class="str">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^\b\d[\w.]*/))){out+='<span class="num">'+esc(m[0])+'</span>';i+=m[0].length;continue;}
+    if((m=rest.match(/^[A-Za-z_]\w*/))){
+      out+= KWRE.test(m[0])&&(KWRE.lastIndex=0,true) ? '<span class="kw">'+esc(m[0])+'</span>' : esc(m[0]);
+      i+=m[0].length;continue;}
+    out+=esc(src[i]); i++;
+  }
+  el.innerHTML=out;
+});
+</script>
+</body></html>

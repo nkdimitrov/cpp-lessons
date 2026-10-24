@@ -1,35 +1,25 @@
 {
- "group": "D and C",
+ "group": "D",
  "groups": [
   {
    "key": "A",
    "name": "A. Read a few numbers, print the answer",
-   "maps": "Theory: sections 3 and 5"
+   "maps": "Theory: section 2"
   },
   {
    "key": "B",
-   "name": "B. One character at a time",
-   "maps": "Theory: sections 3, 4 and 7"
+   "name": "B. A loop over the input",
+   "maps": "Theory: section 3"
   },
   {
    "key": "C",
-   "name": "C. Read the numbers, loop, print one answer",
-   "maps": "Theory: sections 3 and 5"
+   "name": "C. One character at a time",
+   "maps": "Theory: section 4"
   },
   {
    "key": "D",
-   "name": "D. Input that is not just numbers",
-   "maps": "Theory: section 7"
-  },
-  {
-   "key": "E",
-   "name": "E. Getting the output exactly right",
+   "name": "D. Numbers with signs in between",
    "maps": "Theory: section 5"
-  },
-  {
-   "key": "F",
-   "name": "F. Too much input to store",
-   "maps": "Theory: sections 4 and 6"
   }
  ],
  "problems": [
@@ -38,7 +28,7 @@
    "pid": 100283,
    "title": "cinema",
    "en": "Cinema",
-   "tech": "read two numbers, print two - `/` and `%` do the work",
+   "tech": "two numbers in, row and seat out - `/` and `%` do the work",
    "family": "Municipal round",
    "year": 2014,
    "diff": 1,
@@ -46,32 +36,76 @@
   },
   {
    "section": "A",
-   "pid": 100236,
-   "title": "table",
-   "en": "The table",
-   "tech": "read three numbers, answer with a formula",
+   "pid": 100344,
+   "title": "kub",
+   "en": "Cube",
+   "tech": "one number in, four formulas out; the counts need `long long`",
    "family": "Municipal round",
-   "year": 2011,
-   "diff": 1,
-   "url": "https://arena.olimpiici.com/#/catalog/103/problem/100236"
+   "year": 2018,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/146/problem/100344"
+  },
+  {
+   "section": "A",
+   "pid": 100512,
+   "title": "clock",
+   "en": "Clock",
+   "tech": "a time in, a waiting time out - print it in exactly the right form",
+   "family": "National round",
+   "year": 2009,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/211/problem/100512"
   },
   {
    "section": "B",
+   "pid": 100389,
+   "title": "seq",
+   "en": "The sequence",
+   "tech": "keep the previous number, the current streak and the best streak",
+   "family": "Regional round",
+   "year": 2011,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/164/problem/100389"
+  },
+  {
+   "section": "B",
+   "pid": 100225,
+   "title": "remote",
+   "en": "Remote control",
+   "tech": "read the points one by one and keep the smallest `|x| + |y|`",
+   "family": "Municipal round",
+   "year": 2010,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/98/problem/100225"
+  },
+  {
+   "section": "B",
+   "pid": 100613,
+   "title": "rabbits",
+   "en": "Rabbits",
+   "tech": "read each rabbit's two positions and keep the largest difference",
+   "family": "National round",
+   "year": 2013,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/231/problem/100613"
+  },
+  {
+   "section": "C",
    "pid": 100748,
    "title": "sin",
    "en": "Forecast",
-   "tech": "read the letters one at a time; never store them",
+   "tech": "read the letters one at a time: the longest run of one letter",
    "family": "Spring tournament",
    "year": 2008,
    "diff": 1,
    "url": "https://arena.olimpiici.com/#/catalog/261/problem/100748"
   },
   {
-   "section": "B",
+   "section": "C",
    "pid": 100041,
    "title": "maxbin",
    "en": "Ones and zeros",
-   "tech": "count while reading, then print the answer yourself",
+   "tech": "count the ones while reading, then print them before the zeros",
    "family": "Autumn tournament",
    "year": 2009,
    "diff": 1,
@@ -79,25 +113,14 @@
   },
   {
    "section": "C",
-   "pid": 100370,
-   "title": "num",
-   "en": "Repeated digits",
-   "tech": "loop over the range the input gives you",
-   "family": "Regional round",
-   "year": 2010,
-   "diff": 1,
-   "url": "https://arena.olimpiici.com/#/catalog/157/problem/100370"
-  },
-  {
-   "section": "C",
-   "pid": 100222,
-   "title": "Lubimec13",
-   "en": "Favourite 13",
-   "tech": "test every number in the range, print the count",
-   "family": "Municipal round",
-   "year": 2010,
+   "pid": 100027,
+   "title": "choco",
+   "en": "Chocolate",
+   "tech": "count the blocks of one letter as the characters arrive",
+   "family": "Autumn tournament",
+   "year": 2008,
    "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/97/problem/100222"
+   "url": "https://arena.olimpiici.com/#/catalog/20/problem/100027"
   },
   {
    "section": "D",
@@ -115,55 +138,22 @@
    "pid": 100330,
    "title": "circles",
    "en": "Loops in the digits",
-   "tech": "read an expression, then look at the answer's digits",
+   "tech": "read the sum, work out the answer, then look at its digits",
    "family": "Municipal round",
    "year": 2017,
    "diff": 2,
    "url": "https://arena.olimpiici.com/#/catalog/140/problem/100330"
   },
   {
-   "section": "E",
-   "pid": 100512,
-   "title": "clock",
-   "en": "Clock",
-   "tech": "a time in, a time out - get the format exactly right",
-   "family": "National round",
-   "year": 2009,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/211/problem/100512"
-  },
-  {
-   "section": "E",
-   "pid": 100927,
-   "title": "position",
-   "en": "The k-th digit",
-   "tech": "print one digit out of a very long run of squares",
-   "family": "Winter tournament",
-   "year": 2010,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/332/problem/100927"
-  },
-  {
-   "section": "F",
-   "pid": 102529,
-   "title": "prices",
-   "en": "Prices",
-   "tech": "the list will not fit - decide as each value arrives",
-   "family": "Winter tournament",
-   "year": 2026,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/912/problem/102529"
-  },
-  {
-   "section": "F",
-   "pid": 100726,
-   "title": "major",
-   "en": "Majority",
-   "tech": "the same, inside 2 MB",
-   "family": "National round",
-   "year": 2018,
+   "section": "D",
+   "pid": 101259,
+   "title": "guess",
+   "en": "The missing digit",
+   "tech": "try each digit 0-9 in place of `?` and check the sum",
+   "family": "Autumn tournament",
+   "year": 2019,
    "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/255/problem/100726"
+   "url": "https://arena.olimpiici.com/#/catalog/467/problem/101259"
   }
  ]
 }

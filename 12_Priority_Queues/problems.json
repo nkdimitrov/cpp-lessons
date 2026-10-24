@@ -1,0 +1,154 @@
+{
+ "group": "D",
+ "groups": [
+  {
+   "key": "A",
+   "name": "A. The biggest first",
+   "maps": "Theory: section 1"
+  },
+  {
+   "key": "B",
+   "name": "B. The smallest first",
+   "maps": "Theory: section 2"
+  },
+  {
+   "key": "C",
+   "name": "C. Pairs in the queue",
+   "maps": "Theory: section 3"
+  }
+ ],
+ "problems": [
+  {
+   "section": "A",
+   "pid": 100358,
+   "title": "stones",
+   "en": "Stones",
+   "tech": "push every weight; pop them and count how often the value changes",
+   "family": "Regional round",
+   "year": 2009,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/152/problem/100358"
+  },
+  {
+   "section": "A",
+   "pid": 100298,
+   "title": "difference",
+   "en": "Difference",
+   "tech": "digits from a max-heap give the largest number, from a min-heap the smallest",
+   "family": "Municipal round",
+   "year": 2015,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/128/problem/100298"
+  },
+  {
+   "section": "A",
+   "pid": 100542,
+   "title": "machine",
+   "en": "Time machine",
+   "tech": "the same trick with the digits of a year",
+   "family": "National round",
+   "year": 2010,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/216/problem/100542"
+  },
+  {
+   "section": "A",
+   "pid": 100130,
+   "title": "shop",
+   "en": "The shop",
+   "tech": "pop the prices largest first; every k-th one is free",
+   "family": "Autumn tournament",
+   "year": 2015,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/62/problem/100130"
+  },
+  {
+   "section": "B",
+   "pid": 102469,
+   "title": "agent",
+   "en": "Agent",
+   "tech": "find the digits, push them into a min-heap, pop them smallest first",
+   "family": "Autumn tournament",
+   "year": 2025,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/894/problem/102469"
+  },
+  {
+   "section": "B",
+   "pid": 100959,
+   "title": "clock",
+   "en": "Alarm clock",
+   "tech": "minutes until each alarm go into a min-heap; the top rings first",
+   "family": "Winter tournament",
+   "year": 2012,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/345/problem/100959"
+  },
+  {
+   "section": "B",
+   "pid": 102068,
+   "title": "stairs",
+   "en": "Stairs",
+   "tech": "pop the heights smallest first; build the longest chain of steps",
+   "family": "Autumn tournament",
+   "year": 2023,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/790/problem/102068"
+  },
+  {
+   "section": "B",
+   "pid": 101774,
+   "title": "duets",
+   "en": "Duets",
+   "tech": "pop the singers smallest first and pair each with the next one",
+   "family": "Spring tournament",
+   "year": 2022,
+   "diff": 4,
+   "url": "https://arena.olimpiici.com/#/catalog/695/problem/101774"
+  },
+  {
+   "section": "C",
+   "pid": 102296,
+   "title": "courier",
+   "en": "Courier",
+   "tech": "a smallest-first queue of `{distance, {|a|, number}}` - a pair inside a pair; pop k times",
+   "family": "Winter tournament",
+   "year": 2025,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/857/problem/102296"
+  },
+  {
+   "section": "C",
+   "pid": 100730,
+   "title": "visitors",
+   "en": "Visitors",
+   "tech": "a min-heap of leaving times: who has gone when the next one comes?",
+   "family": "National round",
+   "year": 2018,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/255/problem/100730"
+  },
+  {
+   "section": "C",
+   "pid": 100478,
+   "title": "dentist",
+   "en": "The dentist",
+   "tech": "patients come out of a min-heap by arrival; each waits for the last",
+   "family": "Regional round",
+   "year": 2017,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/200/problem/100478"
+  },
+  {
+   "section": "C",
+   "pid": 101762,
+   "title": "maxsum",
+   "en": "Largest sums",
+   "tech": "a heap of (sum, i): pop the largest, then give i its next partner",
+   "family": "Summer tournament",
+   "year": 2021,
+   "diff": 3,
+   "url": "https://arena.olimpiici.com/#/catalog/691/problem/101762"
+  }
+ ]
+}

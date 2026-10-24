@@ -1,7 +1,7 @@
 # Programming Lessons C++ — project instructions
 
 A C++17 course for Bulgarian olympiad preparation (NOI Groups C and D), written
-for **6th–7th graders**. The end product is a static site: a hub that lists
+for **5th–6th graders**. The end product is a static site: a hub that lists
 lessons, one page per lesson, and a searchable catalogue of 768 classified
 competition problems.
 
@@ -47,7 +47,7 @@ python tools/catalog.py find --any-tech Stacks --any-tech Queues --diff 2-3 --li
 ```
 
 ```bash
-python tools/catalog.py pick --alg "Greedy" --diff 2-3 --limit 6 --section A --out 22_Greedy/problems.json
+python tools/catalog.py pick --alg "Greedy" --diff 2-3 --limit 6 --section A --out 23_Greedy/problems.json
 ```
 
 Filters: `--alg`, `--any-alg` (OR), `--exclude-alg`, `--tech` (AND, repeatable),
@@ -123,7 +123,6 @@ are outputs. Edit `syllabus.json`, `content.py` and `problems.json` instead.
    SLUG, BRAND, FOOTER, TITLE, SUBTITLE
    PITFALLS_TITLE          # optional; defaults to "<n> pitfalls that cost real marks"
    LEGACY_DONE_KEY         # optional; only 03_Strings needs it
-   HOWTO       = [ "...", ... ]                      # the three-pass instructions
    SECTIONS    = [ (id, "1. Title", [blocks]), ... ] # theory
    CHEATSHEET  = [ (what, how), ... ]
    PITFALLS    = [ (title, explanation), ... ]
@@ -136,6 +135,8 @@ are outputs. Edit `syllabus.json`, `content.py` and `problems.json` instead.
 
    The four trailing chapters (cheat sheet, pitfalls, complexity, practice) are
    numbered automatically from `len(SECTIONS)` — do not hardcode their numbers.
+   There is no "How to use this lesson" section; the page opens straight on
+   section 1.
 
 4. Build `NN_Topic/problems.json` with `tools/catalog.py pick`, then group the
    problems into lettered sections:
@@ -149,8 +150,8 @@ are outputs. Edit `syllabus.json`, `content.py` and `problems.json` instead.
                   "url": "https://arena.olimpiici.com/#/catalog/92/problem/100208"}]}
    ```
 
-   `maps` must point back at the theory sections that solve that group. Order
-   problems easiest first inside a group, and order the groups easiest first.
+   `maps` must point back at the theory sections that solve that group. The
+   selection rules are in section 6.
 
 5. `python tools/render_lesson.py NN_Topic && python tools/build_site.py`.
 
@@ -158,9 +159,16 @@ are outputs. Edit `syllabus.json`, `content.py` and `problems.json` instead.
 
 ## 5. Content conventions
 
-- **Write for 6th–7th graders.** They know loops, `if`, arrays and functions, and
-  little else. One idea per paragraph, short sentences, and a worked example for
-  every rule. Explain *why* a thing is done, not only what to type.
+- **Write for 5th–6th graders.** Assume only what earlier lessons taught. Short
+  sentences, everyday words, one idea per paragraph, and a small worked example
+  for every rule. Explain *why* a thing is done, not only what to type.
+- **Only the basics.** Teach the few ideas a Group D problem in this lesson
+  needs, and stop. Leave out rare functions, corner-case trivia, performance
+  folklore and "good to know" asides. A lesson is about 5–7 short theory
+  sections, a cheat sheet of about 10 rows, 4–6 pitfalls and a complexity table
+  of about 5 rows. If a section needs more than two or three code blocks, it is
+  doing too much.
+- **No "How to use this lesson" section.** Do not add `HOWTO` to `content.py`.
 - **Keep the C++ small.** No lambdas, no iterators as a concept (`s.begin(), s.end()`
   is a fixed phrase meaning "the whole string"), no templates, no `auto` tricks, no
   structured bindings, no `<sstream>`, no `string_view`, no `<charconv>`, no
@@ -180,22 +188,30 @@ are outputs. Edit `syllabus.json`, `content.py` and `problems.json` instead.
 
 ## 6. Problem selection
 
-- 18–26 problems per lesson, in 4–6 lettered groups.
-- Start at difficulty 1–2 and end at 4–5; a lesson that never gets hard teaches
-  nothing.
-- Group D for the core track, Group C where the technique only appears there.
-  When a lesson mixes the two, say so in the `group` field of `problems.json` —
-  it is printed verbatim after "Group" in the practice heading, so
-  `"D, with four from Group C"` reads correctly.
-- Early lessons (01–07) may stay in the 1–3 band and finish with a single 4;
-  the pupils have not met enough of the language for a 5 to be fair.
+- **Exactly 12 problems per lesson, all from Group D.** Never Group C. The
+  `group` field of `problems.json` is `"D"`.
+- **Group them by the lesson's subtopics**: 3–4 lettered groups, each one the
+  practice for one subtopic (one or two theory sections). Usually 4 groups of 3,
+  or 3 groups of 4.
+- **Complexity goes up.** Inside every group the problems run easiest first and
+  the difficulty never drops; the groups follow the order of the theory, so
+  the page as a whole climbs. Start at difficulty 1–2 where the topic has such
+  problems and finish at 3–4. A 5 is too hard for this audience.
 - Every group maps to a theory section. If a group has no section, either write
   the section or drop the group.
+- When the catalogue tag for a topic is thin in Group D (heaps, stacks, pairs),
+  select on shape: problems a pupil would naturally solve with the lesson's
+  tool, even if the catalogue tags them otherwise. Say how the tool is used in
+  the problem's `tech` line.
 - Do not spend a later lesson's flagship problems. Prefix sums, counting arrays,
   2D grids, sorting and two pointers each have their own lesson; an array
   lesson uses problems where the array itself is the difficulty.
 - Check `--not-used` before assigning. A problem may appear in two lessons only
   if it genuinely teaches both techniques.
+- **Exception: `17_Practice_Contests`** closes Part I with 33 problems in 11
+  rounds of three (A–K), each round mixing difficulties like a real contest and
+  the rounds climbing from warm-ups (2, 2, 3) to hard ones (3, 4, 4). Its problems
+  need only Part I tools and appear in no other lesson; keep it that way.
 
 ## 7. Design
 
