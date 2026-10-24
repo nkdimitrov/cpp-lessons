@@ -16,13 +16,14 @@ Once GitHub Pages is enabled for this repository (Settings → Pages → deploy 
 
 | | |
 |---|---|
-| **42 lessons planned** | 16 on the language and its data structures, 26 on algorithms and techniques |
-| **17 lessons written** | all of Part I: setup and I/O, numbers, strings, arrays, vectors, counting arrays, grids, sorting, pairs and structs, stacks and queues, sets and maps, priority queues, the `<algorithm>` toolbox, big integers, recursion, time and memory limits |
+| **43 lessons planned** | 17 on the language and its data structures, 26 on algorithms and techniques |
+| **17 lessons written** | all of Part I: setup and I/O, numbers, strings, arrays, vectors, counting arrays, grids, sorting, pairs and structs, stacks and queues, sets and maps, priority queues, the `<algorithm>` toolbox, big integers, recursion, time and memory limits, and practice contests |
 | **768 problems classified** | difficulty 1–5, primary and secondary algorithm, technique tags, a one-line hint and a link to the Arena statement |
 
 Each lesson page carries theory, a cheat sheet, the pitfalls that actually cost marks,
 a complexity table, and 12 practice problems from Group D, grouped by subtopic and getting
-harder as you go — every practice group mapped back to the theory section that solves it. Progress ticks and the light/dark
+harder as you go — every practice group mapped back to the theory section that solves it.
+Lesson 17 closes Part I with 33 unused Group D problems in eleven contest-style rounds of three. Progress ticks and the light/dark
 theme are stored per browser in `localStorage`.
 
 Lesson pages are also exported to Word (`NN_Topic/NN_Topic.docx`) for printing.
@@ -81,7 +82,7 @@ python tools/catalog.py find --any-tech Stacks --any-tech Queues --diff 2-3 --li
 ```
 
 ```bash
-python tools/catalog.py pick --alg "Greedy" --diff 2-3 --limit 6 --section A --out 22_Greedy/problems.json
+python tools/catalog.py pick --alg "Greedy" --diff 2-3 --limit 6 --section A --out 23_Greedy/problems.json
 ```
 
 Filters: `--alg`, `--any-alg`, `--exclude-alg`, `--tech`, `--any-tech`, `--group`,

@@ -11,7 +11,7 @@
   {
    "id": "core",
    "title": "Part I - Language and data structures",
-   "blurb": "The C++17 you actually type in a contest, at the level of a 5th or 6th grader: only the basics. Every lesson is self-contained, follows the shape of Lesson 03, and ends with 12 Group D problems from the catalogue, grouped by subtopic and getting harder as you go.",
+   "blurb": "The C++17 you actually type in a contest, at the level of a 5th or 6th grader: only the basics. Lessons 01 to 16 are self-contained, follow the shape of Lesson 03, and end with 12 Group D problems from the catalogue, grouped by subtopic and getting harder as you go. Lesson 17 closes the part with 33 more problems in rounds of three, like a real contest.",
    "lessons": [
     {
      "num": "01",
@@ -367,6 +367,26 @@
       "diff": "3-5",
       "group": "D"
      }
+    },
+    {
+     "num": "17",
+     "slug": "17_Practice_Contests",
+     "status": "done",
+     "title": "Practice contests - eleven rounds of three",
+     "summary": "All of Part I at once: 33 new Group D problems in rounds of three, like a real olympiad, from warm-up rounds to hard ones.",
+     "covers": [
+      "a contest at home: three problems and a timer",
+      "reading all three, then choosing an order",
+      "spotting which Part I tool a problem needs",
+      "reading the limits before you code",
+      "testing before you send",
+      "after the round: learning from what you missed"
+     ],
+     "filters": {
+      "group": "D",
+      "diff": "2-4",
+      "note": "mixed rounds: problems that need only Part I tools and appear in no other lesson"
+     }
     }
    ]
   },
@@ -376,8 +396,8 @@
    "blurb": "One technique per lesson, in the order the catalogue rewards. Each assumes Part I and nothing else.",
    "lessons": [
     {
-     "num": "17",
-     "slug": "17_Brute_Force",
+     "num": "18",
+     "slug": "18_Brute_Force",
      "status": "planned",
      "title": "Brute force and complete search",
      "summary": "Enumerating every candidate - and the arithmetic that tells you whether you are allowed to.",
@@ -395,8 +415,8 @@
      }
     },
     {
-     "num": "18",
-     "slug": "18_Simulation",
+     "num": "19",
+     "slug": "19_Simulation",
      "status": "planned",
      "title": "Simulation and implementation discipline",
      "summary": "Problems where the statement is the algorithm. Structuring long implementations so they stay debuggable.",
@@ -414,8 +434,8 @@
      }
     },
     {
-     "num": "19",
-     "slug": "19_Prefix_Sums",
+     "num": "20",
+     "slug": "20_Prefix_Sums",
      "status": "planned",
      "title": "Prefix sums and difference arrays",
      "summary": "Answering range questions in O(1) after one pass.",
@@ -434,8 +454,8 @@
      }
     },
     {
-     "num": "20",
-     "slug": "20_Two_Pointers",
+     "num": "21",
+     "slug": "21_Two_Pointers",
      "status": "planned",
      "title": "Two pointers and sliding window",
      "summary": "Turning an O(n^2) scan into O(n) by never moving a pointer backwards.",
@@ -454,8 +474,8 @@
      }
     },
     {
-     "num": "21",
-     "slug": "21_Binary_Search",
+     "num": "22",
+     "slug": "22_Binary_Search",
      "status": "planned",
      "title": "Binary search, including binary search on the answer",
      "summary": "The loop invariant that never goes wrong, and the trick of searching over answers rather than over data.",
@@ -474,8 +494,8 @@
      }
     },
     {
-     "num": "22",
-     "slug": "22_Greedy",
+     "num": "23",
+     "slug": "23_Greedy",
      "status": "planned",
      "title": "Greedy - and how to prove it",
      "summary": "The most used and most mis-used technique in Group C. A greedy solution is worthless without an argument.",
@@ -494,8 +514,8 @@
      }
     },
     {
-     "num": "23",
-     "slug": "23_Sorting_Techniques",
+     "num": "24",
+     "slug": "24_Sorting_Techniques",
      "status": "planned",
      "title": "Sorting-based techniques: sweep line and coordinate compression",
      "summary": "What becomes easy once the data is in the right order.",
@@ -513,8 +533,8 @@
      }
     },
     {
-     "num": "24",
-     "slug": "24_Number_Theory_I",
+     "num": "25",
+     "slug": "25_Number_Theory_I",
      "status": "planned",
      "title": "Number theory I: divisibility, primes and GCD",
      "summary": "The arithmetic toolkit behind the largest single family of problems in the catalogue.",
@@ -534,8 +554,8 @@
      }
     },
     {
-     "num": "25",
-     "slug": "25_Number_Theory_II",
+     "num": "26",
+     "slug": "26_Number_Theory_II",
      "status": "planned",
      "title": "Number theory II: modular arithmetic and fast exponentiation",
      "summary": "Working under a modulus without overflow, and computing powers in logarithmic time.",
@@ -557,8 +577,8 @@
      }
     },
     {
-     "num": "26",
-     "slug": "26_Combinatorics",
+     "num": "27",
+     "slug": "27_Combinatorics",
      "status": "planned",
      "title": "Combinatorics and counting",
      "summary": "Counting without enumerating.",
@@ -578,8 +598,8 @@
      }
     },
     {
-     "num": "27",
-     "slug": "27_Backtracking",
+     "num": "28",
+     "slug": "28_Backtracking",
      "status": "planned",
      "title": "Backtracking and generating combinatorial objects",
      "summary": "Systematic search with undo. Generating every subset, permutation and arrangement, and cutting the tree early.",
@@ -598,8 +618,8 @@
      }
     },
     {
-     "num": "28",
-     "slug": "28_Bitmasks",
+     "num": "29",
+     "slug": "29_Bitmasks",
      "status": "planned",
      "title": "Bitmasks and subset enumeration",
      "summary": "Representing a set of up to ~20 items in one integer.",
@@ -619,8 +639,8 @@
      }
     },
     {
-     "num": "29",
-     "slug": "29_DP_I",
+     "num": "30",
+     "slug": "30_DP_I",
      "status": "planned",
      "title": "Dynamic programming I: one dimension",
      "summary": "State, transition, base case, order of evaluation - on a single axis.",
@@ -640,8 +660,8 @@
      }
     },
     {
-     "num": "30",
-     "slug": "30_DP_II",
+     "num": "31",
+     "slug": "31_DP_II",
      "status": "planned",
      "title": "Dynamic programming II: two dimensions and grids",
      "summary": "Two-index states: grids, pairs of sequences, and the layouts that keep them in memory.",
@@ -663,8 +683,8 @@
      }
     },
     {
-     "num": "31",
-     "slug": "31_DP_III",
+     "num": "32",
+     "slug": "32_DP_III",
      "status": "planned",
      "title": "Dynamic programming III: interval, digit and bitmask DP",
      "summary": "The state shapes that appear once the obvious ones stop working.",
@@ -682,8 +702,8 @@
      }
     },
     {
-     "num": "32",
-     "slug": "32_Graphs_Traversal",
+     "num": "33",
+     "slug": "33_Graphs_Traversal",
      "status": "planned",
      "title": "Graphs: representation and traversal",
      "summary": "Adjacency lists, BFS and DFS, and the questions each one answers.",
@@ -703,8 +723,8 @@
      }
     },
     {
-     "num": "33",
-     "slug": "33_Flood_Fill",
+     "num": "34",
+     "slug": "34_Flood_Fill",
      "status": "planned",
      "title": "Flood fill and grid graphs",
      "summary": "Treating a grid as a graph - the most common way graph theory appears in Groups C and D.",
@@ -727,8 +747,8 @@
      }
     },
     {
-     "num": "34",
-     "slug": "34_Shortest_Paths",
+     "num": "35",
+     "slug": "35_Shortest_Paths",
      "status": "planned",
      "title": "Shortest paths",
      "summary": "From unweighted BFS to Dijkstra, and how to know which one the weights allow.",
@@ -747,8 +767,8 @@
      }
     },
     {
-     "num": "35",
-     "slug": "35_Trees",
+     "num": "36",
+     "slug": "36_Trees",
      "status": "planned",
      "title": "Trees",
      "summary": "Graphs with no cycles - and the simplifications that buys.",
@@ -769,8 +789,8 @@
      }
     },
     {
-     "num": "36",
-     "slug": "36_DSU",
+     "num": "37",
+     "slug": "37_DSU",
      "status": "planned",
      "title": "Disjoint set union (union-find)",
      "summary": "Fifteen lines that answer 'are these two in the same group?' in near-constant time.",
@@ -789,8 +809,8 @@
      }
     },
     {
-     "num": "37",
-     "slug": "37_Fenwick_Segment_Trees",
+     "num": "38",
+     "slug": "38_Fenwick_Segment_Trees",
      "status": "planned",
      "title": "Fenwick and segment trees",
      "summary": "Range queries with updates - the structure to reach for when prefix sums stop working.",
@@ -809,8 +829,8 @@
      }
     },
     {
-     "num": "38",
-     "slug": "38_String_Algorithms",
+     "num": "39",
+     "slug": "39_String_Algorithms",
      "status": "planned",
      "title": "String algorithms: KMP, Z, hashing and tries",
      "summary": "Beyond std::string - the linear-time algorithms for pattern matching and substring comparison.",
@@ -830,8 +850,8 @@
      }
     },
     {
-     "num": "39",
-     "slug": "39_Geometry",
+     "num": "40",
+     "slug": "40_Geometry",
      "status": "planned",
      "title": "Geometry basics",
      "summary": "Points, vectors and the handful of primitives that cover the school-level geometry tasks.",
@@ -851,8 +871,8 @@
      }
     },
     {
-     "num": "40",
-     "slug": "40_Game_Theory",
+     "num": "41",
+     "slug": "41_Game_Theory",
      "status": "planned",
      "title": "Game theory",
      "summary": "Two players, perfect information, and deciding who wins from the starting position.",
@@ -870,8 +890,8 @@
      }
     },
     {
-     "num": "41",
-     "slug": "41_Ad_Hoc_Constructive",
+     "num": "42",
+     "slug": "42_Ad_Hoc_Constructive",
      "status": "planned",
      "title": "Ad hoc, constructive problems and invariants",
      "summary": "Problems with no named algorithm. What to look for when nothing fits.",
@@ -891,8 +911,8 @@
      }
     },
     {
-     "num": "42",
-     "slug": "42_Contest_Craft",
+     "num": "43",
+     "slug": "43_Contest_Craft",
      "status": "planned",
      "title": "Contest craft: strategy, testing and debugging",
      "summary": "The part that is not code. How to spend the five hours, and how to stop losing points you have already earned.",

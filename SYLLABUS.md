@@ -9,7 +9,7 @@ Generated from `syllabus.json` by `tools/build_site.py` - edit the JSON, not thi
 
 ## Part I - Language and data structures
 
-The C++17 you actually type in a contest, at the level of a 5th or 6th grader: only the basics. Every lesson is self-contained, follows the shape of Lesson 03, and ends with 12 Group D problems from the catalogue, grouped by subtopic and getting harder as you go.
+The C++17 you actually type in a contest, at the level of a 5th or 6th grader: only the basics. Lessons 01 to 16 are self-contained, follow the shape of Lesson 03, and end with 12 Group D problems from the catalogue, grouped by subtopic and getting harder as you go. Lesson 17 closes the part with 33 more problems in rounds of three, like a real contest.
 
 | # | Lesson | Status | Candidate problems | Catalogue filter |
 |---|--------|--------|--------------------|------------------|
@@ -29,6 +29,7 @@ The C++17 you actually type in a contest, at the level of a 5th or 6th grader: o
 | 14 | Big integers - arithmetic beyond long long | **written** | 12 assigned | `Big numbers · Group D · level 2-5` |
 | 15 | Recursion | **written** | 12 assigned | `Recursion · Group D · level 2-4` |
 | 16 | Time and memory limits | **written** | 12 assigned | `Memory optimization · Group D · level 3-5` |
+| 17 | Practice contests - eleven rounds of three | **written** | 33 assigned | `Group D · level 2-4` |
 
 ### 01. Setup, I/O and the contest toolkit
 
@@ -212,40 +213,51 @@ Counting steps and bytes before you write a line, and the shortcuts that make a 
 - bytes per value and the memory limit
 - a checklist before coding
 
+### 17. Practice contests - eleven rounds of three
+
+All of Part I at once: 33 new Group D problems in rounds of three, like a real olympiad, from warm-up rounds to hard ones.
+
+- a contest at home: three problems and a timer
+- reading all three, then choosing an order
+- spotting which Part I tool a problem needs
+- reading the limits before you code
+- testing before you send
+- after the round: learning from what you missed
+
 ## Part II - Algorithms and techniques
 
 One technique per lesson, in the order the catalogue rewards. Each assumes Part I and nothing else.
 
 | # | Lesson | Status | Candidate problems | Catalogue filter |
 |---|--------|--------|--------------------|------------------|
-| 17 | Brute force and complete search | planned | 54 | `Brute force · level 2-4` |
-| 18 | Simulation and implementation discipline | planned | 82 | `Implementation / Simulation · level 2-4` |
-| 19 | Prefix sums and difference arrays | planned | 71 | `Prefix sums · level 2-5` |
-| 20 | Two pointers and sliding window | planned | 45 | `Two pointers · level 2-5` |
-| 21 | Binary search, including binary search on the answer | planned | 32 | `Binary search · level 3-5` |
-| 22 | Greedy - and how to prove it | planned | 118 | `Greedy · level 2-5` |
-| 23 | Sorting-based techniques: sweep line and coordinate compression | planned | 58 | `Sorting · level 3-5` |
-| 24 | Number theory I: divisibility, primes and GCD | planned | 128 | `Number theory · level 2-4` |
-| 25 | Number theory II: modular arithmetic and fast exponentiation | planned | 30 | `Modular arithmetic · level 3-5` |
-| 26 | Combinatorics and counting | planned | 50 | `Combinatorics · level 3-5` |
-| 27 | Backtracking and generating combinatorial objects | planned | 17 | `Recursion / Backtracking · level 3-5` |
-| 28 | Bitmasks and subset enumeration | planned | 22 | `Bit manipulation · level 3-5` |
-| 29 | Dynamic programming I: one dimension | planned | 76 | `Dynamic programming · level 3-4` |
-| 30 | Dynamic programming II: two dimensions and grids | planned | 39 | `Dynamic programming · 2D arrays · level 3-5` |
-| 31 | Dynamic programming III: interval, digit and bitmask DP | planned | 21 | `Dynamic programming · level 5` |
-| 32 | Graphs: representation and traversal | planned | 56 | `Graph traversal · level 3-5` |
-| 33 | Flood fill and grid graphs | planned | 64 | `Flood fill / Grid/Matrix · level 2-5` |
-| 34 | Shortest paths | planned | 14 | `Shortest path · level 3-5` |
-| 35 | Trees | planned | 10 | `Trees · level 3-5` |
-| 36 | Disjoint set union (union-find) | planned | 37 | `Data structures · level 4-5` |
-| 37 | Fenwick and segment trees | planned | 20 | `Data structures · level 5` |
-| 38 | String algorithms: KMP, Z, hashing and tries | planned | 20 | `String processing · level 4-5` |
-| 39 | Geometry basics | planned | 13 | `Geometry · level 3-5` |
-| 40 | Game theory | planned | 7 | `Game theory · level 3-5` |
-| 41 | Ad hoc, constructive problems and invariants | planned | 28 | `Ad hoc · level 3-5` |
-| 42 | Contest craft: strategy, testing and debugging | planned | 204 | `level 1-5 · National` |
+| 18 | Brute force and complete search | planned | 54 | `Brute force · level 2-4` |
+| 19 | Simulation and implementation discipline | planned | 82 | `Implementation / Simulation · level 2-4` |
+| 20 | Prefix sums and difference arrays | planned | 71 | `Prefix sums · level 2-5` |
+| 21 | Two pointers and sliding window | planned | 45 | `Two pointers · level 2-5` |
+| 22 | Binary search, including binary search on the answer | planned | 32 | `Binary search · level 3-5` |
+| 23 | Greedy - and how to prove it | planned | 118 | `Greedy · level 2-5` |
+| 24 | Sorting-based techniques: sweep line and coordinate compression | planned | 58 | `Sorting · level 3-5` |
+| 25 | Number theory I: divisibility, primes and GCD | planned | 128 | `Number theory · level 2-4` |
+| 26 | Number theory II: modular arithmetic and fast exponentiation | planned | 30 | `Modular arithmetic · level 3-5` |
+| 27 | Combinatorics and counting | planned | 50 | `Combinatorics · level 3-5` |
+| 28 | Backtracking and generating combinatorial objects | planned | 17 | `Recursion / Backtracking · level 3-5` |
+| 29 | Bitmasks and subset enumeration | planned | 22 | `Bit manipulation · level 3-5` |
+| 30 | Dynamic programming I: one dimension | planned | 76 | `Dynamic programming · level 3-4` |
+| 31 | Dynamic programming II: two dimensions and grids | planned | 39 | `Dynamic programming · 2D arrays · level 3-5` |
+| 32 | Dynamic programming III: interval, digit and bitmask DP | planned | 21 | `Dynamic programming · level 5` |
+| 33 | Graphs: representation and traversal | planned | 56 | `Graph traversal · level 3-5` |
+| 34 | Flood fill and grid graphs | planned | 64 | `Flood fill / Grid/Matrix · level 2-5` |
+| 35 | Shortest paths | planned | 14 | `Shortest path · level 3-5` |
+| 36 | Trees | planned | 10 | `Trees · level 3-5` |
+| 37 | Disjoint set union (union-find) | planned | 37 | `Data structures · level 4-5` |
+| 38 | Fenwick and segment trees | planned | 20 | `Data structures · level 5` |
+| 39 | String algorithms: KMP, Z, hashing and tries | planned | 20 | `String processing · level 4-5` |
+| 40 | Geometry basics | planned | 13 | `Geometry · level 3-5` |
+| 41 | Game theory | planned | 7 | `Game theory · level 3-5` |
+| 42 | Ad hoc, constructive problems and invariants | planned | 28 | `Ad hoc · level 3-5` |
+| 43 | Contest craft: strategy, testing and debugging | planned | 204 | `level 1-5 · National` |
 
-### 17. Brute force and complete search
+### 18. Brute force and complete search
 
 Enumerating every candidate - and the arithmetic that tells you whether you are allowed to.
 
@@ -256,7 +268,7 @@ Enumerating every candidate - and the arithmetic that tells you whether you are 
 - brute force as a correctness oracle for stress tests
 - meet in the middle (a first look)
 
-### 18. Simulation and implementation discipline
+### 19. Simulation and implementation discipline
 
 Problems where the statement is the algorithm. Structuring long implementations so they stay debuggable.
 
@@ -267,7 +279,7 @@ Problems where the statement is the algorithm. Structuring long implementations 
 - decomposing into small tested functions
 - reading a long statement without missing a rule
 
-### 19. Prefix sums and difference arrays
+### 20. Prefix sums and difference arrays
 
 Answering range questions in O(1) after one pass.
 
@@ -279,7 +291,7 @@ Answering range questions in O(1) after one pass.
 - prefix sums plus a hash map: subarrays with a given sum
 - prefix sums modulo k
 
-### 20. Two pointers and sliding window
+### 21. Two pointers and sliding window
 
 Turning an O(n^2) scan into O(n) by never moving a pointer backwards.
 
@@ -291,7 +303,7 @@ Turning an O(n^2) scan into O(n) by never moving a pointer backwards.
 - merging two sorted sequences
 - three pointers and partitioning
 
-### 21. Binary search, including binary search on the answer
+### 22. Binary search, including binary search on the answer
 
 The loop invariant that never goes wrong, and the trick of searching over answers rather than over data.
 
@@ -303,7 +315,7 @@ The loop invariant that never goes wrong, and the trick of searching over answer
 - binary search over a real interval with fixed iterations
 - ternary search on a unimodal function
 
-### 22. Greedy - and how to prove it
+### 23. Greedy - and how to prove it
 
 The most used and most mis-used technique in Group C. A greedy solution is worthless without an argument.
 
@@ -315,7 +327,7 @@ The most used and most mis-used technique in Group C. A greedy solution is worth
 - counterexample hunting: how to disprove your own greedy
 - when greedy fails and DP takes over
 
-### 23. Sorting-based techniques: sweep line and coordinate compression
+### 24. Sorting-based techniques: sweep line and coordinate compression
 
 What becomes easy once the data is in the right order.
 
@@ -326,7 +338,7 @@ What becomes easy once the data is in the right order.
 - counting inversions with merge sort
 - offline query processing: sort the queries too
 
-### 24. Number theory I: divisibility, primes and GCD
+### 25. Number theory I: divisibility, primes and GCD
 
 The arithmetic toolkit behind the largest single family of problems in the catalogue.
 
@@ -339,7 +351,7 @@ The arithmetic toolkit behind the largest single family of problems in the catal
 - digit manipulation: digit sum, reversal, base conversion
 - perfect numbers, palindromic numbers and the usual suspects
 
-### 25. Number theory II: modular arithmetic and fast exponentiation
+### 26. Number theory II: modular arithmetic and fast exponentiation
 
 Working under a modulus without overflow, and computing powers in logarithmic time.
 
@@ -352,7 +364,7 @@ Working under a modulus without overflow, and computing powers in logarithmic ti
 - cycles: pow(a, k) mod m repeats
 - when the statement says 'output the answer modulo 10^9+7'
 
-### 26. Combinatorics and counting
+### 27. Combinatorics and counting
 
 Counting without enumerating.
 
@@ -365,7 +377,7 @@ Counting without enumerating.
 - Catalan numbers and where they show up
 - binomials modulo a prime
 
-### 27. Backtracking and generating combinatorial objects
+### 28. Backtracking and generating combinatorial objects
 
 Systematic search with undo. Generating every subset, permutation and arrangement, and cutting the tree early.
 
@@ -377,7 +389,7 @@ Systematic search with undo. Generating every subset, permutation and arrangemen
 - counting solutions versus listing them
 - lexicographic order and next_permutation as an alternative
 
-### 28. Bitmasks and subset enumeration
+### 29. Bitmasks and subset enumeration
 
 Representing a set of up to ~20 items in one integer.
 
@@ -390,7 +402,7 @@ Representing a set of up to ~20 items in one integer.
 - XOR properties and the 'find the odd one out' family
 - bitmask as a DP state (preview of Lesson 32)
 
-### 29. Dynamic programming I: one dimension
+### 30. Dynamic programming I: one dimension
 
 State, transition, base case, order of evaluation - on a single axis.
 
@@ -403,7 +415,7 @@ State, transition, base case, order of evaluation - on a single axis.
 - maximum subarray (Kadane)
 - reconstructing the answer, not just its value
 
-### 30. Dynamic programming II: two dimensions and grids
+### 31. Dynamic programming II: two dimensions and grids
 
 Two-index states: grids, pairs of sequences, and the layouts that keep them in memory.
 
@@ -415,7 +427,7 @@ Two-index states: grids, pairs of sequences, and the layouts that keep them in m
 - rolling rows to cut memory
 - reconstruction by walking the table backwards
 
-### 31. Dynamic programming III: interval, digit and bitmask DP
+### 32. Dynamic programming III: interval, digit and bitmask DP
 
 The state shapes that appear once the obvious ones stop working.
 
@@ -426,7 +438,7 @@ The state shapes that appear once the obvious ones stop working.
 - DP on a tree (subtree states)
 - choosing a state: what must be remembered and what must not
 
-### 32. Graphs: representation and traversal
+### 33. Graphs: representation and traversal
 
 Adjacency lists, BFS and DFS, and the questions each one answers.
 
@@ -439,7 +451,7 @@ Adjacency lists, BFS and DFS, and the questions each one answers.
 - bipartite checking by 2-colouring
 - topological sort (Kahn and DFS)
 
-### 33. Flood fill and grid graphs
+### 34. Flood fill and grid graphs
 
 Treating a grid as a graph - the most common way graph theory appears in Groups C and D.
 
@@ -452,7 +464,7 @@ Treating a grid as a graph - the most common way graph theory appears in Groups 
 - obstacles, walls and boundary handling
 - stack depth: when recursion is not safe
 
-### 34. Shortest paths
+### 35. Shortest paths
 
 From unweighted BFS to Dijkstra, and how to know which one the weights allow.
 
@@ -464,7 +476,7 @@ From unweighted BFS to Dijkstra, and how to know which one the weights allow.
 - Floyd-Warshall for all pairs on small graphs
 - state-expanded graphs (position plus something else)
 
-### 35. Trees
+### 36. Trees
 
 Graphs with no cycles - and the simplifications that buys.
 
@@ -476,7 +488,7 @@ Graphs with no cycles - and the simplifications that buys.
 - binary trees and traversal orders
 - lowest common ancestor: the simple O(depth) method and binary lifting
 
-### 36. Disjoint set union (union-find)
+### 37. Disjoint set union (union-find)
 
 Fifteen lines that answer 'are these two in the same group?' in near-constant time.
 
@@ -488,7 +500,7 @@ Fifteen lines that answer 'are these two in the same group?' in near-constant ti
 - Kruskal's minimum spanning tree
 - DSU on a grid
 
-### 37. Fenwick and segment trees
+### 38. Fenwick and segment trees
 
 Range queries with updates - the structure to reach for when prefix sums stop working.
 
@@ -500,7 +512,7 @@ Range queries with updates - the structure to reach for when prefix sums stop wo
 - lazy propagation for range updates
 - choosing between Fenwick, segment tree and a sqrt decomposition
 
-### 38. String algorithms: KMP, Z, hashing and tries
+### 39. String algorithms: KMP, Z, hashing and tries
 
 Beyond std::string - the linear-time algorithms for pattern matching and substring comparison.
 
@@ -513,7 +525,7 @@ Beyond std::string - the linear-time algorithms for pattern matching and substri
 - palindromes: Manacher's algorithm (a look)
 - when a plain find() is enough
 
-### 39. Geometry basics
+### 40. Geometry basics
 
 Points, vectors and the handful of primitives that cover the school-level geometry tasks.
 
@@ -526,7 +538,7 @@ Points, vectors and the handful of primitives that cover the school-level geomet
 - point in polygon
 - integer arithmetic to avoid floating point entirely
 
-### 40. Game theory
+### 41. Game theory
 
 Two players, perfect information, and deciding who wins from the starting position.
 
@@ -537,7 +549,7 @@ Two players, perfect information, and deciding who wins from the starting positi
 - Sprague-Grundy numbers for sums of games
 - symmetry and mirroring strategies
 
-### 41. Ad hoc, constructive problems and invariants
+### 42. Ad hoc, constructive problems and invariants
 
 Problems with no named algorithm. What to look for when nothing fits.
 
@@ -550,7 +562,7 @@ Problems with no named algorithm. What to look for when nothing fits.
 - proving impossibility
 - recognising when a formula replaces a loop
 
-### 42. Contest craft: strategy, testing and debugging
+### 43. Contest craft: strategy, testing and debugging
 
 The part that is not code. How to spend the five hours, and how to stop losing points you have already earned.
 

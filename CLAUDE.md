@@ -47,7 +47,7 @@ python tools/catalog.py find --any-tech Stacks --any-tech Queues --diff 2-3 --li
 ```
 
 ```bash
-python tools/catalog.py pick --alg "Greedy" --diff 2-3 --limit 6 --section A --out 22_Greedy/problems.json
+python tools/catalog.py pick --alg "Greedy" --diff 2-3 --limit 6 --section A --out 23_Greedy/problems.json
 ```
 
 Filters: `--alg`, `--any-alg` (OR), `--exclude-alg`, `--tech` (AND, repeatable),
@@ -208,6 +208,10 @@ are outputs. Edit `syllabus.json`, `content.py` and `problems.json` instead.
   lesson uses problems where the array itself is the difficulty.
 - Check `--not-used` before assigning. A problem may appear in two lessons only
   if it genuinely teaches both techniques.
+- **Exception: `17_Practice_Contests`** closes Part I with 33 problems in 11
+  rounds of three (A–K), each round mixing difficulties like a real contest and
+  the rounds climbing from warm-ups (2, 2, 3) to hard ones (3, 4, 4). Its problems
+  need only Part I tools and appear in no other lesson; keep it that way.
 
 ## 7. Design
 
