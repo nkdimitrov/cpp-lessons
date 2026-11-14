@@ -3,61 +3,45 @@
  "groups": [
   {
    "key": "A",
-   "name": "A. A list whose length you learn as you go",
-   "maps": "Theory: sections 1 and 3"
+   "name": "A. Lists and digits in a vector",
+   "maps": "Theory: sections 1 to 4"
   },
   {
    "key": "B",
-   "name": "B. Digits and numbers in a vector",
-   "maps": "Theory: section 4"
+   "name": "B. Lists you build as you go",
+   "maps": "Theory: sections 5 and 6"
   },
   {
    "key": "C",
-   "name": "C. Building a new vector",
-   "maps": "Theory: section 5"
-  },
-  {
-   "key": "D",
-   "name": "D. One list for each group",
-   "maps": "Theory: section 6"
+   "name": "C. Challenge",
+   "maps": "Theory: sections 4 and 5"
   }
  ],
  "problems": [
   {
    "section": "A",
-   "pid": 100072,
-   "title": "frequency",
-   "en": "Letter chart",
-   "tech": "read until `@`, so the number of letters is not known in advance",
+   "pid": 100025,
+   "title": "digit",
+   "en": "Digits",
+   "tech": "the digits of each number go into a vector; test the number against each one",
    "family": "Autumn tournament",
-   "year": 2011,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/38/problem/100072"
+   "year": 2008,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/20/problem/100025"
   },
   {
    "section": "A",
-   "pid": 100270,
-   "title": "all",
-   "en": "Everyone",
-   "tech": "collect the ids of each contest, keep those that are in every one",
-   "family": "Municipal round",
+   "pid": 100101,
+   "title": "salary",
+   "en": "Salary",
+   "tech": "push the digits of 1, 8, 27, ... until the vector reaches position k",
+   "family": "Autumn tournament",
    "year": 2013,
    "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/116/problem/100270"
+   "url": "https://arena.olimpiici.com/#/catalog/50/problem/100101"
   },
   {
    "section": "A",
-   "pid": 100420,
-   "title": "tststsbreh",
-   "en": "Consonants",
-   "tech": "cut the text into sentences, one vector entry each, then test each",
-   "family": "Regional round",
-   "year": 2013,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/176/problem/100420"
-  },
-  {
-   "section": "B",
    "pid": 100592,
    "title": "number",
    "en": "Palindrome number",
@@ -69,6 +53,39 @@
   },
   {
    "section": "B",
+   "pid": 100270,
+   "title": "all",
+   "en": "Everyone",
+   "tech": "collect the ids of each contest, keep those that are in every one",
+   "family": "Municipal round",
+   "year": 2013,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/116/problem/100270"
+  },
+  {
+   "section": "B",
+   "pid": 100420,
+   "title": "tststsbreh",
+   "en": "Consonants",
+   "tech": "cut the text into sentences, one vector entry each, then test each",
+   "family": "Regional round",
+   "year": 2013,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/176/problem/100420"
+  },
+  {
+   "section": "B",
+   "pid": 100072,
+   "title": "frequency",
+   "en": "Letter chart",
+   "tech": "read until `@`, so the number of letters is not known in advance",
+   "family": "Autumn tournament",
+   "year": 2011,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/38/problem/100072"
+  },
+  {
+   "section": "C",
    "pid": 100612,
    "title": "pres",
    "en": "Fibonacci sum",
@@ -77,83 +94,6 @@
    "year": 2013,
    "diff": 3,
    "url": "https://arena.olimpiici.com/#/catalog/231/problem/100612"
-  },
-  {
-   "section": "B",
-   "pid": 101870,
-   "title": "numbers",
-   "en": "Nearly equal digits",
-   "tech": "every candidate number into a vector, then the smallest big enough",
-   "family": "Autumn tournament",
-   "year": 2022,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/732/problem/101870"
-  },
-  {
-   "section": "C",
-   "pid": 100101,
-   "title": "salary",
-   "en": "Salary",
-   "tech": "push the digits of 1, 8, 27, ... until the vector reaches position k",
-   "family": "Autumn tournament",
-   "year": 2013,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/50/problem/100101"
-  },
-  {
-   "section": "C",
-   "pid": 101575,
-   "title": "wheel",
-   "en": "Wheel",
-   "tech": "a vector of N blanks; each spin fills one place, found with `%`",
-   "family": "Municipal round",
-   "year": 2021,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/627/problem/101575"
-  },
-  {
-   "section": "C",
-   "pid": 101296,
-   "title": "restore",
-   "en": "Restore",
-   "tech": "`insert` each value at the position it asks for",
-   "family": "Regional round",
-   "year": 2020,
-   "diff": 4,
-   "url": "https://arena.olimpiici.com/#/catalog/476/problem/101296"
-  },
-  {
-   "section": "D",
-   "pid": 100638,
-   "title": "letters",
-   "en": "Letters",
-   "tech": "one list of correspondents per person - how many different ones?",
-   "family": "National round",
-   "year": 2014,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/236/problem/100638"
-  },
-  {
-   "section": "D",
-   "pid": 101924,
-   "title": "red",
-   "en": "The row",
-   "tech": "one list of positions per value; the next one is the neighbour in it",
-   "family": "Regional round",
-   "year": 2023,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/747/problem/101924"
-  },
-  {
-   "section": "D",
-   "pid": 100824,
-   "title": "travel",
-   "en": "Travel",
-   "tech": "one list of neighbours per city, then walk from city 0",
-   "family": "Spring tournament",
-   "year": 2013,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/291/problem/100824"
   }
  ]
 }

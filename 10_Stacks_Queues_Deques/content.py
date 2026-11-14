@@ -7,7 +7,7 @@ FOOTER = ("Lesson 10 · C++17 stack, queue and deque. Problem links point to are
           "statements are in Bulgarian and downloadable as PDF from each problem page.")
 
 TITLE = "C++17 Stacks, queues and deques - piles and lines"
-SUBTITLE = ("Lesson 10 | Theory, cheat sheet and 12 practice problems "
+SUBTITLE = ("Lesson 10 | Theory, cheat sheet and 7 practice problems "
             "from arena.olimpiici.com (Group D)")
 
 SECTIONS = [

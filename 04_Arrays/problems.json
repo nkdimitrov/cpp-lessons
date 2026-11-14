@@ -3,22 +3,17 @@
  "groups": [
   {
    "key": "A",
-   "name": "A. Store the numbers, then look at all of them",
-   "maps": "Theory: sections 2 and 3"
+   "name": "A. Store, scan, look at the neighbours",
+   "maps": "Theory: sections 2, 3 and 4"
   },
   {
    "key": "B",
-   "name": "B. Neighbours",
-   "maps": "Theory: section 4"
+   "name": "B. Circles, windows and several passes",
+   "maps": "Theory: sections 5 and 6"
   },
   {
    "key": "C",
-   "name": "C. Round in a circle, and windows",
-   "maps": "Theory: section 5"
-  },
-  {
-   "key": "D",
-   "name": "D. Several passes, several arrays",
+   "name": "C. Challenge",
    "maps": "Theory: section 6"
   }
  ],
@@ -36,28 +31,6 @@
   },
   {
    "section": "A",
-   "pid": 100026,
-   "title": "roads",
-   "en": "Roads",
-   "tech": "a total for each settlement: the settlement number is the index",
-   "family": "Autumn tournament",
-   "year": 2008,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/20/problem/100026"
-  },
-  {
-   "section": "A",
-   "pid": 100010,
-   "title": "happy",
-   "en": "Happy years",
-   "tech": "mark the happy years, then find the two closest ones",
-   "family": "Autumn tournament",
-   "year": 2007,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/14/problem/100010"
-  },
-  {
-   "section": "B",
    "pid": 101637,
    "title": "lokmax",
    "en": "Local maxima",
@@ -68,18 +41,7 @@
    "url": "https://arena.olimpiici.com/#/catalog/652/problem/101637"
   },
   {
-   "section": "B",
-   "pid": 100056,
-   "title": "parking",
-   "en": "Parking",
-   "tech": "a place is forbidden when its neighbour is D, B or S - then count",
-   "family": "Autumn tournament",
-   "year": 2010,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/32/problem/100056"
-  },
-  {
-   "section": "B",
+   "section": "A",
    "pid": 100240,
    "title": "temperature",
    "en": "Temperatures",
@@ -90,18 +52,18 @@
    "url": "https://arena.olimpiici.com/#/catalog/104/problem/100240"
   },
   {
-   "section": "C",
+   "section": "B",
    "pid": 100224,
    "title": "harvest",
    "en": "Harvest",
    "tech": "three in a row round a circle - wrap with `%`",
    "family": "Municipal round",
    "year": 2010,
-   "diff": 2,
+   "diff": 1,
    "url": "https://arena.olimpiici.com/#/catalog/98/problem/100224"
   },
   {
-   "section": "C",
+   "section": "B",
    "pid": 100513,
    "title": "product",
    "en": "Product",
@@ -112,18 +74,18 @@
    "url": "https://arena.olimpiici.com/#/catalog/211/problem/100513"
   },
   {
-   "section": "C",
-   "pid": 100057,
-   "title": "planes",
-   "en": "Aeroplanes",
-   "tech": "two planes stepping round a circle with `%`",
+   "section": "B",
+   "pid": 100026,
+   "title": "roads",
+   "en": "Roads",
+   "tech": "a total for each settlement: the settlement number is the index",
    "family": "Autumn tournament",
-   "year": 2010,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/32/problem/100057"
+   "year": 2008,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/20/problem/100026"
   },
   {
-   "section": "D",
+   "section": "C",
    "pid": 101295,
    "title": "dry",
    "en": "Dry tubs",
@@ -132,28 +94,6 @@
    "year": 2020,
    "diff": 3,
    "url": "https://arena.olimpiici.com/#/catalog/476/problem/101295"
-  },
-  {
-   "section": "D",
-   "pid": 100390,
-   "title": "shield",
-   "en": "The shield",
-   "tech": "try every pair of planks, both ways round",
-   "family": "Regional round",
-   "year": 2011,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/164/problem/100390"
-  },
-  {
-   "section": "D",
-   "pid": 100809,
-   "title": "processors",
-   "en": "Processors",
-   "tech": "carry the finishing times from one array into the next",
-   "family": "Spring tournament",
-   "year": 2012,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/285/problem/100809"
   }
  ]
 }

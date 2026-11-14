@@ -7,7 +7,7 @@ FOOTER = ("Lesson 14 · C++17 long-number arithmetic. Problem links point to are
           "statements are in Bulgarian and downloadable as PDF from each problem page.")
 
 TITLE = "C++17 Big integers - sums on paper, done by the computer"
-SUBTITLE = ("Lesson 14 | Theory, cheat sheet and 12 practice problems "
+SUBTITLE = ("Lesson 14 | Theory, cheat sheet and 7 practice problems "
             "from arena.olimpiici.com (Group D)")
 
 SECTIONS = [

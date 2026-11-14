@@ -7,7 +7,7 @@ FOOTER = ("Lesson 09 · C++17 pairs and structs. Problem links point to arena.ol
           "statements are in Bulgarian and downloadable as PDF from each problem page.")
 
 TITLE = "C++17 Pairs and structs - keeping things that belong together"
-SUBTITLE = ("Lesson 09 | Theory, cheat sheet and 12 practice problems "
+SUBTITLE = ("Lesson 09 | Theory, cheat sheet and 7 practice problems "
             "from arena.olimpiici.com (Group D)")
 
 SECTIONS = [

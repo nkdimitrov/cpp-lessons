@@ -8,7 +8,7 @@ FOOTER = ("Lesson 06 · C++17 counting and frequency arrays. Problem links point
           "problem page.")
 
 TITLE = "C++17 Counting arrays - one box per value"
-SUBTITLE = ("Lesson 06 | Theory, cheat sheet and 12 practice problems "
+SUBTITLE = ("Lesson 06 | Theory, cheat sheet and 7 practice problems "
             "from arena.olimpiici.com (Group D)")
 
 SECTIONS = [

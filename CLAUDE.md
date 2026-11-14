@@ -188,17 +188,23 @@ are outputs. Edit `syllabus.json`, `content.py` and `problems.json` instead.
 
 ## 6. Problem selection
 
-- **Exactly 12 problems per lesson, all from Group D.** Never Group C. The
+- **Exactly 7 problems per lesson, all from Group D.** Never Group C. The
   `group` field of `problems.json` is `"D"`.
-- **Group them by the lesson's subtopics**: 3–4 lettered groups, each one the
-  practice for one subtopic (one or two theory sections). Usually 4 groups of 3,
-  or 3 groups of 4.
-- **Complexity goes up.** Inside every group the problems run easiest first and
-  the difficulty never drops; the groups follow the order of the theory, so
-  the page as a whole climbs. Start at difficulty 1–2 where the topic has such
-  problems and finish at 3–4. A 5 is too hard for this audience.
+- **Two triads and one challenge.** Groups A and B hold 3 problems each and
+  together cover the whole lesson, following the order of the theory. Each
+  triad opens on one or two 1★ problems and holds only 1★ and 2★ problems.
+  Group C (`"C. Challenge"`) is a single 3★ problem that fits the lesson
+  closely — in Arrays, one that needs several arrays and several passes. That
+  is the only 3★ in the lesson; 4★ and 5★ are too hard for this audience.
+- Inside every group the problems run easiest first and the difficulty never
+  drops.
+- 1★ problems are scarce in Group D (35, all in use). Where a topic has none,
+  a triad may open on a 2★ — today only the second triad of `15_Recursion`.
 - Every group maps to a theory section. If a group has no section, either write
   the section or drop the group.
+- Difficulty is judged for 5th–6th graders. A Group D problem whose solution is
+  one direct loop or formula is 1★; one or two simple steps with no trick is
+  2★. Re-rate it in the catalogue when the row says otherwise.
 - When the catalogue tag for a topic is thin in Group D (heaps, stacks, pairs),
   select on shape: problems a pupil would naturally solve with the lesson's
   tool, even if the catalogue tags them otherwise. Say how the tool is used in

@@ -7,7 +7,7 @@ FOOTER = ("Lesson 16 · C++17 time and memory limits. Problem links point to are
           "statements are in Bulgarian and downloadable as PDF from each problem page.")
 
 TITLE = "C++17 Time and memory - will it be fast enough?"
-SUBTITLE = ("Lesson 16 | Theory, cheat sheet and 12 practice problems "
+SUBTITLE = ("Lesson 16 | Theory, cheat sheet and 7 practice problems "
             "from arena.olimpiici.com (Group D)")
 
 SECTIONS = [

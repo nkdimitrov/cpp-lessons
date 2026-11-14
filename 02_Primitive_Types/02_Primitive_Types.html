@@ -135,18 +135,17 @@ footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
 <a href="#pitfalls">7. Pitfalls</a>
 <a href="#complexity">8. Complexity</a>
 <div class="grp">Practice</div>
-<a href="#problems">9. 12 problems</a>
-<a href="#gA" style="padding-left:16px">A. Big answers need long long</a>
-<a href="#gB" style="padding-left:16px">B. Taking a number apart with / and %</a>
-<a href="#gC" style="padding-left:16px">C. A formula instead of a loop</a>
-<a href="#gD" style="padding-left:16px">D. Square roots and decimals</a>
+<a href="#problems">9. 7 problems</a>
+<a href="#gA" style="padding-left:16px">A. long long, / and %</a>
+<a href="#gB" style="padding-left:16px">B. Formulas, bool and square roots</a>
+<a href="#gC" style="padding-left:16px">C. Challenge</a>
 <div class="pager">
 <a href="../01_Setup_And_IO/01_Setup_And_IO.html" title="Previous: Lesson 01 &middot; Setup, I/O and the contest toolkit">&larr;<small>Lesson 01</small></a>
 <a href="../03_Strings/03_Strings.html" title="Next: Lesson 03 &middot; Strings">&rarr;<small>Lesson 03</small></a>
 </div>
 </nav>
 <main>
-<header class="top"><h1>C++17 Numbers - int, long long, bool and double</h1><div class="sub">Lesson 02 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<header class="top"><h1>C++17 Numbers - int, long long, bool and double</h1><div class="sub">Lesson 02 | Theory, cheat sheet and 7 practice problems from arena.olimpiici.com (Group D)</div></header>
 <h2 id="int">1. int and long long</h2>
 <p>An <code>int</code> holds whole numbers from about -2 billion to +2 billion. The exact limits are -2147483648 and 2147483647.</p>
 <p>When a result goes past that limit, it does not stop with an error. It quietly turns into a wrong number. This is called <strong>overflow</strong>.</p>
@@ -250,31 +249,23 @@ if (r * r == n) cout &lt;&lt; &quot;perfect square\n&quot;;</code></pre>
 <tr><td>A formula such as <code>n * (n + 1) / 2</code></td><td>O(1), where a loop would be O(n)</td></tr>
 <tr><td><code>sqrt(x)</code></td><td>O(1)</td></tr>
 </tbody></table></div>
-<h2 id="problems">9. Practice &mdash; 12 problems, Group D</h2>
-<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<h2 id="problems">9. Practice &mdash; 7 problems, Group D</h2>
+<p>All 7 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the last group is the hardest. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
 <div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
-<div class="pgroup"><h3 id="gA">A. Big answers need long long</h3><p class="maps">Theory: section 1</p>
+<div class="pgroup"><h3 id="gA">A. long long, / and %</h3><p class="maps">Theory: sections 1 and 2</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="100825"></td><td><a href="https://arena.olimpiici.com/#/catalog/291/problem/100825" target="_blank" rel="noopener">pentagonal</a><br><span class="tech">Pentagonal</span></td><td class="tech"><code>k(3k-1)/2</code> - one line, one overflow trap</td><td class="src">Spring tournament 2013</td><td class="dif">★☆☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100329"></td><td><a href="https://arena.olimpiici.com/#/catalog/140/problem/100329" target="_blank" rel="noopener">klas</a><br><span class="tech">Handshakes</span></td><td class="tech"><code>N(N-1)/2</code> and a second formula; multiply in <code>long long</code></td><td class="src">Municipal round 2017</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100913"></td><td><a href="https://arena.olimpiici.com/#/catalog/327/problem/100913" target="_blank" rel="noopener">box</a><br><span class="tech">Three parts</span></td><td class="tech">the ways to split N into three positive parts: <code>(N-1)(N-2)/2</code></td><td class="src">Winter tournament 2009</td><td class="dif">★★☆☆☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gB">B. Taking a number apart with / and %</h3><p class="maps">Theory: section 2</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100025"></td><td><a href="https://arena.olimpiici.com/#/catalog/20/problem/100025" target="_blank" rel="noopener">digit</a><br><span class="tech">Digits</span></td><td class="tech">split each number with <code>% 10</code> and <code>/ 10</code></td><td class="src">Autumn tournament 2008</td><td class="dif">★☆☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100268"></td><td><a href="https://arena.olimpiici.com/#/catalog/116/problem/100268" target="_blank" rel="noopener">tailor</a><br><span class="tech">The tailor</span></td><td class="tech">stotinki into leva and stotinki: <code>/ 100</code> and <code>% 100</code></td><td class="src">Municipal round 2013</td><td class="dif">★★☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100974"></td><td><a href="https://arena.olimpiici.com/#/catalog/351/problem/100974" target="_blank" rel="noopener">angles</a><br><span class="tech">Angles</span></td><td class="tech">degrees, minutes and seconds, carried with <code>/ 60</code> and <code>% 60</code></td><td class="src">Winter tournament 2013</td><td class="dif">★★☆☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gC">C. A formula instead of a loop</h3><p class="maps">Theory: section 3</p>
+<div class="pgroup"><h3 id="gB">B. Formulas, bool and square roots</h3><p class="maps">Theory: sections 3, 4 and 5</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100012"></td><td><a href="https://arena.olimpiici.com/#/catalog/14/problem/100012" target="_blank" rel="noopener">div</a><br><span class="tech">Multiples</span></td><td class="tech"><code>b/c - (a-1)/c</code> counts the multiples without a loop</td><td class="src">Autumn tournament 2007</td><td class="dif">★☆☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101044"></td><td><a href="https://arena.olimpiici.com/#/catalog/382/problem/101044" target="_blank" rel="noopener">triangle</a><br><span class="tech">Third side</span></td><td class="tech">how many whole numbers lie strictly between <code>|a-b|</code> and <code>a+b</code></td><td class="src">Municipal round 2019</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100616"></td><td><a href="https://arena.olimpiici.com/#/catalog/231/problem/100616" target="_blank" rel="noopener">nine</a><br><span class="tech">Nines</span></td><td class="tech"><code>s(N) = s(9N)</code> holds exactly for the multiples of 9 - count them</td><td class="src">National round 2013</td><td class="dif">★★★☆☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gD">D. Square roots and decimals</h3><p class="maps">Theory: section 5</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100661"></td><td><a href="https://arena.olimpiici.com/#/catalog/241/problem/100661" target="_blank" rel="noopener">cubes</a><br><span class="tech">Cubes</span></td><td class="tech">take off the largest cube that still fits, and repeat</td><td class="src">National round 2015</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101044"></td><td><a href="https://arena.olimpiici.com/#/catalog/382/problem/101044" target="_blank" rel="noopener">triangle</a><br><span class="tech">Third side</span></td><td class="tech">how many whole numbers lie strictly between <code>|a-b|</code> and <code>a+b</code></td><td class="src">Municipal round 2019</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100329"></td><td><a href="https://arena.olimpiici.com/#/catalog/140/problem/100329" target="_blank" rel="noopener">klas</a><br><span class="tech">Handshakes</span></td><td class="tech"><code>N(N-1)/2</code> and a second formula; multiply in <code>long long</code></td><td class="src">Municipal round 2017</td><td class="dif">★★☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100808"></td><td><a href="https://arena.olimpiici.com/#/catalog/285/problem/100808" target="_blank" rel="noopener">degree</a><br><span class="tech">Exact power</span></td><td class="tech">is the root, rounded and raised back, really equal to x?</td><td class="src">Spring tournament 2012</td><td class="dif">★★☆☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Challenge</h3><p class="maps">Theory: sections 3 and 5</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="100746"></td><td><a href="https://arena.olimpiici.com/#/catalog/261/problem/100746" target="_blank" rel="noopener">lamps</a><br><span class="tech">Lamps</span></td><td class="tech">a lamp stays on when its number is a perfect square</td><td class="src">Spring tournament 2008</td><td class="dif">★★★☆☆</td></tr>
 </tbody></table></div></div>
 <footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 02 · C++17 numbers, characters and truth values. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>

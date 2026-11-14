@@ -21,8 +21,8 @@ Once GitHub Pages is enabled for this repository (Settings → Pages → deploy 
 | **768 problems classified** | difficulty 1–5, primary and secondary algorithm, technique tags, a one-line hint and a link to the Arena statement |
 
 Each lesson page carries theory, a cheat sheet, the pitfalls that actually cost marks,
-a complexity table, and 12 practice problems from Group D, grouped by subtopic and getting
-harder as you go — every practice group mapped back to the theory section that solves it.
+a complexity table, and 7 practice problems from Group D: two easy triads that cover the
+lesson, then one medium challenge — every practice group mapped back to the theory section that solves it.
 Lesson 17 closes Part I with 33 unused Group D problems in eleven contest-style rounds of three. Progress ticks and the light/dark
 theme are stored per browser in `localStorage`.
 
@@ -93,8 +93,8 @@ placed in some lesson so the same problem is not assigned twice.
 
 [CLAUDE.md](CLAUDE.md) is the working specification: the content conventions (how much
 C++ a 5th-grader may be shown, only the basics, contest style over production style, British
-English), the problem-selection rules (12 Group D problems, grouped by subtopic, difficulty
-rising from 1–2 to 3–4), and the shape of `content.py`. [03_Strings](03_Strings/)
+English), the problem-selection rules (7 Group D problems: two triads of 1★–2★ problems,
+each opening on a 1★, then one 3★ challenge), and the shape of `content.py`. [03_Strings](03_Strings/)
 is the reference lesson — match it.
 
 ## Note on the statements

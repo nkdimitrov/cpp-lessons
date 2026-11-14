@@ -137,18 +137,17 @@ footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
 <a href="#pitfalls">9. Pitfalls</a>
 <a href="#complexity">10. Complexity</a>
 <div class="grp">Practice</div>
-<a href="#problems">11. 12 problems</a>
+<a href="#problems">11. 7 problems</a>
 <a href="#gA" style="padding-left:16px">A. Characters are numbers</a>
-<a href="#gB" style="padding-left:16px">B. Walking along a string</a>
-<a href="#gC" style="padding-left:16px">C. Counting letters</a>
-<a href="#gD" style="padding-left:16px">D. Palindromes and reversing</a>
+<a href="#gB" style="padding-left:16px">B. Runs, counts and palindromes</a>
+<a href="#gC" style="padding-left:16px">C. Challenge</a>
 <div class="pager">
 <a href="../02_Primitive_Types/02_Primitive_Types.html" title="Previous: Lesson 02 &middot; Numbers: int, long long, bool and double">&larr;<small>Lesson 02</small></a>
 <a href="../04_Arrays/04_Arrays.html" title="Next: Lesson 04 &middot; Arrays - a row of numbered boxes">&rarr;<small>Lesson 04</small></a>
 </div>
 </nav>
 <main>
-<header class="top"><h1>C++17 Strings - words, letters and text</h1><div class="sub">Lesson 03 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<header class="top"><h1>C++17 Strings - words, letters and text</h1><div class="sub">Lesson 03 | Theory, cheat sheet and 7 practice problems from arena.olimpiici.com (Group D)</div></header>
 <h2 id="basics">1. A string is a row of characters</h2>
 <p>A <code>string</code> holds text. Add <code>#include &lt;string&gt;</code> at the top. The characters have numbered places, and counting starts at 0:</p>
 <pre><code>string s = &quot;hello&quot;;
@@ -302,32 +301,24 @@ bool pal = (s == r);</code></pre>
 <tr><td>Counting letters into <code>cnt[26]</code></td><td>O(n)</td></tr>
 <tr><td>Palindrome check</td><td>O(n)</td></tr>
 </tbody></table></div>
-<h2 id="problems">11. Practice &mdash; 12 problems, Group D</h2>
-<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<h2 id="problems">11. Practice &mdash; 7 problems, Group D</h2>
+<p>All 7 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the last group is the hardest. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
 <div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
-<div class="pgroup"><h3 id="gA">A. Characters are numbers</h3><p class="maps">Theory: section 2</p>
+<div class="pgroup"><h3 id="gA">A. Characters are numbers</h3><p class="maps">Theory: sections 2, 3 and 4</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="208"></td><td><a href="https://arena.olimpiici.com/#/catalog/92/problem/100208" target="_blank" rel="noopener">word</a><br><span class="tech">Even word</span></td><td class="tech">each letter&#x27;s place in the alphabet: <code>c - &#x27;a&#x27;</code></td><td class="src">Municipal round 2009</td><td class="dif">★☆☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="238"></td><td><a href="https://arena.olimpiici.com/#/catalog/104/problem/100238" target="_blank" rel="noopener">telephone</a><br><span class="tech">Telephone</span></td><td class="tech">letter to phone digit; digits and dashes stay as they are</td><td class="src">Municipal round 2011</td><td class="dif">★☆☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="434"></td><td><a href="https://arena.olimpiici.com/#/catalog/182/problem/100434" target="_blank" rel="noopener">numerology</a><br><span class="tech">Numerology</span></td><td class="tech">letters to digits, then add the digits until one is left</td><td class="src">Regional round 2014</td><td class="dif">★★☆☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gB">B. Walking along a string</h3><p class="maps">Theory: sections 3 and 4</p>
+<div class="pgroup"><h3 id="gB">B. Runs, counts and palindromes</h3><p class="maps">Theory: sections 3, 6 and 7</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="100"></td><td><a href="https://arena.olimpiici.com/#/catalog/50/problem/100100" target="_blank" rel="noopener">zero</a><br><span class="tech">Zeros</span></td><td class="tech">measure every run of zeros - which lengths turn up?</td><td class="src">Autumn tournament 2013</td><td class="dif">★☆☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="388"></td><td><a href="https://arena.olimpiici.com/#/catalog/164/problem/100388" target="_blank" rel="noopener">letters</a><br><span class="tech">Letters</span></td><td class="tech">the first letter, the last letter, and is a letter inside?</td><td class="src">Regional round 2011</td><td class="dif">★★☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="1486"></td><td><a href="https://arena.olimpiici.com/#/catalog/601/problem/101486" target="_blank" rel="noopener">magic</a><br><span class="tech">Magic words</span></td><td class="tech">runs of vowels or of consonants, and how many letters each needs</td><td class="src">Spring tournament 2021</td><td class="dif">★★☆☆☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gC">C. Counting letters</h3><p class="maps">Theory: section 6</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="2065"></td><td><a href="https://arena.olimpiici.com/#/catalog/792/problem/102085" target="_blank" rel="noopener">maxsub</a><br><span class="tech">Same letters</span></td><td class="tech"><code>cnt[26]</code>, then the letter with the biggest count</td><td class="src">Municipal round 2024</td><td class="dif">★☆☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="313"></td><td><a href="https://arena.olimpiici.com/#/catalog/134/problem/100313" target="_blank" rel="noopener">word</a><br><span class="tech">Code word</span></td><td class="tech">count the letters ignoring case, then order them by count</td><td class="src">Municipal round 2016</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="116"></td><td><a href="https://arena.olimpiici.com/#/catalog/56/problem/100116" target="_blank" rel="noopener">substring</a><br><span class="tech">Substring</span></td><td class="tech">count both words; the smaller count of each letter is shared</td><td class="src">Autumn tournament 2014</td><td class="dif">★★☆☆☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gD">D. Palindromes and reversing</h3><p class="maps">Theory: section 7</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="1894"></td><td><a href="https://arena.olimpiici.com/#/catalog/742/problem/101907" target="_blank" rel="noopener">palin</a><br><span class="tech">Palindrome (rearrange)</span></td><td class="tech">a palindrome can be made when at most one letter has an odd count</td><td class="src">Municipal round 2023</td><td class="dif">★★☆☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Challenge</h3><p class="maps">Theory: section 7</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="70"></td><td><a href="https://arena.olimpiici.com/#/catalog/38/problem/100070" target="_blank" rel="noopener">symmetric</a><br><span class="tech">Make it symmetric</span></td><td class="tech">the longest end piece that is already a palindrome; mirror the rest</td><td class="src">Autumn tournament 2011</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="564"></td><td><a href="https://arena.olimpiici.com/#/catalog/221/problem/100564" target="_blank" rel="noopener">key</a><br><span class="tech">Cipher (rotations)</span></td><td class="tech">turning a word round is three <code>reverse</code> calls</td><td class="src">National round 2011</td><td class="dif">★★★★☆</td></tr>
 </tbody></table></div></div>
 <footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 03 · C++17 strings. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
 </main></div>

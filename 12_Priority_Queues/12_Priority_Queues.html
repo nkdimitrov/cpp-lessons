@@ -134,17 +134,17 @@ footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
 <a href="#pitfalls">6. Pitfalls</a>
 <a href="#complexity">7. Complexity</a>
 <div class="grp">Practice</div>
-<a href="#problems">8. 12 problems</a>
-<a href="#gA" style="padding-left:16px">A. The biggest first</a>
-<a href="#gB" style="padding-left:16px">B. The smallest first</a>
-<a href="#gC" style="padding-left:16px">C. Pairs in the queue</a>
+<a href="#problems">8. 7 problems</a>
+<a href="#gA" style="padding-left:16px">A. The largest, or the smallest, on top</a>
+<a href="#gB" style="padding-left:16px">B. Pairs in the queue - or just sort?</a>
+<a href="#gC" style="padding-left:16px">C. Challenge</a>
 <div class="pager">
 <a href="../11_Sets_And_Maps/11_Sets_And_Maps.html" title="Previous: Lesson 11 &middot; Sets and maps">&larr;<small>Lesson 11</small></a>
 <a href="../13_Algorithm_Library/13_Algorithm_Library.html" title="Next: Lesson 13 &middot; The &lt;algorithm&gt; toolbox">&rarr;<small>Lesson 13</small></a>
 </div>
 </nav>
 <main>
-<header class="top"><h1>C++17 Priority queues - always the best one first</h1><div class="sub">Lesson 12 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<header class="top"><h1>C++17 Priority queues - always the best one first</h1><div class="sub">Lesson 12 | Theory, cheat sheet and 7 practice problems from arena.olimpiici.com (Group D)</div></header>
 <h2 id="pq">1. The largest is always on top</h2>
 <p>A <code>priority_queue</code> is a box you can throw numbers into in any order. Whenever you look, the <strong>largest</strong> one is on top. It is also called a <strong>heap</strong>. Add <code>#include &lt;queue&gt;</code>:</p>
 <pre><code>priority_queue&lt;int&gt; pq;
@@ -233,28 +233,23 @@ for (int i = 0; i &lt; n; i++) {
 <tr><td><code>push(x)</code>, <code>pop()</code> with <code>n</code> values inside</td><td>O(log n)</td></tr>
 <tr><td>Putting in <code>n</code> values and taking them all out</td><td>O(n log n) - the same as sorting</td></tr>
 </tbody></table></div>
-<h2 id="problems">8. Practice &mdash; 12 problems, Group D</h2>
-<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<h2 id="problems">8. Practice &mdash; 7 problems, Group D</h2>
+<p>All 7 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the last group is the hardest. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
 <div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
-<div class="pgroup"><h3 id="gA">A. The biggest first</h3><p class="maps">Theory: section 1</p>
+<div class="pgroup"><h3 id="gA">A. The largest, or the smallest, on top</h3><p class="maps">Theory: sections 1 and 2</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="100358"></td><td><a href="https://arena.olimpiici.com/#/catalog/152/problem/100358" target="_blank" rel="noopener">stones</a><br><span class="tech">Stones</span></td><td class="tech">push every weight; pop them and count how often the value changes</td><td class="src">Regional round 2009</td><td class="dif">★☆☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100298"></td><td><a href="https://arena.olimpiici.com/#/catalog/128/problem/100298" target="_blank" rel="noopener">difference</a><br><span class="tech">Difference</span></td><td class="tech">digits from a max-heap give the largest number, from a min-heap the smallest</td><td class="src">Municipal round 2015</td><td class="dif">★★☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100542"></td><td><a href="https://arena.olimpiici.com/#/catalog/216/problem/100542" target="_blank" rel="noopener">machine</a><br><span class="tech">Time machine</span></td><td class="tech">the same trick with the digits of a year</td><td class="src">National round 2010</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100130"></td><td><a href="https://arena.olimpiici.com/#/catalog/62/problem/100130" target="_blank" rel="noopener">shop</a><br><span class="tech">The shop</span></td><td class="tech">pop the prices largest first; every k-th one is free</td><td class="src">Autumn tournament 2015</td><td class="dif">★★★☆☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gB">B. The smallest first</h3><p class="maps">Theory: section 2</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="102469"></td><td><a href="https://arena.olimpiici.com/#/catalog/894/problem/102469" target="_blank" rel="noopener">agent</a><br><span class="tech">Agent</span></td><td class="tech">find the digits, push them into a min-heap, pop them smallest first</td><td class="src">Autumn tournament 2025</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100959"></td><td><a href="https://arena.olimpiici.com/#/catalog/345/problem/100959" target="_blank" rel="noopener">clock</a><br><span class="tech">Alarm clock</span></td><td class="tech">minutes until each alarm go into a min-heap; the top rings first</td><td class="src">Winter tournament 2012</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="102068"></td><td><a href="https://arena.olimpiici.com/#/catalog/790/problem/102068" target="_blank" rel="noopener">stairs</a><br><span class="tech">Stairs</span></td><td class="tech">pop the heights smallest first; build the longest chain of steps</td><td class="src">Autumn tournament 2023</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101774"></td><td><a href="https://arena.olimpiici.com/#/catalog/695/problem/101774" target="_blank" rel="noopener">duets</a><br><span class="tech">Duets</span></td><td class="tech">pop the singers smallest first and pair each with the next one</td><td class="src">Spring tournament 2022</td><td class="dif">★★★★☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gC">C. Pairs in the queue</h3><p class="maps">Theory: section 3</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="102296"></td><td><a href="https://arena.olimpiici.com/#/catalog/857/problem/102296" target="_blank" rel="noopener">courier</a><br><span class="tech">Courier</span></td><td class="tech">a smallest-first queue of <code>{distance, {|a|, number}}</code> - a pair inside a pair; pop k times</td><td class="src">Winter tournament 2025</td><td class="dif">★★☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100730"></td><td><a href="https://arena.olimpiici.com/#/catalog/255/problem/100730" target="_blank" rel="noopener">visitors</a><br><span class="tech">Visitors</span></td><td class="tech">a min-heap of leaving times: who has gone when the next one comes?</td><td class="src">National round 2018</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100478"></td><td><a href="https://arena.olimpiici.com/#/catalog/200/problem/100478" target="_blank" rel="noopener">dentist</a><br><span class="tech">The dentist</span></td><td class="tech">patients come out of a min-heap by arrival; each waits for the last</td><td class="src">Regional round 2017</td><td class="dif">★★★☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gB">B. Pairs in the queue - or just sort?</h3><p class="maps">Theory: sections 2, 3 and 4</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100041"></td><td><a href="https://arena.olimpiici.com/#/catalog/26/problem/100041" target="_blank" rel="noopener">maxbin</a><br><span class="tech">Ones and zeros</span></td><td class="tech">push every digit into a max-heap and the ones come out first - or just count them</td><td class="src">Autumn tournament 2009</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100959"></td><td><a href="https://arena.olimpiici.com/#/catalog/345/problem/100959" target="_blank" rel="noopener">clock</a><br><span class="tech">Alarm clock</span></td><td class="tech">minutes until each alarm go into a min-heap; the top rings first</td><td class="src">Winter tournament 2012</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100478"></td><td><a href="https://arena.olimpiici.com/#/catalog/200/problem/100478" target="_blank" rel="noopener">dentist</a><br><span class="tech">The dentist</span></td><td class="tech">patients come out of a min-heap by arrival; each waits for the last</td><td class="src">Regional round 2017</td><td class="dif">★★☆☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Challenge</h3><p class="maps">Theory: section 3</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="101762"></td><td><a href="https://arena.olimpiici.com/#/catalog/691/problem/101762" target="_blank" rel="noopener">maxsum</a><br><span class="tech">Largest sums</span></td><td class="tech">a heap of (sum, i): pop the largest, then give i its next partner</td><td class="src">Summer tournament 2021</td><td class="dif">★★★☆☆</td></tr>
 </tbody></table></div></div>
 <footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 12 · C++17 priority_queue. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>

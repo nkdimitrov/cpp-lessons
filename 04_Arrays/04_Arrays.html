@@ -136,18 +136,17 @@ footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
 <a href="#pitfalls">8. Pitfalls</a>
 <a href="#complexity">9. Complexity</a>
 <div class="grp">Practice</div>
-<a href="#problems">10. 12 problems</a>
-<a href="#gA" style="padding-left:16px">A. Store the numbers, then look at all of them</a>
-<a href="#gB" style="padding-left:16px">B. Neighbours</a>
-<a href="#gC" style="padding-left:16px">C. Round in a circle, and windows</a>
-<a href="#gD" style="padding-left:16px">D. Several passes, several arrays</a>
+<a href="#problems">10. 7 problems</a>
+<a href="#gA" style="padding-left:16px">A. Store, scan, look at the neighbours</a>
+<a href="#gB" style="padding-left:16px">B. Circles, windows and several passes</a>
+<a href="#gC" style="padding-left:16px">C. Challenge</a>
 <div class="pager">
 <a href="../03_Strings/03_Strings.html" title="Previous: Lesson 03 &middot; Strings">&larr;<small>Lesson 03</small></a>
 <a href="../05_Vectors/05_Vectors.html" title="Next: Lesson 05 &middot; std::vector - a list that grows">&rarr;<small>Lesson 05</small></a>
 </div>
 </nav>
 <main>
-<header class="top"><h1>C++17 Arrays - a row of numbered boxes</h1><div class="sub">Lesson 04 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<header class="top"><h1>C++17 Arrays - a row of numbered boxes</h1><div class="sub">Lesson 04 | Theory, cheat sheet and 7 practice problems from arena.olimpiici.com (Group D)</div></header>
 <h2 id="what">1. What an array is</h2>
 <p>An array is a row of boxes with one name. Each box holds one value and has a number, its <strong>index</strong>. Counting starts at 0:</p>
 <pre><code>int a[5];          // five boxes: a[0], a[1], a[2], a[3], a[4]
@@ -256,32 +255,24 @@ for (int i = n - 2; i &gt;= 0; i--) R[i] = max(R[i + 1], a[i]);</code></pre>
 <tr><td>Sliding a window of <code>k</code> along the array</td><td>O(n), not O(n * k)</td></tr>
 <tr><td>Comparing every pair</td><td>O(n * n) - fine for n up to a few thousand</td></tr>
 </tbody></table></div>
-<h2 id="problems">10. Practice &mdash; 12 problems, Group D</h2>
-<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<h2 id="problems">10. Practice &mdash; 7 problems, Group D</h2>
+<p>All 7 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the last group is the hardest. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
 <div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
-<div class="pgroup"><h3 id="gA">A. Store the numbers, then look at all of them</h3><p class="maps">Theory: sections 2 and 3</p>
+<div class="pgroup"><h3 id="gA">A. Store, scan, look at the neighbours</h3><p class="maps">Theory: sections 2, 3 and 4</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="100254"></td><td><a href="https://arena.olimpiici.com/#/catalog/110/problem/100254" target="_blank" rel="noopener">minipoker</a><br><span class="tech">Mini poker</span></td><td class="tech">five numbers in an array - are they five in a row?</td><td class="src">Municipal round 2012</td><td class="dif">★☆☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100026"></td><td><a href="https://arena.olimpiici.com/#/catalog/20/problem/100026" target="_blank" rel="noopener">roads</a><br><span class="tech">Roads</span></td><td class="tech">a total for each settlement: the settlement number is the index</td><td class="src">Autumn tournament 2008</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100010"></td><td><a href="https://arena.olimpiici.com/#/catalog/14/problem/100010" target="_blank" rel="noopener">happy</a><br><span class="tech">Happy years</span></td><td class="tech">mark the happy years, then find the two closest ones</td><td class="src">Autumn tournament 2007</td><td class="dif">★★☆☆☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gB">B. Neighbours</h3><p class="maps">Theory: section 4</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="101637"></td><td><a href="https://arena.olimpiici.com/#/catalog/652/problem/101637" target="_blank" rel="noopener">lokmax</a><br><span class="tech">Local maxima</span></td><td class="tech"><code>a[i-1] &lt; a[i] &gt; a[i+1]</code>, plus the smallest gap between neighbours</td><td class="src">Municipal round 2022</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100056"></td><td><a href="https://arena.olimpiici.com/#/catalog/32/problem/100056" target="_blank" rel="noopener">parking</a><br><span class="tech">Parking</span></td><td class="tech">a place is forbidden when its neighbour is D, B or S - then count</td><td class="src">Autumn tournament 2010</td><td class="dif">★★☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100240"></td><td><a href="https://arena.olimpiici.com/#/catalog/104/problem/100240" target="_blank" rel="noopener">temperature</a><br><span class="tech">Temperatures</span></td><td class="tech">an average per day, then count the rising, falling and flat stretches</td><td class="src">Municipal round 2011</td><td class="dif">★★☆☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gC">C. Round in a circle, and windows</h3><p class="maps">Theory: section 5</p>
+<div class="pgroup"><h3 id="gB">B. Circles, windows and several passes</h3><p class="maps">Theory: sections 5 and 6</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100224"></td><td><a href="https://arena.olimpiici.com/#/catalog/98/problem/100224" target="_blank" rel="noopener">harvest</a><br><span class="tech">Harvest</span></td><td class="tech">three in a row round a circle - wrap with <code>%</code></td><td class="src">Municipal round 2010</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100224"></td><td><a href="https://arena.olimpiici.com/#/catalog/98/problem/100224" target="_blank" rel="noopener">harvest</a><br><span class="tech">Harvest</span></td><td class="tech">three in a row round a circle - wrap with <code>%</code></td><td class="src">Municipal round 2010</td><td class="dif">★☆☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100513"></td><td><a href="https://arena.olimpiici.com/#/catalog/211/problem/100513" target="_blank" rel="noopener">product</a><br><span class="tech">Product</span></td><td class="tech">a window of <code>m</code> numbers sliding along the array</td><td class="src">National round 2009</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100057"></td><td><a href="https://arena.olimpiici.com/#/catalog/32/problem/100057" target="_blank" rel="noopener">planes</a><br><span class="tech">Aeroplanes</span></td><td class="tech">two planes stepping round a circle with <code>%</code></td><td class="src">Autumn tournament 2010</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100026"></td><td><a href="https://arena.olimpiici.com/#/catalog/20/problem/100026" target="_blank" rel="noopener">roads</a><br><span class="tech">Roads</span></td><td class="tech">a total for each settlement: the settlement number is the index</td><td class="src">Autumn tournament 2008</td><td class="dif">★★☆☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gD">D. Several passes, several arrays</h3><p class="maps">Theory: section 6</p>
+<div class="pgroup"><h3 id="gC">C. Challenge</h3><p class="maps">Theory: section 6</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="101295"></td><td><a href="https://arena.olimpiici.com/#/catalog/476/problem/101295" target="_blank" rel="noopener">dry</a><br><span class="tech">Dry tubs</span></td><td class="tech">for each gap: the highest wall to its left and to its right</td><td class="src">Regional round 2020</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100390"></td><td><a href="https://arena.olimpiici.com/#/catalog/164/problem/100390" target="_blank" rel="noopener">shield</a><br><span class="tech">The shield</span></td><td class="tech">try every pair of planks, both ways round</td><td class="src">Regional round 2011</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100809"></td><td><a href="https://arena.olimpiici.com/#/catalog/285/problem/100809" target="_blank" rel="noopener">processors</a><br><span class="tech">Processors</span></td><td class="tech">carry the finishing times from one array into the next</td><td class="src">Spring tournament 2012</td><td class="dif">★★★☆☆</td></tr>
 </tbody></table></div></div>
 <footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 04 · C++17 arrays. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
 </main></div>

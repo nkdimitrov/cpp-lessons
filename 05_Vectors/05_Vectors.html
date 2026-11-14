@@ -136,18 +136,17 @@ footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
 <a href="#pitfalls">8. Pitfalls</a>
 <a href="#complexity">9. Complexity</a>
 <div class="grp">Practice</div>
-<a href="#problems">10. 12 problems</a>
-<a href="#gA" style="padding-left:16px">A. A list whose length you learn as you go</a>
-<a href="#gB" style="padding-left:16px">B. Digits and numbers in a vector</a>
-<a href="#gC" style="padding-left:16px">C. Building a new vector</a>
-<a href="#gD" style="padding-left:16px">D. One list for each group</a>
+<a href="#problems">10. 7 problems</a>
+<a href="#gA" style="padding-left:16px">A. Lists and digits in a vector</a>
+<a href="#gB" style="padding-left:16px">B. Lists you build as you go</a>
+<a href="#gC" style="padding-left:16px">C. Challenge</a>
 <div class="pager">
 <a href="../04_Arrays/04_Arrays.html" title="Previous: Lesson 04 &middot; Arrays - a row of numbered boxes">&larr;<small>Lesson 04</small></a>
 <a href="../06_Counting_Arrays/06_Counting_Arrays.html" title="Next: Lesson 06 &middot; Counting and frequency arrays">&rarr;<small>Lesson 06</small></a>
 </div>
 </nav>
 <main>
-<header class="top"><h1>C++17 Vectors - a list that grows</h1><div class="sub">Lesson 05 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<header class="top"><h1>C++17 Vectors - a list that grows</h1><div class="sub">Lesson 05 | Theory, cheat sheet and 7 practice problems from arena.olimpiici.com (Group D)</div></header>
 <h2 id="grow">1. A list that grows</h2>
 <p>An array has a fixed size. A <code>vector</code> starts empty and grows each time you add something. Add <code>#include &lt;vector&gt;</code> at the top.</p>
 <pre><code>vector&lt;int&gt; v;           // empty
@@ -252,32 +251,24 @@ cout &lt;&lt; pos[7].size() &lt;&lt; &#x27;\n&#x27;;   // how many times 7 appea
 <tr><td>Building a new vector in one pass</td><td>O(n)</td></tr>
 <tr><td><code>sort(v.begin(), v.end())</code></td><td>O(n log n)</td></tr>
 </tbody></table></div>
-<h2 id="problems">10. Practice &mdash; 12 problems, Group D</h2>
-<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<h2 id="problems">10. Practice &mdash; 7 problems, Group D</h2>
+<p>All 7 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the last group is the hardest. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
 <div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
-<div class="pgroup"><h3 id="gA">A. A list whose length you learn as you go</h3><p class="maps">Theory: sections 1 and 3</p>
+<div class="pgroup"><h3 id="gA">A. Lists and digits in a vector</h3><p class="maps">Theory: sections 1 to 4</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100072"></td><td><a href="https://arena.olimpiici.com/#/catalog/38/problem/100072" target="_blank" rel="noopener">frequency</a><br><span class="tech">Letter chart</span></td><td class="tech">read until <code>@</code>, so the number of letters is not known in advance</td><td class="src">Autumn tournament 2011</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100270"></td><td><a href="https://arena.olimpiici.com/#/catalog/116/problem/100270" target="_blank" rel="noopener">all</a><br><span class="tech">Everyone</span></td><td class="tech">collect the ids of each contest, keep those that are in every one</td><td class="src">Municipal round 2013</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100420"></td><td><a href="https://arena.olimpiici.com/#/catalog/176/problem/100420" target="_blank" rel="noopener">tststsbreh</a><br><span class="tech">Consonants</span></td><td class="tech">cut the text into sentences, one vector entry each, then test each</td><td class="src">Regional round 2013</td><td class="dif">★★☆☆☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gB">B. Digits and numbers in a vector</h3><p class="maps">Theory: section 4</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100592"></td><td><a href="https://arena.olimpiici.com/#/catalog/226/problem/100592" target="_blank" rel="noopener">number</a><br><span class="tech">Palindrome number</span></td><td class="tech">the digits of n in base b go into a vector - same backwards?</td><td class="src">National round 2012</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100612"></td><td><a href="https://arena.olimpiici.com/#/catalog/231/problem/100612" target="_blank" rel="noopener">pres</a><br><span class="tech">Fibonacci sum</span></td><td class="tech">the Fibonacci numbers into a vector, then take the largest that fits</td><td class="src">National round 2013</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101870"></td><td><a href="https://arena.olimpiici.com/#/catalog/732/problem/101870" target="_blank" rel="noopener">numbers</a><br><span class="tech">Nearly equal digits</span></td><td class="tech">every candidate number into a vector, then the smallest big enough</td><td class="src">Autumn tournament 2022</td><td class="dif">★★★☆☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gC">C. Building a new vector</h3><p class="maps">Theory: section 5</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100025"></td><td><a href="https://arena.olimpiici.com/#/catalog/20/problem/100025" target="_blank" rel="noopener">digit</a><br><span class="tech">Digits</span></td><td class="tech">the digits of each number go into a vector; test the number against each one</td><td class="src">Autumn tournament 2008</td><td class="dif">★☆☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100101"></td><td><a href="https://arena.olimpiici.com/#/catalog/50/problem/100101" target="_blank" rel="noopener">salary</a><br><span class="tech">Salary</span></td><td class="tech">push the digits of 1, 8, 27, ... until the vector reaches position k</td><td class="src">Autumn tournament 2013</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101575"></td><td><a href="https://arena.olimpiici.com/#/catalog/627/problem/101575" target="_blank" rel="noopener">wheel</a><br><span class="tech">Wheel</span></td><td class="tech">a vector of N blanks; each spin fills one place, found with <code>%</code></td><td class="src">Municipal round 2021</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101296"></td><td><a href="https://arena.olimpiici.com/#/catalog/476/problem/101296" target="_blank" rel="noopener">restore</a><br><span class="tech">Restore</span></td><td class="tech"><code>insert</code> each value at the position it asks for</td><td class="src">Regional round 2020</td><td class="dif">★★★★☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100592"></td><td><a href="https://arena.olimpiici.com/#/catalog/226/problem/100592" target="_blank" rel="noopener">number</a><br><span class="tech">Palindrome number</span></td><td class="tech">the digits of n in base b go into a vector - same backwards?</td><td class="src">National round 2012</td><td class="dif">★★☆☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gD">D. One list for each group</h3><p class="maps">Theory: section 6</p>
+<div class="pgroup"><h3 id="gB">B. Lists you build as you go</h3><p class="maps">Theory: sections 5 and 6</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100638"></td><td><a href="https://arena.olimpiici.com/#/catalog/236/problem/100638" target="_blank" rel="noopener">letters</a><br><span class="tech">Letters</span></td><td class="tech">one list of correspondents per person - how many different ones?</td><td class="src">National round 2014</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101924"></td><td><a href="https://arena.olimpiici.com/#/catalog/747/problem/101924" target="_blank" rel="noopener">red</a><br><span class="tech">The row</span></td><td class="tech">one list of positions per value; the next one is the neighbour in it</td><td class="src">Regional round 2023</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100824"></td><td><a href="https://arena.olimpiici.com/#/catalog/291/problem/100824" target="_blank" rel="noopener">travel</a><br><span class="tech">Travel</span></td><td class="tech">one list of neighbours per city, then walk from city 0</td><td class="src">Spring tournament 2013</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100270"></td><td><a href="https://arena.olimpiici.com/#/catalog/116/problem/100270" target="_blank" rel="noopener">all</a><br><span class="tech">Everyone</span></td><td class="tech">collect the ids of each contest, keep those that are in every one</td><td class="src">Municipal round 2013</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100420"></td><td><a href="https://arena.olimpiici.com/#/catalog/176/problem/100420" target="_blank" rel="noopener">tststsbreh</a><br><span class="tech">Consonants</span></td><td class="tech">cut the text into sentences, one vector entry each, then test each</td><td class="src">Regional round 2013</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100072"></td><td><a href="https://arena.olimpiici.com/#/catalog/38/problem/100072" target="_blank" rel="noopener">frequency</a><br><span class="tech">Letter chart</span></td><td class="tech">read until <code>@</code>, so the number of letters is not known in advance</td><td class="src">Autumn tournament 2011</td><td class="dif">★★☆☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Challenge</h3><p class="maps">Theory: sections 4 and 5</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100612"></td><td><a href="https://arena.olimpiici.com/#/catalog/231/problem/100612" target="_blank" rel="noopener">pres</a><br><span class="tech">Fibonacci sum</span></td><td class="tech">the Fibonacci numbers into a vector, then take the largest that fits</td><td class="src">National round 2013</td><td class="dif">★★★☆☆</td></tr>
 </tbody></table></div></div>
 <footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 05 · C++17 std::vector. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
 </main></div>

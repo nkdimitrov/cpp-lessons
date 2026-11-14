@@ -11,7 +11,7 @@
   {
    "id": "core",
    "title": "Part I - Language and data structures",
-   "blurb": "The C++17 you actually type in a contest, at the level of a 5th or 6th grader: only the basics. Lessons 01 to 16 are self-contained, follow the shape of Lesson 03, and end with 12 Group D problems from the catalogue, grouped by subtopic and getting harder as you go. Lesson 17 closes the part with 33 more problems in rounds of three, like a real contest.",
+   "blurb": "The C++17 you actually type in a contest, at the level of a 5th or 6th grader: only the basics. Lessons 01 to 16 are self-contained, follow the shape of Lesson 03, and end with 7 Group D problems from the catalogue: two triads of easy problems that cover the lesson, then one medium challenge. Lesson 17 closes the part with 33 more problems in rounds of three, like a real contest.",
    "lessons": [
     {
      "num": "01",

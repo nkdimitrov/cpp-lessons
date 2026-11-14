@@ -7,7 +7,7 @@ FOOTER = ("Lesson 15 · C++17 recursion. Problem links point to arena.olimpiici.
           "statements are in Bulgarian and downloadable as PDF from each problem page.")
 
 TITLE = "C++17 Recursion - a function that calls itself"
-SUBTITLE = ("Lesson 15 | Theory, cheat sheet and 12 practice problems "
+SUBTITLE = ("Lesson 15 | Theory, cheat sheet and 7 practice problems "
             "from arena.olimpiici.com (Group D)")
 
 SECTIONS = [

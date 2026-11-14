@@ -7,7 +7,7 @@ FOOTER = ("Lesson 08 · C++17 sorting. Problem links point to arena.olimpiici.co
           "statements are in Bulgarian and downloadable as PDF from each problem page.")
 
 TITLE = "C++17 Sorting - putting things in order"
-SUBTITLE = ("Lesson 08 | Theory, cheat sheet and 12 practice problems "
+SUBTITLE = ("Lesson 08 | Theory, cheat sheet and 7 practice problems "
             "from arena.olimpiici.com (Group D)")
 
 SECTIONS = [

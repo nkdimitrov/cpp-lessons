@@ -136,18 +136,17 @@ footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
 <a href="#pitfalls">8. Pitfalls</a>
 <a href="#complexity">9. Complexity</a>
 <div class="grp">Practice</div>
-<a href="#problems">10. 12 problems</a>
+<a href="#problems">10. 7 problems</a>
 <a href="#gA" style="padding-left:16px">A. Rows and columns</a>
-<a href="#gB" style="padding-left:16px">B. Neighbours</a>
-<a href="#gC" style="padding-left:16px">C. Walking round the grid</a>
-<a href="#gD" style="padding-left:16px">D. Lines through the grid</a>
+<a href="#gB" style="padding-left:16px">B. Neighbours and walking round</a>
+<a href="#gC" style="padding-left:16px">C. Challenge</a>
 <div class="pager">
 <a href="../06_Counting_Arrays/06_Counting_Arrays.html" title="Previous: Lesson 06 &middot; Counting and frequency arrays">&larr;<small>Lesson 06</small></a>
 <a href="../08_Sorting/08_Sorting.html" title="Next: Lesson 08 &middot; Sorting">&rarr;<small>Lesson 08</small></a>
 </div>
 </nav>
 <main>
-<header class="top"><h1>C++17 Grids - tables of rows and columns</h1><div class="sub">Lesson 07 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<header class="top"><h1>C++17 Grids - tables of rows and columns</h1><div class="sub">Lesson 07 | Theory, cheat sheet and 7 practice problems from arena.olimpiici.com (Group D)</div></header>
 <h2 id="table">1. A table of numbers</h2>
 <p>A two-dimensional array is a table. <code>a[i][j]</code> is the box in <strong>row</strong> <code>i</code> and <strong>column</strong> <code>j</code>. Both start at 0:</p>
 <pre><code>int a[105][105];             // outside main: up to 105 rows and 105 columns
@@ -280,32 +279,24 @@ for (int i = 0; i &lt; n; i++) {
 <tr><td>Checking the four neighbours of one box</td><td>O(1)</td></tr>
 <tr><td>Every row sum and every column sum</td><td>O(n * m)</td></tr>
 </tbody></table></div>
-<h2 id="problems">10. Practice &mdash; 12 problems, Group D</h2>
-<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<h2 id="problems">10. Practice &mdash; 7 problems, Group D</h2>
+<p>All 7 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the last group is the hardest. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
 <div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
-<div class="pgroup"><h3 id="gA">A. Rows and columns</h3><p class="maps">Theory: sections 1 and 2</p>
+<div class="pgroup"><h3 id="gA">A. Rows and columns</h3><p class="maps">Theory: sections 1, 2 and 3</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100946"></td><td><a href="https://arena.olimpiici.com/#/catalog/339/problem/100946" target="_blank" rel="noopener">topscore</a><br><span class="tech">Top score</span></td><td class="tech">smallest in its row and largest in its column</td><td class="src">Winter tournament 2011</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="102263"></td><td><a href="https://arena.olimpiici.com/#/catalog/845/problem/102263" target="_blank" rel="noopener">minmax</a><br><span class="tech">Smallest and largest</span></td><td class="tech">every pair of side-by-side cells: the smallest and largest sum</td><td class="src">Municipal round 2025</td><td class="dif">★☆☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100375"></td><td><a href="https://arena.olimpiici.com/#/catalog/158/problem/100375" target="_blank" rel="noopener">tetris</a><br><span class="tech">Tetris</span></td><td class="tech">is the row full? then runs of full rows, scored <code>k * (k + 1) / 2</code></td><td class="src">Regional round 2010</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100928"></td><td><a href="https://arena.olimpiici.com/#/catalog/333/problem/100928" target="_blank" rel="noopener">warehouse</a><br><span class="tech">Warehouse</span></td><td class="tech">a row, or a column, with nothing in it from end to end</td><td class="src">Winter tournament 2010</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100928"></td><td><a href="https://arena.olimpiici.com/#/catalog/333/problem/100928" target="_blank" rel="noopener">warehouse</a><br><span class="tech">Warehouse</span></td><td class="tech">a row, or a column, with nothing in it from end to end</td><td class="src">Winter tournament 2010</td><td class="dif">★★☆☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gB">B. Neighbours</h3><p class="maps">Theory: sections 3 and 4</p>
+<div class="pgroup"><h3 id="gB">B. Neighbours and walking round</h3><p class="maps">Theory: sections 2, 4 and 5</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="102486"></td><td><a href="https://arena.olimpiici.com/#/catalog/901/problem/102486" target="_blank" rel="noopener">enemy</a><br><span class="tech">Enemies</span></td><td class="tech"><code>dr</code>/<code>dc</code> over the four neighbours, count the occupied ones</td><td class="src">Municipal round 2026</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="102263"></td><td><a href="https://arena.olimpiici.com/#/catalog/845/problem/102263" target="_blank" rel="noopener">minmax</a><br><span class="tech">Smallest and largest</span></td><td class="tech">every pair of side-by-side cells: the smallest and largest sum</td><td class="src">Municipal round 2025</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100637"></td><td><a href="https://arena.olimpiici.com/#/catalog/236/problem/100637" target="_blank" rel="noopener">table</a><br><span class="tech">The table</span></td><td class="tech">test every 2 x 2 block of neighbouring cells</td><td class="src">National round 2014</td><td class="dif">★★★☆☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gC">C. Walking round the grid</h3><p class="maps">Theory: section 5</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="102486"></td><td><a href="https://arena.olimpiici.com/#/catalog/901/problem/102486" target="_blank" rel="noopener">enemy</a><br><span class="tech">Enemies</span></td><td class="tech"><code>dr</code>/<code>dc</code> over the four neighbours, count the occupied ones</td><td class="src">Municipal round 2026</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100946"></td><td><a href="https://arena.olimpiici.com/#/catalog/339/problem/100946" target="_blank" rel="noopener">topscore</a><br><span class="tech">Top score</span></td><td class="tech">smallest in its row and largest in its column</td><td class="src">Winter tournament 2011</td><td class="dif">★★☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100403"></td><td><a href="https://arena.olimpiici.com/#/catalog/170/problem/100403" target="_blank" rel="noopener">limes</a><br><span class="tech">Snake order</span></td><td class="tech">rows numbered left to right, then right to left - find row and column</td><td class="src">Regional round 2012</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101906"></td><td><a href="https://arena.olimpiici.com/#/catalog/742/problem/101906" target="_blank" rel="noopener">spiral</a><br><span class="tech">Spiral</span></td><td class="tech">walk the spiral with a direction array, turning when blocked</td><td class="src">Municipal round 2023</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100688"></td><td><a href="https://arena.olimpiici.com/#/catalog/246/problem/100688" target="_blank" rel="noopener">traf</a><br><span class="tech">Turning grille</span></td><td class="tech">turn the mask by 90 degrees, four times, reading letters through it</td><td class="src">National round 2016</td><td class="dif">★★★☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gD">D. Lines through the grid</h3><p class="maps">Theory: section 6</p>
+<div class="pgroup"><h3 id="gC">C. Challenge</h3><p class="maps">Theory: section 6</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="100615"></td><td><a href="https://arena.olimpiici.com/#/catalog/231/problem/100615" target="_blank" rel="noopener">battle</a><br><span class="tech">Sea battle</span></td><td class="tech">runs of free cells along each row and each column</td><td class="src">National round 2013</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100589"></td><td><a href="https://arena.olimpiici.com/#/catalog/226/problem/100589" target="_blank" rel="noopener">crossword</a><br><span class="tech">Crossword</span></td><td class="tech">number the word starts, then measure the runs across and down</td><td class="src">National round 2012</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100566"></td><td><a href="https://arena.olimpiici.com/#/catalog/221/problem/100566" target="_blank" rel="noopener">points</a><br><span class="tech">Points</span></td><td class="tech">runs of consecutive values along rows, columns and both diagonals</td><td class="src">National round 2011</td><td class="dif">★★★☆☆</td></tr>
 </tbody></table></div></div>
 <footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 07 · C++17 two-dimensional arrays. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
 </main></div>

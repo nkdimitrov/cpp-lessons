@@ -362,7 +362,7 @@ def main():
     for tr in SYL["tracks"]:
         for l in tr["lessons"]:
             p = pool_for(l.get("filters"))
-            if p is not None and p["n"] < 12 and not picked_for(l["slug"]):
+            if p is not None and p["n"] < 7 and not picked_for(l["slug"]):
                 print("  thin pool: %s %-42s %d candidates"
                       % (l["num"], l["title"][:42], p["n"]))
 

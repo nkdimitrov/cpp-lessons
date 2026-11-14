@@ -3,23 +3,18 @@
  "groups": [
   {
    "key": "A",
-   "name": "A. Big answers need long long",
-   "maps": "Theory: section 1"
+   "name": "A. long long, / and %",
+   "maps": "Theory: sections 1 and 2"
   },
   {
    "key": "B",
-   "name": "B. Taking a number apart with / and %",
-   "maps": "Theory: section 2"
+   "name": "B. Formulas, bool and square roots",
+   "maps": "Theory: sections 3, 4 and 5"
   },
   {
    "key": "C",
-   "name": "C. A formula instead of a loop",
-   "maps": "Theory: section 3"
-  },
-  {
-   "key": "D",
-   "name": "D. Square roots and decimals",
-   "maps": "Theory: section 5"
+   "name": "C. Challenge",
+   "maps": "Theory: sections 3 and 5"
   }
  ],
  "problems": [
@@ -36,39 +31,6 @@
   },
   {
    "section": "A",
-   "pid": 100329,
-   "title": "klas",
-   "en": "Handshakes",
-   "tech": "`N(N-1)/2` and a second formula; multiply in `long long`",
-   "family": "Municipal round",
-   "year": 2017,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/140/problem/100329"
-  },
-  {
-   "section": "A",
-   "pid": 100913,
-   "title": "box",
-   "en": "Three parts",
-   "tech": "the ways to split N into three positive parts: `(N-1)(N-2)/2`",
-   "family": "Winter tournament",
-   "year": 2009,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/327/problem/100913"
-  },
-  {
-   "section": "B",
-   "pid": 100025,
-   "title": "digit",
-   "en": "Digits",
-   "tech": "split each number with `% 10` and `/ 10`",
-   "family": "Autumn tournament",
-   "year": 2008,
-   "diff": 1,
-   "url": "https://arena.olimpiici.com/#/catalog/20/problem/100025"
-  },
-  {
-   "section": "B",
    "pid": 100268,
    "title": "tailor",
    "en": "The tailor",
@@ -79,7 +41,7 @@
    "url": "https://arena.olimpiici.com/#/catalog/116/problem/100268"
   },
   {
-   "section": "B",
+   "section": "A",
    "pid": 100974,
    "title": "angles",
    "en": "Angles",
@@ -90,51 +52,29 @@
    "url": "https://arena.olimpiici.com/#/catalog/351/problem/100974"
   },
   {
-   "section": "C",
-   "pid": 100012,
-   "title": "div",
-   "en": "Multiples",
-   "tech": "`b/c - (a-1)/c` counts the multiples without a loop",
-   "family": "Autumn tournament",
-   "year": 2007,
-   "diff": 1,
-   "url": "https://arena.olimpiici.com/#/catalog/14/problem/100012"
-  },
-  {
-   "section": "C",
+   "section": "B",
    "pid": 101044,
    "title": "triangle",
    "en": "Third side",
    "tech": "how many whole numbers lie strictly between `|a-b|` and `a+b`",
    "family": "Municipal round",
    "year": 2019,
-   "diff": 2,
+   "diff": 1,
    "url": "https://arena.olimpiici.com/#/catalog/382/problem/101044"
   },
   {
-   "section": "C",
-   "pid": 100616,
-   "title": "nine",
-   "en": "Nines",
-   "tech": "`s(N) = s(9N)` holds exactly for the multiples of 9 - count them",
-   "family": "National round",
-   "year": 2013,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/231/problem/100616"
-  },
-  {
-   "section": "D",
-   "pid": 100661,
-   "title": "cubes",
-   "en": "Cubes",
-   "tech": "take off the largest cube that still fits, and repeat",
-   "family": "National round",
-   "year": 2015,
+   "section": "B",
+   "pid": 100329,
+   "title": "klas",
+   "en": "Handshakes",
+   "tech": "`N(N-1)/2` and a second formula; multiply in `long long`",
+   "family": "Municipal round",
+   "year": 2017,
    "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/241/problem/100661"
+   "url": "https://arena.olimpiici.com/#/catalog/140/problem/100329"
   },
   {
-   "section": "D",
+   "section": "B",
    "pid": 100808,
    "title": "degree",
    "en": "Exact power",
@@ -145,7 +85,7 @@
    "url": "https://arena.olimpiici.com/#/catalog/285/problem/100808"
   },
   {
-   "section": "D",
+   "section": "C",
    "pid": 100746,
    "title": "lamps",
    "en": "Lamps",

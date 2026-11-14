@@ -136,18 +136,17 @@ footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
 <a href="#pitfalls">8. Pitfalls</a>
 <a href="#complexity">9. Complexity</a>
 <div class="grp">Practice</div>
-<a href="#problems">10. 12 problems</a>
-<a href="#gA" style="padding-left:16px">A. Read a few numbers, print the answer</a>
-<a href="#gB" style="padding-left:16px">B. A loop over the input</a>
-<a href="#gC" style="padding-left:16px">C. One character at a time</a>
-<a href="#gD" style="padding-left:16px">D. Numbers with signs in between</a>
+<a href="#problems">10. 7 problems</a>
+<a href="#gA" style="padding-left:16px">A. Numbers in, answer out</a>
+<a href="#gB" style="padding-left:16px">B. Characters and signs</a>
+<a href="#gC" style="padding-left:16px">C. Challenge</a>
 <div class="pager">
 <span>&larr;<small>&nbsp;</small></span>
 <a href="../02_Primitive_Types/02_Primitive_Types.html" title="Next: Lesson 02 &middot; Numbers: int, long long, bool and double">&rarr;<small>Lesson 02</small></a>
 </div>
 </nav>
 <main>
-<header class="top"><h1>C++17 Setup and I/O - getting the data in and the answer out</h1><div class="sub">Lesson 01 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<header class="top"><h1>C++17 Setup and I/O - getting the data in and the answer out</h1><div class="sub">Lesson 01 | Theory, cheat sheet and 7 practice problems from arena.olimpiici.com (Group D)</div></header>
 <h2 id="first">1. Your first program</h2>
 <p>Every program in this course starts the same way. Here is a whole program. It reads two numbers and prints their sum:</p>
 <pre><code>#include &lt;iostream&gt;          // the tools for reading and printing
@@ -303,31 +302,23 @@ cin.tie(nullptr);</code></pre>
 <tr><td>Reading <code>n</code> numbers in a loop</td><td>O(n) - one step per number</td></tr>
 <tr><td>Keeping a sum, a count or a best value while reading</td><td>O(n) time and almost no memory</td></tr>
 </tbody></table></div>
-<h2 id="problems">10. Practice &mdash; 12 problems, Group D</h2>
-<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<h2 id="problems">10. Practice &mdash; 7 problems, Group D</h2>
+<p>All 7 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the last group is the hardest. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
 <div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
-<div class="pgroup"><h3 id="gA">A. Read a few numbers, print the answer</h3><p class="maps">Theory: section 2</p>
+<div class="pgroup"><h3 id="gA">A. Numbers in, answer out</h3><p class="maps">Theory: sections 2 and 3</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="100283"></td><td><a href="https://arena.olimpiici.com/#/catalog/122/problem/100283" target="_blank" rel="noopener">cinema</a><br><span class="tech">Cinema</span></td><td class="tech">two numbers in, row and seat out - <code>/</code> and <code>%</code> do the work</td><td class="src">Municipal round 2014</td><td class="dif">★☆☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100344"></td><td><a href="https://arena.olimpiici.com/#/catalog/146/problem/100344" target="_blank" rel="noopener">kub</a><br><span class="tech">Cube</span></td><td class="tech">one number in, four formulas out; the counts need <code>long long</code></td><td class="src">Municipal round 2018</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100512"></td><td><a href="https://arena.olimpiici.com/#/catalog/211/problem/100512" target="_blank" rel="noopener">clock</a><br><span class="tech">Clock</span></td><td class="tech">a time in, a waiting time out - print it in exactly the right form</td><td class="src">National round 2009</td><td class="dif">★★☆☆☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gB">B. A loop over the input</h3><p class="maps">Theory: section 3</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="100389"></td><td><a href="https://arena.olimpiici.com/#/catalog/164/problem/100389" target="_blank" rel="noopener">seq</a><br><span class="tech">The sequence</span></td><td class="tech">keep the previous number, the current streak and the best streak</td><td class="src">Regional round 2011</td><td class="dif">★☆☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100225"></td><td><a href="https://arena.olimpiici.com/#/catalog/98/problem/100225" target="_blank" rel="noopener">remote</a><br><span class="tech">Remote control</span></td><td class="tech">read the points one by one and keep the smallest <code>|x| + |y|</code></td><td class="src">Municipal round 2010</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100613"></td><td><a href="https://arena.olimpiici.com/#/catalog/231/problem/100613" target="_blank" rel="noopener">rabbits</a><br><span class="tech">Rabbits</span></td><td class="tech">read each rabbit&#x27;s two positions and keep the largest difference</td><td class="src">National round 2013</td><td class="dif">★★☆☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gC">C. One character at a time</h3><p class="maps">Theory: section 4</p>
+<div class="pgroup"><h3 id="gB">B. Characters and signs</h3><p class="maps">Theory: sections 4 and 5</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="100748"></td><td><a href="https://arena.olimpiici.com/#/catalog/261/problem/100748" target="_blank" rel="noopener">sin</a><br><span class="tech">Forecast</span></td><td class="tech">read the letters one at a time: the longest run of one letter</td><td class="src">Spring tournament 2008</td><td class="dif">★☆☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100041"></td><td><a href="https://arena.olimpiici.com/#/catalog/26/problem/100041" target="_blank" rel="noopener">maxbin</a><br><span class="tech">Ones and zeros</span></td><td class="tech">count the ones while reading, then print them before the zeros</td><td class="src">Autumn tournament 2009</td><td class="dif">★☆☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100027"></td><td><a href="https://arena.olimpiici.com/#/catalog/20/problem/100027" target="_blank" rel="noopener">choco</a><br><span class="tech">Chocolate</span></td><td class="tech">count the blocks of one letter as the characters arrive</td><td class="src">Autumn tournament 2008</td><td class="dif">★★☆☆☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gD">D. Numbers with signs in between</h3><p class="maps">Theory: section 5</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="100315"></td><td><a href="https://arena.olimpiici.com/#/catalog/134/problem/100315" target="_blank" rel="noopener">abx</a><br><span class="tech">The equation</span></td><td class="tech">read <code>a</code>, then the sign, then <code>b</code> - <code>cin &gt;&gt;</code> can do it</td><td class="src">Municipal round 2016</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100330"></td><td><a href="https://arena.olimpiici.com/#/catalog/140/problem/100330" target="_blank" rel="noopener">circles</a><br><span class="tech">Loops in the digits</span></td><td class="tech">read the sum, work out the answer, then look at its digits</td><td class="src">Municipal round 2017</td><td class="dif">★★☆☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Challenge</h3><p class="maps">Theory: sections 4 and 5</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="101259"></td><td><a href="https://arena.olimpiici.com/#/catalog/467/problem/101259" target="_blank" rel="noopener">guess</a><br><span class="tech">The missing digit</span></td><td class="tech">try each digit 0-9 in place of <code>?</code> and check the sum</td><td class="src">Autumn tournament 2019</td><td class="dif">★★★☆☆</td></tr>
 </tbody></table></div></div>
 <footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 01 · C++17 setup and input/output. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>

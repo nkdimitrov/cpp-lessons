@@ -8,7 +8,7 @@ FOOTER = ("Lesson 02 · C++17 numbers, characters and truth values. Problem link
           "problem page.")
 
 TITLE = "C++17 Numbers - int, long long, bool and double"
-SUBTITLE = ("Lesson 02 | Theory, cheat sheet and 12 practice problems "
+SUBTITLE = ("Lesson 02 | Theory, cheat sheet and 7 practice problems "
             "from arena.olimpiici.com (Group D)")
 
 SECTIONS = [

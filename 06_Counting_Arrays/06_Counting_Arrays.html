@@ -136,18 +136,17 @@ footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
 <a href="#pitfalls">8. Pitfalls</a>
 <a href="#complexity">9. Complexity</a>
 <div class="grp">Practice</div>
-<a href="#problems">10. 12 problems</a>
-<a href="#gA" style="padding-left:16px">A. One box per value</a>
-<a href="#gB" style="padding-left:16px">B. Marking: seen or not seen</a>
-<a href="#gC" style="padding-left:16px">C. The commonest value, and pairs</a>
-<a href="#gD" style="padding-left:16px">D. Counting as you go, and counting sort</a>
+<a href="#problems">10. 7 problems</a>
+<a href="#gA" style="padding-left:16px">A. One box per value, and marking</a>
+<a href="#gB" style="padding-left:16px">B. The commonest value, and counting as you go</a>
+<a href="#gC" style="padding-left:16px">C. Challenge</a>
 <div class="pager">
 <a href="../05_Vectors/05_Vectors.html" title="Previous: Lesson 05 &middot; std::vector - a list that grows">&larr;<small>Lesson 05</small></a>
 <a href="../07_Grids_And_Matrices/07_Grids_And_Matrices.html" title="Next: Lesson 07 &middot; Two-dimensional arrays and grids">&rarr;<small>Lesson 07</small></a>
 </div>
 </nav>
 <main>
-<header class="top"><h1>C++17 Counting arrays - one box per value</h1><div class="sub">Lesson 06 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<header class="top"><h1>C++17 Counting arrays - one box per value</h1><div class="sub">Lesson 06 | Theory, cheat sheet and 7 practice problems from arena.olimpiici.com (Group D)</div></header>
 <h2 id="boxes">1. One box per value</h2>
 <p>In lesson 04 the box number was a place in a row. Here the box number is the <strong>value</strong> itself. Box <code>x</code> counts how many times <code>x</code> has been seen:</p>
 <pre><code>int cnt[10];                     // outside main, so all 0
@@ -240,32 +239,24 @@ for (int v = 0; v &lt;= 1000; v++) {
 <tr><td>Walking all the boxes</td><td>O(number of possible values)</td></tr>
 <tr><td>Counting sort</td><td>O(n + number of possible values)</td></tr>
 </tbody></table></div>
-<h2 id="problems">10. Practice &mdash; 12 problems, Group D</h2>
-<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<h2 id="problems">10. Practice &mdash; 7 problems, Group D</h2>
+<p>All 7 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the last group is the hardest. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
 <div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
-<div class="pgroup"><h3 id="gA">A. One box per value</h3><p class="maps">Theory: sections 1 and 2</p>
+<div class="pgroup"><h3 id="gA">A. One box per value, and marking</h3><p class="maps">Theory: sections 1, 2 and 3</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100255"></td><td><a href="https://arena.olimpiici.com/#/catalog/110/problem/100255" target="_blank" rel="noopener">lottery</a><br><span class="tech">Lottery</span></td><td class="tech">ten boxes, one per digit - which digit turns up again?</td><td class="src">Municipal round 2012</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="102262"></td><td><a href="https://arena.olimpiici.com/#/catalog/845/problem/102262" target="_blank" rel="noopener">digit</a><br><span class="tech">Leading digit</span></td><td class="tech">every product of the table goes into the box of its first digit</td><td class="src">Municipal round 2025</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100885"></td><td><a href="https://arena.olimpiici.com/#/catalog/315/problem/100885" target="_blank" rel="noopener">long</a><br><span class="tech">The longest run</span></td><td class="tech">mark the values, then the longest run of marked boxes</td><td class="src">Spring tournament 2017</td><td class="dif">★★☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100539"></td><td><a href="https://arena.olimpiici.com/#/catalog/216/problem/100539" target="_blank" rel="noopener">poker</a><br><span class="tech">Poker</span></td><td class="tech">count each card value, then read the hand off the counts</td><td class="src">National round 2010</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="102262"></td><td><a href="https://arena.olimpiici.com/#/catalog/845/problem/102262" target="_blank" rel="noopener">digit</a><br><span class="tech">Leading digit</span></td><td class="tech">every product of the table goes into the box of its first digit</td><td class="src">Municipal round 2025</td><td class="dif">★★☆☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gB">B. Marking: seen or not seen</h3><p class="maps">Theory: section 3</p>
+<div class="pgroup"><h3 id="gB">B. The commonest value, and counting as you go</h3><p class="maps">Theory: sections 4 and 5</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="102487"></td><td><a href="https://arena.olimpiici.com/#/catalog/901/problem/102487" target="_blank" rel="noopener">pair</a><br><span class="tech">Pairs with sum S</span></td><td class="tech">before marking <code>x</code>, ask whether <code>S - x</code> is already marked</td><td class="src">Municipal round 2026</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100885"></td><td><a href="https://arena.olimpiici.com/#/catalog/315/problem/100885" target="_blank" rel="noopener">long</a><br><span class="tech">The longest run</span></td><td class="tech">mark the values, then the longest run of marked boxes</td><td class="src">Spring tournament 2017</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="102687"></td><td><a href="https://arena.olimpiici.com/#/catalog/949/problem/102687" target="_blank" rel="noopener">triplet</a><br><span class="tech">Pythagorean triples</span></td><td class="tech">mark the values, try each pair, look the third side up</td><td class="src">Spring tournament 2026</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="102279"></td><td><a href="https://arena.olimpiici.com/#/catalog/850/problem/102279" target="_blank" rel="noopener">excess</a><br><span class="tech">Excess</span></td><td class="tech"><code>cnt[x]++</code> for every value, then the values seen fewer than K times</td><td class="src">Winter tournament 2008</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101043"></td><td><a href="https://arena.olimpiici.com/#/catalog/382/problem/101043" target="_blank" rel="noopener">postagestamps</a><br><span class="tech">Postage stamps</span></td><td class="tech">count the stamps of each value, then pages and albums by rounding up</td><td class="src">Municipal round 2019</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100055"></td><td><a href="https://arena.olimpiici.com/#/catalog/32/problem/100055" target="_blank" rel="noopener">seq</a><br><span class="tech">Sequence</span></td><td class="tech">a box per value for the window of four: add the new value, remove the old one</td><td class="src">Autumn tournament 2010</td><td class="dif">★★☆☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gC">C. The commonest value, and pairs</h3><p class="maps">Theory: section 4</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="101043"></td><td><a href="https://arena.olimpiici.com/#/catalog/382/problem/101043" target="_blank" rel="noopener">postagestamps</a><br><span class="tech">Postage stamps</span></td><td class="tech">count the stamps of each value, then pages and albums by rounding up</td><td class="src">Municipal round 2019</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100991"></td><td><a href="https://arena.olimpiici.com/#/catalog/357/problem/100991" target="_blank" rel="noopener">students</a><br><span class="tech">Students</span></td><td class="tech">every wish votes for one shift; the commonest shift wins</td><td class="src">Winter tournament 2014</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101979"></td><td><a href="https://arena.olimpiici.com/#/catalog/762/problem/101979" target="_blank" rel="noopener">alike</a><br><span class="tech">Alike numbers</span></td><td class="tech">a count per digit, then <code>c * (c - 1) / 2</code> pairs from each box</td><td class="src">Spring tournament 2023</td><td class="dif">★★★☆☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gD">D. Counting as you go, and counting sort</h3><p class="maps">Theory: sections 5 and 6</p>
+<div class="pgroup"><h3 id="gC">C. Challenge</h3><p class="maps">Theory: section 5</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="100869"></td><td><a href="https://arena.olimpiici.com/#/catalog/309/problem/100869" target="_blank" rel="noopener">necklace</a><br><span class="tech">Necklace</span></td><td class="tech">count as you go: each pair adds the count of its first letter so far</td><td class="src">Spring tournament 2016</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100345"></td><td><a href="https://arena.olimpiici.com/#/catalog/146/problem/100345" target="_blank" rel="noopener">red</a><br><span class="tech">The row</span></td><td class="tech">how many equal values lie before, and after, each position</td><td class="src">Municipal round 2018</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101773"></td><td><a href="https://arena.olimpiici.com/#/catalog/695/problem/101773" target="_blank" rel="noopener">searching</a><br><span class="tech">Searching</span></td><td class="tech">count the values instead of storing them, then walk to the k-th</td><td class="src">Spring tournament 2022</td><td class="dif">★★★★☆</td></tr>
 </tbody></table></div></div>
 <footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 06 · C++17 counting and frequency arrays. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
 </main></div>

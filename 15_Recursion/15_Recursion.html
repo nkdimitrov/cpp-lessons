@@ -135,18 +135,17 @@ footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
 <a href="#pitfalls">7. Pitfalls</a>
 <a href="#complexity">8. Complexity</a>
 <div class="grp">Practice</div>
-<a href="#problems">9. 12 problems</a>
+<a href="#problems">9. 7 problems</a>
 <a href="#gA" style="padding-left:16px">A. A function that calls itself</a>
-<a href="#gB" style="padding-left:16px">B. Remembering answers</a>
-<a href="#gC" style="padding-left:16px">C. Trying every choice</a>
-<a href="#gD" style="padding-left:16px">D. Going back: backtracking</a>
+<a href="#gB" style="padding-left:16px">B. Trying every choice</a>
+<a href="#gC" style="padding-left:16px">C. Challenge</a>
 <div class="pager">
 <a href="../14_Big_Integers/14_Big_Integers.html" title="Previous: Lesson 14 &middot; Big integers - arithmetic beyond long long">&larr;<small>Lesson 14</small></a>
 <a href="../16_Complexity_And_Limits/16_Complexity_And_Limits.html" title="Next: Lesson 16 &middot; Time and memory limits">&rarr;<small>Lesson 16</small></a>
 </div>
 </nav>
 <main>
-<header class="top"><h1>C++17 Recursion - a function that calls itself</h1><div class="sub">Lesson 15 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<header class="top"><h1>C++17 Recursion - a function that calls itself</h1><div class="sub">Lesson 15 | Theory, cheat sheet and 7 practice problems from arena.olimpiici.com (Group D)</div></header>
 <h2 id="idea">1. A function that calls itself</h2>
 <p>A <strong>recursive</strong> function solves a problem by calling itself on a smaller copy of the same problem. It always has two parts:</p>
 <ul><li>the <strong>base case</strong> - a problem so small that the answer is known at once;</li><li>the <strong>step</strong> - make the problem smaller and call yourself.</li></ul>
@@ -276,32 +275,24 @@ void perm(int k) {                    // fill place k
 <tr><td>All 0/1 strings or all groups of <code>n</code></td><td>O(2^n)</td></tr>
 <tr><td>All orders of <code>n</code> numbers</td><td>O(n!)</td></tr>
 </tbody></table></div>
-<h2 id="problems">9. Practice &mdash; 12 problems, Group D</h2>
-<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<h2 id="problems">9. Practice &mdash; 7 problems, Group D</h2>
+<p>All 7 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the last group is the hardest. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
 <div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
-<div class="pgroup"><h3 id="gA">A. A function that calls itself</h3><p class="maps">Theory: sections 1 and 2</p>
+<div class="pgroup"><h3 id="gA">A. A function that calls itself</h3><p class="maps">Theory: sections 1, 2 and 3</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
+<tr><td><input type="checkbox" data-pid="100253"></td><td><a href="https://arena.olimpiici.com/#/catalog/110/problem/100253" target="_blank" rel="noopener">fish_globe</a><br><span class="tech">Fish bowl</span></td><td class="tech">each day depends on earlier days; keep the answers in an array</td><td class="src">Municipal round 2012</td><td class="dif">★☆☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100209"></td><td><a href="https://arena.olimpiici.com/#/catalog/92/problem/100209" target="_blank" rel="noopener">square</a><br><span class="tech">Squares</span></td><td class="tech">cut off the biggest square and call yourself on what is left</td><td class="src">Municipal round 2009</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100663"></td><td><a href="https://arena.olimpiici.com/#/catalog/241/problem/100663" target="_blank" rel="noopener">parade</a><br><span class="tech">Parade</span></td><td class="tech">the parade doubles each step; find place p in the half it came from</td><td class="src">National round 2015</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101175"></td><td><a href="https://arena.olimpiici.com/#/catalog/434/problem/101175" target="_blank" rel="noopener">numbers</a><br><span class="tech">Numbers</span></td><td class="tech">run the rule backwards, one call per step, until the start</td><td class="src">Spring tournament 2019</td><td class="dif">★★★★☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100663"></td><td><a href="https://arena.olimpiici.com/#/catalog/241/problem/100663" target="_blank" rel="noopener">parade</a><br><span class="tech">Parade</span></td><td class="tech">the parade doubles each step; find place p in the half it came from</td><td class="src">National round 2015</td><td class="dif">★★☆☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gB">B. Remembering answers</h3><p class="maps">Theory: section 3</p>
+<div class="pgroup"><h3 id="gB">B. Trying every choice</h3><p class="maps">Theory: sections 4 and 5</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100253"></td><td><a href="https://arena.olimpiici.com/#/catalog/110/problem/100253" target="_blank" rel="noopener">fish_globe</a><br><span class="tech">Fish bowl</span></td><td class="tech">each day depends on earlier days; keep the answers in an array</td><td class="src">Municipal round 2012</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100853"></td><td><a href="https://arena.olimpiici.com/#/catalog/303/problem/100853" target="_blank" rel="noopener">robot</a><br><span class="tech">Robot</span></td><td class="tech">walks of k steps that end at (i, j): <code>f(k, i, j)</code>, remembered</td><td class="src">Spring tournament 2015</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101923"></td><td><a href="https://arena.olimpiici.com/#/catalog/747/problem/101923" target="_blank" rel="noopener">minesweeper</a><br><span class="tech">Minesweeper</span></td><td class="tech">count the ways cell by cell; remember each count once found</td><td class="src">Regional round 2023</td><td class="dif">★★★★☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100102"></td><td><a href="https://arena.olimpiici.com/#/catalog/50/problem/100102" target="_blank" rel="noopener">sport</a><br><span class="tech">Sport</span></td><td class="tech">pick each unused letter in turn, call yourself, then put the letter back</td><td class="src">Autumn tournament 2013</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100900"></td><td><a href="https://arena.olimpiici.com/#/catalog/321/problem/100900" target="_blank" rel="noopener">delimost</a><br><span class="tech">Divisibility</span></td><td class="tech">build every 0/1 number digit by digit and test each one</td><td class="src">Spring tournament 2018</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100793"></td><td><a href="https://arena.olimpiici.com/#/catalog/279/problem/100793" target="_blank" rel="noopener">competitors</a><br><span class="tech">Competitors</span></td><td class="tech">take or leave each person: every team of up to 10</td><td class="src">Spring tournament 2011</td><td class="dif">★★☆☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gC">C. Trying every choice</h3><p class="maps">Theory: section 4</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100900"></td><td><a href="https://arena.olimpiici.com/#/catalog/321/problem/100900" target="_blank" rel="noopener">delimost</a><br><span class="tech">Divisibility</span></td><td class="tech">build every 0/1 number digit by digit and test each one</td><td class="src">Spring tournament 2018</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100793"></td><td><a href="https://arena.olimpiici.com/#/catalog/279/problem/100793" target="_blank" rel="noopener">competitors</a><br><span class="tech">Competitors</span></td><td class="tech">take or leave each person: every team of up to 10</td><td class="src">Spring tournament 2011</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100568"></td><td><a href="https://arena.olimpiici.com/#/catalog/221/problem/100568" target="_blank" rel="noopener">super</a><br><span class="tech">Super primes</span></td><td class="tech">grow primes one digit at a time; each call adds a digit</td><td class="src">National round 2011</td><td class="dif">★★★☆☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gD">D. Going back: backtracking</h3><p class="maps">Theory: section 5</p>
+<div class="pgroup"><h3 id="gC">C. Challenge</h3><p class="maps">Theory: section 5</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="100011"></td><td><a href="https://arena.olimpiici.com/#/catalog/14/problem/100011" target="_blank" rel="noopener">words</a><br><span class="tech">Words</span></td><td class="tech">chain words by first and last letter; step back when stuck</td><td class="src">Autumn tournament 2007</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100975"></td><td><a href="https://arena.olimpiici.com/#/catalog/351/problem/100975" target="_blank" rel="noopener">conundrum</a><br><span class="tech">Word search</span></td><td class="tech">follow each word through neighbouring cells; undo and try another way</td><td class="src">Winter tournament 2013</td><td class="dif">★★★★☆</td></tr>
-<tr><td><input type="checkbox" data-pid="102723"></td><td><a href="https://arena.olimpiici.com/#/catalog/961/problem/102723" target="_blank" rel="noopener">sum</a><br><span class="tech">Sum</span></td><td class="tech">place the digits column by column; undo a choice that cannot work</td><td class="src">Summer tournament 2026</td><td class="dif">★★★★☆</td></tr>
 </tbody></table></div></div>
 <footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 15 · C++17 recursion. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
 </main></div>

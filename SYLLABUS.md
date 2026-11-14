@@ -9,26 +9,26 @@ Generated from `syllabus.json` by `tools/build_site.py` - edit the JSON, not thi
 
 ## Part I - Language and data structures
 
-The C++17 you actually type in a contest, at the level of a 5th or 6th grader: only the basics. Lessons 01 to 16 are self-contained, follow the shape of Lesson 03, and end with 12 Group D problems from the catalogue, grouped by subtopic and getting harder as you go. Lesson 17 closes the part with 33 more problems in rounds of three, like a real contest.
+The C++17 you actually type in a contest, at the level of a 5th or 6th grader: only the basics. Lessons 01 to 16 are self-contained, follow the shape of Lesson 03, and end with 7 Group D problems from the catalogue: two triads of easy problems that cover the lesson, then one medium challenge. Lesson 17 closes the part with 33 more problems in rounds of three, like a real contest.
 
 | # | Lesson | Status | Candidate problems | Catalogue filter |
 |---|--------|--------|--------------------|------------------|
-| 01 | Setup, I/O and the contest toolkit | **written** | 12 assigned | `I/O parsing · Group D · level 1-3` |
-| 02 | Numbers: int, long long, bool and double | **written** | 12 assigned | `Long long · Group D · level 1-3` |
-| 03 | Strings | **written** | 12 assigned | `String processing · Group D` |
-| 04 | Arrays - a row of numbered boxes | **written** | 12 assigned | `Arrays · Group D · level 1-3` |
-| 05 | std::vector - a list that grows | **written** | 12 assigned | `Vectors · Group D · level 2-4` |
-| 06 | Counting and frequency arrays | **written** | 12 assigned | `Counting / Frequency arrays · Group D · level 2-4` |
-| 07 | Two-dimensional arrays and grids | **written** | 12 assigned | `2D arrays · Group D · level 2-4` |
-| 08 | Sorting | **written** | 12 assigned | `Sorting · Group D · level 2-4` |
-| 09 | Pairs and structs | **written** | 12 assigned | `Pairs / Structs · Group D · level 2-4` |
-| 10 | Stacks, queues and deques | **written** | 12 assigned | `Stacks / Queues / Deque · Group D · level 2-4` |
-| 11 | Sets and maps | **written** | 12 assigned | `Maps / Sets · Group D · level 2-4` |
-| 12 | Priority queues | **written** | 12 assigned | `Priority queue · Group D · level 3-5` |
-| 13 | The <algorithm> toolbox | **written** | 12 assigned | `Vectors · Group D · level 2-3` |
-| 14 | Big integers - arithmetic beyond long long | **written** | 12 assigned | `Big numbers · Group D · level 2-5` |
-| 15 | Recursion | **written** | 12 assigned | `Recursion · Group D · level 2-4` |
-| 16 | Time and memory limits | **written** | 12 assigned | `Memory optimization · Group D · level 3-5` |
+| 01 | Setup, I/O and the contest toolkit | **written** | 7 assigned | `I/O parsing · Group D · level 1-3` |
+| 02 | Numbers: int, long long, bool and double | **written** | 7 assigned | `Long long · Group D · level 1-3` |
+| 03 | Strings | **written** | 7 assigned | `String processing · Group D` |
+| 04 | Arrays - a row of numbered boxes | **written** | 7 assigned | `Arrays · Group D · level 1-3` |
+| 05 | std::vector - a list that grows | **written** | 7 assigned | `Vectors · Group D · level 2-4` |
+| 06 | Counting and frequency arrays | **written** | 7 assigned | `Counting / Frequency arrays · Group D · level 2-4` |
+| 07 | Two-dimensional arrays and grids | **written** | 7 assigned | `2D arrays · Group D · level 2-4` |
+| 08 | Sorting | **written** | 7 assigned | `Sorting · Group D · level 2-4` |
+| 09 | Pairs and structs | **written** | 7 assigned | `Pairs / Structs · Group D · level 2-4` |
+| 10 | Stacks, queues and deques | **written** | 7 assigned | `Stacks / Queues / Deque · Group D · level 2-4` |
+| 11 | Sets and maps | **written** | 7 assigned | `Maps / Sets · Group D · level 2-4` |
+| 12 | Priority queues | **written** | 7 assigned | `Priority queue · Group D · level 3-5` |
+| 13 | The <algorithm> toolbox | **written** | 7 assigned | `Vectors · Group D · level 2-3` |
+| 14 | Big integers - arithmetic beyond long long | **written** | 7 assigned | `Big numbers · Group D · level 2-5` |
+| 15 | Recursion | **written** | 7 assigned | `Recursion · Group D · level 2-4` |
+| 16 | Time and memory limits | **written** | 7 assigned | `Memory optimization · Group D · level 3-5` |
 | 17 | Practice contests - eleven rounds of three | **written** | 33 assigned | `Group D · level 2-4` |
 
 ### 01. Setup, I/O and the contest toolkit
@@ -230,23 +230,23 @@ One technique per lesson, in the order the catalogue rewards. Each assumes Part 
 
 | # | Lesson | Status | Candidate problems | Catalogue filter |
 |---|--------|--------|--------------------|------------------|
-| 18 | Brute force and complete search | planned | 54 | `Brute force · level 2-4` |
-| 19 | Simulation and implementation discipline | planned | 82 | `Implementation / Simulation · level 2-4` |
-| 20 | Prefix sums and difference arrays | planned | 71 | `Prefix sums · level 2-5` |
-| 21 | Two pointers and sliding window | planned | 45 | `Two pointers · level 2-5` |
+| 18 | Brute force and complete search | planned | 50 | `Brute force · level 2-4` |
+| 19 | Simulation and implementation discipline | planned | 81 | `Implementation / Simulation · level 2-4` |
+| 20 | Prefix sums and difference arrays | planned | 70 | `Prefix sums · level 2-5` |
+| 21 | Two pointers and sliding window | planned | 43 | `Two pointers · level 2-5` |
 | 22 | Binary search, including binary search on the answer | planned | 32 | `Binary search · level 3-5` |
-| 23 | Greedy - and how to prove it | planned | 118 | `Greedy · level 2-5` |
-| 24 | Sorting-based techniques: sweep line and coordinate compression | planned | 58 | `Sorting · level 3-5` |
-| 25 | Number theory I: divisibility, primes and GCD | planned | 128 | `Number theory · level 2-4` |
+| 23 | Greedy - and how to prove it | planned | 116 | `Greedy · level 2-5` |
+| 24 | Sorting-based techniques: sweep line and coordinate compression | planned | 54 | `Sorting · level 3-5` |
+| 25 | Number theory I: divisibility, primes and GCD | planned | 127 | `Number theory · level 2-4` |
 | 26 | Number theory II: modular arithmetic and fast exponentiation | planned | 30 | `Modular arithmetic · level 3-5` |
 | 27 | Combinatorics and counting | planned | 50 | `Combinatorics · level 3-5` |
-| 28 | Backtracking and generating combinatorial objects | planned | 17 | `Recursion / Backtracking · level 3-5` |
-| 29 | Bitmasks and subset enumeration | planned | 22 | `Bit manipulation · level 3-5` |
-| 30 | Dynamic programming I: one dimension | planned | 76 | `Dynamic programming · level 3-4` |
+| 28 | Backtracking and generating combinatorial objects | planned | 16 | `Recursion / Backtracking · level 3-5` |
+| 29 | Bitmasks and subset enumeration | planned | 21 | `Bit manipulation · level 3-5` |
+| 30 | Dynamic programming I: one dimension | planned | 74 | `Dynamic programming · level 3-4` |
 | 31 | Dynamic programming II: two dimensions and grids | planned | 39 | `Dynamic programming · 2D arrays · level 3-5` |
 | 32 | Dynamic programming III: interval, digit and bitmask DP | planned | 21 | `Dynamic programming · level 5` |
 | 33 | Graphs: representation and traversal | planned | 56 | `Graph traversal · level 3-5` |
-| 34 | Flood fill and grid graphs | planned | 64 | `Flood fill / Grid/Matrix · level 2-5` |
+| 34 | Flood fill and grid graphs | planned | 62 | `Flood fill / Grid/Matrix · level 2-5` |
 | 35 | Shortest paths | planned | 14 | `Shortest path · level 3-5` |
 | 36 | Trees | planned | 10 | `Trees · level 3-5` |
 | 37 | Disjoint set union (union-find) | planned | 37 | `Data structures · level 4-5` |

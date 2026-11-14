@@ -7,7 +7,7 @@ FOOTER = ("Lesson 11 · C++17 set and map. Problem links point to arena.olimpiic
           "statements are in Bulgarian and downloadable as PDF from each problem page.")
 
 TITLE = "C++17 Sets and maps - remembering what you have seen"
-SUBTITLE = ("Lesson 11 | Theory, cheat sheet and 12 practice problems "
+SUBTITLE = ("Lesson 11 | Theory, cheat sheet and 7 practice problems "
             "from arena.olimpiici.com (Group D)")
 
 SECTIONS = [

@@ -8,7 +8,7 @@ FOOTER = ("Lesson 07 · C++17 two-dimensional arrays. Problem links point to "
           "problem page.")
 
 TITLE = "C++17 Grids - tables of rows and columns"
-SUBTITLE = ("Lesson 07 | Theory, cheat sheet and 12 practice problems "
+SUBTITLE = ("Lesson 07 | Theory, cheat sheet and 7 practice problems "
             "from arena.olimpiici.com (Group D)")
 
 SECTIONS = [

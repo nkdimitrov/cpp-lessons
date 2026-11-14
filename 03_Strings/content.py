@@ -9,7 +9,7 @@ FOOTER = ("Lesson 03 · C++17 strings. Problem links point to arena.olimpiici.co
 LEGACY_DONE_KEY = "str_done"   # progress saved before the site-wide key scheme
 
 TITLE = "C++17 Strings - words, letters and text"
-SUBTITLE = ("Lesson 03 | Theory, cheat sheet and 12 practice problems "
+SUBTITLE = ("Lesson 03 | Theory, cheat sheet and 7 practice problems "
             "from arena.olimpiici.com (Group D)")
 
 SECTIONS = [

@@ -8,7 +8,7 @@ FOOTER = ("Lesson 01 · C++17 setup and input/output. Problem links point to "
           "problem page.")
 
 TITLE = "C++17 Setup and I/O - getting the data in and the answer out"
-SUBTITLE = ("Lesson 01 | Theory, cheat sheet and 12 practice problems "
+SUBTITLE = ("Lesson 01 | Theory, cheat sheet and 7 practice problems "
             "from arena.olimpiici.com (Group D)")
 
 SECTIONS = [

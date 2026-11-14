@@ -4,25 +4,31 @@
   {
    "key": "A",
    "name": "A. Two values in one: pair",
-   "maps": "Theory: sections 1 and 5"
+   "maps": "Theory: sections 1 and 2"
   },
   {
    "key": "B",
-   "name": "B. Sorting pairs",
-   "maps": "Theory: section 2"
+   "name": "B. Your own record: struct",
+   "maps": "Theory: sections 3 and 4"
   },
   {
    "key": "C",
-   "name": "C. Your own record: struct",
-   "maps": "Theory: section 3"
-  },
-  {
-   "key": "D",
-   "name": "D. Sorting records by several rules",
+   "name": "C. Challenge",
    "maps": "Theory: section 4"
   }
  ],
  "problems": [
+  {
+   "section": "A",
+   "pid": 100284,
+   "title": "klassir",
+   "en": "Classification",
+   "tech": "sort (time, number) pairs - the second value breaks ties for free",
+   "family": "Municipal round",
+   "year": 2014,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/122/problem/100284"
+  },
   {
    "section": "A",
    "pid": 100087,
@@ -46,84 +52,40 @@
    "url": "https://arena.olimpiici.com/#/catalog/555/problem/101367"
   },
   {
-   "section": "A",
-   "pid": 100763,
-   "title": "line",
-   "en": "Lines",
-   "tech": "a function turns a node number into a (row, place) pair",
-   "family": "Spring tournament",
-   "year": 2009,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/267/problem/100763"
-  },
-  {
    "section": "B",
-   "pid": 100284,
-   "title": "klassir",
-   "en": "Classification",
-   "tech": "sort (time, number) pairs - the second value breaks ties for free",
-   "family": "Municipal round",
-   "year": 2014,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/122/problem/100284"
-  },
-  {
-   "section": "B",
-   "pid": 101021,
-   "title": "sock",
-   "en": "Socks",
-   "tech": "every two socks as a (difference, length) pair, then sort",
-   "family": "Winter tournament",
-   "year": 2016,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/369/problem/101021"
-  },
-  {
-   "section": "B",
-   "pid": 101111,
-   "title": "sim",
-   "en": "Symmetry",
-   "tech": "cells as (row, column) pairs: sort them and drop the repeats",
+   "pid": 100613,
+   "title": "rabbits",
+   "en": "Rabbits",
+   "tech": "a struct per rabbit with its cage and its feeder; keep the largest difference",
    "family": "National round",
-   "year": 2019,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/407/problem/101111"
+   "year": 2013,
+   "diff": 1,
+   "url": "https://arena.olimpiici.com/#/catalog/231/problem/100613"
   },
   {
-   "section": "C",
+   "section": "B",
+   "pid": 102296,
+   "title": "courier",
+   "en": "Courier",
+   "tech": "a struct per parcel, sorted by distance, then by `|a|`, then by number",
+   "family": "Winter tournament",
+   "year": 2025,
+   "diff": 2,
+   "url": "https://arena.olimpiici.com/#/catalog/857/problem/102296"
+  },
+  {
+   "section": "B",
    "pid": 100514,
    "title": "soil",
    "en": "Soil",
    "tech": "a struct per site with its volume and its number, then sort",
    "family": "National round",
    "year": 2009,
-   "diff": 3,
+   "diff": 2,
    "url": "https://arena.olimpiici.com/#/catalog/211/problem/100514"
   },
   {
    "section": "C",
-   "pid": 100747,
-   "title": "numbers",
-   "en": "Rectangles",
-   "tech": "a struct per rectangle: how many points are inside, and its area",
-   "family": "Spring tournament",
-   "year": 2008,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/261/problem/100747"
-  },
-  {
-   "section": "C",
-   "pid": 100591,
-   "title": "goldbox",
-   "en": "Gold box",
-   "tech": "a struct per ingot: smallest and largest row and column",
-   "family": "National round",
-   "year": 2012,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/226/problem/100591"
-  },
-  {
-   "section": "D",
    "pid": 100839,
    "title": "fina",
    "en": "Swimming",
@@ -132,28 +94,6 @@
    "year": 2014,
    "diff": 3,
    "url": "https://arena.olimpiici.com/#/catalog/297/problem/100839"
-  },
-  {
-   "section": "D",
-   "pid": 101224,
-   "title": "mutexes",
-   "en": "Mutexes",
-   "tech": "a struct per thread; they take turns until nobody can move",
-   "family": "Summer tournament",
-   "year": 2019,
-   "diff": 3,
-   "url": "https://arena.olimpiici.com/#/catalog/452/problem/101224"
-  },
-  {
-   "section": "D",
-   "pid": 100778,
-   "title": "runners",
-   "en": "Runners",
-   "tech": "a struct per runner; work out when each one passes, then count meetings",
-   "family": "Spring tournament",
-   "year": 2010,
-   "diff": 4,
-   "url": "https://arena.olimpiici.com/#/catalog/273/problem/100778"
   }
  ]
 }

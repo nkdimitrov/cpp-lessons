@@ -135,17 +135,17 @@ footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
 <a href="#pitfalls">7. Pitfalls</a>
 <a href="#complexity">8. Complexity</a>
 <div class="grp">Practice</div>
-<a href="#problems">9. 12 problems</a>
+<a href="#problems">9. 7 problems</a>
 <a href="#gA" style="padding-left:16px">A. Each value once: set</a>
 <a href="#gB" style="padding-left:16px">B. Counting with a map</a>
-<a href="#gC" style="padding-left:16px">C. Is it there? Fast lookups</a>
+<a href="#gC" style="padding-left:16px">C. Challenge</a>
 <div class="pager">
 <a href="../10_Stacks_Queues_Deques/10_Stacks_Queues_Deques.html" title="Previous: Lesson 10 &middot; Stacks, queues and deques">&larr;<small>Lesson 10</small></a>
 <a href="../12_Priority_Queues/12_Priority_Queues.html" title="Next: Lesson 12 &middot; Priority queues">&rarr;<small>Lesson 12</small></a>
 </div>
 </nav>
 <main>
-<header class="top"><h1>C++17 Sets and maps - remembering what you have seen</h1><div class="sub">Lesson 11 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<header class="top"><h1>C++17 Sets and maps - remembering what you have seen</h1><div class="sub">Lesson 11 | Theory, cheat sheet and 7 practice problems from arena.olimpiici.com (Group D)</div></header>
 <h2 id="set">1. set: each value once, in order</h2>
 <p>A <code>set</code> is a bag that keeps every value <strong>only once</strong> and always keeps them <strong>sorted</strong>. Add <code>#include &lt;set&gt;</code>:</p>
 <pre><code>set&lt;int&gt; s;
@@ -235,29 +235,24 @@ for (int i = 0; i &lt; n; i++) {
 <tr><td>Walking a whole set or map</td><td>O(n)</td></tr>
 <tr><td>The same jobs with an array</td><td>O(1) each</td></tr>
 </tbody></table></div>
-<h2 id="problems">9. Practice &mdash; 12 problems, Group D</h2>
-<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<h2 id="problems">9. Practice &mdash; 7 problems, Group D</h2>
+<p>All 7 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the last group is the hardest. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
 <div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
-<div class="pgroup"><h3 id="gA">A. Each value once: set</h3><p class="maps">Theory: sections 1 and 3</p>
+<div class="pgroup"><h3 id="gA">A. Each value once: set</h3><p class="maps">Theory: sections 1, 3 and 4</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="101343"></td><td><a href="https://arena.olimpiici.com/#/catalog/542/problem/101343" target="_blank" rel="noopener">albums</a><br><span class="tech">Stamp albums</span></td><td class="tech">put one album in a set, then check the other album&#x27;s stamps</td><td class="src">Autumn tournament 2020</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100884"></td><td><a href="https://arena.olimpiici.com/#/catalog/315/problem/100884" target="_blank" rel="noopener">number</a><br><span class="tech">The number</span></td><td class="tech">a set of the values - more than three different means no answer</td><td class="src">Spring tournament 2017</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101922"></td><td><a href="https://arena.olimpiici.com/#/catalog/747/problem/101922" target="_blank" rel="noopener">brackets</a><br><span class="tech">Brackets</span></td><td class="tech">every way of removing brackets goes into a set, so repeats count once</td><td class="src">Regional round 2023</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="102404"></td><td><a href="https://arena.olimpiici.com/#/catalog/873/problem/102404" target="_blank" rel="noopener">tangerine</a><br><span class="tech">Tangerines</span></td><td class="tech">only the different values matter: a set of them, sorted for free</td><td class="src">Spring tournament 2025</td><td class="dif">★★★★☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101343"></td><td><a href="https://arena.olimpiici.com/#/catalog/542/problem/101343" target="_blank" rel="noopener">albums</a><br><span class="tech">Stamp albums</span></td><td class="tech">put one album in a set, then check the other album&#x27;s stamps</td><td class="src">Autumn tournament 2020</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100638"></td><td><a href="https://arena.olimpiici.com/#/catalog/236/problem/100638" target="_blank" rel="noopener">letters</a><br><span class="tech">Letters</span></td><td class="tech">a set of correspondents for each person - its size is the answer</td><td class="src">National round 2014</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="102487"></td><td><a href="https://arena.olimpiici.com/#/catalog/901/problem/102487" target="_blank" rel="noopener">pair</a><br><span class="tech">Pairs with sum S</span></td><td class="tech">a set of the values so far: is <code>S - x</code> already in it?</td><td class="src">Municipal round 2026</td><td class="dif">★★☆☆☆</td></tr>
 </tbody></table></div></div>
 <div class="pgroup"><h3 id="gB">B. Counting with a map</h3><p class="maps">Theory: sections 2 and 3</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="102279"></td><td><a href="https://arena.olimpiici.com/#/catalog/850/problem/102279" target="_blank" rel="noopener">excess</a><br><span class="tech">Excess</span></td><td class="tech"><code>m[x]++</code> for every value, then the ones seen fewer than K times</td><td class="src">Winter tournament 2008</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100990"></td><td><a href="https://arena.olimpiici.com/#/catalog/357/problem/100990" target="_blank" rel="noopener">monitors</a><br><span class="tech">Monitors</span></td><td class="tech">a map from height to total width, then the largest total</td><td class="src">Winter tournament 2014</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101109"></td><td><a href="https://arena.olimpiici.com/#/catalog/407/problem/101109" target="_blank" rel="noopener">progres</a><br><span class="tech">Progression</span></td><td class="tech"><code>m[a[i] - i*d]++</code> - the commonest key is the part that stays</td><td class="src">National round 2019</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100686"></td><td><a href="https://arena.olimpiici.com/#/catalog/246/problem/100686" target="_blank" rel="noopener">scales</a><br><span class="tech">Scales</span></td><td class="tech">a map of how many pairs give each sum, times the count of that weight</td><td class="src">National round 2016</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100990"></td><td><a href="https://arena.olimpiici.com/#/catalog/357/problem/100990" target="_blank" rel="noopener">monitors</a><br><span class="tech">Monitors</span></td><td class="tech">a map from height to total width, then the largest total</td><td class="src">Winter tournament 2014</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100313"></td><td><a href="https://arena.olimpiici.com/#/catalog/134/problem/100313" target="_blank" rel="noopener">word</a><br><span class="tech">Code word</span></td><td class="tech"><code>m[c]++</code> for each letter, ignoring case, then order the letters by count</td><td class="src">Municipal round 2016</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100116"></td><td><a href="https://arena.olimpiici.com/#/catalog/56/problem/100116" target="_blank" rel="noopener">substring</a><br><span class="tech">Substring</span></td><td class="tech">a map of letter counts for each word; the smaller count of each letter is shared</td><td class="src">Autumn tournament 2014</td><td class="dif">★★☆☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gC">C. Is it there? Fast lookups</h3><p class="maps">Theory: section 4</p>
+<div class="pgroup"><h3 id="gC">C. Challenge</h3><p class="maps">Theory: section 2</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="101577"></td><td><a href="https://arena.olimpiici.com/#/catalog/627/problem/101577" target="_blank" rel="noopener">squares</a><br><span class="tech">Sums of squares</span></td><td class="tech">keep the squares in a set; for each <code>i*i</code>, is the rest there too?</td><td class="src">Municipal round 2021</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101943"></td><td><a href="https://arena.olimpiici.com/#/catalog/751/problem/101943" target="_blank" rel="noopener">nice</a><br><span class="tech">Nice numbers</span></td><td class="tech">a set of all sums of two earlier values; look each new value up</td><td class="src">National round 2023</td><td class="dif">★★★★☆</td></tr>
-<tr><td><input type="checkbox" data-pid="102087"></td><td><a href="https://arena.olimpiici.com/#/catalog/792/problem/102087" target="_blank" rel="noopener">sumfraction</a><br><span class="tech">Fractions</span></td><td class="tech">reduce each fraction, then group them in a map by denominator</td><td class="src">Municipal round 2024</td><td class="dif">★★★★☆</td></tr>
-<tr><td><input type="checkbox" data-pid="102154"></td><td><a href="https://arena.olimpiici.com/#/catalog/810/problem/102154" target="_blank" rel="noopener">volley</a><br><span class="tech">Volleyball</span></td><td class="tech">store every sum of a yellow pair, then look up each orange pair</td><td class="src">Spring tournament 2024</td><td class="dif">★★★★☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101109"></td><td><a href="https://arena.olimpiici.com/#/catalog/407/problem/101109" target="_blank" rel="noopener">progres</a><br><span class="tech">Progression</span></td><td class="tech"><code>m[a[i] - i*d]++</code> - the commonest key is the part that stays</td><td class="src">National round 2019</td><td class="dif">★★★☆☆</td></tr>
 </tbody></table></div></div>
 <footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 11 · C++17 set and map. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
 </main></div>

@@ -3,23 +3,18 @@
  "groups": [
   {
    "key": "A",
-   "name": "A. Read a few numbers, print the answer",
-   "maps": "Theory: section 2"
+   "name": "A. Numbers in, answer out",
+   "maps": "Theory: sections 2 and 3"
   },
   {
    "key": "B",
-   "name": "B. A loop over the input",
-   "maps": "Theory: section 3"
+   "name": "B. Characters and signs",
+   "maps": "Theory: sections 4 and 5"
   },
   {
    "key": "C",
-   "name": "C. One character at a time",
-   "maps": "Theory: section 4"
-  },
-  {
-   "key": "D",
-   "name": "D. Numbers with signs in between",
-   "maps": "Theory: section 5"
+   "name": "C. Challenge",
+   "maps": "Theory: sections 4 and 5"
   }
  ],
  "problems": [
@@ -36,28 +31,6 @@
   },
   {
    "section": "A",
-   "pid": 100344,
-   "title": "kub",
-   "en": "Cube",
-   "tech": "one number in, four formulas out; the counts need `long long`",
-   "family": "Municipal round",
-   "year": 2018,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/146/problem/100344"
-  },
-  {
-   "section": "A",
-   "pid": 100512,
-   "title": "clock",
-   "en": "Clock",
-   "tech": "a time in, a waiting time out - print it in exactly the right form",
-   "family": "National round",
-   "year": 2009,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/211/problem/100512"
-  },
-  {
-   "section": "B",
    "pid": 100389,
    "title": "seq",
    "en": "The sequence",
@@ -68,7 +41,7 @@
    "url": "https://arena.olimpiici.com/#/catalog/164/problem/100389"
   },
   {
-   "section": "B",
+   "section": "A",
    "pid": 100225,
    "title": "remote",
    "en": "Remote control",
@@ -80,17 +53,6 @@
   },
   {
    "section": "B",
-   "pid": 100613,
-   "title": "rabbits",
-   "en": "Rabbits",
-   "tech": "read each rabbit's two positions and keep the largest difference",
-   "family": "National round",
-   "year": 2013,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/231/problem/100613"
-  },
-  {
-   "section": "C",
    "pid": 100748,
    "title": "sin",
    "en": "Forecast",
@@ -101,18 +63,7 @@
    "url": "https://arena.olimpiici.com/#/catalog/261/problem/100748"
   },
   {
-   "section": "C",
-   "pid": 100041,
-   "title": "maxbin",
-   "en": "Ones and zeros",
-   "tech": "count the ones while reading, then print them before the zeros",
-   "family": "Autumn tournament",
-   "year": 2009,
-   "diff": 1,
-   "url": "https://arena.olimpiici.com/#/catalog/26/problem/100041"
-  },
-  {
-   "section": "C",
+   "section": "B",
    "pid": 100027,
    "title": "choco",
    "en": "Chocolate",
@@ -123,7 +74,7 @@
    "url": "https://arena.olimpiici.com/#/catalog/20/problem/100027"
   },
   {
-   "section": "D",
+   "section": "B",
    "pid": 100315,
    "title": "abx",
    "en": "The equation",
@@ -134,18 +85,7 @@
    "url": "https://arena.olimpiici.com/#/catalog/134/problem/100315"
   },
   {
-   "section": "D",
-   "pid": 100330,
-   "title": "circles",
-   "en": "Loops in the digits",
-   "tech": "read the sum, work out the answer, then look at its digits",
-   "family": "Municipal round",
-   "year": 2017,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/140/problem/100330"
-  },
-  {
-   "section": "D",
+   "section": "C",
    "pid": 101259,
    "title": "guess",
    "en": "The missing digit",

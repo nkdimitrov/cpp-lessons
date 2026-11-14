@@ -7,7 +7,7 @@ FOOTER = ("Lesson 05 · C++17 std::vector. Problem links point to arena.olimpiic
           "statements are in Bulgarian and downloadable as PDF from each problem page.")
 
 TITLE = "C++17 Vectors - a list that grows"
-SUBTITLE = ("Lesson 05 | Theory, cheat sheet and 12 practice problems "
+SUBTITLE = ("Lesson 05 | Theory, cheat sheet and 7 practice problems "
             "from arena.olimpiici.com (Group D)")
 
 SECTIONS = [

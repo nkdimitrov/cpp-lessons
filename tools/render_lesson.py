@@ -388,7 +388,7 @@ def build_html():
     a('<p>All %d are from the <a href="https://arena.olimpiici.com/#/catalog/1" '
       'style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group %s, across the National '
       'Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each '
-      'group, and the groups themselves get harder as you go down. Tick a problem when it is '
+      'group, and the last group is the hardest. Tick a problem when it is '
       'accepted &mdash; progress is stored in this browser. The full classified catalogue is in '
       '<a href="../Group C and D problems/index.html" style="color:var(--accent)">'
       'Group C and D problems</a>.</p>' % (NPROB, PGROUP))
@@ -605,7 +605,7 @@ def build_docx():
     para('All %d problems are from the Olimpiici Arena catalogue '
          '(https://arena.olimpiici.com/#/catalog/1), Group %s, across the National Olympiad rounds '
          'and the seasonal tournaments. They are ordered easiest first inside each group, and the '
-         'groups themselves get harder as you go down. Click a problem name to open it.'
+         'last group is the hardest. Click a problem name to open it.'
          % (NPROB, PGROUP))
 
     for key, name, maps in GROUPS:

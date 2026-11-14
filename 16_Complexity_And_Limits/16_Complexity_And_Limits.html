@@ -135,17 +135,17 @@ footer{margin-top:60px;padding-top:16px;border-top:1px solid var(--line);
 <a href="#pitfalls">7. Pitfalls</a>
 <a href="#complexity">8. Complexity</a>
 <div class="grp">Practice</div>
-<a href="#problems">9. 12 problems</a>
-<a href="#gA" style="padding-left:16px">A. Count the steps: is trying everything fast enough?</a>
-<a href="#gB" style="padding-left:16px">B. Too slow - find a shortcut</a>
-<a href="#gC" style="padding-left:16px">C. Too big to store</a>
+<a href="#problems">9. 7 problems</a>
+<a href="#gA" style="padding-left:16px">A. Count the steps first</a>
+<a href="#gB" style="padding-left:16px">B. Shortcuts, and too big to store</a>
+<a href="#gC" style="padding-left:16px">C. Challenge</a>
 <div class="pager">
 <a href="../15_Recursion/15_Recursion.html" title="Previous: Lesson 15 &middot; Recursion">&larr;<small>Lesson 15</small></a>
 <a href="../17_Practice_Contests/17_Practice_Contests.html" title="Next: Lesson 17 &middot; Practice contests - eleven rounds of three">&rarr;<small>Lesson 17</small></a>
 </div>
 </nav>
 <main>
-<header class="top"><h1>C++17 Time and memory - will it be fast enough?</h1><div class="sub">Lesson 16 | Theory, cheat sheet and 12 practice problems from arena.olimpiici.com (Group D)</div></header>
+<header class="top"><h1>C++17 Time and memory - will it be fast enough?</h1><div class="sub">Lesson 16 | Theory, cheat sheet and 7 practice problems from arena.olimpiici.com (Group D)</div></header>
 <h2 id="steps">1. Counting steps</h2>
 <p>Before you write a solution, count roughly how many steps it will make. You do not need the exact number - only how it grows when <code>n</code> grows:</p>
 <pre><code>for (int i = 0; i &lt; n; i++) s += a[i];          // n steps
@@ -228,29 +228,24 @@ for (long long i = 1; i * i &lt;= n; i++) {
 <tr><td>O(n^3)</td><td>fine up to about 500</td></tr>
 <tr><td>O(2^n), O(n!)</td><td>only for about 20 and about 10</td></tr>
 </tbody></table></div>
-<h2 id="problems">9. Practice &mdash; 12 problems, Group D</h2>
-<p>All 12 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the groups themselves get harder as you go down. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
+<h2 id="problems">9. Practice &mdash; 7 problems, Group D</h2>
+<p>All 7 are from the <a href="https://arena.olimpiici.com/#/catalog/1" style="color:var(--accent)">Olimpiici Arena catalogue</a>, Group D, across the National Olympiad rounds and the seasonal tournaments. They are ordered easiest first inside each group, and the last group is the hardest. Tick a problem when it is accepted &mdash; progress is stored in this browser. The full classified catalogue is in <a href="../Group C and D problems/index.html" style="color:var(--accent)">Group C and D problems</a>.</p>
 <div id="bar"><strong id="cnt"></strong><div class="track"><div class="fill"></div></div><button id="reset">Reset</button></div>
-<div class="pgroup"><h3 id="gA">A. Count the steps: is trying everything fast enough?</h3><p class="maps">Theory: sections 1 and 2</p>
+<div class="pgroup"><h3 id="gA">A. Count the steps first</h3><p class="maps">Theory: sections 1 and 2</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="100587"></td><td><a href="https://arena.olimpiici.com/#/catalog/226/problem/100587" target="_blank" rel="noopener">decision</a><br><span class="tech">Buses and taxis</span></td><td class="tech">try every number of buses - there are not many</td><td class="src">National round 2012</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101366"></td><td><a href="https://arena.olimpiici.com/#/catalog/555/problem/101366" target="_blank" rel="noopener">int</a><br><span class="tech">Digit product</span></td><td class="tech">at most 100001 numbers in the range: test each one</td><td class="src">Municipal round 2020</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100145"></td><td><a href="https://arena.olimpiici.com/#/catalog/68/problem/100145" target="_blank" rel="noopener">sherlok</a><br><span class="tech">Sherlock</span></td><td class="tech">try every third volume - count the steps first</td><td class="src">Autumn tournament 2016</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="101368"></td><td><a href="https://arena.olimpiici.com/#/catalog/555/problem/101368" target="_blank" rel="noopener">sum</a><br><span class="tech">Sum</span></td><td class="tech">three loops with X up to 1500 - count the steps before you write them</td><td class="src">Municipal round 2020</td><td class="dif">★★★☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="101366"></td><td><a href="https://arena.olimpiici.com/#/catalog/555/problem/101366" target="_blank" rel="noopener">int</a><br><span class="tech">Digit product</span></td><td class="tech">at most 100001 numbers in the range: test each one</td><td class="src">Municipal round 2020</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100587"></td><td><a href="https://arena.olimpiici.com/#/catalog/226/problem/100587" target="_blank" rel="noopener">decision</a><br><span class="tech">Buses and taxis</span></td><td class="tech">try every number of buses - there are not many</td><td class="src">National round 2012</td><td class="dif">★☆☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100145"></td><td><a href="https://arena.olimpiici.com/#/catalog/68/problem/100145" target="_blank" rel="noopener">sherlok</a><br><span class="tech">Sherlock</span></td><td class="tech">try every third volume - count the steps first</td><td class="src">Autumn tournament 2016</td><td class="dif">★★☆☆☆</td></tr>
 </tbody></table></div></div>
-<div class="pgroup"><h3 id="gB">B. Too slow - find a shortcut</h3><p class="maps">Theory: section 3</p>
+<div class="pgroup"><h3 id="gB">B. Shortcuts, and too big to store</h3><p class="maps">Theory: sections 3 and 4</p>
 <div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
-<tr><td><input type="checkbox" data-pid="102070"></td><td><a href="https://arena.olimpiici.com/#/catalog/790/problem/102070" target="_blank" rel="noopener">sum</a><br><span class="tech">The sum</span></td><td class="tech"><code>n(n+1)/2</code> grows fast: find n without adding one by one</td><td class="src">Autumn tournament 2023</td><td class="dif">★★☆☆☆</td></tr>
+<tr><td><input type="checkbox" data-pid="100012"></td><td><a href="https://arena.olimpiici.com/#/catalog/14/problem/100012" target="_blank" rel="noopener">div</a><br><span class="tech">Multiples</span></td><td class="tech"><code>b/c - (a-1)/c</code> - a loop up to 10^18 would never finish</td><td class="src">Autumn tournament 2007</td><td class="dif">★☆☆☆☆</td></tr>
 <tr><td><input type="checkbox" data-pid="100040"></td><td><a href="https://arena.olimpiici.com/#/catalog/26/problem/100040" target="_blank" rel="noopener">rect</a><br><span class="tech">Rectangle</span></td><td class="tech">divisors come in pairs, so stop at the square root</td><td class="src">Autumn tournament 2009</td><td class="dif">★★☆☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100450"></td><td><a href="https://arena.olimpiici.com/#/catalog/188/problem/100450" target="_blank" rel="noopener">digits</a><br><span class="tech">Counting a digit</span></td><td class="tech">up to 10^18: count position by position, not number by number</td><td class="src">Regional round 2015</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="100883"></td><td><a href="https://arena.olimpiici.com/#/catalog/315/problem/100883" target="_blank" rel="noopener">zcount</a><br><span class="tech">Counting zeros</span></td><td class="tech">the same shortcut for the zeros, up to 10^16</td><td class="src">Spring tournament 2017</td><td class="dif">★★★★☆</td></tr>
-</tbody></table></div></div>
-<div class="pgroup"><h3 id="gC">C. Too big to store</h3><p class="maps">Theory: section 4</p>
-<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="102529"></td><td><a href="https://arena.olimpiici.com/#/catalog/912/problem/102529" target="_blank" rel="noopener">prices</a><br><span class="tech">Prices</span></td><td class="tech">the list will not fit - keep the cheapest price so far</td><td class="src">Winter tournament 2026</td><td class="dif">★★☆☆☆</td></tr>
+</tbody></table></div></div>
+<div class="pgroup"><h3 id="gC">C. Challenge</h3><p class="maps">Theory: section 4</p>
+<div class="tblwrap"><table class="prob"><thead><tr><th style="width:26px"></th><th>Problem</th><th>Technique</th><th>Source</th><th>Level</th></tr></thead><tbody>
 <tr><td><input type="checkbox" data-pid="100726"></td><td><a href="https://arena.olimpiici.com/#/catalog/255/problem/100726" target="_blank" rel="noopener">major</a><br><span class="tech">Majority</span></td><td class="tech">inside 2 MB: one candidate and one counter</td><td class="src">National round 2018</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="102132"></td><td><a href="https://arena.olimpiici.com/#/catalog/803/problem/102132" target="_blank" rel="noopener">rank</a><br><span class="tech">The k-th score</span></td><td class="tech">the scores will not fit in 2 MB - keep only what you need</td><td class="src">National round 2024</td><td class="dif">★★★☆☆</td></tr>
-<tr><td><input type="checkbox" data-pid="102005"></td><td><a href="https://arena.olimpiici.com/#/catalog/771/problem/102005" target="_blank" rel="noopener">flowers</a><br><span class="tech">Flowers</span></td><td class="tech">only the commonest flower matters - work out what to keep instead of storing every flower</td><td class="src">Summer tournament 2023</td><td class="dif">★★★★☆</td></tr>
 </tbody></table></div></div>
 <footer><a href="../index.html" style="color:var(--accent)">&larr; All lessons</a> &middot; Lesson 16 · C++17 time and memory limits. Problem links point to arena.olimpiici.com; statements are in Bulgarian and downloadable as PDF from each problem page.</footer>
 </main></div>

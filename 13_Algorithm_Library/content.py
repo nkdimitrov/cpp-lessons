@@ -7,7 +7,7 @@ FOOTER = ("Lesson 13 · C++17 <algorithm>. Problem links point to arena.olimpiic
           "statements are in Bulgarian and downloadable as PDF from each problem page.")
 
 TITLE = "C++17 The <algorithm> toolbox - loops you do not have to write"
-SUBTITLE = ("Lesson 13 | Theory, cheat sheet and 12 practice problems "
+SUBTITLE = ("Lesson 13 | Theory, cheat sheet and 7 practice problems "
             "from arena.olimpiici.com (Group D)")
 
 SECTIONS = [

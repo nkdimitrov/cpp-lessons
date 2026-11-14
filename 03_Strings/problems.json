@@ -4,21 +4,16 @@
   {
    "key": "A",
    "name": "A. Characters are numbers",
-   "maps": "Theory: section 2"
+   "maps": "Theory: sections 2, 3 and 4"
   },
   {
    "key": "B",
-   "name": "B. Walking along a string",
-   "maps": "Theory: sections 3 and 4"
+   "name": "B. Runs, counts and palindromes",
+   "maps": "Theory: sections 3, 6 and 7"
   },
   {
    "key": "C",
-   "name": "C. Counting letters",
-   "maps": "Theory: section 6"
-  },
-  {
-   "key": "D",
-   "name": "D. Palindromes and reversing",
+   "name": "C. Challenge",
    "maps": "Theory: section 7"
   }
  ],
@@ -69,17 +64,6 @@
   },
   {
    "section": "B",
-   "pid": 388,
-   "title": "letters",
-   "en": "Letters",
-   "tech": "the first letter, the last letter, and is a letter inside?",
-   "family": "Regional round",
-   "year": 2011,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/164/problem/100388"
-  },
-  {
-   "section": "B",
    "pid": 1486,
    "title": "magic",
    "en": "Magic words",
@@ -90,40 +74,7 @@
    "url": "https://arena.olimpiici.com/#/catalog/601/problem/101486"
   },
   {
-   "section": "C",
-   "pid": 2065,
-   "title": "maxsub",
-   "en": "Same letters",
-   "tech": "`cnt[26]`, then the letter with the biggest count",
-   "family": "Municipal round",
-   "year": 2024,
-   "diff": 1,
-   "url": "https://arena.olimpiici.com/#/catalog/792/problem/102085"
-  },
-  {
-   "section": "C",
-   "pid": 313,
-   "title": "word",
-   "en": "Code word",
-   "tech": "count the letters ignoring case, then order them by count",
-   "family": "Municipal round",
-   "year": 2016,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/134/problem/100313"
-  },
-  {
-   "section": "C",
-   "pid": 116,
-   "title": "substring",
-   "en": "Substring",
-   "tech": "count both words; the smaller count of each letter is shared",
-   "family": "Autumn tournament",
-   "year": 2014,
-   "diff": 2,
-   "url": "https://arena.olimpiici.com/#/catalog/56/problem/100116"
-  },
-  {
-   "section": "D",
+   "section": "B",
    "pid": 1894,
    "title": "palin",
    "en": "Palindrome (rearrange)",
@@ -134,7 +85,7 @@
    "url": "https://arena.olimpiici.com/#/catalog/742/problem/101907"
   },
   {
-   "section": "D",
+   "section": "C",
    "pid": 70,
    "title": "symmetric",
    "en": "Make it symmetric",
@@ -143,17 +94,6 @@
    "year": 2011,
    "diff": 3,
    "url": "https://arena.olimpiici.com/#/catalog/38/problem/100070"
-  },
-  {
-   "section": "D",
-   "pid": 564,
-   "title": "key",
-   "en": "Cipher (rotations)",
-   "tech": "turning a word round is three `reverse` calls",
-   "family": "National round",
-   "year": 2011,
-   "diff": 4,
-   "url": "https://arena.olimpiici.com/#/catalog/221/problem/100564"
   }
  ]
 }
